@@ -12,7 +12,7 @@ function Signup() {
   const [check, setCheck] = useState(false);
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
-  const loader = useSelector((state) => state.authMgmtSlice?.loader);
+  const loader = useSelector((state) => state.authMgmtSlice?.loader) || false;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -49,6 +49,7 @@ function Signup() {
       const message = res?.payload?.data?.message;
 
       if (status === 200) {
+        localStorage.setItem("PhoneNumber", phoneNumber);
         navigate("/otp-verify");
         toast.success(`${message} (Otp: ${res.payload.data.data})` || "OTP sent sucessfully");
       } else {
@@ -92,7 +93,9 @@ function Signup() {
                   setErrors((prev) => ({ ...prev, phoneError: "" }));
                 }}
               />
-              {errors.phoneError && <p style={{ color: "red" }}>{errors.phoneError}</p>}
+              {errors.phoneError && (
+                <p style={{ color: "red", fontSize: "14px" }}>{errors.phoneError}</p>
+              )}
             </div>
 
             <button className="Button" disabled={disable}>
@@ -116,7 +119,9 @@ function Signup() {
                 <span className="Green"> privacy policy</span>.
                 <span className="checkmark" />
               </label>
-              {errors.checkError && <p style={{ color: "red" }}>{errors.checkError}</p>}
+              {errors.checkError && (
+                <p style={{ color: "red", fontSize: "14px" }}>{errors.checkError}</p>
+              )}
             </div>
           </form>
         </section>
