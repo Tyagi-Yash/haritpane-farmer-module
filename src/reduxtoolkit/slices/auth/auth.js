@@ -47,7 +47,31 @@ export const login = createAsyncThunk("auth/login", async (payload, { rejectWith
   }
 });
 
+export const logout = createAsyncThunk("auth/logout", async (payload, { rejectWithValue }) => {
+  try {
+    const response = await axios.put("/logout", payload);
+
+    if (response.status === 200) {
+      return {
+        status: response.status,
+        data: response.data,
+      };
+    } else {
+      return rejectWithValue({
+        status: response.status,
+        data: response.data,
+      });
+    }
+  } catch (err) {
+    return rejectWithValue({
+      status: err.response?.status || 500,
+      data: err.response?.data || { message: "Network or server error" },
+    });
+  }
+});
+
 const initialState = {
+  otploader: false,
   loader: false,
 };
 
@@ -56,15 +80,16 @@ const authMgmtSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
+
       // sendOtp
       .addCase(sendOtp.pending, (state) => {
-        state.loader = true;
+        state.otploader = true;
       })
       .addCase(sendOtp.fulfilled, (state) => {
-        state.loader = false;
+        state.otploader = false;
       })
       .addCase(sendOtp.rejected, (state) => {
-        state.loader = false;
+        state.otploader = false;
       })
 
       // login
@@ -75,6 +100,17 @@ const authMgmtSlice = createSlice({
         state.loader = false;
       })
       .addCase(login.rejected, (state) => {
+        state.loader = false;
+      })
+
+      // logout
+      .addCase(logout.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loader = false;
+      })
+      .addCase(logout.rejected, (state) => {
         state.loader = false;
       });
   },

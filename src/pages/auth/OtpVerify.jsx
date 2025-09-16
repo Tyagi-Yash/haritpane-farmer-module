@@ -5,8 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import OtpInput from "../../components/auth/OTPInput";
-import { login } from "../../reduxtoolkit/slices/auth/auth";
+import OtpInput from "../../components/otpverify/OTPInput";
+import { login, sendOtp } from "../../reduxtoolkit/slices/auth/auth";
+import OtpResend from "../../components/otpverify/OtpResend";
 
 function OtpVerify() {
   const navigate = useNavigate();
@@ -16,7 +17,8 @@ function OtpVerify() {
   const [check, setCheck] = useState(false);
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
-  const loader = useSelector((state) => state.authMgmtSlice?.loader) || false;
+  const loginloader = useSelector((state) => state.authMgmtSlice?.loader) || false;
+  const otploader = useSelector((state) => state.authMgmtSlice?.otploader) || false;
 
   const phoneNumber = localStorage.getItem("PhoneNumber") || "";
 
@@ -59,16 +61,38 @@ function OtpVerify() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+
+    //remove this after 3rd party otp api implemented
+    if (otp != localStorage.getItem("otp")) {
+      toast.error("Please Enter correct OPT");
+      return;
+    }
+
     setDisable(true);
+
     try {
       const res = await dispatch(login({ phone: phoneNumber.trim() }));
+
       const status = res?.payload?.status;
-      const message = res?.payload?.data?.message;
-      const jwtToken = res?.payload?.data?.data?.jwtToken;
+
+      const data = res?.payload?.data;
+      const message = data.message;
+      const jwtToken = data.data.jwtToken;
+      const farmerProfile = {
+        phone: data.data.phone,
+        languageSelector: data.data.languageSelector,
+        name: data.data.name,
+        profileImage: data.data.profileImage,
+      };
 
       if (status === 200) {
         localStorage.setItem("token", jwtToken);
+        localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));
         localStorage.removeItem("PhoneNumber");
+
+        //remove this after 3rd party otp api implemented
+        localStorage.removeItem("otp");
+
         navigate("/dashboard");
         toast.success(message || "OTP verified sucessfully");
       } else {
@@ -78,6 +102,49 @@ function OtpVerify() {
       toast.error("Something went wrong");
     } finally {
       setDisable(false);
+    }
+  };
+
+  const validateNumber = () => {
+    let newErrors = {};
+    let valid = true;
+
+    if (!phoneNumber.trim()) {
+      newErrors.phoneError = "*Phone number is required.Please enter Phone Number on SignUp Page";
+      valid = false;
+      setErrors(newErrors);
+      return valid;
+    } else if (!/^[0-9]{10}$/.test(phoneNumber.trim())) {
+      newErrors.phoneError =
+        "*Phone number must be a 10-digit number.Please enter a valid Phone Number on SignUp Page";
+      valid = false;
+      setErrors(newErrors);
+      return valid;
+    }
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const resendOtp = async (e) => {
+    if (!validateNumber()) return;
+    try {
+      const res = await dispatch(sendOtp({ phone: phoneNumber.trim() }));
+      const status = res?.payload?.status;
+      const message = res?.payload?.data?.message;
+
+      if (status === 200) {
+        //remove this after 3rd party otp api implemented
+        localStorage.setItem("otp", res?.payload?.data?.data);
+
+        toast.success(`${message} (Otp: ${res.payload.data.data})` || "OTP sent sucessfully");
+        return true;
+      } else {
+        toast.error(message || "Failed to send OTP");
+        return false;
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      return false;
     }
   };
 
@@ -99,23 +166,12 @@ function OtpVerify() {
               Enter the verification code {phoneNumber ? `we send you on: ${phoneNumber}` : ""}
             </h4>
             {errors.phoneError && (
-              <>
+              <div>
                 <p style={{ color: "red", fontSize: "14px" }}>{errors.phoneError}</p>
-                <Link
-                  to="/signup"
-                  style={{
-                    backgroundColor: "#eab308",
-                    color: "white",
-                    padding: "5px",
-                    borderRadius: "10px",
-                    marginBottom: "10px",
-                    textDecoration: "none",
-                    fontSize: "14px",
-                  }}
-                >
-                  → SignUp
+                <Link to="/signup" className="Button">
+                  → SignUp Page
                 </Link>
-              </>
+              </div>
             )}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
@@ -123,20 +179,11 @@ function OtpVerify() {
                 {errors.otpError && (
                   <p style={{ color: "red", fontSize: "14px" }}>{errors.otpError}</p>
                 )}
-                <p className="text-center mb-4 mt-4">
-                  Didn’t receive code?
-                  <a>
-                    {" "}
-                    <button style={{ border: "none", background: "none" }}>
-                      <span className="Green">Resend</span>
-                    </button>
-                  </a>
-                </p>
-                <p className="text-center mb-4 mt-4">
-                  <i className="fa-regular fa-clock" /> 08:59
-                </p>
+
+                <OtpResend cooldown={30} onResend={resendOtp} loader={otploader} />
+
                 <button className="Button" disabled={disable}>
-                  {loader ? "Verifying..." : "Verify & Continue"}
+                  {loginloader ? "Verifying..." : "Verify & Continue"}
                 </button>
                 <div className="Checkboxs">
                   <label className="CheckBox" htmlFor="check">

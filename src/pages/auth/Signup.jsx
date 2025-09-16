@@ -12,7 +12,7 @@ function Signup() {
   const [check, setCheck] = useState(false);
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
-  const loader = useSelector((state) => state.authMgmtSlice?.loader) || false;
+  const loader = useSelector((state) => state.authMgmtSlice?.otploader) || false;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,6 +50,10 @@ function Signup() {
 
       if (status === 200) {
         localStorage.setItem("PhoneNumber", phoneNumber);
+
+        //remove this after 3rd party otp api implemented
+        localStorage.setItem("otp", res?.payload?.data?.data);
+
         navigate("/otp-verify");
         toast.success(`${message} (Otp: ${res.payload.data.data})` || "OTP sent sucessfully");
       } else {

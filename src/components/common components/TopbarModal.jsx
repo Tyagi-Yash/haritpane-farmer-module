@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 function TopbarModal(props) {
+  // localStorage.getItem
   return (
     <>
       <div className="topbar">

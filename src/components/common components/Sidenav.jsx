@@ -12,17 +12,33 @@ import language from "../../assets/images/language.svg";
 import myFarm from "../../assets/images/my-farm.svg";
 import LogoutModal from "./LogoutModal";
 import { toast } from "react-toastify";
+import { logout } from "../../reduxtoolkit/slices/auth/auth";
+import { useDispatch } from "react-redux";
 
 function SideNav() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const navigate = useNavigate();
-  const handleLogout = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
     try {
-      console.log("User logged out!");
-      navigate("/signup");
-      setShowLogoutModal(false);
+      const res = await dispatch(logout());
+
+      const status = res?.payload?.status;
+      const message = res?.payload?.data?.message;
+
+      if (status === 200) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("farmerProfile");
+        toast.success(`${message}` || "Logged out sucessfully!");
+        setShowLogoutModal(false);
+        navigate("/signup");
+      } else {
+        toast.error(message || "Failed to logout");
+      }
     } catch (error) {
+      console.log(error);
       toast.error("Something went wrong");
     }
   };
@@ -123,7 +139,11 @@ function SideNav() {
         </div>
       </div>
 
-      <LogoutModal show={showLogoutModal} onClose={() => setShowLogoutModal(false)} onLogout={handleLogout} />
+      <LogoutModal
+        show={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        onLogout={handleLogout}
+      />
     </>
   );
 }
