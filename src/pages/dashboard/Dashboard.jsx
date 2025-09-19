@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import profile from "../../assets/images/profile.png";
 import localShop from "../../assets/images/Local-shop.svg";
 import localManufacturer from "../../assets/images/local-manufacturer.svg";
 import landManagementTractorServices from "../../assets/images/land-management-tractor-services.png";
@@ -26,7 +25,7 @@ function Dashboard() {
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal profile={profile} />
+          <TopbarModal />
           <div className="dashboard-page">
             <div className="dashboard">
               <div>
@@ -85,7 +84,10 @@ function Dashboard() {
                           <div className="service-section">
                             <div className="service-header" />
                             <div className="service-grid">
-                              <a href="land-management-services-sub-services.html" className="service-card">
+                              <a
+                                href="land-management-services-sub-services.html"
+                                className="service-card"
+                              >
                                 <div className="card-image-part">
                                   <img src={landManagementTractorServices} alt="Tractor" />
                                 </div>

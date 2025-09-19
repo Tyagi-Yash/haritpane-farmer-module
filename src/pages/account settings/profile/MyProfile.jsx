@@ -1,14 +1,87 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-import profile from "../../../assets/images/profile.png";
+import profilePic from "../../../assets/images/profile.svg";
 import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
-import profilePic from "../../../assets/images/profile-pic.png";
-import deleteEmoji from "../../../assets/images/delete-emoji.png";
 import cameraIcon from "../../../assets/images/camera-icon.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
-import { Link } from "react-router-dom";
+import ProfileSkeleton from "../../../components/skeletons/ProfileSkeleton";
+import DeleteModal from "../../../components/account settings/profile/DeleteModal";
+import ProfileFieldGroup from "../../../components/account settings/profile/ProfileFieldGroup";
+import { getFarmerProfile } from "../../../reduxtoolkit/slices/account settings/profile";
 
 function MyProfile() {
+  const [formState, setFormState] = useState({
+    farmerName: "",
+    phone: "",
+    email: "",
+    address: "",
+    profileImage: "",
+  });
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const fetchFarmerProfile = async () => {
+    try {
+      const res = await dispatch(getFarmerProfile());
+      const { status, data } = res?.payload || {};
+      if (status === 200) {
+        setFormState({
+          farmerName: data?.data?.name || "",
+          phone: data?.data?.phone || "",
+          email: data?.data?.email || "",
+          address: data?.data?.address || "",
+          profileImage: data?.data?.profileImage || "",
+        });
+        setLoading(false);
+      } else {
+        toast(data?.message || "Failed to load Profile");
+      }
+    } catch (err) {
+      toast("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    fetchFarmerProfile();
+  }, []);
+
+  const { farmerName, profileImage } = formState;
+
+  const profileFields = [
+    {
+      label: "Full Name",
+      required: true,
+      type: "text",
+      placeholder: "You haven’t added your name yet",
+      valueKey: "farmerName",
+    },
+    {
+      label: "Phone Number",
+      required: true,
+      type: "tel",
+      placeholder: "You haven’t added a phone number yet",
+      valueKey: "phone",
+    },
+    {
+      label: "Email Address",
+      required: false,
+      type: "email",
+      placeholder: "You haven’t added an email yet",
+      valueKey: "email",
+    },
+    {
+      label: "Full Address",
+      required: true,
+      type: "text",
+      placeholder: "You haven’t added your address yet",
+      valueKey: "address",
+    },
+  ];
+
   return (
     <>
       <div className="WrapperArea">
@@ -18,95 +91,45 @@ function MyProfile() {
             title="My Profile"
             secImage={landManagementTractorServices}
             navigate="/dashboard"
-            profile={profile}
           />
           <div className="dashboard">
-            <div>
-              {/* Profile Info */}
-              <div className="d-flex align-items-center mb-2 position-relative">
-                <img src={profilePic} alt="Profile" className="profile-img me-3" />
-                <span className="camera-icon translate-middle">
-                  <img src={cameraIcon} width={15} alt="Edit" />
-                </span>
-              </div>
-              {/* Personal Details */}
-              <h4 className="main-heading mb-3">Ramesh</h4>
-              <h6 className="radio-label mb-3">Personal Details</h6>
-              <form>
-                <div className="row g-3">
-                  <div className="col-md-6">
-                    <label className="form-label">
-                      Full Name<span className="text-danger">*</span>
-                    </label>
-                    <input type="text" className="form-control" placeholder="Enter your full name" />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">
-                      Phone Number<span className="text-danger">*</span>
-                    </label>
-                    <input type="tel" className="form-control" placeholder="Enter your phone number" />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">Email Address</label>
-                    <input type="email" className="form-control" placeholder="Enter your email address" />
-                  </div>
-                  <div className="col-md-6">
-                    <label className="form-label">
-                      Full Address<span className="text-danger">*</span>
-                    </label>
-                    <input type="text" className="form-control" placeholder="Enter your full address" />
-                  </div>
+            {loading ? (
+              <ProfileSkeleton />
+            ) : (
+              <div>
+                <div className="d-flex align-items-center mb-2 position-relative">
+                  <img
+                    src={profileImage ? profileImage : profilePic}
+                    alt="Profile"
+                    className="profile-img me-3"
+                  />
+                  <span className="camera-icon translate-middle">
+                    <img src={cameraIcon} width={15} alt="Edit" />
+                  </span>
                 </div>
-                {/* Buttons */}
+                <h4 className="main-heading mb-3">{farmerName ? farmerName : "Farmer"}</h4>
+                <h6 className="radio-label mb-3">Personal Details</h6>
+                <ProfileFieldGroup fields={profileFields} formState={formState} />
                 <div className="d-flex justify-content-end align-items-center mt-5">
                   <button
-                    type="button"
                     className="btn-delete"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deleteModal"
+                    onClick={() => setShowDeleteModal(true)}
+                    type="button"
                   >
                     Delete Account?
                   </button>
-                  <Link to="profile-edit" type="submit" className="btn-edit">
+                  <Link to="profile-edit" className="btn-edit">
                     Edit
                   </Link>
                 </div>
-              </form>
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
       <div className="my-profile">
-        <div
-          className="modal fade"
-          id="deleteModal"
-          tabIndex={-1}
-          aria-labelledby="deleteModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-body">
-                <div className="modal-emoji">
-                  <img src={deleteEmoji} alt />
-                </div>
-                <div className="modal-title">Are you sure you want to delete your account?</div>
-                <p>
-                  You’ll permanently lose all saved info, orders, and <br />
-                  access to HaritPane services.
-                </p>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-delete-modal" data-bs-dismiss="modal">
-                    Delete Account
-                  </button>
-                  <button type="button" className="btn btn-cancel" data-bs-dismiss="modal">
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <DeleteModal show={showDeleteModal} onClose={() => setShowDeleteModal(false)} />
       </div>
     </>
   );

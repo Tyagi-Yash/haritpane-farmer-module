@@ -790,7 +790,11 @@ ol {
 }
 
 .ClassifiedBox figure span {
-  background: linear-gradient(309.25deg, rgba(34, 197, 94, 0.5) 4.05%, rgba(187, 247, 208, 0.5) 94.33%);
+  background: linear-gradient(
+    309.25deg,
+    rgba(34, 197, 94, 0.5) 4.05%,
+    rgba(187, 247, 208, 0.5) 94.33%
+  );
 
   display: block;
   border-radius: 10px;
@@ -925,6 +929,22 @@ ol {
   font-size: 14px;
   font-weight: 500;
   line-height: 28px;
+}
+
+.available-service-btn .LangButton {
+  display: inline-block;
+  border-radius: 12px;
+  color: #ffffff;
+  background-color: #eab308;
+  padding: 10px 100px;
+  text-decoration: none;
+  text-align: center;
+  font-family: "Roboto";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 28px;
+  width: auto;
+  border: none;
 }
 
 .vendor-card-link {
@@ -2700,33 +2720,60 @@ input[type="date" i] {
   padding-left: 10px !important;
 }
 
-/* .carousel-indicators {
-  position: absolute;
-  right: 0;
-  bottom: -45px;
-  left: 0;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  
+.skeleton {
+  background: #e0e0e0;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite linear;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
 }
 
-.carousel-indicators [data-bs-target] {
-  background-color: #000000;
+@keyframes shimmer {
+  100% {
+    background-position: -200% 0;
+  }
 }
 
-.carousel-control-next,
-.carousel-control-prev {
-  top: auto;
-  bottom: -30px;
-  width: auto;
-  opacity: 1;
+.skeleton-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
 
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-  filter: invert(1);
-  width: 25px;
-  height: 25px;
-} */
+.skeleton-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.skeleton-heading {
+  width: 180px;
+  height: 24px;
+  border-radius: 4px;
+}
+
+.skeleton-subheading {
+  width: 140px;
+  height: 18px;
+  border-radius: 4px;
+}
+
+.skeleton-label {
+  width: 100px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.skeleton-input {
+  width: 100%;
+  height: 38px;
+  border-radius: 6px;
+}
+
+.skeleton-btn {
+  width: 100px;
+  height: 36px;
+  border-radius: 6px;
+}
+
+

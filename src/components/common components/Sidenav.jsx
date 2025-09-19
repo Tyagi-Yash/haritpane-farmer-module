@@ -31,7 +31,7 @@ function SideNav() {
       if (status === 200) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
-        toast.success(`${message}` || "Logged out sucessfully!");
+        toast.success(message || "Logged out sucessfully!");
         setShowLogoutModal(false);
         navigate("/signup");
       } else {

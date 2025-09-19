@@ -6,7 +6,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import OtpInput from "../../components/otpverify/OTPInput";
-import { login, sendOtp } from "../../reduxtoolkit/slices/auth/auth";
+import { login } from "../../reduxtoolkit/slices/auth/auth";
 import OtpResend from "../../components/otpverify/OtpResend";
 
 function OtpVerify() {
@@ -18,7 +18,6 @@ function OtpVerify() {
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const loginloader = useSelector((state) => state.authMgmtSlice?.loader) || false;
-  const otploader = useSelector((state) => state.authMgmtSlice?.otploader) || false;
 
   const phoneNumber = localStorage.getItem("PhoneNumber") || "";
 
@@ -69,31 +68,27 @@ function OtpVerify() {
     }
 
     setDisable(true);
-
     try {
       const res = await dispatch(login({ phone: phoneNumber.trim() }));
-
       const status = res?.payload?.status;
+      const { message, data: userData } = res?.payload?.data || {};
 
-      const data = res?.payload?.data;
-      const message = data.message;
-      const jwtToken = data.data.jwtToken;
+      const jwtToken = userData?.jwtToken || "";
       const farmerProfile = {
-        phone: data.data.phone,
-        languageSelector: data.data.languageSelector,
-        name: data.data.name,
-        profileImage: data.data.profileImage,
+        name: userData?.name ?? "",
+        profileImage: userData?.profileImage ?? "",
+        languageSelector: userData?.languageSelector ?? "",
       };
 
       if (status === 200) {
         localStorage.setItem("token", jwtToken);
         localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));
-        localStorage.removeItem("PhoneNumber");
 
+        localStorage.removeItem("PhoneNumber");
         //remove this after 3rd party otp api implemented
         localStorage.removeItem("otp");
 
-        navigate("/dashboard");
+        farmerProfile.languageSelector ? navigate("/dashboard") : navigate("/language");
         toast.success(message || "OTP verified sucessfully");
       } else {
         toast.error(message || "Verification failed");
@@ -102,49 +97,6 @@ function OtpVerify() {
       toast.error("Something went wrong");
     } finally {
       setDisable(false);
-    }
-  };
-
-  const validateNumber = () => {
-    let newErrors = {};
-    let valid = true;
-
-    if (!phoneNumber.trim()) {
-      newErrors.phoneError = "*Phone number is required.Please enter Phone Number on SignUp Page";
-      valid = false;
-      setErrors(newErrors);
-      return valid;
-    } else if (!/^[0-9]{10}$/.test(phoneNumber.trim())) {
-      newErrors.phoneError =
-        "*Phone number must be a 10-digit number.Please enter a valid Phone Number on SignUp Page";
-      valid = false;
-      setErrors(newErrors);
-      return valid;
-    }
-    setErrors(newErrors);
-    return valid;
-  };
-
-  const resendOtp = async (e) => {
-    if (!validateNumber()) return;
-    try {
-      const res = await dispatch(sendOtp({ phone: phoneNumber.trim() }));
-      const status = res?.payload?.status;
-      const message = res?.payload?.data?.message;
-
-      if (status === 200) {
-        //remove this after 3rd party otp api implemented
-        localStorage.setItem("otp", res?.payload?.data?.data);
-
-        toast.success(`${message} (Otp: ${res.payload.data.data})` || "OTP sent sucessfully");
-        return true;
-      } else {
-        toast.error(message || "Failed to send OTP");
-        return false;
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-      return false;
     }
   };
 
@@ -180,7 +132,7 @@ function OtpVerify() {
                   <p style={{ color: "red", fontSize: "14px" }}>{errors.otpError}</p>
                 )}
 
-                <OtpResend cooldown={30} onResend={resendOtp} loader={otploader} />
+                <OtpResend cooldown={30} phoneNumber={phoneNumber} setErrors={setErrors} />
 
                 <button className="Button" disabled={disable}>
                   {loginloader ? "Verifying..." : "Verify & Continue"}

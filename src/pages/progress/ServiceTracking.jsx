@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import landManagementTractorServices from "../../assets/images/land-management-tractor-services.png";
-import profile from "../../assets/images/profile.png";
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
 import dryCattleManagement from "../../assets/images/DryCattleManagement.png";
 import TopbarModal from "../../components/common components/TopbarModal";
@@ -15,7 +14,6 @@ function ServiceTracking() {
             title="Service Tracking"
             secImage={landManagementTractorServices}
             navigate="/dashboard"
-            profile={profile}
           />
           <div className="dashboard service-tracking">
             <div className="option-wrapper">
@@ -26,14 +24,24 @@ function ServiceTracking() {
                   <div className="col-md-4 mb-3">
                     <label className="form-label">Select Start Date</label>
                     <div className="input-group">
-                      <input type="date" className="form-control" placeholder="From date*" required />
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="From date*"
+                        required
+                      />
                     </div>
                   </div>
                   {/* End Date */}
                   <div className="col-md-4 mb-3">
                     <label className="form-label">Select End Date</label>
                     <div className="input-group">
-                      <input type="date" className="form-control" placeholder="From date*" required />
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="From date*"
+                        required
+                      />
                     </div>
                   </div>
                   {/* Sort Dropdown */}

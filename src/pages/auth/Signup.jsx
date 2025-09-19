@@ -55,7 +55,7 @@ function Signup() {
         localStorage.setItem("otp", res?.payload?.data?.data);
 
         navigate("/otp-verify");
-        toast.success(`${message} (Otp: ${res.payload.data.data})` || "OTP sent sucessfully");
+        toast.success(`${message} (Otp: ${res.payload.data.data})` || "OTP sent successfully");
       } else {
         toast.error(message || "Signup failed");
       }
