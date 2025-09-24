@@ -1,0 +1,38 @@
+export const profileFields = [
+  {
+    label: "Full Name",
+    required: true,
+    type: "text",
+    placeholder: "Enter your full name",
+    valueKey: "farmerName",
+    error: "nameError",
+    disabled: false,
+  },
+  {
+    label: "Phone Number",
+    required: true,
+    type: "tel",
+    placeholder: "Enter your phone number",
+    valueKey: "phone",
+    error: "phoneError",
+    disabled: true,
+  },
+  {
+    label: "Email Address",
+    required: false,
+    type: "email",
+    placeholder: "Enter your email address",
+    valueKey: "email",
+    error: "",
+    disabled: false,
+  },
+  {
+    label: "Full Address",
+    required: true,
+    type: "text",
+    placeholder: "Enter your full address",
+    valueKey: "address",
+    error: "addressError",
+    disabled: false,
+  },
+];

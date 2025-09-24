@@ -1,6 +1,5 @@
 import React from "react";
 
-import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
 import profile from "../../../assets/images/profile.png";
 import miniMap from "../../../assets/images/mini-map.png";
 import editRectangle from "../../../assets/images/edit-rectangle.svg";
@@ -16,7 +15,6 @@ function MyFarmCardSection() {
           <TopbarModal
             titleBox={true}
             title="My Farm"
-            secImage={landManagementTractorServices}
             navigate="/farm-home"
             profile={profile}
           />

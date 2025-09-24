@@ -2776,4 +2776,29 @@ input[type="date" i] {
   border-radius: 6px;
 }
 
+.spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #ddd;
+  border-top: 2px solid #199647;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}

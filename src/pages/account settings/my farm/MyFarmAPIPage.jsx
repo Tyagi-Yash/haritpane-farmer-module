@@ -1,6 +1,5 @@
 import React from "react";
 
-import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
 import profile from "../../../assets/images/profile.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { Link } from "react-router-dom";
@@ -13,7 +12,6 @@ function MyFarmAPIPage() {
           <TopbarModal
             titleBox={true}
             title="My Farm"
-            secImage={landManagementTractorServices}
             navigate="/farm-home"
             profile={profile}
           />

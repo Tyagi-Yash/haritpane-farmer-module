@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import landManagementTractorServices from "../../assets/images/land-management-tractor-services.png";
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
 import dryCattleManagement from "../../assets/images/DryCattleManagement.png";
 import TopbarModal from "../../components/common components/TopbarModal";
@@ -12,7 +11,6 @@ function ServiceTracking() {
           <TopbarModal
             titleBox={true}
             title="Service Tracking"
-            secImage={landManagementTractorServices}
             navigate="/dashboard"
           />
           <div className="dashboard service-tracking">

@@ -104,8 +104,10 @@ function App() {
             <Route path="vendor-details" element={<ServiceTrackingVendorDetails />} />
           </Route>
 
-          <Route path="service-category">
-            <Route index element={<ServiceCategory />} />
+          <Route path="service-category" element={<ServiceCategory />} />
+          <Route path="land-management">
+            <Route index element={<LandManagementServicesSubServices />} />
+            <Route path="available-services" element={<LandManagementChangeAvailablity />} />
           </Route>
 
           <Route path="chats">

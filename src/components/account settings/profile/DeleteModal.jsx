@@ -42,26 +42,28 @@ function DeleteModal({ show, onClose }) {
       keyboard={false}
     >
       <Modal.Body>
-        <div className="modal-emoji">
-          <img src={deleteEmoji} alt="" />
-        </div>
-        <div className="modal-title">Are you sure you want to delete your account?</div>
-        <p>
-          You’ll permanently lose all saved info, orders, and <br />
-          access to HaritPane services.
-        </p>
-        <div className="modal-footer">
-          <button
-            type="button"
-            className="btn btn-delete-modal"
-            onClick={handleDelete}
-            disabled={disable}
-          >
-            {disable ? "Deleting..." : "Delete Account"}
-          </button>
-          <button type="button" className="btn btn-cancel" onClick={onClose}>
-            Cancel
-          </button>
+        <div className="my-profile">
+          <div className="modal-emoji">
+            <img src={deleteEmoji} alt="" />
+          </div>
+          <div className="modal-title">Are you sure you want to delete your account?</div>
+          <p>
+            You’ll permanently lose all saved info, orders, and <br />
+            access to HaritPane services.
+          </p>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-delete-modal"
+              onClick={handleDelete}
+              disabled={disable}
+            >
+              {disable ? "Deleting..." : "Delete Account"}
+            </button>
+            <button type="button" className="btn btn-cancel" onClick={onClose}>
+              Cancel
+            </button>
+          </div>
         </div>
       </Modal.Body>
     </Modal>

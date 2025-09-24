@@ -1,4 +1,4 @@
-function ProfileFieldGroup({ fields, formState, disabled = true }) {
+function ProfileFieldGroup({ fields, formState, errors }) {
   return (
     <div className="row g-3">
       {fields.map((field, index) => (
@@ -12,9 +12,12 @@ function ProfileFieldGroup({ fields, formState, disabled = true }) {
             className="form-control"
             placeholder={field.placeholder}
             value={formState[field.valueKey] || ""}
-            disabled={disabled}
+            disabled={field.disabled}
             onChange={field.onChange ? (e) => field.onChange(e.target.value) : undefined}
           />
+          {errors?.[field.error] && (
+            <p style={{ color: "red", fontSize: "14px" }}>{errors[field.error]}</p>
+          )}
         </div>
       ))}
     </div>

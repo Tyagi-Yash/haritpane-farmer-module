@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import TopbarModal from "../../../../components/common components/TopbarModal";
 import profile from "../../../../assets/images/profile.png";
-import landManagementTractorServices from "../../../../assets/images/land-management-tractor-services.png";
 
 function LocalShopsModule() {
   return (
@@ -12,7 +11,6 @@ function LocalShopsModule() {
           <TopbarModal
             titleBox={true}
             title="View Local Shop"
-            secImage={landManagementTractorServices}
             navigate="/dashboard"
             profile={profile}
           />

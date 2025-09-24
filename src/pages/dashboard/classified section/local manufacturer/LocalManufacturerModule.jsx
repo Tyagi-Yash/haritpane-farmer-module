@@ -2,7 +2,6 @@ import profile from "../../../../assets/images/profile.png";
 import locationBlack from "../../../../assets/images/location-black.svg";
 import sortArrowDown from "../../../../assets/images/sort-arrow-down.svg";
 import productImage from "../../../../assets/images/product-image.png";
-import landManagementTractorServices from "../../../../assets/images/land-management-tractor-services.png";
 import TopbarModal from "../../../../components/common components/TopbarModal";
 import { Link } from "react-router-dom";
 
@@ -14,7 +13,6 @@ function LocalManufacturerModule() {
           <TopbarModal
             titleBox={true}
             title="View Local Shop"
-            secImage={landManagementTractorServices}
             navigate="/dashboard"
             profile={profile}
           />
@@ -25,7 +23,12 @@ function LocalManufacturerModule() {
               </div>
               <div className="search-sort">
                 <div className="location-wrapper">
-                  <input type="text" className="form-control" placeholder="Farm location*" required />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Farm location*"
+                    required
+                  />
                   <img src={locationBlack} alt="" className="location-icon" />
                 </div>
                 <div className="sort-box" id="sortBox">

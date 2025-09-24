@@ -38,7 +38,7 @@ function ServiceCategory() {
                   <div className="service-section">
                     <div className="service-header"></div>
                     <div className="service-grid">
-                      <Link to="land-management-services-sub-services.html" className="service-card">
+                      <Link to="/land-management" className="service-card">
                         <div className="card-image-part">
                           <img src={landManagementTractorServices} alt="Tractor" />
                         </div>

@@ -1,5 +1,4 @@
 import profile from "../../../../assets/images/profile.png";
-import landManagementTractorServices from "../../../../assets/images/land-management-tractor-services.png";
 import forceTractor from "../../../../assets/images/force-tractor.png";
 import shareIcon from "../../../../assets/images/share-icon.svg";
 import customerReviewLocalHops from "../../../../assets/images/customer-review-local-hops.png";
@@ -13,7 +12,6 @@ function LocalManufacturerProductDetails() {
           <TopbarModal
             titleBox={true}
             title="Plow Force Assist"
-            secImage={landManagementTractorServices}
             navigate="/dashboard/local-manufacturers"
             profile={profile}
           />
@@ -37,9 +35,10 @@ function LocalManufacturerProductDetails() {
               <div className="mb-4">
                 <h6 className="normal-heading">Product Description</h6>
                 <p className="grey-para">
-                  FieldTrac Services offers reliable, on-demand tractor solutions designed to simplify land
-                  preparation, plowing, leveling, and harvesting for Indian farmers. We bring the power of
-                  technology to your fields—efficiently, affordably, and locally.
+                  FieldTrac Services offers reliable, on-demand tractor solutions designed to
+                  simplify land preparation, plowing, leveling, and harvesting for Indian farmers.
+                  We bring the power of technology to your fields—efficiently, affordably, and
+                  locally.
                 </p>
               </div>
               {/* Specifications */}
@@ -149,8 +148,8 @@ function LocalManufacturerProductDetails() {
                   </div>
                 </div>
                 <p className="grey-para">
-                  Consequat velit qui adipisicing sunt do rependerit ad laborum tempor ullamco exercitation.
-                  Ullamco tempor adipisicing et voluptate duis sit esse aliqua.
+                  Consequat velit qui adipisicing sunt do rependerit ad laborum tempor ullamco
+                  exercitation. Ullamco tempor adipisicing et voluptate duis sit esse aliqua.
                 </p>
                 <div className="divider" />
               </div>
@@ -166,8 +165,8 @@ function LocalManufacturerProductDetails() {
                   </div>
                 </div>
                 <p className="grey-para">
-                  Consequat velit qui adipisicing sunt do rependerit ad laborum tempor ullamco exercitation.
-                  Ullamco tempor adipisicing et voluptate duis sit esse aliqua.
+                  Consequat velit qui adipisicing sunt do rependerit ad laborum tempor ullamco
+                  exercitation. Ullamco tempor adipisicing et voluptate duis sit esse aliqua.
                 </p>
                 <div className="divider" />
               </div>
@@ -183,8 +182,8 @@ function LocalManufacturerProductDetails() {
                   </div>
                 </div>
                 <p className="grey-para">
-                  Consequat velit qui adipisicing sunt do rependerit ad laborum tempor ullamco exercitation.
-                  Ullamco tempor adipisicing et voluptate duis sit esse aliqua.
+                  Consequat velit qui adipisicing sunt do rependerit ad laborum tempor ullamco
+                  exercitation. Ullamco tempor adipisicing et voluptate duis sit esse aliqua.
                 </p>
                 <div className="divider" />
               </div>

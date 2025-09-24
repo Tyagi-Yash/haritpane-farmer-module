@@ -3,7 +3,7 @@ import profile from "../../assets/images/profile.svg";
 import { Link } from "react-router-dom";
 
 function TopbarModal({ titleBox, navigate, secImage, title }) {
-  const { name, profileImage } = JSON.parse(localStorage.getItem("farmerProfile"));
+  const { name, profileImage } = JSON.parse(localStorage.getItem("farmerProfile")) || {};
   return (
     <div className="topbar">
       <div className="TitleBox">
@@ -15,9 +15,11 @@ function TopbarModal({ titleBox, navigate, secImage, title }) {
               </Link>
             </span>
             <h4 className="book-heading d-flex align-items-center">
-              <span className="top-icon-image hide">
-                <img src={secImage} alt="" />
-              </span>
+              {secImage && (
+                <span className="top-icon-image">
+                  <img src={secImage} alt="" />
+                </span>
+              )}
               {title}
             </h4>
           </div>

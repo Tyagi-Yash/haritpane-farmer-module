@@ -53,6 +53,32 @@ export const getFarmerProfile = createAsyncThunk(
   }
 );
 
+export const uploadImage = createAsyncThunk(
+  "profile/uploadImage",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/saveImageToAwsFarmer", payload);
+
+      if (response.status === 200) {
+        return {
+          status: response.status,
+          data: response.data,
+        };
+      } else {
+        return rejectWithValue({
+          status: response.status,
+          data: response.data,
+        });
+      }
+    } catch (err) {
+      return rejectWithValue({
+        status: err.response?.status || 500,
+        data: err.response?.data || { message: "Network or server error" },
+      });
+    }
+  }
+);
+
 const initialState = {
   loader: false,
 };
@@ -82,6 +108,16 @@ const profileMgmtSlice = createSlice({
         state.loader = false;
       })
       .addCase(getFarmerProfile.rejected, (state) => {
+        state.loader = false;
+      })
+      // uploadImage
+      .addCase(uploadImage.pending, (state) => {
+        state.loader = true;
+      })
+      .addCase(uploadImage.fulfilled, (state) => {
+        state.loader = false;
+      })
+      .addCase(uploadImage.rejected, (state) => {
         state.loader = false;
       });
   },

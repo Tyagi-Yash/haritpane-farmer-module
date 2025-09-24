@@ -1,6 +1,3 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import landManagementTractorServices from "../../assets/images/land-management-tractor-services.png";
 import profile from "../../assets/images/profile.png";
 import userIcon from "../../assets/images/user-icon.svg";
 import locationIcon from "../../assets/images/location-icon.png";
@@ -19,7 +16,6 @@ function ServiceTrackingVendorDetails() {
           <TopbarModal
             titleBox={true}
             title="Vendor Details"
-            secImage={landManagementTractorServices}
             navigate="/service-tracking"
             profile={profile}
           />
@@ -174,8 +170,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
@@ -190,8 +186,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
@@ -206,8 +202,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
@@ -222,8 +218,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
@@ -238,8 +234,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
@@ -254,8 +250,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
@@ -270,8 +266,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
@@ -286,8 +282,8 @@ function ServiceTrackingVendorDetails() {
                       </div>
                       <div className="stars">★ ★ ★ ★ ★</div>
                       <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-                        time, and the work was done smoothly. Highly reliable service!”
+                        “Booked a tractor through HaritPane for ploughing my field. The driver
+                        arrived on time, and the work was done smoothly. Highly reliable service!”
                       </div>
                     </div>
                   </div>
