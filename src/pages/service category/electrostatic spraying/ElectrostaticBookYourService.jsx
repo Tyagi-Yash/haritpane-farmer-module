@@ -41,7 +41,12 @@ function ElectrostaticBookYourService() {
                   {/* Farm Location */}
                   <div className="col-md-6">
                     <div className="location-wrapper">
-                      <input type="text" className="form-control" placeholder="Farm location*" required />
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Farm location*"
+                        required
+                      />
                       <img src="assets/images/location-black.svg" alt className="location-icon" />
                     </div>
                   </div>
@@ -49,7 +54,7 @@ function ElectrostaticBookYourService() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Area under cultivation*"
+                      placeholder="Area Under Cultivation(per acre)*"
                       required
                     />
                   </div>

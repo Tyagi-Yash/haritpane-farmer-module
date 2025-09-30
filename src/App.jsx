@@ -105,9 +105,20 @@ function App() {
           </Route>
 
           <Route path="service-category" element={<ServiceCategory />} />
+
           <Route path="land-management">
             <Route index element={<LandManagementServicesSubServices />} />
             <Route path="available-services" element={<LandManagementChangeAvailablity />} />
+          </Route>
+
+          <Route path="harvestor">
+            <Route index element={<HarvestorSubServices />} />
+            <Route path="available-services" element={<HarvestorChangeAvailablity />} />
+          </Route>
+
+          <Route path="cattle-purchase-sale">
+            <Route index element={<CattleBookYourServices />} />
+            <Route path="available-services" element={<CattleChangeAvailablity />} />
           </Route>
 
           <Route path="chats">

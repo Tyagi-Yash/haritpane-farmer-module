@@ -97,9 +97,7 @@ function Signup() {
                   setErrors((prev) => ({ ...prev, phoneError: "" }));
                 }}
               />
-              {errors.phoneError && (
-                <p style={{ color: "red", fontSize: "14px" }}>{errors.phoneError}</p>
-              )}
+              {errors.phoneError && <p className="error-text">{errors.phoneError}</p>}
             </div>
 
             <button className="Button" disabled={disable}>
@@ -123,9 +121,7 @@ function Signup() {
                 <span className="Green"> privacy policy</span>.
                 <span className="checkmark" />
               </label>
-              {errors.checkError && (
-                <p style={{ color: "red", fontSize: "14px" }}>{errors.checkError}</p>
-              )}
+              {errors.checkError && <p className="error-text">{errors.checkError}</p>}
             </div>
           </form>
         </section>

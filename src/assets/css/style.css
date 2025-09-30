@@ -931,6 +931,21 @@ ol {
   line-height: 28px;
 }
 
+.available-service-btn button {
+  display: inline-block;
+  border-radius: 12px;
+  color: #ffffff;
+  background-color: #eab308;
+  padding: 10px 100px;
+  text-decoration: none;
+  text-align: center;
+  font-family: "Roboto";
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 28px;
+  border: none;
+}
+
 .available-service-btn .LangButton {
   display: inline-block;
   border-radius: 12px;
@@ -2801,4 +2816,10 @@ input[type="date" i] {
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.error-text {
+  color: red !important;
+  font-size: 14px !important;
+  margin-top: 4px !important;
 }

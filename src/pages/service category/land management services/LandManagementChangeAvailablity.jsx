@@ -1,74 +1,145 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
+import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
+import TopbarModal from "../../../components/common components/TopbarModal";
+import { getAllLandManagementServices } from "../../../reduxtoolkit/slices/service category/landManagementServices";
 
 function LandManagementChangeAvailablity() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const dispatch = useDispatch();
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const [filters, setFilters] = useState({
+    subServices: queryParams.get("subServices") || "",
+    lat: queryParams.get("lat") || "",
+    lng: queryParams.get("lng") || "",
+    hpOfTractor: queryParams.get("hpOfTractor") || "",
+    equipmentInformation: queryParams.get("equipmentInformation") || "",
+    fromDate: queryParams.get("fromDate") || "",
+    toDate: queryParams.get("toDate") || "",
+    fromTime: queryParams.get("fromTime") || "",
+  });
+  const { toDate, fromDate } = filters;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const [services, setServices] = useState([]);
+
+  const validateForm = () => {
+    let newErrors = {};
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (!fromDate) {
+      newErrors.fromDate = "*From date is required";
+    } else if (new Date(fromDate) < today) {
+      newErrors.fromDate = "*From date cannot be in the past";
+    }
+
+    if (!toDate) {
+      newErrors.toDate = "*To date is required";
+    } else if (new Date(toDate) < today) {
+      newErrors.toDate = "*To date cannot be in the past";
+    }
+
+    if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+      newErrors.toDate = "*To date cannot be earlier than from date";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const fetchServices = async () => {
+    if (!validateForm()) return;
+    setLoading(true);
+    try {
+      const res = await dispatch(getAllLandManagementServices(filters));
+      const { status, data } = res?.payload || {};
+      if (status === 200) {
+        setServices(data?.data?.[0]?.data || []);
+      } else {
+        toast(data?.message || "Failed to load Services");
+      }
+    } catch (error) {
+      toast("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchServices();
+  }, [filters.toDate, filters.fromDate]);
+
   return (
     <div className="WrapperArea form-section">
       <div className="WrapperBox">
-        <div className="topbar">
-          <div className="TitleBox">
-            <div className="TitleBox-top-bar">
-              <span>
-                <a className="back-circle-navbar" href="land-management-services-sub-services.html">
-                  <i className="fa-solid fa-arrow-left" />
-                </a>
-              </span>
-              <h4 className="book-heading d-flex align-items-center">
-                <span className="top-icon-image">
-                  <img src="assets/images/land-management-tractor-services.png" alt />
-                </span>
-                Land Management Services Listing
-              </h4>
-            </div>
-          </div>
-          <div className="right-section">
-            <div className="search-box">
-              <input className="form-control" type="text" placeholder="Search Services..." />
-              <i className="fas fa-search search-icon" />
-            </div>
-            <i className="far fa-bell bell-icon" />
-            <div className="profile">
-              <img src="assets/images/profile.png" alt="Profile" />
-              <span className="username">Ramesh</span>
-            </div>
-          </div>
-          65r2edcx
-        </div>
+        <TopbarModal
+          titleBox={true}
+          title="Land Management Services Listing"
+          secImage={landManagementTractorServices}
+          navigate="/land-management"
+        />
         <div className="dashboard">
           <div className="option-wrapper">
             <h3 className="main-heading">Change Availability Date</h3>
             <div className="filter-area">
               <div className="row align-items-end">
-                {/* Start Date */}
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Select Start Date</label>
+                  {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   <div className="input-group">
-                    <input type="date" className="form-control" placeholder="From date*" required />
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="Till date*"
+                      name="fromDate"
+                      value={fromDate}
+                      onChange={handleInputChange}
+                    />
                   </div>
                 </div>
-                {/* End Date */}
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Select End Date</label>
+                  {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
-                    <input type="date" className="form-control" placeholder="From date*" required />
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="Till date*"
+                      name="toDate"
+                      value={toDate}
+                      onChange={handleInputChange}
+                    />
                   </div>
                 </div>
-                {/* Sort Dropdown */}
                 <div className="col-md-4 mb-3">
                   <div className="sort-box" id="sortBox">
-                    <div className="sort-toggle" onclick="toggleSortMenu()">
+                    <div className="sort-toggle">
                       <span>
                         <span id="sortSelectedLabel" className="sort-label">
                           Sort
                         </span>
-                        <img src="assets/images/sort-arrow-down.svg" alt="Sort Icon" />
+                        <img src={sortArrowDown} alt="Sort Icon" />
                       </span>
                     </div>
                     <div className="sort-menu">
-                      <div className="sort-option" onclick="selectSortOption('Top rating')">
-                        Top rating
-                      </div>
-                      <div className="sort-option" onclick="selectSortOption('Out of Radius')">
-                        Out of Radius
-                      </div>
+                      <div className="sort-option">Top rating</div>
+                      <div className="sort-option">Out of Radius</div>
                     </div>
                   </div>
                 </div>
@@ -76,102 +147,48 @@ function LandManagementChangeAvailablity() {
             </div>
           </div>
           <div className="option-wrapper">
-            <h3 className="main-heading">Available Vendor</h3>
-            <h6 className="form-label-max">Choose from in your radius</h6>
-            {/* Card 1 (Selected) */}
-            <div className="vendor-card selected">
-              <div className="service-info">
-                <img
-                  src="assets/images/PoweringPrecisionFarming.png"
-                  alt="Service"
-                  className="service-image"
-                />
-                <div className="service-text">
-                  <a href="land-management-vendor-details-pending.html">
-                    Powering Precision Farming
-                  </a>
-                  <div className="rating">
-                    <span>
-                      <i className="fa-solid fa-star star-icon" />
-                    </span>{" "}
-                    4.2
-                  </div>
-                </div>
-              </div>
-              <div className="price-info">
-                <h6>₹ 699.00</h6>
-                <small>Additional charges might apply</small>
-              </div>
-            </div>
-            {/* Card 2 */}
-            <div className="vendor-card">
-              <div className="service-info">
-                <img
-                  src="assets/images/LandPrepDoneRight.svg"
-                  alt="Service"
-                  className="service-image"
-                />
-                <div className="service-text">
-                  <a href="#">Land Prep Done Right</a>
-                  <div className="rating">
-                    <span>
-                      <i className="fa-solid fa-star star-icon" />
-                    </span>{" "}
-                    4.2
-                  </div>
-                </div>
-              </div>
-              <div className="price-info">
-                <h6>₹ 499.00</h6>
-                <small>Additional charges might apply</small>
-              </div>
-            </div>
-            {/* Card 3 */}
-            <div className="vendor-card">
-              <div className="service-info">
-                <img
-                  src="assets/images/PoweringPrecisionFarming.png"
-                  alt="Service"
-                  className="service-image"
-                />
-                <div className="service-text">
-                  <a href="#">Maximize Your Land Potential</a>
-                  <div className="rating">
-                    <span>
-                      <i className="fa-solid fa-star star-icon" />
-                    </span>{" "}
-                    4.2
-                  </div>
-                </div>
-              </div>
-              <div className="price-info">
-                <h6>₹ 999.00</h6>
-                <small>Additional charges might apply</small>
-              </div>
-            </div>
-            {/* Card 4 */}
-            <div className="vendor-card">
-              <div className="service-info">
-                <img
-                  src="assets/images/PoweringPrecisionFarming.png"
-                  alt="Service"
-                  className="service-image"
-                />
-                <div className="service-text">
-                  <a href="#">Deep Tilling. Strong Yields</a>
-                  <div className="rating">
-                    <span>
-                      <i className="fa-solid fa-star star-icon" />
-                    </span>{" "}
-                    4.2
-                  </div>
-                </div>
-              </div>
-              <div className="price-info">
-                <h6>₹ 599.00</h6>
-                <small>Additional charges might apply</small>
-              </div>
-            </div>
+            {loading ? (
+              <p style={{ color: "gray", marginTop: "10px" }}>Loading services...</p>
+            ) : services.length === 0 ? (
+              <p style={{ color: "gray", marginTop: "10px" }}>
+                No services found for the selected filters.
+              </p>
+            ) : (
+              <>
+                <h3 className="main-heading">Available Vendor</h3>
+                <h6 className="form-label-max">Choose from in your radius</h6>
+                {services.map((service) => (
+                  <Link
+                    className="vendor-card-link"
+                    to={`/harvestorVendorDetailsPending/${service._id}`}
+                    key={service._id}
+                  >
+                    <div className="vendor-card">
+                      <div className="service-info">
+                        <img
+                          src={service.attachmentImage}
+                          alt="Service"
+                          className="service-image"
+                        />
+                        <div className="service-text">
+                          <div className="title"> {service.equipmentDescription}</div>
+                          <div className="rating">
+                            <span>
+                              <i className="fa-solid fa-star star-icon" />
+                            </span>{" "}
+                            {service.rating}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="price-info">
+                        <h6>₹ {Number(service.payableAmount).toFixed(2)}</h6>
+                        <small>Additional charges might apply</small>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>

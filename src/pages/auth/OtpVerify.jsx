@@ -119,7 +119,7 @@ function OtpVerify() {
             </h4>
             {errors.phoneError && (
               <div>
-                <p style={{ color: "red", fontSize: "14px" }}>{errors.phoneError}</p>
+                <p className="error-text">{errors.phoneError}</p>
                 <Link to="/signup" className="Button">
                   → SignUp Page
                 </Link>
@@ -128,9 +128,7 @@ function OtpVerify() {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <OtpInput length={4} onChange={handleOtpChange} />
-                {errors.otpError && (
-                  <p style={{ color: "red", fontSize: "14px" }}>{errors.otpError}</p>
-                )}
+                {errors.otpError && <p className="error-text">{errors.otpError}</p>}
 
                 <OtpResend cooldown={30} phoneNumber={phoneNumber} setErrors={setErrors} />
 
@@ -154,9 +152,7 @@ function OtpVerify() {
                     <span className="Green"> privacy policy</span>.
                     <span className="checkmark" />
                   </label>
-                  {errors.checkError && (
-                    <p style={{ color: "red", fontSize: "14px" }}>{errors.checkError}</p>
-                  )}
+                  {errors.checkError && <p className="error-text">{errors.checkError}</p>}
                 </div>
               </div>
             </form>

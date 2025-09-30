@@ -84,30 +84,27 @@ function Dashboard() {
                           <div className="service-section">
                             <div className="service-header" />
                             <div className="service-grid">
-                              <a
-                                href="land-management-services-sub-services.html"
-                                className="service-card"
-                              >
+                              <Link to="/land-management" className="service-card">
                                 <div className="card-image-part">
                                   <img src={landManagementTractorServices} alt="Tractor" />
                                 </div>
                                 <div className="label">Land Management / Tractor Services</div>
-                              </a>
+                              </Link>
                               <div className="service-card">
-                                <a href="harvestor-sub-services.html">
+                                <Link to="/harvestor">
                                   <div className="card-image-part">
                                     <img src={harvester} alt="Harvester" />
                                   </div>
                                   <div className="label">Harvester</div>
-                                </a>
+                                </Link>
                               </div>
                               <div className="service-card">
-                                <a href="cattle-Book-your-services.html">
+                                <Link to="/cattle-purchase-sale">
                                   <div className="card-image-part">
                                     <img src={cattlePurchageSale} alt="Cattle" />
                                   </div>
                                   <div className="label">Cattle Purchase &amp; Sale</div>
-                                </a>
+                                </Link>
                               </div>
                             </div>
                           </div>

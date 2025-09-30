@@ -15,9 +15,7 @@ function ProfileFieldGroup({ fields, formState, errors }) {
             disabled={field.disabled}
             onChange={field.onChange ? (e) => field.onChange(e.target.value) : undefined}
           />
-          {errors?.[field.error] && (
-            <p style={{ color: "red", fontSize: "14px" }}>{errors[field.error]}</p>
-          )}
+          {errors?.[field.error] && <p className="error-text">{errors[field.error]}</p>}
         </div>
       ))}
     </div>

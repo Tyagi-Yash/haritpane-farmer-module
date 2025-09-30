@@ -8,11 +8,7 @@ function ServiceTracking() {
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal
-            titleBox={true}
-            title="Service Tracking"
-            navigate="/dashboard"
-          />
+          <TopbarModal titleBox={true} title="Service Tracking" navigate="/dashboard" />
           <div className="dashboard service-tracking">
             <div className="option-wrapper">
               <h3 className="main-heading">Change Availability Date</h3>
@@ -104,7 +100,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -125,7 +121,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -146,7 +142,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -167,7 +163,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -202,7 +198,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -223,7 +219,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -244,7 +240,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -265,7 +261,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -301,7 +297,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -322,7 +318,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -343,7 +339,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>
@@ -364,7 +360,7 @@ function ServiceTracking() {
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
-                            </span>
+                            </span>{" "}
                             4.2
                           </div>
                         </div>

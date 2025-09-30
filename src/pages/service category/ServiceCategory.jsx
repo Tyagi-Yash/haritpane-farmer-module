@@ -45,20 +45,20 @@ function ServiceCategory() {
                         <div className="label">Land Management / Tractor Services</div>
                       </Link>
                       <div className="service-card">
-                        <a href="harvestor-sub-services.html">
+                        <Link to="/harvestor">
                           <div className="card-image-part">
                             <img src={harvester} alt="Harvester" />
                           </div>
                           <div className="label">Harvester</div>
-                        </a>
+                        </Link>
                       </div>
                       <div className="service-card">
-                        <a href="cattle-Book-your-services.html">
+                        <Link to="/cattle-purchase-sale">
                           <div className="card-image-part">
                             <img src={cattlePurchageSale} alt="Cattle" />
                           </div>
                           <div className="label">Cattle Purchase &amp; Sale</div>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
