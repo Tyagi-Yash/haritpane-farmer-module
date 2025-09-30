@@ -116,22 +116,28 @@ function Dashboard() {
                             <div className="service-header mt-2"></div>
                             <div className="service-grid">
                               <div className="service-card">
-                                <div className="card-image-part">
-                                  <img src={excavation} alt="Excavation" />
-                                </div>
-                                <div className="label">Excavation</div>
+                                <Link to="/excavation">
+                                  <div className="card-image-part">
+                                    <img src={excavation} alt="Excavation" />
+                                  </div>
+                                  <div className="label">Excavation</div>
+                                </Link>
                               </div>
                               <div className="service-card">
-                                <div className="card-image-part">
-                                  <img src={electrostatic} alt="Electrostatic Spraying" />
-                                </div>
-                                <div className="label">Electrostatic Spraying</div>
+                                <Link to="/electrostatic-spraying">
+                                  <div className="card-image-part">
+                                    <img src={electrostatic} alt="Electrostatic Spraying" />
+                                  </div>
+                                  <div className="label">Electrostatic Spraying</div>
+                                </Link>
                               </div>
                               <div className="service-card">
-                                <div className="card-image-part">
-                                  <img src={laborRequirement} alt="Cattle" />
-                                </div>
-                                <div className="label">Labor Requirement</div>
+                                <Link to="/">
+                                  <div className="card-image-part">
+                                    <img src={laborRequirement} alt="Cattle" />
+                                  </div>
+                                  <div className="label">Labor Requirement</div>
+                                </Link>
                               </div>
                             </div>
                           </div>
