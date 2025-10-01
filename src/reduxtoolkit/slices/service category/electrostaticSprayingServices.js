@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
 
 export const getAllServicesOfElectrostatic = createAsyncThunk(
-  "ElectrostaticSprayingServiceMgmtSlice/getAllServicesOfElectrostatic",
+  "electrostaticSprayingService/getAllServicesOfElectrostatic",
   async (filters, { rejectWithValue }) => {
     try {
       const response = await axios.get("/getAllServicesOfElectrostatic", { params: filters });
@@ -32,7 +32,7 @@ const initialState = {
 };
 
 const ElectrostaticSprayingServiceMgmtSlice = createSlice({
-  name: "profile",
+  name: "electrostaticSprayingService",
   initialState,
   extraReducers: (builder) => {
     builder

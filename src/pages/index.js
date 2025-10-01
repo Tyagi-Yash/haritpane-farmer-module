@@ -13,6 +13,8 @@ import MyProfileSaveContinue from "./account settings/profile/MyProfileSaveConti
 import ChatChatSection from "./chats/ChatChatSection";
 import ChatEnquirySection from "./chats/ChatEnquirySection";
 import ChatsReviewSection from "./chats/ChatsReviewSection";
+import LocalProductsListingModule from "./dashboard/classified section/LocalProductsListingModule";
+import LocalProductDetails from "./dashboard/classified section/LocalProductDetails";
 import LocalManufacturerModule from "./dashboard/classified section/local manufacturer/LocalManufacturerModule";
 import LocalManufacturerProductDetails from "./dashboard/classified section/local manufacturer/LocalManufacturerProductDetails";
 import LocalShopsModule from "./dashboard/classified section/local shops/LocalShopsModule";
@@ -88,6 +90,8 @@ export {
   ChatChatSection,
   ChatEnquirySection,
   ChatsReviewSection,
+  LocalProductsListingModule,
+  LocalProductDetails,
   LocalManufacturerModule,
   LocalManufacturerProductDetails,
   LocalShopsModule,

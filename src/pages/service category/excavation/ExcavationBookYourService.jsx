@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom";
 import locationBlack from "../../../assets/images/location-black.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import ExcavationIcon from "../../../assets/images/Excavation-icon.png";
+import {
+  validateDates,
+  validateDurationFields,
+  validateEquipmentTypes,
+  validateFromTime,
+  validateLat,
+  validateLng,
+} from "../../../utils/formValidators";
 
 function ExcavationBookYourService() {
   const equipmentTypesOption = [
@@ -24,13 +32,14 @@ function ExcavationBookYourService() {
     fromDate: "",
     toDate: "",
     fromTime: "",
-    duration: "",
+    hours: "",
+    minutes: "",
   });
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const { lat, lng, equipmentTypes, fromDate, toDate, fromTime, duration } = formState;
+  const { lat, lng, equipmentTypes, fromDate, toDate, fromTime, hours, minutes } = formState;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,61 +52,24 @@ function ExcavationBookYourService() {
 
   const validateForm = () => {
     let newErrors = {};
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    if (!lat.trim()) {
-      newErrors.lat = "*Latitude is required";
-    } else if (isNaN(lat) || lat < -90 || lat > 90) {
-      newErrors.lat = "*Latitude must be a number between -90 and 90";
-    }
+    const latError = validateLat(lat);
+    if (latError) newErrors.lat = latError;
 
-    if (!lng.trim()) {
-      newErrors.lng = "*Longitude is required";
-    } else if (isNaN(lng) || lng < -180 || lng > 180) {
-      newErrors.lng = "*Longitude must be a number between -180 and 180";
-    }
+    const lngError = validateLng(lng);
+    if (lngError) newErrors.lng = lngError;
 
-    if (!equipmentTypes) {
-      newErrors.equipmentTypes = "*Specific Service is required";
-    }
+    const equipmentError = validateEquipmentTypes(equipmentTypes);
+    if (equipmentError) newErrors.equipmentTypes = equipmentError;
 
-    if (!fromDate) {
-      newErrors.fromDate = "*From date is required";
-    } else if (new Date(fromDate) < today) {
-      newErrors.fromDate = "*From date cannot be in the past";
-    }
+    const dateErrors = validateDates(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
 
-    if (!toDate) {
-      newErrors.toDate = "*To date is required";
-    } else if (new Date(toDate) < today) {
-      newErrors.toDate = "*To date cannot be in the past";
-    }
+    const timeError = validateFromTime(fromDate, fromTime);
+    if (timeError) newErrors.fromTime = timeError;
 
-    if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
-      newErrors.toDate = "*To date cannot be earlier than from date";
-    }
-
-    if (!fromTime) {
-      newErrors.fromTime = "*From time is required";
-    } else if (fromDate) {
-      const selectedDate = new Date(fromDate);
-      const now = new Date();
-      if (selectedDate.toDateString() === now.toDateString()) {
-        const [h, m] = fromTime.split(":");
-        const selectedTime = new Date();
-        selectedTime.setHours(h, m, 0, 0);
-        if (selectedTime <= now) {
-          newErrors.fromTime = "*Time must be in the future";
-        }
-      }
-    }
-
-    if (!duration.trim()) {
-      newErrors.duration = "*Duration is required";
-    } else if (isNaN(duration) || duration <= 0) {
-      newErrors.duration = "*Duration must be a positive number";
-    }
+    const durationErrors = validateDurationFields(hours, minutes);
+    newErrors = { ...newErrors, ...durationErrors };
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -107,6 +79,7 @@ function ExcavationBookYourService() {
     e.preventDefault();
     if (!validateForm()) return;
     setDisable(true);
+    const totalDuration = (Number(hours) || 0) + (Number(minutes) || 0) / 60;
     const formdata = {
       lat: lat.trim(),
       lng: lng.trim(),
@@ -114,7 +87,7 @@ function ExcavationBookYourService() {
       fromDate,
       toDate,
       fromTime,
-      duration: duration.trim(),
+      duration: totalDuration.toString(),
     };
     try {
       const query = new URLSearchParams(formdata).toString();
@@ -230,23 +203,39 @@ function ExcavationBookYourService() {
                   </div>
                 </div>
                 <h5 className="book-heading">Tentative Duration</h5>
-                <div className="row">
-                  <div className="col-md-12">
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label">Hours</label>
+
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Enter tentative hours(In hours)*"
-                      name="duration"
-                      value={duration}
+                      placeholder="Hours*"
+                      name="hours"
+                      min="0"
+                      value={hours}
                       onChange={handleInputChange}
                     />
-                    {errors.duration && <p className="error-text">{errors.duration}</p>}
+                    {errors.hours && <p className="error-text">{errors.hours}</p>}
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Minutes</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Minutes (0-59)*"
+                      name="minutes"
+                      min="0"
+                      value={minutes}
+                      onChange={handleInputChange}
+                    />
+                    {errors.minutes && <p className="error-text">{errors.minutes}</p>}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="available-service-btn">
-              <button disabled={disable}>See Available Service</button>
+            <div type="submit" className="available-service-btn">
+              <button disabled={disable}>{disable ? "Loading..." : "See Available Service"}</button>
             </div>
           </form>
         </div>

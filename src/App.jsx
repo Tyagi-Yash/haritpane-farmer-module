@@ -75,7 +75,10 @@ import {
   TransportationVendorDetailsAccepted,
   TransportationVendorDetailsPending,
   ServiceCategory,
+  LocalProductsListingModule,
+  LocalProductDetails,
 } from "./pages";
+
 import { ToastContainer } from "react-toastify";
 
 function App() {
@@ -90,12 +93,12 @@ function App() {
           <Route path="dashboard">
             <Route index element={<Dashboard />} />
             <Route path="local-shops">
-              <Route index element={<LocalShopsModule />} />
-              <Route path="product-details" element={<LocalShopsProductDetails />} />
+              <Route index element={<LocalProductsListingModule />} />
+              <Route path="product-details/:id" element={<LocalProductDetails />} />
             </Route>
             <Route path="local-manufacturers">
-              <Route index element={<LocalManufacturerModule />} />
-              <Route path="product-details" element={<LocalManufacturerProductDetails />} />
+              <Route index element={<LocalProductsListingModule />} />
+              <Route path="product-details/:id" element={<LocalProductDetails />} />
             </Route>
           </Route>
 

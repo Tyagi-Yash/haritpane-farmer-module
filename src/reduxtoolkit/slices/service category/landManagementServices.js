@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
 
 export const getAllLandManagementServices = createAsyncThunk(
-  "LandServiceMgmtSlice/getAllLandManagementServices",
+  "LandService/getAllLandManagementServices",
   async (filters, { rejectWithValue }) => {
     try {
       const response = await axios.get("/getAllServicesOfLandManagement", { params: filters });
@@ -32,7 +32,7 @@ const initialState = {
 };
 
 const LandServiceMgmtSlice = createSlice({
-  name: "profile",
+  name: "LandService",
   initialState,
   extraReducers: (builder) => {
     builder

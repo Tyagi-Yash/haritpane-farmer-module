@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
 
 export const getAllServicesOfHarvester = createAsyncThunk(
-  "HarvestorServiceMgmtSlice/getAllServicesOfHarvester",
+  "HarvestorService/getAllServicesOfHarvester",
   async (filters, { rejectWithValue }) => {
     try {
       const response = await axios.get("/getAllServicesOfHarvester", { params: filters });
@@ -32,7 +32,7 @@ const initialState = {
 };
 
 const HarvestorServiceMgmtSlice = createSlice({
-  name: "profile",
+  name: "HarvestorService",
   initialState,
   extraReducers: (builder) => {
     builder

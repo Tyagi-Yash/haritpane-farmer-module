@@ -6,8 +6,6 @@ import { toast } from "react-toastify";
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import ElectrostaticSprayingIcon from "../../../assets/images/Electrostatic-Spraying-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
-import { getAllLandManagementServices } from "../../../reduxtoolkit/slices/service category/landManagementServices";
-import { getAllServicesOfHarvester } from "../../../reduxtoolkit/slices/service category/harvestorServices";
 import { getAllServicesOfElectrostatic } from "../../../reduxtoolkit/slices/service category/electrostaticSprayingServices";
 
 function ElectrostaticChangeAvailablity() {

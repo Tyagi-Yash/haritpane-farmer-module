@@ -85,13 +85,14 @@ function OtpVerify() {
         localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));
 
         localStorage.removeItem("PhoneNumber");
+
         //remove this after 3rd party otp api implemented
         localStorage.removeItem("otp");
 
         farmerProfile.languageSelector ? navigate("/dashboard") : navigate("/language");
         toast.success(message || "OTP verified sucessfully");
       } else {
-        toast.error(message || "Verification failed");
+        toast.error(message || "Invalid OTP");
       }
     } catch (error) {
       toast.error("Something went wrong");
