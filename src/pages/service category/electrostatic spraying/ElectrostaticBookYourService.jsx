@@ -181,7 +181,9 @@ function ElectrostaticBookYourService() {
               </div>
             </div>
             <div className="available-service-btn">
-              <button disabled={disable}>See Available Service</button>
+              <button type="submit" disabled={disable}>
+                See Available Service
+              </button>
             </div>
           </form>
         </div>

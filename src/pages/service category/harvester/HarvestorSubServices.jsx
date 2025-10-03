@@ -149,6 +149,7 @@ function HarvestorSubServices() {
                         value="combine_harvester"
                         className="radio-input"
                         onChange={handleInputChange}
+                        
                         defaultChecked
                       />
                       <div className="radio-card">
@@ -272,7 +273,9 @@ function HarvestorSubServices() {
               </div>
             </div>
             <div className="available-service-btn">
-              <button disabled={disable}>See Available Service</button>
+              <button type="submit" disabled={disable}>
+                See Available Service
+              </button>
             </div>
           </form>
         </div>

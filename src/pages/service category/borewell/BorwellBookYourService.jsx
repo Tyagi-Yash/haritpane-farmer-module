@@ -1,105 +1,232 @@
-import React from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+import locationBlack from "../../../assets/images/location-black.svg";
+import TopbarModal from "../../../components/common components/TopbarModal";
+import BorewellIcon from "../../../assets/images/Borewell-icon.png";
 
 function BorwellBookYourService() {
+  const [formState, setFormState] = useState({
+    lat: "",
+    lng: "",
+    depthOfBorewell: "",
+    casingPipe: "",
+    waterMotor: "",
+    fromDate: "",
+    toDate: "",
+    fromTime: "",
+    toTime: "",
+  });
+  const { lat, lng, depthOfBorewell, casingPipe, waterMotor, fromDate, toDate, fromTime, toTime } =
+    formState;
+  const [disable, setDisable] = useState(false);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  // const validateForm = () => {
+  //   let newErrors = {};
+
+  //   const latError = validateLat(lat);
+  //   if (latError) newErrors.lat = latError;
+
+  //   const lngError = validateLng(lng);
+  //   if (lngError) newErrors.lng = lngError;
+
+  //   const equipmentError = validateEquipmentTypes(equipmentTypes);
+  //   if (equipmentError) newErrors.equipmentTypes = equipmentError;
+
+  //   const dateErrors = validateDates(fromDate, toDate);
+  //   newErrors = { ...newErrors, ...dateErrors };
+
+  //   const timeError = validateFromTime(fromDate, fromTime);
+  //   if (timeError) newErrors.fromTime = timeError;
+
+  //   const durationErrors = validateDurationFields(hours, minutes);
+  //   newErrors = { ...newErrors, ...durationErrors };
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // if (!validasteForm()) return;
+    setDisable(true);
+    const formdata = {
+      lat: lat.trim(),
+      lng: lng.trim(),
+      depthOfBorewell: depthOfBorewell.trim(),
+      casingPipe,
+      waterMotor,
+      fromDate,
+      toDate,
+      fromTime,
+      toTime,
+    };
+    try {
+      const query = new URLSearchParams(formdata).toString();
+      navigate(`available-services?${query}`);
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setDisable(false);
+    }
+  };
   return (
-    <>
-      <div className="WrapperArea">
-        <div className="WrapperBox">
-          <div className="topbar">
-            <div className="TitleBox">
-              <div className="TitleBox-top-bar">
-                <span>
-                  <a className="back-circle-navbar" href="service-category.html">
-                    <i className="fa-solid fa-arrow-left" />
-                  </a>
-                </span>
-                <h4 className="book-heading d-flex align-items-center">
-                  <span className="top-icon-image">
-                    <img src="assets/images/Borewell-icon.png" alt />
-                  </span>
-                  Borewell
-                </h4>
-              </div>
-            </div>
-            <div className="right-section">
-              <div className="search-box">
-                <input className="form-control" type="text" placeholder="Search Services..." />
-                <i className="fas fa-search search-icon" />
-              </div>
-              <i className="far fa-bell bell-icon" />
-              <div className="profile">
-                <img src="assets/images/profile.png" alt="Profile" />
-                <span className="username">Ramesh</span>
-              </div>
-            </div>
-          </div>
-          <div className="dashboard">
+    <div className="WrapperArea">
+      <div className="WrapperBox">
+        <TopbarModal
+          titleBox={true}
+          title="Borewell"
+          secImage={BorewellIcon}
+          navigate="/service-category"
+        />
+        <div className="dashboard">
+          <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
-                  {/* Farm Location (Text) */}
                   <div className="col-md-6">
+                    {/*need to remove this after geo api implemented */}
                     <div className="location-wrapper">
-                      <input type="text" className="form-control" placeholder="Farm location*" required />
-                      <img src="assets/images/location-black.svg" alt className="location-icon" />
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Latitude*"
+                        name="lat"
+                        value={lat}
+                        onChange={handleInputChange}
+                      />
+                      {/* {errors.lat && <p className="error-text">{errors.lat}</p>} */}
                     </div>
+                    <div className="location-wrapper">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Longitude*"
+                        name="lng"
+                        value={lng}
+                        onChange={handleInputChange}
+                      />
+                      {/* {errors.lng && <p className="error-text">{errors.lng}</p>} */}
+                    </div>
+                    {/* <div className="location-wrapper">
+                      <input type="text" className="form-control" placeholder="Farm location*" />
+                      <img src={locationBlack} alt="" className="location-icon" />
+                    </div> */}
                   </div>
                   <div className="col-md-6">
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Approximate depth of borewell"
-                      required
+                      placeholder="Approximate depth of borewell(in feet)"
+                      name="depthOfBorewell"
+                      value={depthOfBorewell}
+                      onChange={handleInputChange}
                     />
                   </div>
                   <div className="col-md-6">
-                    <select name id className="form-control">
-                      <option value selected disabled>
+                    <select
+                      className="form-control"
+                      name="casingPipe"
+                      value={casingPipe}
+                      onChange={handleInputChange}
+                    >
+                      <option value="" disabled>
                         Casing Pipe
                       </option>
-                      <option value>Yes</option>
-                      <option value>No</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
                     </select>
                   </div>
                   <div className="col-md-6">
-                    <select name id className="form-control">
-                      <option value selected disabled>
+                    <select
+                      className="form-control"
+                      name="waterMotor"
+                      value={waterMotor}
+                      onChange={handleInputChange}
+                    >
+                      <option value="" disabled>
                         Submersible water motor
                       </option>
-                      <option value>Yes</option>
-                      <option value>No</option>
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
                     </select>
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
-                  {/* From Date */}
                   <div className="col-md-6">
-                    <input type="date" className="form-control" required />
+                    <label className="form-label">From date</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="From date*"
+                      name="fromDate"
+                      value={fromDate}
+                      onChange={handleInputChange}
+                    />
+                    {/* {errors.fromDate && <p className="error-text">{errors.fromDate}</p>} */}
                   </div>
-                  {/* Till Date */}
                   <div className="col-md-6">
-                    <input type="date" className="form-control" required />
+                    <label className="form-label">Till date</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="Till date*"
+                      name="toDate"
+                      value={toDate}
+                      onChange={handleInputChange}
+                    />
+                    {/* {errors.toDate && <p className="error-text">{errors.toDate}</p>} */}
                   </div>
-                  {/* From Time */}
                   <div className="col-md-6">
-                    <input type="time" className="form-control" required />
+                    <label className="form-label">Start time</label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      placeholder="Start time*"
+                      name="fromTime"
+                      value={fromTime}
+                      onChange={handleInputChange}
+                    />
+                    {/* {errors.fromTime && <p className="error-text">{errors.fromTime}</p>} */}
                   </div>
-                  {/* From Time */}
                   <div className="col-md-6">
-                    <input type="time" className="form-control" required />
+                    <label className="form-label">End time</label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      placeholder="End time*"
+                      name="toTime"
+                      value={toTime}
+                      onChange={handleInputChange}
+                    />
+                    {/* {errors.toTime && <p className="error-text">{errors.toTime}</p>} */}
                   </div>
                 </div>
               </div>
             </div>
             <div className="available-service-btn">
-              <a href="borwell-change-availablity.html">See Available Service</a>
+              <button type="submit" disabled={disable}>
+                {disable ? "Loading..." : "See Available Service"}
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

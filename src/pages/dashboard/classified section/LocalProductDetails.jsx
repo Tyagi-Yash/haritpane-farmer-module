@@ -3,8 +3,11 @@ import forceTractor from "../../../assets/images/force-tractor.png";
 import shareIcon from "../../../assets/images/share-icon.svg";
 import customerReviewLocalHops from "../../../assets/images/customer-review-local-hops.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
+import { useParams } from "react-router-dom";
 
 function LocalProductDetails() {
+  const { id } = useParams();
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">

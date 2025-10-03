@@ -134,6 +134,16 @@ function App() {
             <Route path="available-services" element={<ElectrostaticChangeAvailablity />} />
           </Route>
 
+          <Route path="labor-requirement">
+            <Route index element={<LaborBookYourService />} />
+            <Route path="available-services" element={<LabourChangeAvailablity />} />
+          </Route>
+
+          <Route path="borewell">
+            <Route index element={<BorwellBookYourService />} />
+            <Route path="available-services" element={<BorwellChangeAvailablity />} />
+          </Route>
+
           <Route path="chats">
             <Route index element={<ChatChatSection />} />
             <Route path="message-chat" element={<ChatChatSection />} />

@@ -45,7 +45,7 @@ function LocalProductsListingModule() {
   }, [pathname]);
 
   const handleEnquiryClick = (id) => {
-    navigate(`product-details/:${id}`);
+    navigate(`/product-details/:${id}`);
   };
 
   return (
@@ -94,27 +94,22 @@ function LocalProductsListingModule() {
               products.map((product) => (
                 <div className="col-md-4 mb-3" key={product._id}>
                   <div className="product-card">
-                    <Link to="product-details" onClick={() => handleEnquiryClick(product._id)}>
-                      <div className="image-part">
-                        <img
-                          src={product.productImage?.[0] || productImage}
-                          alt={product.productName || "Product"}
-                        />
-                      </div>
-                      <div className="card-text-part">
-                        <h6 className="normal-heading">{product.productName}</h6>
-                        <p className="normal-para">Vendor Name: Grain Edge</p>
-                        <p className="normal-para">Sameypur, Rajpura Block, Meerut</p>
-                      </div>
-                      <div className="available-service-btn">
-                        <button
-                          onClick={() => handleEnquiryClick(product._id)}
-                          className="send-btn"
-                        >
-                          Send Enquiry
-                        </button>
-                      </div>
-                    </Link>
+                    <div className="image-part">
+                      <img
+                        src={product.productImage?.[0] || productImage}
+                        alt={product.productName || "Product"}
+                      />
+                    </div>
+                    <div className="card-text-part">
+                      <h6 className="normal-heading">{product.productName}</h6>
+                      <p className="normal-para">Vendor Name: Grain Edge</p>
+                      <p className="normal-para">Sameypur, Rajpura Block, Meerut</p>
+                    </div>
+                    <div className="available-service-btn">
+                      <button onClick={() => handleEnquiryClick(product._id)} className="send-btn">
+                        Send Enquiry
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))

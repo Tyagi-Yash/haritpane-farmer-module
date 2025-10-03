@@ -35,11 +35,10 @@ function ExcavationBookYourService() {
     hours: "",
     minutes: "",
   });
+  const { lat, lng, equipmentTypes, fromDate, toDate, fromTime, hours, minutes } = formState;
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
-  const { lat, lng, equipmentTypes, fromDate, toDate, fromTime, hours, minutes } = formState;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -190,11 +189,11 @@ function ExcavationBookYourService() {
                     {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   </div>
                   <div className="col-md-4">
-                    <label className="form-label">From time</label>
+                    <label className="form-label">Start time</label>
                     <input
                       type="time"
                       className="form-control"
-                      placeholder="From time*"
+                      placeholder="Start time*"
                       name="fromTime"
                       value={fromTime}
                       onChange={handleInputChange}
@@ -234,8 +233,10 @@ function ExcavationBookYourService() {
                 </div>
               </div>
             </div>
-            <div type="submit" className="available-service-btn">
-              <button disabled={disable}>{disable ? "Loading..." : "See Available Service"}</button>
+            <div className="available-service-btn">
+              <button type="submit" disabled={disable}>
+                {disable ? "Loading..." : "See Available Service"}
+              </button>
             </div>
           </form>
         </div>

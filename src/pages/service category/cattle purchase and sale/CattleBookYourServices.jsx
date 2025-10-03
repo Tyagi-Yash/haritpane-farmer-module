@@ -59,7 +59,6 @@ function CattleBookYourServices() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
     try {
       const query = new URLSearchParams(formState).toString();
       navigate(`available-services?${query}`);
@@ -187,7 +186,7 @@ function CattleBookYourServices() {
               </div>
               <div className="text-center">
                 <div className="available-service-btn">
-                  <button>See Available Service</button>
+                  <button type="submit">See Available Service</button>
                 </div>
               </div>
             </form>

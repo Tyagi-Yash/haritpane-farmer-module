@@ -32,8 +32,9 @@ export const validateDates = (fromDate, toDate) => {
   return {};
 };
 
-export const validateFromTime = (fromDate, fromTime) => {
-  if (!fromTime) return "*From time is required";
+export const validateFromTime = (fromDate, fromTime, toTime) => {
+  if (!fromTime) return "*Start time is required";
+  if (!toTime) return "*End time is required";
 
   if (fromDate) {
     const selectedDate = new Date(fromDate);

@@ -105,7 +105,7 @@ function ExcavationChangeAvailablity() {
                     <input
                       type="date"
                       className="form-control"
-                      placeholder="Till date*"
+                      placeholder="From date*"
                       name="fromDate"
                       value={fromDate}
                       onChange={handleInputChange}

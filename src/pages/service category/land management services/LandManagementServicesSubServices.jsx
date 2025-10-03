@@ -288,8 +288,7 @@ function LandManagementServicesSubServices() {
               </div>
             </div>
             <div className="available-service-btn">
-              {/* <Link to="available-services">See Available Service</Link> */}
-              <button onClick={handleSubmit} disabled={disable}>
+              <button type="submit" onClick={handleSubmit} disabled={disable}>
                 See Available Service
               </button>
             </div>
