@@ -1,21 +1,50 @@
-import profile from "../../../assets/images/profile.png";
 import forceTractor from "../../../assets/images/force-tractor.png";
 import shareIcon from "../../../assets/images/share-icon.svg";
 import customerReviewLocalHops from "../../../assets/images/customer-review-local-hops.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { getProductById } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 function LocalProductDetails() {
+  const dispatch = useDispatch();
   const { id } = useParams();
+  const location = useLocation();
+  const backPath = location.state?.from || "/dashboard";
+
+  const [loading, setLoading] = useState(false);
+  const [productDetails, setProductDetails] = useState({});
+
+  const loadProductDetails = async () => {
+    setLoading(true);
+    try {
+      const res = await dispatch(getProductById({ productId: id }));
+      const { status, data } = res?.payload || {};
+      if (status === 200) {
+        setProductDetails(data?.data || {});
+      } else {
+        toast(data?.message || "Failed to load product details");
+      }
+    } catch (error) {
+      toast("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadProductDetails();
+  }, []);
 
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Plow Force Assist"
-          navigate="/dashboard/local-shops"
-          profile={profile}
+          title={productDetails?.productName || ""}
+          navigate={backPath}
         />
         <div className="dashboard local-product-details">
           <figure className="status-image-tag">
@@ -29,18 +58,13 @@ function LocalProductDetails() {
             <div className="mb-3">
               <h4 className="mb-0 me-2 main-heading">FieldTrac Services</h4>
               <div>
-                <span className="rating-badge">4.2</span>
+                <span className="rating-badge">{productDetails.rating}</span>
                 <span className="text-warning">★★★★★</span>
               </div>
             </div>
-            {/* Description */}
             <div className="mb-4">
               <h6 className="normal-heading">Product Description</h6>
-              <p className="grey-para">
-                FieldTrac Services offers reliable, on-demand tractor solutions designed to simplify
-                land preparation, plowing, leveling, and harvesting for Indian farmers. We bring the
-                power of technology to your fields—efficiently, affordably, and locally.
-              </p>
+              <p className="grey-para">{productDetails.productDescription}</p>
             </div>
             {/* Specifications */}
             <div className="mb-4">
@@ -77,11 +101,8 @@ function LocalProductDetails() {
               </table>
             </div>
             <h5 className="normal-heading">Reviews</h5>
-            {/* Review Summary */}
             <div className="row rating-summary mb-4">
-              {/* Left Section: Ratings Distribution */}
               <div className="col-md-10">
-                {/* Row for each rating */}
                 <div className="d-flex align-items-center mb-2">
                   <div className="rating-label">
                     5 <span className="star">★</span>
@@ -125,7 +146,7 @@ function LocalProductDetails() {
               </div>
               {/* Right Section: Average Rating */}
               <div className="col-md-2 text-center d-flex flex-column justify-content-center align-items-center">
-                <h2 className="fw-bold mb-0">4.2</h2>
+                <h2 className="fw-bold mb-0">{productDetails.rating}</h2>
                 <div>
                   <span className="star">★</span>
                   <span className="star">★</span>

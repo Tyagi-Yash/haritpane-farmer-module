@@ -15,10 +15,6 @@ import ChatEnquirySection from "./chats/ChatEnquirySection";
 import ChatsReviewSection from "./chats/ChatsReviewSection";
 import LocalProductsListingModule from "./dashboard/classified section/LocalProductsListingModule";
 import LocalProductDetails from "./dashboard/classified section/LocalProductDetails";
-import LocalManufacturerModule from "./dashboard/classified section/local manufacturer/LocalManufacturerModule";
-import LocalManufacturerProductDetails from "./dashboard/classified section/local manufacturer/LocalManufacturerProductDetails";
-import LocalShopsModule from "./dashboard/classified section/local shops/LocalShopsModule";
-import LocalShopsProductDetails from "./dashboard/classified section/local shops/LocalShopsProductDetails";
 import Dashboard from "./dashboard/Dashboard";
 import ServiceTracking from "./progress/ServiceTracking";
 import ServiceTrackingVendorDetails from "./progress/ServiceTrackingVendorDetails";
@@ -92,10 +88,6 @@ export {
   ChatsReviewSection,
   LocalProductsListingModule,
   LocalProductDetails,
-  LocalManufacturerModule,
-  LocalManufacturerProductDetails,
-  LocalShopsModule,
-  LocalShopsProductDetails,
   Dashboard,
   ServiceTracking,
   ServiceTrackingVendorDetails,

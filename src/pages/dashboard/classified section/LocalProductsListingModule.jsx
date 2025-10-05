@@ -1,26 +1,26 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import locationBlack from "../../../assets/images/location-black.svg";
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import productImage from "../../../assets/images/product-image.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllProductsForFarmer } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
+import ClassifiedSectionSkeleton from "../../../components/skeletons/ClassifiedSectionSkeleton";
 
 function LocalProductsListingModule() {
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const [products, setProducts] = useState([]);
-  console.log(products);
   const loadProducts = async () => {
     setLoading(true);
-
     const paramData = {
       createdBy: pathname === "/dashboard/local-shops" ? "india_mart" : "just_dial",
     };
@@ -31,7 +31,7 @@ function LocalProductsListingModule() {
       if (status === 200) {
         setProducts(data?.data?.[0]?.data || []);
       } else {
-        toast(data?.message || "Failed to load Services");
+        toast(data?.message || "Failed to load Products");
       }
     } catch (error) {
       toast("Something went wrong");
@@ -45,7 +45,9 @@ function LocalProductsListingModule() {
   }, [pathname]);
 
   const handleEnquiryClick = (id) => {
-    navigate(`/product-details/:${id}`);
+    navigate(`product-details/${id}`, {
+      state: { from: pathname },
+    });
   };
 
   return (
@@ -87,7 +89,7 @@ function LocalProductsListingModule() {
           </div>
           <div className="row">
             {loading ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>Loading services...</p>
+              <ClassifiedSectionSkeleton />
             ) : products.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>No product found.</p>
             ) : (

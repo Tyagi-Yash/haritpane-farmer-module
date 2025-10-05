@@ -2765,6 +2765,7 @@ input[type="date" i] {
   width: 180px;
   height: 24px;
   border-radius: 4px;
+  margin-top: 10px;
 }
 
 .skeleton-subheading {
@@ -2788,6 +2789,12 @@ input[type="date" i] {
 .skeleton-btn {
   width: 100px;
   height: 36px;
+  border-radius: 6px;
+}
+
+.skeleton-image-part {
+  width: 100%;
+  height: 200px;
   border-radius: 6px;
 }
 
