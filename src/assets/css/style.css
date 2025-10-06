@@ -1674,6 +1674,7 @@ ol {
   font-size: 13px;
   color: #7b7b7b;
   margin-bottom: 5px !important;
+  padding-left: 15px;
 }
 
 .from-select {
@@ -2769,7 +2770,7 @@ input[type="date" i] {
 }
 
 .skeleton-subheading {
-  width: 140px;
+  width: 190px;
   height: 18px;
   border-radius: 4px;
 }
@@ -2796,6 +2797,51 @@ input[type="date" i] {
   width: 100%;
   height: 200px;
   border-radius: 6px;
+}
+.skeleton-ads-height {
+  width: 100%;
+  height: 280px;
+  border-radius: 30px;
+}
+
+.skeleton-option-wrapper {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 40px;
+  border: none;
+}
+
+.skeleton-vendor-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.skeleton-service-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  margin-right: 15px;
+}
+
+.skeleton-rating {
+  width: 40px;
+  height: 14px;
+}
+
+.skeleton-price {
+  width: 90px;
+  height: 18px;
+}
+
+.skeleton-small-text {
+  width: 170px;
+  height: 14px;
 }
 
 .spinner {
@@ -2829,4 +2875,9 @@ input[type="date" i] {
   color: red !important;
   font-size: 14px !important;
   margin-top: 4px !important;
+  padding-left: 15px !important;
+}
+
+.ads-height {
+  height: 280px;
 }

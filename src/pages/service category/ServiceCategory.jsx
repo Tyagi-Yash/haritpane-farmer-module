@@ -153,12 +153,12 @@ function ServiceCategory() {
                       </a>
                     </div>
                     <div className="service-card">
-                      <a href="auger-book-your-service.html">
+                      <Link to="/auger-service">
                         <div className="card-image-part">
                           <img src={augerServices} alt="Auger Services" />
                         </div>
                         <div className="label">Auger Services</div>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

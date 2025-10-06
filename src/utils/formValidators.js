@@ -49,6 +49,31 @@ export const validateFromTime = (fromDate, fromTime, toTime) => {
   return "";
 };
 
+export const validateSelectTime = (fromDate, fromTime) => {
+  if (!fromTime) return "*Start time is required";
+
+  if (fromDate) {
+    const selectedDate = new Date(fromDate);
+    const now = new Date();
+    if (selectedDate.toDateString() === now.toDateString()) {
+      const [h, m] = fromTime.split(":");
+      const selectedTime = new Date();
+      selectedTime.setHours(h, m, 0, 0);
+      if (selectedTime <= now) return "*Time must be in the future";
+    }
+  }
+  return "";
+};
+
+export const validateFromDate = (fromDate) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (!fromDate) return "*From date is required";
+  if (new Date(fromDate) < today) return "*From date cannot be in the past";
+  return "";
+};
+
 export const validateDuration = (duration) => {
   if (!duration.trim()) return "*Duration is required";
   if (isNaN(duration) || duration <= 0) return "*Duration must be a positive number";

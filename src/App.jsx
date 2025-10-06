@@ -140,6 +140,11 @@ function App() {
             <Route path="available-services" element={<BorwellChangeAvailablity />} />
           </Route>
 
+          <Route path="auger-service">
+            <Route index element={<AugerBookYourService />} />
+            <Route path="available-services" element={<AugerChangeAvailablity />} />
+          </Route>
+
           <Route path="chats">
             <Route index element={<ChatChatSection />} />
             <Route path="message-chat" element={<ChatChatSection />} />

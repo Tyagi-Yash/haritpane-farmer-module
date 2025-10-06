@@ -29,9 +29,9 @@ export const editFarmerProfile = createAsyncThunk(
 
 export const getFarmerProfile = createAsyncThunk(
   "profile/getFarmerProfile",
-  async (payload, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/getFarmerProfile", payload);
+      const response = await axios.get("/getFarmerProfile");
 
       if (response.status === 200) {
         return {
