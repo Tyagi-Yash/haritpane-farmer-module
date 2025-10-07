@@ -151,7 +151,7 @@ ol {
   position: relative;
   padding-left: 33px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
   user-select: none;
   font-weight: 400;
   color: #4a4d54;
@@ -164,9 +164,12 @@ ol {
   height: 0;
   width: 0;
 }
-.CheckBox .checkmark {
+.CheckBox a {
+  text-decoration: none;
+}
+.CheckBox .authCheckmark {
   position: absolute;
-  top: 10px;
+  /* top: 10px; */
   left: 0;
   height: 20px;
   width: 20px;
@@ -174,14 +177,14 @@ ol {
   border: 1.5px solid #16a34a;
   border-radius: 5px;
 }
-.CheckBox:hover input ~ .checkmark {
+.CheckBox:hover input ~ .authCheckmark {
   background-color: transparent;
   border-color: #16a34a;
 }
-.CheckBox input:checked ~ .checkmark {
+.CheckBox input:checked ~ .authCheckmark {
   background-color: transparent;
 }
-.CheckBox .checkmark:after {
+.CheckBox .authCheckmark:after {
   content: "";
   position: absolute;
   display: none;
@@ -193,7 +196,7 @@ ol {
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
-.CheckBox input:checked ~ .checkmark:after {
+.CheckBox input:checked ~ .authCheckmark:after {
   display: block;
 }
 

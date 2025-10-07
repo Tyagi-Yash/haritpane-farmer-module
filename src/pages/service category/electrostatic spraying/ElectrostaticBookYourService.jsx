@@ -156,10 +156,10 @@ function ElectrostaticBookYourService() {
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
+                    <label className="form-label">From date*</label>
                     <input
                       type="date"
                       className="form-control"
-                      placeholder="From date*"
                       name="fromDate"
                       value={fromDate}
                       onChange={handleInputChange}
@@ -167,10 +167,10 @@ function ElectrostaticBookYourService() {
                     {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
                   <div className="col-md-6">
+                    <label className="form-label">Start time*</label>
                     <input
                       type="time"
                       className="form-control"
-                      placeholder="From time*"
                       name="fromTime"
                       value={fromTime}
                       onChange={handleInputChange}

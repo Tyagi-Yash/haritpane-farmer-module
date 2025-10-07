@@ -252,10 +252,10 @@ function LandManagementServicesSubServices() {
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
+                    <label className="form-label">From date*</label>
                     <input
                       type="date"
                       className="form-control"
-                      placeholder="From date*"
                       name="fromDate"
                       value={fromDate}
                       onChange={handleInputChange}
@@ -263,10 +263,10 @@ function LandManagementServicesSubServices() {
                     {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
                   <div className="col-md-4">
+                    <label className="form-label">Till date*</label>
                     <input
                       type="date"
                       className="form-control"
-                      placeholder="Till date*"
                       name="toDate"
                       value={toDate}
                       onChange={handleInputChange}
@@ -274,10 +274,10 @@ function LandManagementServicesSubServices() {
                     {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   </div>
                   <div className="col-md-4">
+                    <label className="form-label">Start time*</label>
                     <input
                       type="time"
                       className="form-control"
-                      placeholder="From time*"
                       name="fromTime"
                       value={fromTime}
                       onChange={handleInputChange}

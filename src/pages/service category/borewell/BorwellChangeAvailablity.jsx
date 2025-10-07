@@ -150,7 +150,7 @@ function BorwellChangeAvailablity() {
           </div>
           <div className="option-wrapper">
             {loading ? (
-              <VendorCardSkeleton count={2} />
+              <VendorCardSkeleton count={5} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
                 No services found for the selected filters.

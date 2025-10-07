@@ -1,5 +1,7 @@
 import OtpVerify from "./auth/OtpVerify";
 import Signup from "./auth/Signup";
+import PrivacyPolicy from "./static content/PrivacyPolicy";
+import TermsOfService from "./static content/TermsOfService";
 import LanguagePage from "./account settings/language/LanguagePage";
 import MyFarmAddLocation from "./account settings/my farm/MyFarmAddLocation";
 import MyFarmDetails from "./account settings/my farm/MyFarmDetails";
@@ -73,6 +75,8 @@ import ServiceCategory from "./service category/ServiceCategory";
 export {
   OtpVerify,
   Signup,
+  PrivacyPolicy,
+  TermsOfService,
   LanguagePage,
   MyFarmAddLocation,
   MyFarmDetails,

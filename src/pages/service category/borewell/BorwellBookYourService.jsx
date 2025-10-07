@@ -5,6 +5,12 @@ import { useNavigate } from "react-router-dom";
 import locationBlack from "../../../assets/images/location-black.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import BorewellIcon from "../../../assets/images/Borewell-icon.png";
+import {
+  validateDates,
+  validateLat,
+  validateLng,
+  validateTime,
+} from "../../../utils/formValidators";
 
 function BorwellBookYourService() {
   const [formState, setFormState] = useState({
@@ -33,34 +39,28 @@ function BorwellBookYourService() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // const validateForm = () => {
-  //   let newErrors = {};
+  const validateForm = () => {
+    let newErrors = {};
 
-  //   const latError = validateLat(lat);
-  //   if (latError) newErrors.lat = latError;
+    const latError = validateLat(lat);
+    if (latError) newErrors.lat = latError;
 
-  //   const lngError = validateLng(lng);
-  //   if (lngError) newErrors.lng = lngError;
+    const lngError = validateLng(lng);
+    if (lngError) newErrors.lng = lngError;
 
-  //   const equipmentError = validateEquipmentTypes(equipmentTypes);
-  //   if (equipmentError) newErrors.equipmentTypes = equipmentError;
+    const dateErrors = validateDates(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
 
-  //   const dateErrors = validateDates(fromDate, toDate);
-  //   newErrors = { ...newErrors, ...dateErrors };
+    const timeError = validateTime(fromDate, toDate, fromTime, toTime);
+    if (timeError) newErrors[timeError] = timeError;
 
-  //   const timeError = validateFromTime(fromDate, fromTime);
-  //   if (timeError) newErrors.fromTime = timeError;
-
-  //   const durationErrors = validateDurationFields(hours, minutes);
-  //   newErrors = { ...newErrors, ...durationErrors };
-
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!validasteForm()) return;
+    if (!validateForm()) return;
     setDisable(true);
     const formdata = {
       lat: lat.trim(),
@@ -108,7 +108,7 @@ function BorwellBookYourService() {
                         value={lat}
                         onChange={handleInputChange}
                       />
-                      {/* {errors.lat && <p className="error-text">{errors.lat}</p>} */}
+                      {errors.lat && <p className="error-text">{errors.lat}</p>}
                     </div>
                     <div className="location-wrapper">
                       <input
@@ -119,7 +119,7 @@ function BorwellBookYourService() {
                         value={lng}
                         onChange={handleInputChange}
                       />
-                      {/* {errors.lng && <p className="error-text">{errors.lng}</p>} */}
+                      {errors.lng && <p className="error-text">{errors.lng}</p>}
                     </div>
                     {/* <div className="location-wrapper">
                       <input type="text" className="form-control" placeholder="Farm location*" />
@@ -130,7 +130,7 @@ function BorwellBookYourService() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Approximate depth of borewell(in feet)"
+                      placeholder="Approximate depth of borewell(in feet)*"
                       name="depthOfBorewell"
                       value={depthOfBorewell}
                       onChange={handleInputChange}
@@ -144,7 +144,7 @@ function BorwellBookYourService() {
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
-                        Casing Pipe
+                        Casing Pipe*
                       </option>
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
@@ -158,7 +158,7 @@ function BorwellBookYourService() {
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
-                        Submersible water motor
+                        Submersible water motor*
                       </option>
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
@@ -168,52 +168,52 @@ function BorwellBookYourService() {
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">From date</label>
+                    <label className="form-label">From date*</label>
                     <input
                       type="date"
                       className="form-control"
-                      placeholder="From date*"
                       name="fromDate"
                       value={fromDate}
                       onChange={handleInputChange}
                     />
-                    {/* {errors.fromDate && <p className="error-text">{errors.fromDate}</p>} */}
+                    {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Till date</label>
+                    <label className="form-label">Till date*</label>
                     <input
                       type="date"
                       className="form-control"
-                      placeholder="Till date*"
                       name="toDate"
                       value={toDate}
                       onChange={handleInputChange}
                     />
-                    {/* {errors.toDate && <p className="error-text">{errors.toDate}</p>} */}
+                    {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Start time</label>
+                    <label className="form-label">Start time*</label>
                     <input
                       type="time"
                       className="form-control"
-                      placeholder="Start time*"
                       name="fromTime"
                       value={fromTime}
                       onChange={handleInputChange}
                     />
-                    {/* {errors.fromTime && <p className="error-text">{errors.fromTime}</p>} */}
+                    {errors.fromTime && (
+                      <p className="error-text">{errors.fromTime}</p>
+                    )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">End time</label>
+                    <label className="form-label">End time*</label>
                     <input
                       type="time"
                       className="form-control"
-                      placeholder="End time*"
                       name="toTime"
                       value={toTime}
                       onChange={handleInputChange}
                     />
-                    {/* {errors.toTime && <p className="error-text">{errors.toTime}</p>} */}
+                    {errors.toTime && (
+                      <p className="error-text">{errors.toTime}</p>
+                    )}
                   </div>
                 </div>
               </div>

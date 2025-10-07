@@ -7,6 +7,7 @@ import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import ElectrostaticSprayingIcon from "../../../assets/images/Electrostatic-Spraying-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfElectrostatic } from "../../../reduxtoolkit/slices/service category/electrostaticSprayingServices";
+import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 
 function ElectrostaticChangeAvailablity() {
   const location = useLocation();
@@ -146,7 +147,7 @@ function ElectrostaticChangeAvailablity() {
           </div>
           <div className="option-wrapper">
             {loading ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>Loading services...</p>
+              <VendorCardSkeleton count={5} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
                 No services found for the selected filters.

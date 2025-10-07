@@ -32,21 +32,39 @@ export const validateDates = (fromDate, toDate) => {
   return {};
 };
 
-export const validateFromTime = (fromDate, fromTime, toTime) => {
-  if (!fromTime) return "*Start time is required";
-  if (!toTime) return "*End time is required";
+// export const validateFromTime = (fromDate, fromTime, toTime) => {
+//   if (!fromTime) return { fromTime: "*Start time is required" };
+//   if (!toTime) return { toTime: "*End time is required" };
 
-  if (fromDate) {
-    const selectedDate = new Date(fromDate);
-    const now = new Date();
-    if (selectedDate.toDateString() === now.toDateString()) {
-      const [h, m] = fromTime.split(":");
-      const selectedTime = new Date();
-      selectedTime.setHours(h, m, 0, 0);
-      if (selectedTime <= now) return "*Time must be in the future";
-    }
+//   if (fromDate) {
+//     const selectedDate = new Date(fromDate);
+//     const now = new Date();
+//     if (selectedDate.toDateString() === now.toDateString()) {
+//       const [h, m] = fromTime.split(":");
+//       const selectedTime = new Date();
+//       selectedTime.setHours(h, m, 0, 0);
+//       if (selectedTime <= now) return "*Time must be in the future";
+//     }
+//   }
+//   return {};
+// };
+export const validateTime = (fromDate, toDate, fromTime, toTime) => {
+  if (!fromTime) return { fromTime: "*Start time is required" };
+  if (!toTime) return { toTime: "*End time is required" };
+
+  const fromDateTime = new Date(`${fromDate}T${fromTime}`);
+  const toDateTime = new Date(`${toDate}T${toTime}`);
+  const now = new Date();
+
+  if (fromDateTime.toDateString() === now.toDateString() && fromDateTime <= now) {
+    return { fromTime: "*Start time must be in the future" };
   }
-  return "";
+
+  if (toDateTime <= fromDateTime) {
+    return { toTime: "*End time must be after start time" };
+  }
+
+  return {};
 };
 
 export const validateSelectTime = (fromDate, fromTime) => {

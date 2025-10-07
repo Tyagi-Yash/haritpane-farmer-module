@@ -129,8 +129,6 @@ function AugerBookYourService() {
                 <h5 className="book-heading">Estimate Job Duration</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">Hours*</label>
-
                     <input
                       type="number"
                       className="form-control"
@@ -143,7 +141,6 @@ function AugerBookYourService() {
                     {errors.hours && <p className="error-text">{errors.hours}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Minutes*</label>
                     <input
                       type="number"
                       className="form-control"

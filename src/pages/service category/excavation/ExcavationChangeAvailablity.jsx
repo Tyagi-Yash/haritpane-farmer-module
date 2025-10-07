@@ -7,6 +7,7 @@ import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import ExcavationIcon from "../../../assets/images/Excavation-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfExcavation } from "../../../reduxtoolkit/slices/service category/excavationServices";
+import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 
 function ExcavationChangeAvailablity() {
   const location = useLocation();
@@ -147,7 +148,7 @@ function ExcavationChangeAvailablity() {
           </div>
           <div className="option-wrapper">
             {loading ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>Loading services...</p>
+              <VendorCardSkeleton count={5} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
                 No services found for the selected filters.

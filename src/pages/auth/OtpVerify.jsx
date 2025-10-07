@@ -102,65 +102,79 @@ function OtpVerify() {
   };
 
   return (
-    <>
-      <div className="signup">
-        <div className="signup-container row m-0">
-          <section className="signup-left col-7 my-0">
-            <img src={signupLeft} alt="" />
-          </section>
-          <section className="signup-right col-5">
-            <div className="brand-logo">
-              <figure>
-                <img src={brandLogo} alt="" />
-              </figure>
+    <div className="signup">
+      <div className="signup-container row m-0">
+        <section className="signup-left col-7 my-0">
+          <img src={signupLeft} alt="" />
+        </section>
+        <section className="signup-right col-5">
+          <div className="brand-logo">
+            <figure>
+              <img src={brandLogo} alt="" />
+            </figure>
+          </div>
+          <h3>Phone number verification</h3>
+          <h4 className="sub-heading">
+            Enter the verification code {phoneNumber ? `we send you on: ${phoneNumber}` : ""}
+          </h4>
+          {errors.phoneError && (
+            <div>
+              <p className="error-text">{errors.phoneError}</p>
+              <Link to="/signup" className="Button">
+                → SignUp Page
+              </Link>
             </div>
-            <h3>Phone number verification</h3>
-            <h4 className="sub-heading">
-              Enter the verification code {phoneNumber ? `we send you on: ${phoneNumber}` : ""}
-            </h4>
-            {errors.phoneError && (
-              <div>
-                <p className="error-text">{errors.phoneError}</p>
-                <Link to="/signup" className="Button">
-                  → SignUp Page
+          )}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <OtpInput length={4} onChange={handleOtpChange} />
+              {errors.otpError && <p className="error-text">{errors.otpError}</p>}
+
+              <OtpResend cooldown={30} phoneNumber={phoneNumber} setErrors={setErrors} />
+
+              <button className="Button" disabled={disable}>
+                {loginloader ? "Verifying..." : "Verify & Continue"}
+              </button>
+            </div>
+
+            <div className="Checkboxs">
+              <label className="CheckBox" htmlFor="check">
+                <input
+                  type="checkbox"
+                  id="check"
+                  checked={check}
+                  onChange={(e) => {
+                    setCheck(e.target.checked);
+                    setErrors((prev) => ({ ...prev, checkError: "" }));
+                  }}
+                />
+                <span className="authCheckmark" />
+                By signing up, you agree to the{" "}
+                <Link
+                  to="/terms-of-service"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="Green"
+                >
+                  terms of service{" "}
                 </Link>
-              </div>
-            )}
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <OtpInput length={4} onChange={handleOtpChange} />
-                {errors.otpError && <p className="error-text">{errors.otpError}</p>}
-
-                <OtpResend cooldown={30} phoneNumber={phoneNumber} setErrors={setErrors} />
-
-                <button className="Button" disabled={disable}>
-                  {loginloader ? "Verifying..." : "Verify & Continue"}
-                </button>
-                <div className="Checkboxs">
-                  <label className="CheckBox" htmlFor="check">
-                    <input
-                      type="checkbox"
-                      id="check"
-                      checked={check}
-                      onChange={(e) => {
-                        setCheck(e.target.checked);
-                        setErrors((prev) => ({ ...prev, checkError: "" }));
-                      }}
-                    />
-                    By signing up, you agree to the
-                    <span className="Green"> terms of service</span> and
-                    <br />
-                    <span className="Green"> privacy policy</span>.
-                    <span className="checkmark" />
-                  </label>
-                  {errors.checkError && <p className="error-text">{errors.checkError}</p>}
-                </div>
-              </div>
-            </form>
-          </section>
-        </div>
+                and{" "}
+                <Link
+                  to="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="Green"
+                >
+                  privacy policy
+                </Link>
+                .
+              </label>
+              {errors.checkError && <p className="error-text">{errors.checkError}</p>}
+            </div>
+          </form>
+        </section>
       </div>
-    </>
+    </div>
   );
 }
 

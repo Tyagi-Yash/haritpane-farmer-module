@@ -73,6 +73,8 @@ import {
   ServiceCategory,
   LocalProductsListingModule,
   LocalProductDetails,
+  PrivacyPolicy,
+  TermsOfService,
 } from "./pages";
 
 import { ToastContainer } from "react-toastify";
@@ -84,6 +86,9 @@ function App() {
         <Route path="/" element={<Signup />} />
         <Route path="signup" element={<Signup />} />
         <Route path="otp-verify" element={<OtpVerify />} />
+
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="terms-of-service" element={<TermsOfService />} />
 
         <Route element={<RootLayout />}>
           <Route path="dashboard">

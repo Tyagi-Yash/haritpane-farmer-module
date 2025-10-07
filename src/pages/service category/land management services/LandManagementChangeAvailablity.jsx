@@ -7,6 +7,7 @@ import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllLandManagementServices } from "../../../reduxtoolkit/slices/service category/landManagementServices";
+import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 
 function LandManagementChangeAvailablity() {
   const location = useLocation();
@@ -148,7 +149,7 @@ function LandManagementChangeAvailablity() {
           </div>
           <div className="option-wrapper">
             {loading ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>Loading services...</p>
+              <VendorCardSkeleton count={5} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
                 No services found for the selected filters.

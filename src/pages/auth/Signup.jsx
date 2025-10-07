@@ -1,7 +1,7 @@
 import signupLeft from "../../assets/images/signip-left.png";
 import brandLogo from "../../assets/images/brand-logo.png";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -115,11 +115,26 @@ function Signup() {
                     setErrors((prev) => ({ ...prev, checkError: "" }));
                   }}
                 />
-                By signing up, you agree to the
-                <span className="Green"> terms of service</span> and
-                <br />
-                <span className="Green"> privacy policy</span>.
-                <span className="checkmark" />
+                <span className="authCheckmark" />
+                By signing up, you agree to the{" "}
+                <Link
+                  to="/terms-of-service"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="Green"
+                >
+                  terms of service{" "}
+                </Link>
+                and{" "}
+                <Link
+                  to="/privacy-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="Green"
+                >
+                  privacy policy
+                </Link>
+                .
               </label>
               {errors.checkError && <p className="error-text">{errors.checkError}</p>}
             </div>
