@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import cattleIcon from "../../../assets/images/cattle-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfCattle } from "../../../reduxtoolkit/slices/service category/cattlePurchaseServices";
+import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 
 function CattleChangeAvailablity() {
   const location = useLocation();
@@ -52,11 +53,10 @@ function CattleChangeAvailablity() {
           secImage={cattleIcon}
           navigate="/cattle-purchase-sale"
         />
-
         <div className="dashboard">
           <div className="option-wrapper">
             {loading ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>Loading services...</p>
+              <VendorCardSkeleton count={2} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
                 No services found for the selected filters.

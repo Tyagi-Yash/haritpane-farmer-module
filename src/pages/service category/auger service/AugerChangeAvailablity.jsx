@@ -123,7 +123,7 @@ function AugerChangeAvailablity() {
           </div>
           <div className="option-wrapper">
             {loading ? (
-              <VendorCardSkeleton count={1} />
+              <VendorCardSkeleton count={2} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
                 No services found for the selected filters.
