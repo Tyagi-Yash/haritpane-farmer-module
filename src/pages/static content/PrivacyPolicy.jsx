@@ -14,9 +14,7 @@ function PrivacyPolicy() {
     const loadContent = async () => {
       setLoading(true);
       try {
-        const res = await dispatch(
-          getStaticFarmerContent({ appType: "Farmer", title: "Privacy Policy" })
-        );
+        const res = await dispatch(getStaticFarmerContent({ title: "Privacy Policy" }));
         const { status, data } = res?.payload || {};
         if (status === 200) {
           setContent(data?.data[0] || {});
@@ -33,7 +31,7 @@ function PrivacyPolicy() {
   }, []);
 
   return (
-    <main className="container">
+    <main className="PrivacyPolicy  container">
       <article className="card" aria-labelledby="policy-title">
         <header>
           <h1 id="policy-title">Privacy Policy</h1>

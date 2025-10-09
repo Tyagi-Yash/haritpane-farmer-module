@@ -1,4 +1,3 @@
-import profile from "../../assets/images/profile.png";
 import landManagementTractorServices from "../../assets/images/land-management-tractor-services.png";
 import harvester from "../../assets/images/harvester.png";
 import cattlePurchageSale from "../../assets/images/cattle-purchage-sale.png";
@@ -19,7 +18,7 @@ function ServiceCategory() {
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal profile={profile} />
+        <TopbarModal />
         <div className="dashboard service-category">
           <section>
             <div className="headline-sort">
@@ -145,12 +144,12 @@ function ServiceCategory() {
                       </a>
                     </div>
                     <div className="service-card">
-                      <a href="drone-book-your-service.html">
+                      <Link to="/drone-service">
                         <div className="card-image-part">
                           <img src={DroneServices} alt="Drone Services" />
                         </div>
                         <div className="label">Drone Services</div>
-                      </a>
+                      </Link>
                     </div>
                     <div className="service-card">
                       <Link to="/auger-service">

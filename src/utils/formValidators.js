@@ -11,11 +11,6 @@ export const validateLng = (lng) => {
   return "";
 };
 
-export const validateEquipmentTypes = (equipmentTypes) => {
-  if (!equipmentTypes) return "*Specific Service is required";
-  return "";
-};
-
 export const validateDates = (fromDate, toDate) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -32,22 +27,6 @@ export const validateDates = (fromDate, toDate) => {
   return {};
 };
 
-// export const validateFromTime = (fromDate, fromTime, toTime) => {
-//   if (!fromTime) return { fromTime: "*Start time is required" };
-//   if (!toTime) return { toTime: "*End time is required" };
-
-//   if (fromDate) {
-//     const selectedDate = new Date(fromDate);
-//     const now = new Date();
-//     if (selectedDate.toDateString() === now.toDateString()) {
-//       const [h, m] = fromTime.split(":");
-//       const selectedTime = new Date();
-//       selectedTime.setHours(h, m, 0, 0);
-//       if (selectedTime <= now) return "*Time must be in the future";
-//     }
-//   }
-//   return {};
-// };
 export const validateTime = (fromDate, toDate, fromTime, toTime) => {
   if (!fromTime) return { fromTime: "*Start time is required" };
   if (!toTime) return { toTime: "*End time is required" };
@@ -92,9 +71,8 @@ export const validateFromDate = (fromDate) => {
   return "";
 };
 
-export const validateDuration = (duration) => {
-  if (!duration.trim()) return "*Duration is required";
-  if (isNaN(duration) || duration <= 0) return "*Duration must be a positive number";
+export const validateEquipmentTypes = (equipmentTypes) => {
+  if (!equipmentTypes) return "*Specific Service is required";
   return "";
 };
 
@@ -114,4 +92,29 @@ export const validateDurationFields = (hours, minutes) => {
   }
 
   return errors;
+};
+
+export const validateDepthOfBorewell = (depthOfBorewell) => {
+  if (depthOfBorewell === "") return "Depth of Borewell is required";
+
+  const num = Number(depthOfBorewell);
+  if (isNaN(num) || num < 0) return "Please enter a valid positive number";
+
+  if (num === 0) return "Depth cannot be 0";
+
+  return "";
+};
+
+export const validateCasingPipe = (casingPipe) => {
+  if (!casingPipe || casingPipe === "") {
+    return "*Casing Pipe is required";
+  }
+  return "";
+};
+
+export const validateWaterMotor = (waterMotor) => {
+  if (!waterMotor || waterMotor === "") {
+    return "*Water Motor is required";
+  }
+  return "";
 };

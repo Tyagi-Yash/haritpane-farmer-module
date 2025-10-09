@@ -145,6 +145,11 @@ function App() {
             <Route path="available-services" element={<BorwellChangeAvailablity />} />
           </Route>
 
+          <Route path="drone-service">
+            <Route index element={<DroneBookYourService />} />
+            <Route path="available-services" element={<DroneChangeAvailablity />} />
+          </Route>
+
           <Route path="auger-service">
             <Route index element={<AugerBookYourService />} />
             <Route path="available-services" element={<AugerChangeAvailablity />} />

@@ -30,7 +30,9 @@ function TopbarModal({ titleBox, navigate, secImage, title }) {
           <input type="text" placeholder="Search Services..." />
           <i className="fas fa-search search-icon" />
         </div>
-        <i className="far fa-bell bell-icon" />
+        <Link to="/notification" style={{ textDecoration: "none" }}>
+          <i className="far fa-bell bell-icon" />
+        </Link>
         <Link to="/profile" style={{ textDecoration: "none" }}>
           <div className="profile">
             <img src={profileImage ? profileImage : profile} alt="profile" />

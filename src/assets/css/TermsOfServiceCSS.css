@@ -1,4 +1,4 @@
-/* body {
+.TermsOfServicePage {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
   margin: 0;
@@ -7,19 +7,19 @@
   color: #333;
 }
 
-header {
-  background: #f0fdf4; 
+.TermsOfServicePage header {
+  background: #f0fdf4;
   color: #06030e;
   text-align: center;
   padding: 40px 20px;
 }
 
-header h1 {
+.TermsOfServicePage header h1 {
   margin: 0;
   font-size: 2.2rem;
 }
 
-main {
+.TermsOfServicePage main {
   max-width: 900px;
   margin: 30px auto;
   padding: 20px;
@@ -28,23 +28,23 @@ main {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
+.TermsOfServicePage h2 {
   color: #06030e;
   margin-top: 30px;
 }
 
-p,
-li {
+.TermsOfServicePage p,
+.TermsOfServicePage li {
   font-size: 1rem;
   margin: 10px 0;
   list-style: disc;
 }
 
-ul {
+.TermsOfServicePage ul {
   margin: 10px 0 20px 0px;
 }
 
-footer {
+.TermsOfServicePage footer {
   text-align: center;
   padding: 20px;
   margin-top: 40px;
@@ -53,25 +53,25 @@ footer {
   color: #555;
 }
 
-a {
+.TermsOfServicePage a {
   color: #512314;
   text-decoration: none;
 }
-a:hover {
+.TermsOfServicePage a:hover {
   text-decoration: underline;
 }
-ol li {
+.TermsOfServicePage ol li {
   list-style: lower-alpha;
 }
-.flexProperty {
+.TermsOfServicePage .flexProperty {
   display: flex;
   align-items: start;
   gap: 10px;
 }
-.flexProperty p {
+.TermsOfServicePage .flexProperty p {
   margin: 0px;
   padding: 0px;
 }
-.margin-minus {
+.TermsOfServicePage .margin-minus {
   margin-left: -40px !important;
-} */
+}

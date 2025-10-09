@@ -14,9 +14,7 @@ function TermsOfService() {
     const loadContent = async () => {
       setLoading(true);
       try {
-        const res = await dispatch(
-          getStaticFarmerContent({ appType: "Farmer", title: "Terms & Conditions" })
-        );
+        const res = await dispatch(getStaticFarmerContent({ title: "Terms & Conditions" }));
         const { status, data } = res?.payload || {};
         if (status === 200) {
           setContent(data?.data[0] || {});
@@ -33,7 +31,7 @@ function TermsOfService() {
   }, []);
 
   return (
-    <div>
+    <div className="TermsOfServicePage">
       <header>
         <h1>TERMS OF USE &amp; END USER LICENSE AGREEMENT</h1>
         <p>TERMS OF USE &amp; END USER LICENSE AGREEMENT (For the Haritpane Agro® India )</p>

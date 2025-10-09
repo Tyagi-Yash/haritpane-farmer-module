@@ -6,10 +6,13 @@ import locationBlack from "../../../assets/images/location-black.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import BorewellIcon from "../../../assets/images/Borewell-icon.png";
 import {
+  validateCasingPipe,
   validateDates,
+  validateDepthOfBorewell,
   validateLat,
   validateLng,
   validateTime,
+  validateWaterMotor,
 } from "../../../utils/formValidators";
 
 function BorwellBookYourService() {
@@ -48,11 +51,20 @@ function BorwellBookYourService() {
     const lngError = validateLng(lng);
     if (lngError) newErrors.lng = lngError;
 
+    const depthError = validateDepthOfBorewell(depthOfBorewell.trim());
+    if (depthError) newErrors.depthOfBorewell = depthError;
+
+    const waterMotorError = validateWaterMotor(waterMotor);
+    if (waterMotorError) newErrors.waterMotor = waterMotorError;
+
+    const casingPipeError = validateCasingPipe(casingPipe);
+    if (casingPipeError) newErrors.casingPipe = casingPipeError;
+
     const dateErrors = validateDates(fromDate, toDate);
     newErrors = { ...newErrors, ...dateErrors };
 
     const timeError = validateTime(fromDate, toDate, fromTime, toTime);
-    if (timeError) newErrors[timeError] = timeError;
+    newErrors = { ...newErrors, ...timeError };
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -135,6 +147,9 @@ function BorwellBookYourService() {
                       value={depthOfBorewell}
                       onChange={handleInputChange}
                     />
+                    {errors.depthOfBorewell && (
+                      <p className="error-text">{errors.depthOfBorewell}</p>
+                    )}
                   </div>
                   <div className="col-md-6">
                     <select
@@ -149,6 +164,7 @@ function BorwellBookYourService() {
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
                     </select>
+                    {errors.casingPipe && <p className="error-text">{errors.casingPipe}</p>}
                   </div>
                   <div className="col-md-6">
                     <select
@@ -163,6 +179,7 @@ function BorwellBookYourService() {
                       <option value="yes">Yes</option>
                       <option value="no">No</option>
                     </select>
+                    {errors.waterMotor && <p className="error-text">{errors.waterMotor}</p>}
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>
@@ -198,9 +215,7 @@ function BorwellBookYourService() {
                       value={fromTime}
                       onChange={handleInputChange}
                     />
-                    {errors.fromTime && (
-                      <p className="error-text">{errors.fromTime}</p>
-                    )}
+                    {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">End time*</label>
@@ -211,9 +226,7 @@ function BorwellBookYourService() {
                       value={toTime}
                       onChange={handleInputChange}
                     />
-                    {errors.toTime && (
-                      <p className="error-text">{errors.toTime}</p>
-                    )}
+                    {errors.toTime && <p className="error-text">{errors.toTime}</p>}
                   </div>
                 </div>
               </div>
