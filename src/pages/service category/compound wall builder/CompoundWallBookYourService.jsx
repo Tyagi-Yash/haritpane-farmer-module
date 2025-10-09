@@ -1,67 +1,190 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+
+import locationBlack from "../../../assets/images/location-black.svg";
+import CompoundWallBuilderIcon from "../../../assets/images/CompoundWallBuilder-icon.png";
+import TopbarModal from "../../../components/common components/TopbarModal";
+import {
+  validateFromDate,
+  validateLat,
+  validateLng,
+  validateSelectTime,
+  validateWallserviceType,
+} from "../../../utils/formValidators";
+import { getCompoundWallServiceTypes } from "../../../reduxtoolkit/slices/service category/compoundWallServices";
 
 function CompoundWallBookYourService() {
+  const [formState, setFormState] = useState({
+    lat: "",
+    lng: "",
+    serviceType: "",
+    date: "",
+    time: "",
+  });
+  const { lat, lng, serviceType, date, time } = formState;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [disable, setDisable] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [serviceTypesOption, setserviceTypesOption] = useState([]);
+
+  useEffect(() => {
+    const fetchServiceType = async () => {
+      try {
+        const res = await dispatch(getCompoundWallServiceTypes());
+        const { status, data } = res?.payload || {};
+        if (status === 200) {
+          setserviceTypesOption(data?.data);
+        } else {
+          toast(data?.message || "Failed to service type");
+        }
+      } catch (err) {
+        toast.error("Something went wrong");
+      }
+    };
+
+    fetchServiceType();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    const latError = validateLat(lat);
+    if (latError) newErrors.lat = latError;
+
+    const lngError = validateLng(lng);
+    if (lngError) newErrors.lng = lngError;
+
+    const serviceTypeErrors = validateWallserviceType(serviceType);
+    if (serviceTypeErrors) newErrors.serviceType = serviceTypeErrors;
+
+    const dateErrors = validateFromDate(date);
+    if (dateErrors) newErrors.date = dateErrors;
+
+    const timeError = validateSelectTime(date, time);
+    if (timeError) newErrors.time = timeError;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    setDisable(true);
+    const query = new URLSearchParams({
+      lat: lat.trim(),
+      lng: lng.trim(),
+      serviceType,
+      date,
+      time,
+    }).toString();
+
+    navigate(`available-services?${query}`);
+    setDisable(false);
+  };
+
   return (
-    <>
-      <div className="WrapperArea">
-        <div className="WrapperBox">
-          <div className="topbar">
-            <div className="TitleBox">
-              <div className="TitleBox-top-bar">
-                <span>
-                  <a className="back-circle-navbar" href="service-category.html">
-                    <i className="fa-solid fa-arrow-left" />
-                  </a>
-                </span>
-                <h4 className="book-heading d-flex align-items-center">
-                  <span className="top-icon-image">
-                    <img src="assets/images/CompoundWallBuilder-icon.png" alt />
-                  </span>
-                  Compound Wall Builder
-                </h4>
-              </div>
-            </div>
-            <div className="right-section">
-              <div className="search-box">
-                <input className="form-control" type="text" placeholder="Search Services..." />
-                <i className="fas fa-search search-icon" />
-              </div>
-              <i className="far fa-bell bell-icon" />
-              <div className="profile">
-                <img src="assets/images/profile.png" alt="Profile" />
-                <span className="username">Ramesh</span>
-              </div>
-            </div>
-          </div>
-          <div className="dashboard">
+    <div className="WrapperArea">
+      <div className="WrapperBox">
+        <TopbarModal
+          titleBox={true}
+          title="Compound Wall Builder"
+          secImage={CompoundWallBuilderIcon}
+          navigate="/service-category"
+        />
+        <div className="dashboard">
+          <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
-                  {/* Farm Location (Text) */}
                   <div className="col-md-6">
-                    <input type="text" className="form-control" placeholder="Farm location*" required />
+                    {/*need to remove this after geo api implemented */}
+                    <div className="location-wrapper">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Latitude*"
+                        name="lat"
+                        value={lat}
+                        onChange={handleInputChange}
+                      />
+                      {errors.lat && <p className="error-text">{errors.lat}</p>}
+                    </div>
+                    <div className="location-wrapper">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Longitude*"
+                        name="lng"
+                        value={lng}
+                        onChange={handleInputChange}
+                      />
+                      {errors.lng && <p className="error-text">{errors.lng}</p>}
+                    </div>
+                    {/* <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Farm location*"
+                      required
+                    /> */}
                   </div>
                   <div className="col-md-6">
-                    <select name id className="form-control">
-                      <option value selected disabled>
-                        Select Service*
+                    <select
+                      className="form-control"
+                      name="serviceType"
+                      value={serviceType}
+                      onChange={handleInputChange}
+                    >
+                      <option value="" disabled>
+                        Select Specific Service*
                       </option>
-                      <option value>RCC Compound Wall</option>
-                      <option value>Garden Fencing Net Compound Wall</option>
-                      <option value>Barded Wire Compound Wall</option>
+                      {serviceTypesOption.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
                     </select>
+
+                    {errors.serviceType && <p className="error-text">{errors.serviceType}</p>}
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
-                  {/* From Date */}
                   <div className="col-md-6">
-                    <input type="date" className="form-control" required />
+                    <label className="form-label">From date*</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="date"
+                      value={date}
+                      onChange={handleInputChange}
+                    />
+                    {errors.date && <p className="error-text">{errors.date}</p>}{" "}
                   </div>
-                  {/* From Time */}
                   <div className="col-md-6">
-                    <input type="time" className="form-control" required />
+                    <label className="form-label">Start time*</label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      name="time"
+                      value={time}
+                      onChange={handleInputChange}
+                    />
+                    {errors.time && <p className="error-text">{errors.time}</p>}
                   </div>
                   <div className="end-item">
                     <a href="#">Measure wall length now?</a>
@@ -70,12 +193,14 @@ function CompoundWallBookYourService() {
               </div>
             </div>
             <div className="available-service-btn">
-              <a href="compound-wall-change-availablity.html">See Available Service</a>
+              <button type="submit" disabled={disable}>
+                {disable ? "Loading..." : "See Available Service"}
+              </button>{" "}
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom";
 import locationBlack from "../../../assets/images/location-black.svg";
 import droneServiceIcon from "../../../assets/images/DroneService-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
+import {
+  validateArea,
+  validateCrop,
+  validateFromDate,
+  validateLat,
+  validateLng,
+  validateSelectTime,
+} from "../../../utils/formValidators";
 
 function DroneBookYourService() {
   const [formState, setFormState] = useState({
@@ -32,49 +40,24 @@ function DroneBookYourService() {
 
   const validateForm = () => {
     let newErrors = {};
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    if (!lat.trim()) {
-      newErrors.lat = "*Latitude is required";
-    } else if (isNaN(lat) || lat < -90 || lat > 90) {
-      newErrors.lat = "*Latitude must be a number between -90 and 90";
-    }
+    const latError = validateLat(lat);
+    if (latError) newErrors.lat = latError;
 
-    if (!lng.trim()) {
-      newErrors.lng = "*Longitude is required";
-    } else if (isNaN(lng) || lng < -180 || lng > 180) {
-      newErrors.lng = "*Longitude must be a number between -180 and 180";
-    }
+    const lngError = validateLng(lng);
+    if (lngError) newErrors.lng = lngError;
 
-    if (!cropUnderCultivation.trim()) {
-      newErrors.cropUnderCultivation = "*Name of Crop Under Cultivation is required";
-    }
+    const cropError = validateCrop(cropUnderCultivation.trim());
+    if (cropError) newErrors.cropUnderCultivation = cropError;
 
-    if (!areaUnderCultivation.trim()) {
-      newErrors.areaUnderCultivation = "*Area Under Cultivation is required";
-    }
+    const areaError = validateArea(areaUnderCultivation.trim());
+    if (areaError) newErrors.areaUnderCultivation = areaError;
 
-    if (!date) {
-      newErrors.date = "*From date is required";
-    } else if (new Date(date) < today) {
-      newErrors.date = "*From date cannot be in the past";
-    }
+    const dateErrors = validateFromDate(date);
+    if (dateErrors) newErrors.date = dateErrors;
 
-    if (!time) {
-      newErrors.time = "*Start time is required";
-    } else if (date) {
-      const selectedDate = new Date(date);
-      const now = new Date();
-      if (selectedDate.toDateString() === now.toDateString()) {
-        const [h, m] = time.split(":");
-        const selectedTime = new Date();
-        selectedTime.setHours(h, m, 0, 0);
-        if (selectedTime <= now) {
-          newErrors.time = "*Time must be in the future";
-        }
-      }
-    }
+    const timeError = validateSelectTime(date, time);
+    if (timeError) newErrors.time = timeError;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

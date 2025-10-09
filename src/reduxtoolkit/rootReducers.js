@@ -8,6 +8,7 @@ import ExcavationServiceMgmtSlice from "./slices/service category/excavationServ
 import ElectrostaticSprayingServiceMgmtSlice from "./slices/service category/electrostaticSprayingServices";
 import LabourServiceMgmtSlice from "./slices/service category/labourServices";
 import BorewellServiceMgmtSlice from "./slices/service category/borewellServices";
+import CompoundWallServiceMgmtSlice from "./slices/service category/compoundWallServices";
 import DroneServiceMgmtSlice from "./slices/service category/droneServices";
 import AugerServiceMgmtSlice from "./slices/service category/augerServices";
 import CarouselAdsMgmtSlice from "./slices/dashboard/carouselAds";
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   ElectrostaticSprayingServiceMgmtSlice,
   LabourServiceMgmtSlice,
   BorewellServiceMgmtSlice,
+  CompoundWallServiceMgmtSlice,
   DroneServiceMgmtSlice,
   AugerServiceMgmtSlice,
   CarouselAdsMgmtSlice,

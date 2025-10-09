@@ -98,9 +98,7 @@ export const validateDepthOfBorewell = (depthOfBorewell) => {
   if (depthOfBorewell === "") return "Depth of Borewell is required";
 
   const num = Number(depthOfBorewell);
-  if (isNaN(num) || num < 0) return "Please enter a valid positive number";
-
-  if (num === 0) return "Depth cannot be 0";
+  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
 
   return "";
 };
@@ -115,6 +113,44 @@ export const validateCasingPipe = (casingPipe) => {
 export const validateWaterMotor = (waterMotor) => {
   if (!waterMotor || waterMotor === "") {
     return "*Water Motor is required";
+  }
+  return "";
+};
+
+export const validateNumberOfLabour = (numberOfLabour) => {
+  if (numberOfLabour === "") return "Number Of Labour is required";
+
+  const num = Number(numberOfLabour);
+  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
+
+  return "";
+};
+
+export const validateLabourType = (labourType) => {
+  if (!labourType || labourType === "") {
+    return "*Labour Type is required";
+  }
+  return "";
+};
+
+export const validateArea = (areaUnderCultivation) => {
+  if (areaUnderCultivation === "") return "Area Under Cultivation is required";
+
+  const num = Number(areaUnderCultivation);
+  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
+
+  return "";
+};
+
+export const validateCrop = (typeOfCrop) => {
+  if (typeOfCrop === "") return "Crop Under Cultivation is required";
+
+  return "";
+};
+
+export const validateWallserviceType = (serviceType) => {
+  if (!serviceType || serviceType === "") {
+    return "*Service Type is required";
   }
   return "";
 };

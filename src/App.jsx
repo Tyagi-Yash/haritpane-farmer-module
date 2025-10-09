@@ -140,9 +140,24 @@ function App() {
             <Route path="available-services" element={<LabourChangeAvailablity />} />
           </Route>
 
+          <Route path="transportation">
+            <Route index element={<TransportationBookYourService />} />
+            <Route path="available-services" element={<TransportationChangeAvailablity />} />
+          </Route>
+
           <Route path="borewell">
             <Route index element={<BorwellBookYourService />} />
             <Route path="available-services" element={<BorwellChangeAvailablity />} />
+          </Route>
+
+          <Route path="cow-dunk-supply">
+            <Route index element={<CowDungBookYourService />} />
+            <Route path="available-services" element={<CowDungChangeAvailablity />} />
+          </Route>
+
+          <Route path="compound-wall-builder">
+            <Route index element={<CompoundWallBookYourService />} />
+            <Route path="available-services" element={<CompoundWallChangeAvailablity />} />
           </Route>
 
           <Route path="drone-service">

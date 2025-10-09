@@ -137,7 +137,7 @@ function Dashboard() {
                           <div className="service-header mt-2"></div>
                           <div className="service-grid">
                             <div className="service-card">
-                              <Link to="/dashboard">
+                              <Link to="/transportation">
                                 <div className="card-image-part">
                                   <img src={transportation} alt="Transportation" />
                                 </div>
@@ -153,7 +153,7 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/dashboard">
+                              <Link to="/cow-dunk-supply">
                                 <div className="card-image-part">
                                   <img src={cowDunkSupply} alt="Cow Dunk Supply" />
                                 </div>

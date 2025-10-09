@@ -7,6 +7,14 @@ import TractorHarvester from "../../../assets/images/TractorHarvester.png";
 import StandardHarvesterCombined from "../../../assets/images/StandardHarvesterCombined.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import harvestorIcon from "../../../assets/images/harvestor-icon.png";
+import {
+  validateArea,
+  validateCrop,
+  validateDates,
+  validateLat,
+  validateLng,
+  validateSelectTime,
+} from "../../../utils/formValidators";
 
 function HarvestorSubServices() {
   const [formState, setFormState] = useState({
@@ -45,59 +53,24 @@ function HarvestorSubServices() {
 
   const validateForm = () => {
     let newErrors = {};
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    if (!lat.trim()) {
-      newErrors.lat = "*Latitude is required";
-    } else if (isNaN(lat) || lat < -90 || lat > 90) {
-      newErrors.lat = "*Latitude must be a number between -90 and 90";
-    }
+    const latError = validateLat(lat);
+    if (latError) newErrors.lat = latError;
 
-    if (!lng.trim()) {
-      newErrors.lng = "*Longitude is required";
-    } else if (isNaN(lng) || lng < -180 || lng > 180) {
-      newErrors.lng = "*Longitude must be a number between -180 and 180";
-    }
+    const lngError = validateLng(lng);
+    if (lngError) newErrors.lng = lngError;
 
-    if (!typeOfCrop.trim()) {
-      newErrors.typeOfCrop = "*Type Of Crop is required";
-    }
+    const cropError = validateCrop(typeOfCrop.trim());
+    if (cropError) newErrors.typeOfCrop = cropError;
 
-    if (!areaUnderCultivation.trim()) {
-      newErrors.areaUnderCultivation = "*Area Under Cultivation is required";
-    }
+    const areaError = validateArea(areaUnderCultivation.trim());
+    if (areaError) newErrors.areaUnderCultivation = areaError;
 
-    if (!fromDate) {
-      newErrors.fromDate = "*From date is required";
-    } else if (new Date(fromDate) < today) {
-      newErrors.fromDate = "*From date cannot be in the past";
-    }
+    const dateErrors = validateDates(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
 
-    if (!toDate) {
-      newErrors.toDate = "*To date is required";
-    } else if (new Date(toDate) < today) {
-      newErrors.toDate = "*To date cannot be in the past";
-    }
-
-    if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
-      newErrors.toDate = "*To date cannot be earlier than from date";
-    }
-
-    if (!fromTime) {
-      newErrors.fromTime = "*From time is required";
-    } else if (fromDate) {
-      const selectedDate = new Date(fromDate);
-      const now = new Date();
-      if (selectedDate.toDateString() === now.toDateString()) {
-        const [h, m] = fromTime.split(":");
-        const selectedTime = new Date();
-        selectedTime.setHours(h, m, 0, 0);
-        if (selectedTime <= now) {
-          newErrors.fromTime = "*Time must be in the future";
-        }
-      }
-    }
+    const timeError = validateSelectTime(fromDate, fromTime);
+    if (timeError) newErrors.fromTime = timeError;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

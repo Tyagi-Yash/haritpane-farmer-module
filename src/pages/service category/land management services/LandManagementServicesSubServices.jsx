@@ -7,6 +7,12 @@ import onlyAttachment from "../../../assets/images/only-attachment.png";
 import TractorandAttachment from "../../../assets/images/TractorandAttachment.png";
 import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
+import {
+  validateDates,
+  validateLat,
+  validateLng,
+  validateSelectTime,
+} from "../../../utils/formValidators";
 
 function LandManagementServicesSubServices() {
   const [formState, setFormState] = useState({
@@ -37,20 +43,12 @@ function LandManagementServicesSubServices() {
 
   const validateForm = () => {
     let newErrors = {};
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    if (!lat.trim()) {
-      newErrors.lat = "*Latitude is required";
-    } else if (isNaN(lat) || lat < -90 || lat > 90) {
-      newErrors.lat = "*Latitude must be a number between -90 and 90";
-    }
+    const latError = validateLat(lat);
+    if (latError) newErrors.lat = latError;
 
-    if (!lng.trim()) {
-      newErrors.lng = "*Longitude is required";
-    } else if (isNaN(lng) || lng < -180 || lng > 180) {
-      newErrors.lng = "*Longitude must be a number between -180 and 180";
-    }
+    const lngError = validateLng(lng);
+    if (lngError) newErrors.lng = lngError;
 
     if (!selectAttachment) {
       newErrors.selectAttachment = "*Please select an attachment";
@@ -60,36 +58,11 @@ function LandManagementServicesSubServices() {
       newErrors.hpOfTractor = "*Please select tractor category";
     }
 
-    if (!fromDate) {
-      newErrors.fromDate = "*From date is required";
-    } else if (new Date(fromDate) < today) {
-      newErrors.fromDate = "*From date cannot be in the past";
-    }
+    const dateErrors = validateDates(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
 
-    if (!toDate) {
-      newErrors.toDate = "*To date is required";
-    } else if (new Date(toDate) < today) {
-      newErrors.toDate = "*To date cannot be in the past";
-    }
-
-    if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
-      newErrors.toDate = "*To date cannot be earlier than from date";
-    }
-
-    if (!fromTime) {
-      newErrors.fromTime = "*From time is required";
-    } else if (fromDate) {
-      const selectedDate = new Date(fromDate);
-      const now = new Date();
-      if (selectedDate.toDateString() === now.toDateString()) {
-        const [h, m] = fromTime.split(":");
-        const selectedTime = new Date();
-        selectedTime.setHours(h, m, 0, 0);
-        if (selectedTime <= now) {
-          newErrors.fromTime = "*Time must be in the future";
-        }
-      }
-    }
+    const timeError = validateSelectTime(fromDate, fromTime);
+    if (timeError) newErrors.fromTime = timeError;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

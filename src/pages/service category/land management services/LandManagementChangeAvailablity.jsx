@@ -177,7 +177,7 @@ function LandManagementChangeAvailablity() {
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service.rating}
+                            {service.avgRating}
                           </div>
                         </div>
                       </div>

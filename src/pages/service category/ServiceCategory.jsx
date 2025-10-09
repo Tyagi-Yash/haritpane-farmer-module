@@ -103,12 +103,12 @@ function ServiceCategory() {
                   <div className="service-header mt-2"></div>
                   <div className="service-grid">
                     <div className="service-card">
-                      <a href="transportation-book-your-service.html">
+                      <Link to="/transportation">
                         <div className="card-image-part">
                           <img src={transportation} alt="Transportation" />
                         </div>
                         <div className="label">Transportation</div>
-                      </a>
+                      </Link>
                     </div>
                     <div className="service-card">
                       <Link to="/borewell">
@@ -119,12 +119,12 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <a href="Cow-dung-book-your-service.html">
+                      <Link to="/cow-dunk-supply">
                         <div className="card-image-part">
                           <img src={cowDunkSupply} alt="Cow Dunk Supply" />
                         </div>
                         <div className="label">Cow Dunk Supply</div>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -136,12 +136,12 @@ function ServiceCategory() {
                   <div className="service-header mt-2"></div>
                   <div className="service-grid">
                     <div className="service-card compound-wall">
-                      <a href="compound-wall-book-your-service.html">
+                      <Link to="/compound-wall-builder">
                         <div className="card-image-part">
                           <img src={compundBuilder} alt="Compound Wall Builder" />
                         </div>
                         <div className="label">Compound Wall Builder</div>
-                      </a>
+                      </Link>
                     </div>
                     <div className="service-card">
                       <Link to="/drone-service">
