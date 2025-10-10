@@ -1,89 +1,209 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { toast } from "react-toastify";
+
+import TopbarModal from "../../../components/common components/TopbarModal";
+import CowDunkSupplyIcon from "../../../assets/images/CowDunkSupply-icon.png";
+import {
+  validateFromDate,
+  validateLat,
+  validateLng,
+  validateSelectTime,
+} from "../../../utils/formValidators";
 
 function CowDungBookYourService() {
+  const dryDunkOptions = [
+    { value: "trolly", name: "1-2 Dry (Trolly)" },
+    { value: "truck", name: "5-6 Dry (Truck)" },
+  ];
+  const wetDunkOptions = [
+    { value: "trolly", name: "3-4 Wet (Trolly)" },
+    { value: "truck", name: "10-12 Wet (Truck)" },
+  ];
+  const [formState, setFormState] = useState({
+    lat: "",
+    lng: "",
+    typeOfCowDunk: "",
+    quantity: "",
+    date: "",
+    time: "",
+  });
+  const { lat, lng, date, time, quantity, typeOfCowDunk } = formState;
+  const [disable, setDisable] = useState(false);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    const latError = validateLat(lat);
+    if (latError) newErrors.lat = latError;
+
+    const lngError = validateLng(lng);
+    if (lngError) newErrors.lng = lngError;
+
+    const dateErrors = validateFromDate(date);
+    if (dateErrors) newErrors.date = dateErrors;
+
+    const timeError = validateSelectTime(date, time);
+    if (timeError) newErrors.time = timeError;
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    setDisable(true);
+    const formdata = {
+      lat: lat.trim(),
+      lng: lng.trim(),
+      typeOfCowDunk,
+      quantity,
+      date,
+      time,
+    };
+    try {
+      const query = new URLSearchParams(formdata).toString();
+      navigate(`available-services?${query}`);
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setDisable(false);
+    }
+  };
   return (
-    <>
-      <div className="WrapperArea">
-        <div className="WrapperBox">
-          <div className="topbar">
-            <div className="TitleBox">
-              <div className="TitleBox-top-bar">
-                <span>
-                  <a className="back-circle-navbar" href="service-category.html">
-                    <i className="fa-solid fa-arrow-left" />
-                  </a>
-                </span>
-                <h4 className="book-heading d-flex align-items-center">
-                  <span className="top-icon-image">
-                    <img src="assets/images/CowDunkSupply-icon.png" alt />
-                  </span>
-                  Cow Dunk Supply
-                </h4>
-              </div>
-            </div>
-            <div className="right-section">
-              <div className="search-box">
-                <input className="form-control" type="text" placeholder="Search Services..." />
-                <i className="fas fa-search search-icon" />
-              </div>
-              <i className="far fa-bell bell-icon" />
-              <div className="profile">
-                <img src="assets/images/profile.png" alt="Profile" />
-                <span className="username">Ramesh</span>
-              </div>
-            </div>
-          </div>
-          <div className="dashboard">
+    <div className="WrapperArea">
+      <div className="WrapperBox">
+        <TopbarModal
+          titleBox={true}
+          title="Cow Dunk Supply"
+          secImage={CowDunkSupplyIcon}
+          navigate="/service-category"
+        />
+        <div className="dashboard">
+          <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
-                  {/* Farm Location (Text) */}
-                  <div className="col-md-12">
-                    <div className="location-wrapper">
-                      <input type="text" className="form-control" placeholder="Farm location*" required />
-                      <img src="assets/images/location-black.svg" alt className="location-icon" />
-                    </div>
+                  {/*need to remove this after geo api implemented */}
+                  <div className="col-md-6">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Latitude*"
+                      name="lat"
+                      value={lat}
+                      onChange={handleInputChange}
+                    />
+                    {errors.lat && <p className="error-text">{errors.lat}</p>}
                   </div>
                   <div className="col-md-6">
-                    <select id="typeSelect" className="form-control" onchange="updateQuantity()">
-                      <option value selected disabled>
-                        Select type
-                      </option>
-                      <option value="Dry">Dry</option>
-                      <option value="Wet">Wet</option>
-                    </select>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Longitude*"
+                      name="lng"
+                      value={lng}
+                      onChange={handleInputChange}
+                    />
+                    {errors.lng && <p className="error-text">{errors.lng}</p>}
                   </div>
-                  {/* Quantity Dropdown (Dynamic) */}
+                  {/* <div className="col-md-12">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Job location*"
+                    required
+                  />
+                </div> */}
                   <div className="col-md-6">
-                    <select id="quantitySelect" className="form-control">
-                      <option value selected disabled>
-                        Select quantity
+                    <select
+                      className="form-control"
+                      name="typeOfCowDunk"
+                      value={typeOfCowDunk}
+                      onChange={handleInputChange}
+                    >
+                      <option value="" disabled>
+                        Select type*
                       </option>
+                      <option value="dry">Dry</option>
+                      <option value="wet">Wet</option>
                     </select>
-                    <span className="note d-block mt-1">You’ll get a trolly for the selected quantity.</span>
+                    {errors.typeOfCowDunk && <p className="error-text">{errors.typeOfCowDunk}</p>}
+                  </div>
+
+                  <div className="col-md-6">
+                    <select
+                      className="form-control"
+                      name="quantity"
+                      value={quantity}
+                      onChange={handleInputChange}
+                    >
+                      <option value="" disabled>
+                        Select quantity*
+                      </option>
+                      {typeOfCowDunk &&
+                        (typeOfCowDunk === "dry" ? dryDunkOptions : wetDunkOptions).map((type) => (
+                          <option key={type.value} className="form-control" value={type.value}>
+                            {type.name}
+                          </option>
+                        ))}
+                    </select>
+                    {errors.quantity && <p className="error-text">{errors.quantity}</p>}
+
+                    <span className="note d-block mt-1">
+                      {quantity && `You'll get a ${quantity} for the selected quantity.`}
+                    </span>
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
-                  {/* From Date */}
                   <div className="col-md-6">
-                    <input type="date" className="form-control" required />
+                    <label className="form-label">From date*</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="date"
+                      value={date}
+                      onChange={handleInputChange}
+                    />
+                    {errors.date && <p className="error-text">{errors.date}</p>}{" "}
                   </div>
-                  {/* From Time */}
                   <div className="col-md-6">
-                    <input type="time" className="form-control" required />
+                    <label className="form-label">Start time*</label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      name="time"
+                      value={time}
+                      onChange={handleInputChange}
+                    />
+                    {errors.time && <p className="error-text">{errors.time}</p>}
                   </div>
                 </div>
               </div>
             </div>
             <div className="available-service-btn">
-              <a href="cow-Dung-change-availablity.html">See Available Service</a>
+              <button type="submit" disabled={disable}>
+                {disable ? "Loading..." : "See Available Service"}
+              </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
