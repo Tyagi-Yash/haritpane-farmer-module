@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import CowDunkSupplyIcon from "../../../assets/images/CowDunkSupply-icon.png";
 import {
+  validateCowDunkType,
   validateFromDate,
   validateLat,
   validateLng,
+  validateQuantity,
   validateSelectTime,
 } from "../../../utils/formValidators";
 
@@ -35,10 +37,13 @@ function CowDungBookYourService() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setFormState((prev) => ({
       ...prev,
       [name]: value,
+      ...(name === "typeOfCowDunk" ? { quantity: "" } : {}),
     }));
+
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -50,6 +55,12 @@ function CowDungBookYourService() {
 
     const lngError = validateLng(lng);
     if (lngError) newErrors.lng = lngError;
+
+    const typeError = validateCowDunkType(typeOfCowDunk);
+    if (typeError) newErrors.typeOfCowDunk = typeError;
+
+    const quantityError = typeOfCowDunk && validateQuantity(quantity);
+    if (quantityError) newErrors.quantity = quantityError;
 
     const dateErrors = validateFromDate(date);
     if (dateErrors) newErrors.date = dateErrors;
@@ -82,6 +93,7 @@ function CowDungBookYourService() {
       setDisable(false);
     }
   };
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">

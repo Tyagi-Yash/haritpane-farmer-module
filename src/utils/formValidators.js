@@ -154,3 +154,17 @@ export const validateWallserviceType = (serviceType) => {
   }
   return "";
 };
+
+export const validateCowDunkType = (typeOfCowDunk) => {
+  if (!typeOfCowDunk || typeOfCowDunk === "") {
+    return "*Type is required";
+  }
+  return "";
+};
+
+export const validateQuantity = (quantity) => {
+  if (!quantity || quantity === "") {
+    return "*Quantity is required";
+  }
+  return "";
+};

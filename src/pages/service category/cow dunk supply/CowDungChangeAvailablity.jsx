@@ -162,7 +162,7 @@ function CowDungChangeAvailablity() {
                   >
                     <div className="vendor-card">
                       <div className="service-info">
-                        <img src={service.droneImgs[0]} alt="Service" className="service-image" />
+                        <img src={service.droneImgs} alt="Service" className="service-image" />
                         <div className="service-text">
                           <div className="title"> {service.equipmentDescription}</div>
                           <div className="rating">
