@@ -1,181 +1,207 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+
+import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
+import TransportationIcon from "../../../assets/images/Transportation-icon.png";
+import TopbarModal from "../../../components/common components/TopbarModal";
+import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
+import { getAllServicesTransportation } from "../../../reduxtoolkit/slices/service category/transportationService";
 
 function TransportationChangeAvailablity() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const dispatch = useDispatch();
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const [filters, setFilters] = useState({
+    lat: 28.40793935,
+    lng: 77.0842600176243,
+    currentLocationOfTransportation: queryParams.get("currentLocationOfTransportation") || "",
+    destinationLocationOfTransportation:
+      queryParams.get("destinationLocationOfTransportation") || "",
+    transportItem: queryParams.get("transportItem") || "",
+    vegetableType: queryParams.get("vegetableType") || "",
+    numberOfCattle: queryParams.get("numberOfCattle") || "",
+    equipmentDimensions: {
+      lengthCm: queryParams.get("lengthCm") || "",
+      widthCm: queryParams.get("widthCm") || "",
+      heightCm: queryParams.get("heightCm") || "",
+    },
+    equipmentWeight: queryParams.get("equipmentWeight") || "",
+    otherWeightKg: queryParams.get("otherWeightKg") || "",
+    typeOfVehicle: queryParams.get("typeOfVehicle") || "",
+    fromDate: queryParams.get("fromDate") || "",
+    toDate: queryParams.get("toDate") || "",
+    fromTime: queryParams.get("fromTime") || "",
+    toTime: queryParams.get("toTime") || "",
+  });
+  const { toDate, fromDate } = filters;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const [services, setServices] = useState([]);
+
+  const validateForm = () => {
+    let newErrors = {};
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (!fromDate) {
+      newErrors.fromDate = "*From date is required";
+    } else if (new Date(fromDate) < today) {
+      newErrors.fromDate = "*From date cannot be in the past";
+    }
+
+    if (!toDate) {
+      newErrors.toDate = "*To date is required";
+    } else if (new Date(toDate) < today) {
+      newErrors.toDate = "*To date cannot be in the past";
+    }
+
+    if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+      newErrors.toDate = "*To date cannot be earlier than from date";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const fetchServices = async () => {
+    if (!validateForm()) return;
+    setLoading(true);
+    try {
+      const res = await dispatch(getAllServicesTransportation(filters));
+      const { status, data } = res?.payload || {};
+      if (status === 200) {
+        setServices(data?.data?.[0]?.data || []);
+      } else {
+        toast(data?.message || "Failed to load Services");
+      }
+    } catch (error) {
+      toast("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchServices();
+  }, [toDate, fromDate]);
+
   return (
-    <>
-      <div className="WrapperArea">
-        <div className="WrapperBox">
-          <div className="topbar">
-            <div className="TitleBox">
-              <div className="TitleBox-top-bar">
-                <span>
-                  <a className="back-circle-navbar" href="transportation-book-your-service.html">
-                    <i className="fa-solid fa-arrow-left" />
-                  </a>
-                </span>
-                <h4 className="book-heading d-flex align-items-center">
-                  <span className="top-icon-image">
-                    <img src="assets/images/Transportation-icon.png" alt />
-                  </span>
-                  Transportation
-                </h4>
-              </div>
-            </div>
-            <div className="right-section">
-              <div className="search-box">
-                <input className="form-control" type="text" placeholder="Search Services..." />
-                <i className="fas fa-search search-icon" />
-              </div>
-              <i className="far fa-bell bell-icon" />
-              <div className="profile">
-                <img src="assets/images/profile.png" alt="Profile" />
-                <span className="username">Ramesh</span>
+    <div className="WrapperArea">
+      <div className="WrapperBox">
+        <TopbarModal
+          titleBox={true}
+          title="Transportation"
+          secImage={TransportationIcon}
+          navigate="/transportation"
+        />
+        <div className="dashboard">
+          <div className="option-wrapper">
+            <h3 className="main-heading">Change Availability Date</h3>
+            <div className="filter-area">
+              <div className="row align-items-end">
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Select Start Date</label>
+                  {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
+                  <div className="input-group">
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="From date*"
+                      name="fromDate"
+                      value={fromDate}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Select End Date</label>
+                  {errors.toDate && <p className="error-text">{errors.toDate}</p>}
+                  <div className="input-group">
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="Till date*"
+                      name="toDate"
+                      value={toDate}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <div className="sort-box" id="sortBox">
+                    <div className="sort-toggle">
+                      <span>
+                        <span id="sortSelectedLabel" className="sort-label">
+                          Sort
+                        </span>
+                        <img src={sortArrowDown} alt="Sort Icon" />
+                      </span>
+                    </div>
+                    <div className="sort-menu">
+                      <div className="sort-option">Top rating</div>
+                      <div className="sort-option">Out of Radius</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="dashboard">
-            <div className="option-wrapper">
-              <h3 className="main-heading">Change Availability Date</h3>
-              <div className="filter-area">
-                <div className="row align-items-end">
-                  {/* Start Date */}
-                  <div className="col-md-4 mb-3">
-                    <label className="form-label">Select Start Date</label>
-                    <div className="input-group">
-                      <input type="date" className="form-control" placeholder="From date*" required />
-                    </div>
-                  </div>
-                  {/* End Date */}
-                  <div className="col-md-4 mb-3">
-                    <label className="form-label">Select End Date</label>
-                    <div className="input-group">
-                      <input type="date" className="form-control" placeholder="From date*" required />
-                    </div>
-                  </div>
-                  {/* Sort Dropdown */}
-                  <div className="col-md-4 mb-3">
-                    <div className="sort-box" id="sortBox">
-                      <div className="sort-toggle" onclick="toggleSortMenu()">
-                        <span>
-                          <span id="sortSelectedLabel" className="sort-label">
-                            Sort
-                          </span>
-                          <img src="assets/images/sort-arrow-down.svg" alt="Sort Icon" />
-                        </span>
-                      </div>
-                      <div className="sort-menu">
-                        <div className="sort-option" onclick="selectSortOption('Top rating')">
-                          Top rating
-                        </div>
-                        <div className="sort-option" onclick="selectSortOption('Out of Radius')">
-                          Out of Radius
+          <div className="option-wrapper">
+            {loading ? (
+              <VendorCardSkeleton count={5} />
+            ) : services.length === 0 ? (
+              <p style={{ color: "gray", marginTop: "10px" }}>
+                No services found for the selected filters.
+              </p>
+            ) : (
+              <>
+                <h3 className="main-heading">Available Vendor</h3>
+                <h6 className="form-label-max">Choose from in your radius</h6>
+                {services.map((service) => (
+                  <Link
+                    className="vendor-card-link"
+                    to={`/landMManagementVendorDetailsPending/${service._id}`}
+                    key={service._id}
+                  >
+                    <div className="vendor-card">
+                      <div className="service-info">
+                        <img src={service.vehicleImg[0]} alt="Service" className="service-image" />
+                        <div className="service-text">
+                          <div className="title"> {service.equipmentDescription}</div>
+                          <div className="rating">
+                            <span>
+                              <i className="fa-solid fa-star star-icon" />
+                            </span>{" "}
+                            {service.rating}
+                          </div>
                         </div>
                       </div>
+                      {/* <div className="price-info">
+                        <h6>₹ {Number(service.payableAmount).toFixed(2)}</h6>
+                        <small>Additional charges might apply</small>
+                      </div> */}
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="option-wrapper">
-              <h3 className="main-heading">Change Availability Date</h3>
-              <h6 className="form-label-max">Choose from in your radius</h6>
-              {/* Card 1 (Selected) */}
-              <div className="vendor-card selected">
-                <div className="service-info">
-                  <img
-                    src="assets/images/GoodsTransportService.png"
-                    alt="Service"
-                    className="service-image"
-                  />
-                  <div className="service-text">
-                    <a href="transportation-vendor-details-pending.html">Goods Transport Service</a>
-                    <div className="rating">
-                      <span>
-                        <i className="fa-solid fa-star star-icon" />
-                      </span>{" "}
-                      4.2
-                    </div>
-                  </div>
-                </div>
-                <div className="price-info">
-                  <h6>₹ 699.00</h6>
-                  <small>Additional charges might apply</small>
-                </div>
-              </div>
-              {/* Card 2 */}
-              <div className="vendor-card">
-                <div className="service-info">
-                  <img
-                    src="assets/images/GoodsTransportService.png"
-                    alt="Service"
-                    className="service-image"
-                  />
-                  <div className="service-text">
-                    <h6>Land Prep Done Right</h6>
-                    <div className="rating">
-                      <span>
-                        <i className="fa-solid fa-star star-icon" />
-                      </span>{" "}
-                      4.2
-                    </div>
-                  </div>
-                </div>
-                <div className="price-info">
-                  <h6>₹ 499.00</h6>
-                  <small>Additional charges might apply</small>
-                </div>
-              </div>
-              {/* Card 3 */}
-              <div className="vendor-card">
-                <div className="service-info">
-                  <img
-                    src="assets/images/GoodsTransportService.png"
-                    alt="Service"
-                    className="service-image"
-                  />
-                  <div className="service-text">
-                    <h6>Maximize Your Land Potential</h6>
-                    <div className="rating">
-                      <span>
-                        <i className="fa-solid fa-star star-icon" />
-                      </span>{" "}
-                      4.2
-                    </div>
-                  </div>
-                </div>
-                <div className="price-info">
-                  <h6>₹ 999.00</h6>
-                  <small>Additional charges might apply</small>
-                </div>
-              </div>
-              {/* Card 4 */}
-              <div className="vendor-card">
-                <div className="service-info">
-                  <img
-                    src="assets/images/GoodsTransportService.png"
-                    alt="Service"
-                    className="service-image"
-                  />
-                  <div className="service-text">
-                    <h6>Deep Tilling. Strong Yields</h6>
-                    <div className="rating">
-                      <span>
-                        <i className="fa-solid fa-star star-icon" />
-                      </span>{" "}
-                      4.2
-                    </div>
-                  </div>
-                </div>
-                <div className="price-info">
-                  <h6>₹ 599.00</h6>
-                  <small>Additional charges might apply</small>
-                </div>
-              </div>
-            </div>
+                  </Link>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

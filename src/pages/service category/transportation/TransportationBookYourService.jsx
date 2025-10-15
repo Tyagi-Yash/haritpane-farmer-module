@@ -1,233 +1,381 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+import TopbarModal from "../../../components/common components/TopbarModal";
+import TransportationIcon from "../../../assets/images/Transportation-icon.png";
+import { getVehicleTypesForTransportation } from "../../../reduxtoolkit/slices/service category/transportationService";
+import { useDispatch } from "react-redux";
+import { validateDates, validateTime } from "../../../utils/formValidators";
 
 function TransportationBookYourService() {
+  const dispatch = useDispatch();
+  const [vehicle, setVehicle] = useState([]);
+  const fetchVehicle = async () => {
+    try {
+      const res = await dispatch(getVehicleTypesForTransportation());
+      const { status, data } = res?.payload || {};
+      if (status === 200) {
+        setVehicle(data?.data || []);
+      } else {
+        toast(data?.message || "Failed to load Vehicle");
+      }
+    } catch (error) {
+      console.log(error);
+      toast("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    fetchVehicle();
+  }, []);
+
+  const [formState, setFormState] = useState({
+    lat: "",
+    lng: "",
+    currentLocationOfTransportation: "",
+    destinationLocationOfTransportation: "",
+    transportItem: "",
+    vegetableType: "",
+    numberOfCattle: "",
+    lengthCm: "",
+    widthCm: "",
+    heightCm: "",
+    equipmentWeight: "",
+    otherWeightKg: "",
+    typeOfVehicle: "",
+    fromDate: "",
+    toDate: "",
+    fromTime: "",
+    toTime: "",
+  });
+
+  const {
+    lat,
+    lng,
+    currentLocationOfTransportation,
+    destinationLocationOfTransportation,
+    transportItem,
+    vegetableType,
+    numberOfCattle,
+    lengthCm,
+    widthCm,
+    heightCm,
+    equipmentWeight,
+    otherWeightKg,
+    typeOfVehicle,
+    fromDate,
+    toDate,
+    fromTime,
+    toTime,
+  } = formState;
+
+  const [disable, setDisable] = useState(false);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    const dateErrors = validateDates(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
+
+    const timeError = validateTime(fromDate, toDate, fromTime, toTime);
+    newErrors = { ...newErrors, ...timeError };
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    setDisable(true);
+    // const formdata = {
+    //   lat: lat.trim(),
+    //   lng: lng.trim(),
+    //   fromDate,
+    //   toDate,
+    //   fromTime,
+    //   toTime,
+    // };
+    try {
+      const query = new URLSearchParams(formState).toString();
+      navigate(`available-services?${query}`);
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setDisable(false);
+    }
+  };
   return (
-    <>
-      <div className="WrapperArea">
-        <div className="WrapperBox">
-          <div className="topbar">
-            <div className="TitleBox">
-              <div className="TitleBox-top-bar">
-                <span>
-                  <a className="back-circle-navbar" href="service-category.html">
-                    <i className="fa-solid fa-arrow-left" />
-                  </a>
-                </span>
-                <h4 className="book-heading d-flex align-items-center">
-                  <span className="top-icon-image">
-                    <img src="assets/images/Transportation-icon.png" alt />
-                  </span>
-                  Transportation
-                </h4>
-              </div>
-            </div>
-            <div className="right-section">
-              <div className="search-box">
-                <input className="form-control" type="text" placeholder="Search Services..." />
-                <i className="fas fa-search search-icon" />
-              </div>
-              <i className="far fa-bell bell-icon" />
-              <div className="profile">
-                <img src="assets/images/profile.png" alt="Profile" />
-                <span className="username">Ramesh</span>
-              </div>
-            </div>
-          </div>
-          <div className="dashboard">
-            <form action>
-              <div className="option-wrapper">
-                <div className="form-section">
-                  <h5 className="book-heading">Book your service</h5>
-                  {/* <div class="row g-3">
-    
-            <div class="col-md-6">
-              <select name="" id="" class="form-control">
-                <option value="" disabled selected>
-                  Select goods for your transport*
-                </option>
-                <option value="" class="form-control">Vegetable</option>
-                <option value="" class="form-control">Cattle</option>
-                <option value="" class="form-control">Equipment's</option>
-                <option value="" class="form-control">Other</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <select name="" id="" class="form-control">
-                <option value="" disabled selected>
-                  Select type of vegetable*
-                </option>
-                <option value="" class="form-control">
-                  Leafy Vegetable- Stack
-                </option>
-                <option value="" class="form-control">
-                  Tomato, Cucumber- Crate
-                </option>
-                <option value="" class="form-control">
-                  Onion, Potato- Stack
-                </option>
-                <option value="" class="form-control">
-                  Cabbage, Cauliflower- Mesh Sack
-                </option>
-                <option value="" class="form-control">
-                  Grains- Sack
-                </option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Number of cattle*"
-              />
-            </div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Equipment Dimension*"
-              />
-            </div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Equipment Weight*"
-              />
-            </div>
-            <div class="col-md-6">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Weight of Object*"
-              />
-            </div>
-            <div class="col-md-3">
-              <input
-                type="text"
-                placeholder="Current location*"
-                class="form-control"
-              />
-            </div>
-            <div class="col-md-3">
-              <input
-                type="text"
-                placeholder="Travel location*"
-                class="form-control"
-              />
-            </div>
-
-            <div class="col-md-6">
-              <select name="" id="" class="form-control">
-                <option value="" disabled selected>
-                  Type of vehicle*
-                </option>
-                <option value="" class="form-control">
-                  Tata Ace Mahindra Maximo
-                </option>
-                <option value="" class="form-control">
-                  Tata Ace ZIP- Mahindra Jeeto
-                </option>
-                <option value="" class="form-control">
-                  Tractor- Trolly
-                </option>
-                <option value="" class="form-control">
-                  Bolero Pickup
-                </option>
-              </select>
-            </div>
-          </div> */}
-                  <div className="row g-3">
-                    {/* Goods Type Selector */}
-                    <div className="col-md-6">
-                      <select id="goodsType" className="form-control">
-                        <option value disabled selected>
-                          Select goods for your transport*
-                        </option>
-                        <option value="vegetable">Vegetable</option>
-                        <option value="cattle">Cattle</option>
-                        <option value="equipment">Equipment's</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-                    {/* Vegetable: Type */}
-                    <div className="col-md-6 hidden" id="vegetableTypeGroup">
-                      <select className="form-control">
-                        <option value disabled selected>
-                          Select type of vegetable*
-                        </option>
-                        <option>Leafy Vegetable - Stack</option>
-                        <option>Tomato, Cucumber - Crate</option>
-                        <option>Onion, Potato - Stack</option>
-                        <option>Cabbage, Cauliflower - Mesh Sack</option>
-                        <option>Grains - Sack</option>
-                      </select>
-                    </div>
-                    {/* Cattle */}
-                    <div className="col-md-6 hidden" id="cattleCountGroup">
-                      <input type="text" className="form-control" placeholder="Number of cattle*" />
-                    </div>
-                    {/* Equipment */}
-                    <div className="col-md-6 hidden" id="equipDimGroup">
-                      <input type="text" className="form-control" placeholder="Equipment Dimension*" />
-                    </div>
-                    <div className="col-md-6 hidden" id="equipWeightGroup">
-                      <input type="text" className="form-control" placeholder="Equipment Weight*" />
-                    </div>
-                    {/* Other */}
-                    <div className="col-md-6 hidden" id="objectWeightGroup">
-                      <input type="text" className="form-control" placeholder="Weight of Object*" />
-                    </div>
-                    {/* Common: Location */}
-                    <div className="col-md-6 hidden" id="currentLocationGroup">
-                      <input type="text" className="form-control" placeholder="Current location*" />
-                    </div>
-                    <div className="col-md-6 hidden" id="travelLocationGroup">
-                      <input type="text" className="form-control" placeholder="Travel location*" />
-                    </div>
-                    {/* Common: Vehicle Type */}
-                    <div className="col-md-6 hidden" id="vehicleTypeGroup">
-                      <select className="form-control">
-                        <option value disabled selected>
-                          Type of vehicle*
-                        </option>
-                        <option>Tata Ace Mahindra Maximo</option>
-                        <option>Tata Ace ZIP - Mahindra Jeeto</option>
-                        <option>Tractor - Trolly</option>
-                        <option>Bolero Pickup</option>
-                      </select>
-                    </div>
+    <div className="WrapperArea">
+      <div className="WrapperBox">
+        <TopbarModal
+          titleBox={true}
+          title="Transportation"
+          secImage={TransportationIcon}
+          navigate="/service-category"
+        />
+        <div className="dashboard">
+          <form onSubmit={handleSubmit}>
+            <div className="option-wrapper">
+              <div className="form-section">
+                <h5 className="book-heading">Book your service</h5>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label">Transport Item*</label>
+                    <select
+                      className="form-control"
+                      name="transportItem"
+                      value={transportItem}
+                      onChange={handleInputChange}
+                    >
+                      <option value="" disabled>
+                        Select goods for your transport
+                      </option>
+                      <option value="vegitable" className="form-control">
+                        Vegetable
+                      </option>
+                      <option value="cattle" className="form-control">
+                        Cattle
+                      </option>
+                      <option value="equipment" className="form-control">
+                        Equipment's
+                      </option>
+                      <option value="other" className="form-control">
+                        Other
+                      </option>
+                    </select>
                   </div>
-                  <h5 className="book-heading">Book Services date &amp; time</h5>
-                  <div className="row g-3">
-                    {/* From Date */}
+                  {transportItem === "vegitable" && (
                     <div className="col-md-6">
-                      <input type="date" className="form-control" required />
+                      <label className="form-label">Vegetable Type*</label>
+                      <select
+                        className="form-control"
+                        name="vegetableType"
+                        value={vegetableType}
+                        onChange={handleInputChange}
+                      >
+                        <option value="" disabled>
+                          Select type of vegetable
+                        </option>
+                        <option value="leafy_stack" className="form-control">
+                          Leafy Vegetable- Stack
+                        </option>
+                        <option value="tomato_cucumber_crate" className="form-control">
+                          Tomato, Cucumber- Crate
+                        </option>
+                        <option value="onion_potato_stack" className="form-control">
+                          Onion, Potato- Stack
+                        </option>
+                        <option value="cabbage_cauliflower_mesh_sack" className="form-control">
+                          Cabbage, Cauliflower- Mesh Sack
+                        </option>
+                        <option value="grains_sack" className="form-control">
+                          Grains- Sack
+                        </option>
+                      </select>
                     </div>
-                    {/* Till Date */}
+                  )}
+                  {transportItem === "cattle" && (
                     <div className="col-md-6">
-                      <input type="date" className="form-control" required />
+                      <label className="form-label">Number of cattle*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Number of cattle"
+                        name="numberOfCattle"
+                        value={numberOfCattle}
+                        onChange={handleInputChange}
+                      />
+                      {errors.numberOfCattle && (
+                        <p className="error-text">{errors.numberOfCattle}</p>
+                      )}
                     </div>
-                    {/* From Time */}
+                  )}
+                  {transportItem === "equipment" && (
+                    <>
+                      <div className="col-md-6">
+                        <label className="form-label">Equipment Dimension*</label>
+                        <div className="row">
+                          <div className="col-md-4">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Length (cm)"
+                              name="lengthCm"
+                              value={lengthCm}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="col-md-4">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Width (cm)"
+                              name="widthCm"
+                              value={widthCm}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                          <div className="col-md-4">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Height (cm)"
+                              name="heightCm"
+                              value={heightCm}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <label className="form-label">Equipment Weight*</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Equipment Weight(in Kg)"
+                          name="equipmentWeight"
+                          value={equipmentWeight}
+                          onChange={handleInputChange}
+                        />
+                        {errors.equipmentWeight && (
+                          <p className="error-text">{errors.equipmentWeight}</p>
+                        )}
+                      </div>
+                    </>
+                  )}
+                  {transportItem === "other" && (
                     <div className="col-md-6">
-                      <input type="time" className="form-control" required />
+                      <label className="form-label">Object Weight*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Weight of Object(in Kg)"
+                        name="otherWeightKg"
+                        value={otherWeightKg}
+                        onChange={handleInputChange}
+                      />
+                      {errors.otherWeightKg && <p className="error-text">{errors.otherWeightKg}</p>}
                     </div>
-                    {/* From Time */}
-                    <div className="col-md-6">
-                      <input type="time" className="form-control" required />
-                    </div>
+                  )}
+                  <div className="col-md-3">
+                    <label className="form-label">Current location*</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="location"
+                      name="currentLocationOfTransportation"
+                      value={currentLocationOfTransportation}
+                      onChange={handleInputChange}
+                    />
+                    {errors.currentLocationOfTransportation && (
+                      <p className="error-text">{errors.currentLocationOfTransportation}</p>
+                    )}
+                  </div>
+                  <div className="col-md-3">
+                    <label className="form-label">Travel location*</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="location"
+                      name="destinationLocationOfTransportation"
+                      value={destinationLocationOfTransportation}
+                      onChange={handleInputChange}
+                    />
+                    {errors.destinationLocationOfTransportation && (
+                      <p className="error-text">{errors.destinationLocationOfTransportation}</p>
+                    )}
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Vehicle Type*</label>
+                    <select
+                      className="form-control"
+                      name="typeOfVehicle"
+                      value={typeOfVehicle}
+                      onChange={handleInputChange}
+                    >
+                      <option value="" disabled>
+                        Type of vehicle*
+                      </option>
+                      {vehicle.map((type) => (
+                        <option value={type} className="form-control" key={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <h5 className="book-heading">Book Services date &amp; time</h5>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label">From date*</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="fromDate"
+                      value={fromDate}
+                      onChange={handleInputChange}
+                    />
+                    {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Till date*</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      name="toDate"
+                      value={toDate}
+                      onChange={handleInputChange}
+                    />
+                    {errors.toDate && <p className="error-text">{errors.toDate}</p>}
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Start time*</label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      name="fromTime"
+                      value={fromTime}
+                      onChange={handleInputChange}
+                    />
+                    {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">End time*</label>
+                    <input
+                      type="time"
+                      className="form-control"
+                      name="toTime"
+                      value={toTime}
+                      onChange={handleInputChange}
+                    />
+                    {errors.toTime && <p className="error-text">{errors.toTime}</p>}
                   </div>
                 </div>
               </div>
-              <div className="available-service-btn">
-                <a href="transportation-change-availablity.html">See Available Service</a>
-              </div>
-            </form>
-          </div>
+            </div>
+            <div className="available-service-btn">
+              <button type="submit" disabled={disable}>
+                {disable ? "Loading..." : "See Available Service"}
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
