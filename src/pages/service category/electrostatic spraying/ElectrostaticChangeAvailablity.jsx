@@ -175,7 +175,7 @@ function ElectrostaticChangeAvailablity() {
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service.avgRating}
+                            {service.rating}
                           </div>
                         </div>
                       </div>

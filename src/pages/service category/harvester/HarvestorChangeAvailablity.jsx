@@ -166,18 +166,14 @@ function HarvestorChangeAvailablity() {
                   >
                     <div className="vendor-card">
                       <div className="service-info">
-                        <img
-                          src={service.images[0]}
-                          alt="Service"
-                          className="service-image"
-                        />
+                        <img src={service.images[0]} alt="Service" className="service-image" />
                         <div className="service-text">
                           <div className="title"> {service.equipmentDescription}</div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service.avgRating}
+                            {service.rating}
                           </div>
                         </div>
                       </div>

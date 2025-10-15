@@ -22,7 +22,7 @@ function LocalProductsListingModule() {
   const loadProducts = async () => {
     setLoading(true);
     const paramData = {
-      createdBy: pathname === "/dashboard/local-shops" ? "india_mart" : "just_dial",
+      createdBy: pathname === "/dashboard/local-shops" ? "just_dial" : "india_mart",
     };
 
     try {
