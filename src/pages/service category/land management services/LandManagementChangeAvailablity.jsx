@@ -161,7 +161,7 @@ function LandManagementChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`/harvestorVendorDetailsPending/${service._id}`}
+                    to={`/vendor-details/${service._id}`}
                     key={service._id}
                   >
                     <div className="vendor-card">

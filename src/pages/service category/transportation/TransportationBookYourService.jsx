@@ -6,7 +6,20 @@ import TopbarModal from "../../../components/common components/TopbarModal";
 import TransportationIcon from "../../../assets/images/Transportation-icon.png";
 import { getVehicleTypesForTransportation } from "../../../reduxtoolkit/slices/service category/transportationService";
 import { useDispatch } from "react-redux";
-import { validateDates, validateTime } from "../../../utils/formValidators";
+import {
+  validateCurrentLocation,
+  validateDates,
+  validateDestinationLocation,
+  validateHeight,
+  validateItemType,
+  validateLength,
+  validateNumberOfCattle,
+  validateTime,
+  validateVegeType,
+  validateVehicleType,
+  validateWeight,
+  validateWidth,
+} from "../../../utils/formValidators";
 
 function TransportationBookYourService() {
   const dispatch = useDispatch();
@@ -74,23 +87,162 @@ function TransportationBookYourService() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormState((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
+  //   setErrors((prev) => ({ ...prev, [name]: "" }));
+  // };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormState((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    if (name === "transportItem") {
+      setFormState((prev) => ({
+        ...prev,
+        [name]: value,
+        vegetableType: "",
+        numberOfCattle: "",
+        lengthCm: "",
+        widthCm: "",
+        heightCm: "",
+        equipmentWeight: "",
+        otherWeightKg: "",
+      }));
+    } else {
+      setFormState((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
+
+  // const validateForm = () => {
+  //   let newErrors = {};
+
+  //   const transportItemError = validateItemType(transportItem.trim());
+  //   if (transportItemError) newErrors.transportItem = transportItemError;
+
+  //   const currentLocationError = validateCurrentLocation(currentLocationOfTransportation.trim());
+  //   if (currentLocationError) newErrors.currentLocationOfTransportation = currentLocationError;
+
+  //   const targetLocationError = validateDestinationLocation(
+  //     destinationLocationOfTransportation.trim()
+  //   );
+  //   if (targetLocationError) newErrors.destinationLocationOfTransportation = targetLocationError;
+
+  //   const vegeTypeError = validateVegeType(vegetableType.trim());
+  //   if (vegeTypeError) newErrors.vegetableType = vegeTypeError;
+
+  //   const cattleError = validateNumberOfCattle(numberOfCattle.trim());
+  //   if (cattleError) newErrors.numberOfCattle = cattleError;
+
+  //   const equipWeightError = validateWeight(equipmentWeight.trim());
+  //   if (equipWeightError) newErrors.equipmentWeight = equipWeightError;
+
+  //   const lenghtError = validateLength(lengthCm.trim());
+  //   if (lenghtError) newErrors.lengthCm = lenghtError;
+
+  //   const WidthError = validateWidth(widthCm.trim());
+  //   if (WidthError) newErrors.widthCm = WidthError;
+
+  //   const heightError = validateHeight(heightCm.trim());
+  //   if (heightError) newErrors.heightCm = heightError;
+
+  //   const objWeightError = validateWeight(otherWeightKg.trim());
+  //   if (objWeightError) newErrors.otherWeightKg = objWeightError;
+
+  //   const vehicleTypeError = validateVehicleType(typeOfVehicle.trim());
+  //   if (vehicleTypeError) newErrors.typeOfVehicle = vehicleTypeError;
+
+  //   const dateErrors = validateDates(fromDate, toDate);
+  //   newErrors = { ...newErrors, ...dateErrors };
+
+  //   const timeError = validateTime(fromDate, toDate, fromTime, toTime);
+  //   newErrors = { ...newErrors, ...timeError };
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) return;
+
+  //   setDisable(true);
+  //   const formdata = {
+  //     fromDate,
+  //     toDate,
+  //     fromTime,
+  //     toTime,
+  //   };
+  //   try {
+  //     const query = new URLSearchParams(formState).toString();
+  //     navigate(`available-services?${query}`);
+  //   } catch (error) {
+  //     toast.error("Something went wrong");
+  //   } finally {
+  //     setDisable(false);
+  //   }
+  // }
 
   const validateForm = () => {
     let newErrors = {};
 
-    const dateErrors = validateDates(fromDate, toDate);
-    newErrors = { ...newErrors, ...dateErrors };
+    const transportItemError = validateItemType(transportItem.trim());
+    if (transportItemError) newErrors.transportItem = transportItemError;
 
-    const timeError = validateTime(fromDate, toDate, fromTime, toTime);
-    newErrors = { ...newErrors, ...timeError };
+    if (!transportItemError) {
+      const currentLocationError = validateCurrentLocation(currentLocationOfTransportation.trim());
+      if (currentLocationError) newErrors.currentLocationOfTransportation = currentLocationError;
+
+      const targetLocationError = validateDestinationLocation(
+        destinationLocationOfTransportation.trim()
+      );
+      if (targetLocationError) newErrors.destinationLocationOfTransportation = targetLocationError;
+
+      const vehicleTypeError = validateVehicleType(typeOfVehicle.trim());
+      if (vehicleTypeError) newErrors.typeOfVehicle = vehicleTypeError;
+
+      const dateErrors = validateDates(fromDate, toDate);
+      newErrors = { ...newErrors, ...dateErrors };
+
+      const timeError = validateTime(fromDate, toDate, fromTime, toTime);
+      newErrors = { ...newErrors, ...timeError };
+
+      if (transportItem === "vegitable") {
+        const vegeTypeError = validateVegeType(vegetableType.trim());
+        if (vegeTypeError) newErrors.vegetableType = vegeTypeError;
+      }
+
+      if (transportItem === "cattle") {
+        const cattleError = validateNumberOfCattle(numberOfCattle.trim());
+        if (cattleError) newErrors.numberOfCattle = cattleError;
+      }
+
+      if (transportItem === "equipment") {
+        const lengthError = validateLength(lengthCm.trim());
+        if (lengthError) newErrors.lengthCm = lengthError;
+
+        const widthError = validateWidth(widthCm.trim());
+        if (widthError) newErrors.widthCm = widthError;
+
+        const heightError = validateHeight(heightCm.trim());
+        if (heightError) newErrors.heightCm = heightError;
+
+        const equipWeightError = validateWeight(equipmentWeight.trim());
+        if (equipWeightError) newErrors.equipmentWeight = equipWeightError;
+      }
+
+      if (transportItem === "other") {
+        const objWeightError = validateWeight(otherWeightKg.trim());
+        if (objWeightError) newErrors.otherWeightKg = objWeightError;
+      }
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -101,16 +253,33 @@ function TransportationBookYourService() {
     if (!validateForm()) return;
 
     setDisable(true);
-    // const formdata = {
-    //   lat: lat.trim(),
-    //   lng: lng.trim(),
-    //   fromDate,
-    //   toDate,
-    //   fromTime,
-    //   toTime,
-    // };
+
     try {
-      const query = new URLSearchParams(formState).toString();
+      let formdata = {
+        currentLocationOfTransportation,
+        destinationLocationOfTransportation,
+        typeOfVehicle,
+        fromDate,
+        toDate,
+        fromTime,
+        toTime,
+        transportItem,
+      };
+
+      if (transportItem === "vegitable") {
+        formdata.vegetableType = vegetableType;
+      } else if (transportItem === "cattle") {
+        formdata.numberOfCattle = numberOfCattle;
+      } else if (transportItem === "equipment") {
+        formdata.lengthCm = lengthCm;
+        formdata.widthCm = widthCm;
+        formdata.heightCm = heightCm;
+        formdata.equipmentWeight = equipmentWeight;
+      } else if (transportItem === "other") {
+        formdata.otherWeightKg = otherWeightKg;
+      }
+
+      const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
       toast.error("Something went wrong");
@@ -118,6 +287,7 @@ function TransportationBookYourService() {
       setDisable(false);
     }
   };
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -157,6 +327,7 @@ function TransportationBookYourService() {
                         Other
                       </option>
                     </select>
+                    {errors.transportItem && <p className="error-text">{errors.transportItem}</p>}
                   </div>
                   {transportItem === "vegitable" && (
                     <div className="col-md-6">
@@ -186,6 +357,7 @@ function TransportationBookYourService() {
                           Grains- Sack
                         </option>
                       </select>
+                      {errors.vegetableType && <p className="error-text">{errors.vegetableType}</p>}
                     </div>
                   )}
                   {transportItem === "cattle" && (
@@ -218,6 +390,7 @@ function TransportationBookYourService() {
                               value={lengthCm}
                               onChange={handleInputChange}
                             />
+                            {errors.lengthCm && <p className="error-text">{errors.lengthCm}</p>}
                           </div>
                           <div className="col-md-4">
                             <input
@@ -228,6 +401,7 @@ function TransportationBookYourService() {
                               value={widthCm}
                               onChange={handleInputChange}
                             />
+                            {errors.widthCm && <p className="error-text">{errors.widthCm}</p>}
                           </div>
                           <div className="col-md-4">
                             <input
@@ -238,6 +412,7 @@ function TransportationBookYourService() {
                               value={heightCm}
                               onChange={handleInputChange}
                             />
+                            {errors.heightCm && <p className="error-text">{errors.heightCm}</p>}
                           </div>
                         </div>
                       </div>
@@ -316,6 +491,7 @@ function TransportationBookYourService() {
                         </option>
                       ))}
                     </select>
+                    {errors.typeOfVehicle && <p className="error-text">{errors.typeOfVehicle}</p>}
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>

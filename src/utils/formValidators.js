@@ -168,3 +168,70 @@ export const validateQuantity = (quantity) => {
   }
   return "";
 };
+
+export const validateCurrentLocation = (location) => {
+  if (location === "") return "*Current Location is required";
+
+  return "";
+};
+
+export const validateDestinationLocation = (location) => {
+  if (location === "") return "*Travel Location is required";
+
+  return "";
+};
+
+export const validateItemType = (item) => {
+  if (!item || item === "") {
+    return "*Transport Item is required";
+  }
+  return "";
+};
+export const validateVegeType = (item) => {
+  if (!item || item === "") {
+    return "*Vegetable Type is required";
+  }
+  return "";
+};
+export const validateVehicleType = (item) => {
+  if (!item || item === "") {
+    return "*Vehicle Type is required";
+  }
+  return "";
+};
+export const validateLength = (item) => {
+  if (!item || item === "") {
+    return "*Length is required";
+  }
+  return "";
+};
+export const validateWidth = (item) => {
+  if (!item || item === "") {
+    return "*Width is required";
+  }
+  return "";
+};
+export const validateHeight = (item) => {
+  if (!item || item === "") {
+    return "*Height is required";
+  }
+  return "";
+};
+
+export const validateNumberOfCattle = (number) => {
+  if (number === "") return "*Number of cattle is required";
+
+  const num = Number(number);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
+  return "";
+};
+
+export const validateWeight = (number) => {
+  if (number === "") return "*Weight is required";
+
+  const num = Number(number);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
+  return "";
+};

@@ -86,15 +86,19 @@ function Signup() {
               <label htmlFor="phoneNumber">
                 Enter Mobile Number <sup>*</sup>
               </label>
+
               <input
-                type="tel"
+                type="text"
                 id="phoneNumber"
                 className="form-control-white"
                 placeholder="Enter your mobile number"
                 value={phoneNumber}
                 onChange={(e) => {
-                  setPhoneNumber(e.target.value);
-                  setErrors((prev) => ({ ...prev, phoneError: "" }));
+                  const value = e.target.value;
+                  if (/^\d{0,10}$/.test(value)) {
+                    setPhoneNumber(value);
+                    setErrors((prev) => ({ ...prev, phoneError: "" }));
+                  }
                 }}
               />
               {errors.phoneError && <p className="error-text">{errors.phoneError}</p>}

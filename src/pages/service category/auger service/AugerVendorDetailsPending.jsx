@@ -5,6 +5,12 @@ function AugerVendorDetailsPending() {
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
+          <TopbarModal
+          titleBox={true}
+          title="Vendor Details"
+          secImage={AugerServiceIcon}
+          navigate="/auger-service"
+        />
           <div className="topbar">
             <div className="TitleBox">
               <div className="TitleBox-top-bar">

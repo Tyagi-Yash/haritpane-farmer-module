@@ -78,121 +78,162 @@ import {
 } from "./pages";
 
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/common components/UserAuthProtect";
+import PublicRoute from "./components/common components/PublicRoute";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Signup />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="otp-verify" element={<OtpVerify />} />
-
+        <Route element={<PublicRoute />}>
+          <Route path="/" element={<Signup />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="otp-verify" element={<OtpVerify />} />
+        </Route>
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="terms-of-service" element={<TermsOfService />} />
 
-        <Route element={<RootLayout />}>
-          <Route path="dashboard">
-            <Route index element={<Dashboard />} />
-            <Route path="local-shops">
-              <Route index element={<LocalProductsListingModule />} />
-              <Route path="product-details/:id" element={<LocalProductDetails />} />
+        <Route element={<ProtectedRoute />}>
+          <Route element={<RootLayout />}>
+            <Route path="dashboard">
+              <Route index element={<Dashboard />} />
+              <Route path="local-shops">
+                <Route index element={<LocalProductsListingModule />} />
+                <Route path="product-details/:id" element={<LocalProductDetails />} />
+              </Route>
+              <Route path="local-manufacturers">
+                <Route index element={<LocalProductsListingModule />} />
+                <Route path="product-details/:id" element={<LocalProductDetails />} />
+              </Route>
             </Route>
-            <Route path="local-manufacturers">
-              <Route index element={<LocalProductsListingModule />} />
-              <Route path="product-details/:id" element={<LocalProductDetails />} />
+
+            <Route path="service-tracking">
+              <Route index element={<ServiceTracking />} />
+              <Route path="vendor-details" element={<ServiceTrackingVendorDetails />} />
             </Route>
-          </Route>
 
-          <Route path="service-tracking">
-            <Route index element={<ServiceTracking />} />
-            <Route path="vendor-details" element={<ServiceTrackingVendorDetails />} />
-          </Route>
+            <Route path="service-category" element={<ServiceCategory />} />
 
-          <Route path="service-category" element={<ServiceCategory />} />
+            <Route path="land-management">
+              <Route index element={<LandManagementServicesSubServices />} />
+              <Route path="available-services">
+                <Route index element={<LandManagementChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<LandManagementVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="land-management">
-            <Route index element={<LandManagementServicesSubServices />} />
-            <Route path="available-services" element={<LandManagementChangeAvailablity />} />
-          </Route>
+            <Route path="harvestor">
+              <Route index element={<HarvestorSubServices />} />
+              <Route path="available-services">
+                <Route index element={<HarvestorChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<HarvestorVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="harvestor">
-            <Route index element={<HarvestorSubServices />} />
-            <Route path="available-services" element={<HarvestorChangeAvailablity />} />
-          </Route>
+            <Route path="cattle-purchase-sale">
+              <Route index element={<CattleBookYourServices />} />
+              <Route path="available-services">
+                <Route index element={<CattleChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<CattleVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="cattle-purchase-sale">
-            <Route index element={<CattleBookYourServices />} />
-            <Route path="available-services" element={<CattleChangeAvailablity />} />
-          </Route>
+            <Route path="excavation">
+              <Route index element={<ExcavationBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<ExcavationChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<CattleVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="excavation">
-            <Route index element={<ExcavationBookYourService />} />
-            <Route path="available-services" element={<ExcavationChangeAvailablity />} />
-          </Route>
+            <Route path="electrostatic-spraying">
+              <Route index element={<ElectrostaticBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<ElectrostaticChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<ElectrostaticVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="electrostatic-spraying">
-            <Route index element={<ElectrostaticBookYourService />} />
-            <Route path="available-services" element={<ElectrostaticChangeAvailablity />} />
-          </Route>
+            <Route path="labor-requirement">
+              <Route index element={<LaborBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<LabourChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<LabourVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="labor-requirement">
-            <Route index element={<LaborBookYourService />} />
-            <Route path="available-services" element={<LabourChangeAvailablity />} />
-          </Route>
+            <Route path="transportation">
+              <Route index element={<TransportationBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<TransportationChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<TransportationVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="transportation">
-            <Route index element={<TransportationBookYourService />} />
-            <Route path="available-services" element={<TransportationChangeAvailablity />} />
-          </Route>
+            <Route path="borewell">
+              <Route index element={<BorwellBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<BorwellChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<BorwellVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="borewell">
-            <Route index element={<BorwellBookYourService />} />
-            <Route path="available-services" element={<BorwellChangeAvailablity />} />
-          </Route>
+            <Route path="cow-dunk-supply">
+              <Route index element={<CowDungBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<CowDungChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<CowDungVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="cow-dunk-supply">
-            <Route index element={<CowDungBookYourService />} />
-            <Route path="available-services" element={<CowDungChangeAvailablity />} />
-          </Route>
+            <Route path="compound-wall-builder">
+              <Route index element={<CompoundWallBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<CompoundWallChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<CompoundWallVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="compound-wall-builder">
-            <Route index element={<CompoundWallBookYourService />} />
-            <Route path="available-services" element={<CompoundWallChangeAvailablity />} />
-          </Route>
+            <Route path="drone-service">
+              <Route index element={<DroneBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<DroneChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<DroneVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="drone-service">
-            <Route index element={<DroneBookYourService />} />
-            <Route path="available-services" element={<DroneChangeAvailablity />} />
-          </Route>
+            <Route path="auger-service">
+              <Route index element={<AugerBookYourService />} />
+              <Route path="available-services">
+                <Route index element={<AugerChangeAvailablity />} />
+                <Route path="vendor-details/:id" element={<AugerVendorDetailsPending />} />
+              </Route>
+            </Route>
 
-          <Route path="auger-service">
-            <Route index element={<AugerBookYourService />} />
-            <Route path="available-services" element={<AugerChangeAvailablity />} />
-          </Route>
+            <Route path="chats">
+              <Route index element={<ChatChatSection />} />
+              <Route path="message-chat" element={<ChatChatSection />} />
+              <Route path="enquiry-chat" element={<ChatEnquirySection />} />
+              <Route path="review-chat" element={<ChatsReviewSection />} />
+            </Route>
 
-          <Route path="chats">
-            <Route index element={<ChatChatSection />} />
-            <Route path="message-chat" element={<ChatChatSection />} />
-            <Route path="enquiry-chat" element={<ChatEnquirySection />} />
-            <Route path="review-chat" element={<ChatsReviewSection />} />
-          </Route>
+            <Route path="notification" element={<Notification />} />
 
-          <Route path="notification" element={<Notification />} />
+            <Route path="language" element={<LanguagePage />} />
 
-          <Route path="language" element={<LanguagePage />} />
+            <Route path="profile">
+              <Route index element={<MyProfile />} />
+              <Route path="profile-edit" element={<MyProfileSaveContinue />} />
+            </Route>
 
-          <Route path="profile">
-            <Route index element={<MyProfile />} />
-            <Route path="profile-edit" element={<MyProfileSaveContinue />} />
-          </Route>
-
-          <Route path="farm-home">
-            <Route index element={<MyFarmHome />} />
-            <Route path="farm-api-page" element={<MyFarmAPIPage />} />
-            <Route path="farm-add-location" element={<MyFarmAddLocation />} />
-            <Route path="farm-map-image" element={<MyFarmMapImage />} />
-            <Route path="farm-select-map" element={<MyFarmCardSection />} />
-            <Route path="farm-details" element={<MyFarmDetails />} />
+            <Route path="farm-home">
+              <Route index element={<MyFarmHome />} />
+              <Route path="farm-api-page" element={<MyFarmAPIPage />} />
+              <Route path="farm-add-location" element={<MyFarmAddLocation />} />
+              <Route path="farm-map-image" element={<MyFarmMapImage />} />
+              <Route path="farm-select-map" element={<MyFarmCardSection />} />
+              <Route path="farm-details" element={<MyFarmDetails />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
