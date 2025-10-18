@@ -7,47 +7,49 @@ export const getAllServicesOfHarvester = createAsyncThunk(
     try {
       const response = await axios.get("/getAllServicesOfHarvester", { params: filters });
 
-      if (response.status === 200) {
-        return {
-          status: response.status,
-          data: response.data,
-        };
-      } else {
-        return rejectWithValue({
-          status: response.status,
-          data: response.data,
-        });
-      }
-    } catch (err) {
+      return { status: response.status, data: response.data, filters };
+    } catch (error) {
       return rejectWithValue({
-        status: err.response?.status || 500,
-        data: err.response?.data || { message: "Network or server error" },
+        status: error.response?.status || 500,
+        data: error.response?.data || { message: "Network or server error" },
       });
     }
   }
 );
 
-const initialState = {
-  loader: false,
-};
-
 const HarvestorServiceMgmtSlice = createSlice({
   name: "HarvestorService",
-  initialState,
+  initialState: {
+    services: [],
+    filters: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearHarvestorServices: (state) => {
+      state.services = [];
+      state.filters = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
-
-      // getAllServicesOfHarvester
       .addCase(getAllServicesOfHarvester.pending, (state) => {
-        state.loader = true;
+        state.loading = true;
       })
-      .addCase(getAllServicesOfHarvester.fulfilled, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfHarvester.fulfilled, (state, action) => {
+        const { status, data, filters } = action.payload;
+        if (status === 200) {
+          state.services = data?.data?.[0]?.data || [];
+          state.filters = filters;
+        }
+        state.loading = false;
       })
-      .addCase(getAllServicesOfHarvester.rejected, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfHarvester.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { clearHarvestorServices } = HarvestorServiceMgmtSlice.actions;
 export default HarvestorServiceMgmtSlice.reducer;

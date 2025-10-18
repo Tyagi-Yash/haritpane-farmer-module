@@ -68,9 +68,10 @@ function CattleChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`vendor-details/${service._id}`}
+                    // to={`vendor-details/${service._id}`}
+                    to={`vendor-details/${service._id}?${new URLSearchParams(filters).toString()}`}
                     key={service._id}
-                  >
+                  > 
                     <div className="vendor-card">
                       <div className="service-info">
                         <img src={service.images[0]} alt="Service" className="service-image" />

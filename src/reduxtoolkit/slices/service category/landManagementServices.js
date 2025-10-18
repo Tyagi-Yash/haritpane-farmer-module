@@ -5,49 +5,51 @@ export const getAllLandManagementServices = createAsyncThunk(
   "LandService/getAllLandManagementServices",
   async (filters, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/getAllServicesOfLandManagement", { params: filters });
+      const response = await axios.get("/getAllLandManagementServices", { params: filters });
 
-      if (response.status === 200) {
-        return {
-          status: response.status,
-          data: response.data,
-        };
-      } else {
-        return rejectWithValue({
-          status: response.status,
-          data: response.data,
-        });
-      }
-    } catch (err) {
+      return { status: response.status, data: response.data, filters };
+    } catch (error) {
       return rejectWithValue({
-        status: err.response?.status || 500,
-        data: err.response?.data || { message: "Network or server error" },
+        status: error.response?.status || 500,
+        data: error.response?.data || { message: "Network or server error" },
       });
     }
   }
 );
 
-const initialState = {
-  loader: false,
-};
-
 const LandServiceMgmtSlice = createSlice({
   name: "LandService",
-  initialState,
+  initialState: {
+    services: [],
+    filters: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearLandServiceServices: (state) => {
+      state.services = [];
+      state.filters = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
-
-      // getAllLandManagementServices
       .addCase(getAllLandManagementServices.pending, (state) => {
-        state.loader = true;
+        state.loading = true;
       })
-      .addCase(getAllLandManagementServices.fulfilled, (state) => {
-        state.loader = false;
+      .addCase(getAllLandManagementServices.fulfilled, (state, action) => {
+        const { status, data, filters } = action.payload;
+        if (status === 200) {
+          state.services = data?.data?.[0]?.data || [];
+          state.filters = filters;
+        }
+        state.loading = false;
       })
-      .addCase(getAllLandManagementServices.rejected, (state) => {
-        state.loader = false;
+      .addCase(getAllLandManagementServices.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { clearLandServiceServices } = LandServiceMgmtSlice.actions;
 export default LandServiceMgmtSlice.reducer;

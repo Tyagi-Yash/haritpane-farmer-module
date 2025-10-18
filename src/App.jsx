@@ -80,10 +80,12 @@ import {
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common components/UserAuthProtect";
 import PublicRoute from "./components/common components/PublicRoute";
+import SyncLogout from "./components/common components/SyncLogout";
 
 function App() {
   return (
     <>
+      <SyncLogout />
       <Routes>
         <Route element={<PublicRoute />}>
           <Route path="/" element={<Signup />} />

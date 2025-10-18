@@ -7,47 +7,49 @@ export const getAllServicesOfBorewell = createAsyncThunk(
     try {
       const response = await axios.get("/getAllServicesOfBorewell", { params: filters });
 
-      if (response.status === 200) {
-        return {
-          status: response.status,
-          data: response.data,
-        };
-      } else {
-        return rejectWithValue({
-          status: response.status,
-          data: response.data,
-        });
-      }
-    } catch (err) {
+      return { status: response.status, data: response.data, filters };
+    } catch (error) {
       return rejectWithValue({
-        status: err.response?.status || 500,
-        data: err.response?.data || { message: "Network or server error" },
+        status: error.response?.status || 500,
+        data: error.response?.data || { message: "Network or server error" },
       });
     }
   }
 );
 
-const initialState = {
-  loader: false,
-};
-
 const BorewellServiceMgmtSlice = createSlice({
   name: "borewellService",
-  initialState,
+  initialState: {
+    services: [],
+    filters: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearBorewellServices: (state) => {
+      state.services = [];
+      state.filters = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
-
-      // getAllServicesOfBorewell
       .addCase(getAllServicesOfBorewell.pending, (state) => {
-        state.loader = true;
+        state.loading = true;
       })
-      .addCase(getAllServicesOfBorewell.fulfilled, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfBorewell.fulfilled, (state, action) => {
+        const { status, data, filters } = action.payload;
+        if (status === 200) {
+          state.services = data?.data?.[0]?.data || [];
+          state.filters = filters;
+        }
+        state.loading = false;
       })
-      .addCase(getAllServicesOfBorewell.rejected, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfBorewell.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { clearBorewellServices } = BorewellServiceMgmtSlice.actions;
 export default BorewellServiceMgmtSlice.reducer;

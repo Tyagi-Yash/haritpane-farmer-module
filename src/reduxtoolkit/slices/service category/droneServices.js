@@ -7,47 +7,49 @@ export const getAllServicesOfDrone = createAsyncThunk(
     try {
       const response = await axios.get("/getAllServicesOfDrone", { params: filters });
 
-      if (response.status === 200) {
-        return {
-          status: response.status,
-          data: response.data,
-        };
-      } else {
-        return rejectWithValue({
-          status: response.status,
-          data: response.data,
-        });
-      }
-    } catch (err) {
+      return { status: response.status, data: response.data, filters };
+    } catch (error) {
       return rejectWithValue({
-        status: err.response?.status || 500,
-        data: err.response?.data || { message: "Network or server error" },
+        status: error.response?.status || 500,
+        data: error.response?.data || { message: "Network or server error" },
       });
     }
   }
 );
 
-const initialState = {
-  loader: false,
-};
-
 const DroneServiceMgmtSlice = createSlice({
   name: "droneService",
-  initialState,
+  initialState: {
+    services: [],
+    filters: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearDroneServices: (state) => {
+      state.services = [];
+      state.filters = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
-
-      // getAllServicesOfDrone
       .addCase(getAllServicesOfDrone.pending, (state) => {
-        state.loader = true;
+        state.loading = true;
       })
-      .addCase(getAllServicesOfDrone.fulfilled, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfDrone.fulfilled, (state, action) => {
+        const { status, data, filters } = action.payload;
+        if (status === 200) {
+          state.services = data?.data?.[0]?.data || [];
+          state.filters = filters;
+        }
+        state.loading = false;
       })
-      .addCase(getAllServicesOfDrone.rejected, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfDrone.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { clearDroneServices } = DroneServiceMgmtSlice.actions;
 export default DroneServiceMgmtSlice.reducer;

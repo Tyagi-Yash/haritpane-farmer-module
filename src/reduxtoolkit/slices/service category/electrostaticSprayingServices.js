@@ -7,47 +7,49 @@ export const getAllServicesOfElectrostatic = createAsyncThunk(
     try {
       const response = await axios.get("/getAllServicesOfElectrostatic", { params: filters });
 
-      if (response.status === 200) {
-        return {
-          status: response.status,
-          data: response.data,
-        };
-      } else {
-        return rejectWithValue({
-          status: response.status,
-          data: response.data,
-        });
-      }
-    } catch (err) {
+      return { status: response.status, data: response.data, filters };
+    } catch (error) {
       return rejectWithValue({
-        status: err.response?.status || 500,
-        data: err.response?.data || { message: "Network or server error" },
+        status: error.response?.status || 500,
+        data: error.response?.data || { message: "Network or server error" },
       });
     }
   }
 );
 
-const initialState = {
-  loader: false,
-};
-
 const ElectrostaticSprayingServiceMgmtSlice = createSlice({
   name: "electrostaticSprayingService",
-  initialState,
+  initialState: {
+    services: [],
+    filters: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearElectroStaticSprayingServices: (state) => {
+      state.services = [];
+      state.filters = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
-
-      // getAllServicesOfElectrostatic
       .addCase(getAllServicesOfElectrostatic.pending, (state) => {
-        state.loader = true;
+        state.loading = true;
       })
-      .addCase(getAllServicesOfElectrostatic.fulfilled, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfElectrostatic.fulfilled, (state, action) => {
+        const { status, data, filters } = action.payload;
+        if (status === 200) {
+          state.services = data?.data?.[0]?.data || [];
+          state.filters = filters;
+        }
+        state.loading = false;
       })
-      .addCase(getAllServicesOfElectrostatic.rejected, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesOfElectrostatic.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { clearElectroStaticSprayingServices } = ElectrostaticSprayingServiceMgmtSlice.actions;
 export default ElectrostaticSprayingServiceMgmtSlice.reducer;

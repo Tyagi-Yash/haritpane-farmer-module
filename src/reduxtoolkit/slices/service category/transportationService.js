@@ -26,39 +26,37 @@ export const getVehicleTypesForTransportation = createAsyncThunk(
     }
   }
 );
+
 export const getAllServicesTransportation = createAsyncThunk(
   "transportationService/getAllServicesTransportation",
   async (filters, { rejectWithValue }) => {
     try {
       const response = await axios.get("/getAllServicesTransportation", { params: filters });
 
-      if (response.status === 200) {
-        return {
-          status: response.status,
-          data: response.data,
-        };
-      } else {
-        return rejectWithValue({
-          status: response.status,
-          data: response.data,
-        });
-      }
-    } catch (err) {
+      return { status: response.status, data: response.data, filters };
+    } catch (error) {
       return rejectWithValue({
-        status: err.response?.status || 500,
-        data: err.response?.data || { message: "Network or server error" },
+        status: error.response?.status || 500,
+        data: error.response?.data || { message: "Network or server error" },
       });
     }
   }
 );
 
-const initialState = {
-  loader: false,
-};
-
 const TransportationServiceMgmtSlice = createSlice({
   name: "transportationService",
-  initialState,
+  initialState: {
+    services: [],
+    filters: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearTransportServices: (state) => {
+      state.services = [];
+      state.filters = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
 
@@ -75,15 +73,22 @@ const TransportationServiceMgmtSlice = createSlice({
 
       // getAllServicesTransportation
       .addCase(getAllServicesTransportation.pending, (state) => {
-        state.loader = true;
+        state.loading = true;
       })
-      .addCase(getAllServicesTransportation.fulfilled, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesTransportation.fulfilled, (state, action) => {
+        const { status, data, filters } = action.payload;
+        if (status === 200) {
+          state.services = data?.data?.[0]?.data || [];
+          state.filters = filters;
+        }
+        state.loading = false;
       })
-      .addCase(getAllServicesTransportation.rejected, (state) => {
-        state.loader = false;
+      .addCase(getAllServicesTransportation.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
+export const { clearTransportServices } = TransportationServiceMgmtSlice.actions;
 export default TransportationServiceMgmtSlice.reducer;
