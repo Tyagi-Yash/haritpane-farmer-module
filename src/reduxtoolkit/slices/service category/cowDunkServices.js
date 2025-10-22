@@ -89,6 +89,7 @@ const CowDunkServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServiceCowDunk.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServiceCowDunk.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

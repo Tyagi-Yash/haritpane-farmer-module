@@ -58,7 +58,7 @@ function SideNav() {
                 <span className="Icon">
                   <img src={dashboard} alt="" />
                 </span>
-                <span className="Text">Overview</span>
+                <span className="Text">Dashboard</span>
               </NavLink>
             </li>
             <li>

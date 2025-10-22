@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { sendOtp } from "../../reduxtoolkit/slices/auth/auth";
 import { toast } from "react-toastify";
 
-function OtpResend({ cooldown = 30, phoneNumber, setErrors }) {
+function OtpResend({ cooldown = 30, phoneNumber, setErrors, setOtp }) {
   const [timeLeft, setTimeLeft] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const otploader = useSelector((state) => state.authMgmtSlice?.otploader) || false;
@@ -49,6 +49,7 @@ function OtpResend({ cooldown = 30, phoneNumber, setErrors }) {
 
   const resendOtp = async (e) => {
     if (!validateNumber()) return;
+
     try {
       const res = await dispatch(sendOtp({ phone: phoneNumber.trim() }));
       const status = res?.payload?.status;
@@ -59,6 +60,7 @@ function OtpResend({ cooldown = 30, phoneNumber, setErrors }) {
         localStorage.setItem("otp", res?.payload?.data?.data);
         toast.success(`${message} (Otp: ${res.payload.data.data})` || "OTP sent sucessfully");
 
+        setOtp("");
         setIsActive(true);
         setTimeLeft(cooldown);
       } else {

@@ -35,6 +35,7 @@ const CattleServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfCattle.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfCattle.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

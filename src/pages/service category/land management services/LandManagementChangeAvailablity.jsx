@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
-import { getAllLandManagementServices } from "../../../reduxtoolkit/slices/service category/landManagementServices";
+import { getAllServicesOfLandManagement } from "../../../reduxtoolkit/slices/service category/landManagementServices";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 
 function LandManagementChangeAvailablity() {
@@ -68,7 +68,7 @@ function LandManagementChangeAvailablity() {
     if (!validateForm()) return;
     setLoading(true);
     try {
-      const res = await dispatch(getAllLandManagementServices(filters));
+      const res = await dispatch(getAllServicesOfLandManagement(filters));
       const { status, data } = res?.payload || {};
       if (status === 200) {
         setServices(data?.data?.[0]?.data || []);

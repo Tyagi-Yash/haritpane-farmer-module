@@ -1,8 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-function OtpInput({ length = 4, onChange }) {
+function OtpInput({ length = 4, value = "", onChange }) {
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const inputsRef = useRef([]);
+
+  useEffect(() => {
+    if (value === "") {
+      setOtp(new Array(length).fill(""));
+      if (inputsRef.current[0]) inputsRef.current[0].focus();
+    }
+  }, [value, length]);
 
   const handleChange = (value, index) => {
     if (!/^[0-9]?$/.test(value)) return;

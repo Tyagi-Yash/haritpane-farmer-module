@@ -35,6 +35,7 @@ const ElectrostaticSprayingServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfElectrostatic.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfElectrostatic.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

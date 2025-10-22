@@ -35,6 +35,7 @@ const AugerServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfAuger.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfAuger.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

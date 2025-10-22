@@ -35,6 +35,7 @@ const ExcavationServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfExcavation.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfExcavation.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

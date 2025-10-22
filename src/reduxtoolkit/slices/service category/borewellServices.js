@@ -35,6 +35,7 @@ const BorewellServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfBorewell.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfBorewell.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

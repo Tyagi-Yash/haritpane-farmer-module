@@ -174,6 +174,27 @@ function LandManagementServicesSubServices() {
                       <img src={locationBlack} alt="" className="location-icon" />
                     </div> */}
                   </div>
+                  {selectSubCategory === "trackter_attachments" && (
+                    <div className="col-md-4">
+                      <select
+                        className="form-control"
+                        name="hpOfTractor"
+                        value={hpOfTractor}
+                        onChange={handleInputChange}
+                      >
+                        <option value="" disabled>
+                          Select Tractor Category*
+                        </option>
+                        <option value="Under_20">Under 20 hp</option>
+                        <option value="21-30">21-30 hp</option>
+                        <option value="31-40">31-40 hp</option>
+                        <option value="41-45">41-45 hp</option>
+                        <option value="46-50">46-50 hp</option>
+                        <option value="Above_50">Above 50 hp</option>
+                      </select>
+                      {errors.hpOfTractor && <p className="error-text">{errors.hpOfTractor}</p>}
+                    </div>
+                  )}
                   <div className="col-md-4">
                     <select
                       className="form-control"
@@ -200,27 +221,6 @@ function LandManagementServicesSubServices() {
                       <p className="error-text">{errors.selectAttachment}</p>
                     )}
                   </div>
-                  {selectSubCategory === "trackter_attachments" && (
-                    <div className="col-md-4">
-                      <select
-                        className="form-control"
-                        name="hpOfTractor"
-                        value={hpOfTractor}
-                        onChange={handleInputChange}
-                      >
-                        <option value="" disabled>
-                          Select Tractor Category*
-                        </option>
-                        <option value="Under_20">Under 20 hp</option>
-                        <option value="21-30">21-30 hp</option>
-                        <option value="31-40">31-40 hp</option>
-                        <option value="41-45">41-45 hp</option>
-                        <option value="46-50">46-50 hp</option>
-                        <option value="Above_50">Above 50 hp</option>
-                      </select>
-                      {errors.hpOfTractor && <p className="error-text">{errors.hpOfTractor}</p>}
-                    </div>
-                  )}
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">

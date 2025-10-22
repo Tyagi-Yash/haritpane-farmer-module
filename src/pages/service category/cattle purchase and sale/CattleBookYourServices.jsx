@@ -10,14 +10,18 @@ import {
   breedOptions,
   cattleData,
 } from "../../../constants/service category/cattle purchase and sale/cattleAndBreedData";
+import { useSelector } from "react-redux";
 
 function CattleBookYourServices() {
-  const [formState, setFormState] = useState({
-    lat: "",
-    lng: "",
-    selectBreed: "",
-    sectectCattle: "",
-  });
+  const filters = useSelector((state) => state.services.CattleServiceMgmtSlice.filters);
+  const [formState, setFormState] = useState(
+    filters || {
+      lat: "",
+      lng: "",
+      selectBreed: "",
+      sectectCattle: "",
+    }
+  );
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 

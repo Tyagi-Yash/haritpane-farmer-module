@@ -127,10 +127,17 @@ function OtpVerify() {
           )}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <OtpInput length={4} onChange={handleOtpChange} />
+              {/* <OtpInput length={4} onChange={handleOtpChange} /> */}
+              <OtpInput length={4} value={otp} onChange={handleOtpChange} />
+
               {errors.otpError && <p className="error-text">{errors.otpError}</p>}
 
-              <OtpResend cooldown={30} phoneNumber={phoneNumber} setErrors={setErrors} />
+              <OtpResend
+                cooldown={30}
+                phoneNumber={phoneNumber}
+                setErrors={setErrors}
+                setOtp={setOtp}
+              />
 
               <button className="Button" disabled={disable}>
                 {loginloader ? "Verifying..." : "Verify & Continue"}

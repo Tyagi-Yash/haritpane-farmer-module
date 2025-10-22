@@ -35,6 +35,7 @@ const HarvestorServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfHarvester.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfHarvester.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

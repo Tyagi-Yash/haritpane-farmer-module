@@ -63,6 +63,7 @@ const CompoundWallServiceMgmtSlice = createSlice({
       // getAllServicesCompoundWall
       .addCase(getAllServicesCompoundWall.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesCompoundWall.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

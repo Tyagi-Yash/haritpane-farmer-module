@@ -35,6 +35,7 @@ const LabourServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfLabour.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfLabour.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;

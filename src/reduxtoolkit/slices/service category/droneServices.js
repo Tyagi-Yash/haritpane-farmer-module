@@ -35,6 +35,7 @@ const DroneServiceMgmtSlice = createSlice({
     builder
       .addCase(getAllServicesOfDrone.pending, (state) => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(getAllServicesOfDrone.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;
