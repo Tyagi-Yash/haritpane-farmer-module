@@ -13,16 +13,19 @@ import {
   validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import { useSelector } from "react-redux";
 
 function DroneBookYourService() {
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.DroneServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     cropUnderCultivation: "",
     areaUnderCultivation: "",
     date: "",
     time: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();

@@ -45,6 +45,9 @@ const CompoundWallServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearCompoundWallServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -80,5 +83,6 @@ const CompoundWallServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearCompoundWallServices } = CompoundWallServiceMgmtSlice.actions;
+export const { clearCompoundWallServices, clearCompoundWallServicesFilters } =
+  CompoundWallServiceMgmtSlice.actions;
 export default CompoundWallServiceMgmtSlice.reducer;

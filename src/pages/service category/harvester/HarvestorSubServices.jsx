@@ -15,9 +15,11 @@ import {
   validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import { useSelector } from "react-redux";
 
 function HarvestorSubServices() {
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.HarvestorServiceMgmtSlice.filters);
+  const defaultForm = {
     selectSubCategory: "combine_harvester",
     lat: "",
     lng: "",
@@ -26,7 +28,9 @@ function HarvestorSubServices() {
     fromDate: "",
     toDate: "",
     fromTime: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -122,7 +126,7 @@ function HarvestorSubServices() {
                         value="combine_harvester"
                         className="radio-input"
                         onChange={handleInputChange}
-                        defaultChecked
+                        checked={selectSubCategory === "combine_harvester"}
                       />
                       <div className="radio-card">
                         <img src={StandardHarvesterCombined} alt="Tractor & Attachment" />
@@ -138,6 +142,7 @@ function HarvestorSubServices() {
                         value="tractor_harvester"
                         className="radio-input"
                         onChange={handleInputChange}
+                        checked={selectSubCategory === "tractor_harvester"}
                       />
                       <div className="radio-card">
                         <img src={TractorHarvester} alt="Only Attachment" />

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
 
-export const getAllServicesOfLandManagement  = createAsyncThunk(
+export const getAllServicesOfLandManagement = createAsyncThunk(
   "LandService/getAllServicesOfLandManagement",
   async (filters, { rejectWithValue }) => {
     try {
@@ -17,7 +17,6 @@ export const getAllServicesOfLandManagement  = createAsyncThunk(
   }
 );
 
-
 const LandServiceMgmtSlice = createSlice({
   name: "LandService",
   initialState: {
@@ -27,8 +26,11 @@ const LandServiceMgmtSlice = createSlice({
     error: null,
   },
   reducers: {
-    clearLandServiceServices: (state) => {
+    clearLandServices: (state) => {
       state.services = [];
+      state.filters = {};
+    },
+    clearLandServicesFilters: (state) => {
       state.filters = {};
     },
   },
@@ -53,5 +55,5 @@ const LandServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearLandServiceServices } = LandServiceMgmtSlice.actions;
+export const { clearLandServices, clearLandServicesFilters } = LandServiceMgmtSlice.actions;
 export default LandServiceMgmtSlice.reducer;

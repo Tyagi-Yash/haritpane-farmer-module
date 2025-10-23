@@ -11,16 +11,19 @@ import {
   validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import { useSelector } from "react-redux";
 
 function AugerBookYourService() {
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.AugerServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     date: "",
     time: "",
     hours: "",
     minutes: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
   const { lat, lng, date, time, hours, minutes } = formState;
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});

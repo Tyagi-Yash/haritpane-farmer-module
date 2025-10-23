@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import locationBlack from "../../../assets/images/location-black.svg";
@@ -14,13 +15,18 @@ import {
 } from "../../../utils/formValidators";
 
 function ElectrostaticBookYourService() {
-  const [formState, setFormState] = useState({
+  const filters = useSelector(
+    (state) => state.services.ElectrostaticSprayingServiceMgmtSlice.filters
+  );
+  const defaultForm = {
     lat: "",
     lng: "",
     areaUnderCultivation: "",
     fromDate: "",
     fromTime: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();

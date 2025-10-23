@@ -30,6 +30,9 @@ const ExcavationServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearExcavationServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,6 @@ const ExcavationServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearExcavationServices } = ExcavationServiceMgmtSlice.actions;
+export const { clearExcavationServices, clearExcavationServicesFilters } =
+  ExcavationServiceMgmtSlice.actions;
 export default ExcavationServiceMgmtSlice.reducer;

@@ -12,6 +12,7 @@ import {
   validateQuantity,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import { useSelector } from "react-redux";
 
 function CowDungBookYourService() {
   const dryDunkOptions = [
@@ -22,14 +23,17 @@ function CowDungBookYourService() {
     { value: "trolly", name: "3-4 Wet (Trolly)" },
     { value: "truck", name: "10-12 Wet (Truck)" },
   ];
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.CowDunkServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     typeOfCowDunk: "",
     quantity: "",
     date: "",
     time: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
   const { lat, lng, date, time, quantity, typeOfCowDunk } = formState;
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});

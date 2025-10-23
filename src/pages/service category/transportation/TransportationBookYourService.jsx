@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import TransportationIcon from "../../../assets/images/Transportation-icon.png";
 import { getVehicleTypesForTransportation } from "../../../reduxtoolkit/slices/service category/transportationService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   validateCurrentLocation,
   validateDates,
@@ -38,12 +38,12 @@ function TransportationBookYourService() {
       toast("Something went wrong");
     }
   };
-
   useEffect(() => {
     fetchVehicle();
   }, []);
 
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.TransportationServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     currentLocationOfTransportation: "",
@@ -61,7 +61,8 @@ function TransportationBookYourService() {
     toDate: "",
     fromTime: "",
     toTime: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
 
   const {
     lat,
@@ -87,15 +88,6 @@ function TransportationBookYourService() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormState((prev) => ({
-  //     ...prev,
-  //     [name]: value,
-  //   }));
-  //   setErrors((prev) => ({ ...prev, [name]: "" }));
-  // };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
@@ -120,75 +112,6 @@ function TransportationBookYourService() {
 
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
-  // const validateForm = () => {
-  //   let newErrors = {};
-
-  //   const transportItemError = validateItemType(transportItem.trim());
-  //   if (transportItemError) newErrors.transportItem = transportItemError;
-
-  //   const currentLocationError = validateCurrentLocation(currentLocationOfTransportation.trim());
-  //   if (currentLocationError) newErrors.currentLocationOfTransportation = currentLocationError;
-
-  //   const targetLocationError = validateDestinationLocation(
-  //     destinationLocationOfTransportation.trim()
-  //   );
-  //   if (targetLocationError) newErrors.destinationLocationOfTransportation = targetLocationError;
-
-  //   const vegeTypeError = validateVegeType(vegetableType.trim());
-  //   if (vegeTypeError) newErrors.vegetableType = vegeTypeError;
-
-  //   const cattleError = validateNumberOfCattle(numberOfCattle.trim());
-  //   if (cattleError) newErrors.numberOfCattle = cattleError;
-
-  //   const equipWeightError = validateWeight(equipmentWeight.trim());
-  //   if (equipWeightError) newErrors.equipmentWeight = equipWeightError;
-
-  //   const lenghtError = validateLength(lengthCm.trim());
-  //   if (lenghtError) newErrors.lengthCm = lenghtError;
-
-  //   const WidthError = validateWidth(widthCm.trim());
-  //   if (WidthError) newErrors.widthCm = WidthError;
-
-  //   const heightError = validateHeight(heightCm.trim());
-  //   if (heightError) newErrors.heightCm = heightError;
-
-  //   const objWeightError = validateWeight(otherWeightKg.trim());
-  //   if (objWeightError) newErrors.otherWeightKg = objWeightError;
-
-  //   const vehicleTypeError = validateVehicleType(typeOfVehicle.trim());
-  //   if (vehicleTypeError) newErrors.typeOfVehicle = vehicleTypeError;
-
-  //   const dateErrors = validateDates(fromDate, toDate);
-  //   newErrors = { ...newErrors, ...dateErrors };
-
-  //   const timeError = validateTime(fromDate, toDate, fromTime, toTime);
-  //   newErrors = { ...newErrors, ...timeError };
-
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) return;
-
-  //   setDisable(true);
-  //   const formdata = {
-  //     fromDate,
-  //     toDate,
-  //     fromTime,
-  //     toTime,
-  //   };
-  //   try {
-  //     const query = new URLSearchParams(formState).toString();
-  //     navigate(`available-services?${query}`);
-  //   } catch (error) {
-  //     toast.error("Something went wrong");
-  //   } finally {
-  //     setDisable(false);
-  //   }
-  // }
 
   const validateForm = () => {
     let newErrors = {};

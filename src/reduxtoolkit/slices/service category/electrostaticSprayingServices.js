@@ -30,6 +30,9 @@ const ElectrostaticSprayingServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearElectroStaticSprayingServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,6 @@ const ElectrostaticSprayingServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearElectroStaticSprayingServices } = ElectrostaticSprayingServiceMgmtSlice.actions;
+export const { clearElectroStaticSprayingServices, clearElectroStaticSprayingServicesFilters } =
+  ElectrostaticSprayingServiceMgmtSlice.actions;
 export default ElectrostaticSprayingServiceMgmtSlice.reducer;

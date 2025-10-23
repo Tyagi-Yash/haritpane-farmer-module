@@ -13,9 +13,11 @@ import {
   validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import { useSelector } from "react-redux";
 
 function LandManagementServicesSubServices() {
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.LandServiceMgmtSlice.filters);
+  const defaultForm = {
     selectSubCategory: "trackter_attachments",
     lat: "",
     lng: "",
@@ -24,7 +26,10 @@ function LandManagementServicesSubServices() {
     fromDate: "",
     toDate: "",
     fromTime: "",
-  });
+  };
+  
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -115,7 +120,7 @@ function LandManagementServicesSubServices() {
                         value="trackter_attachments"
                         className="radio-input"
                         onChange={handleInputChange}
-                        defaultChecked
+                        checked={selectSubCategory === "trackter_attachments"}
                       />
                       <div className="radio-card">
                         <img src={TractorandAttachment} alt="Tractor & Attachment" />
@@ -131,6 +136,7 @@ function LandManagementServicesSubServices() {
                         value="only_attachments"
                         className="radio-input"
                         onChange={handleInputChange}
+                        checked={selectSubCategory === "only_attachments"}
                       />
                       <div className="radio-card">
                         <img src={onlyAttachment} alt="Only Attachment" />

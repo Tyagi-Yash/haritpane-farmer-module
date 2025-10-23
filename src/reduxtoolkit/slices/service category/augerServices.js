@@ -30,6 +30,9 @@ const AugerServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearAugerServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,5 @@ const AugerServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearAugerServices } = AugerServiceMgmtSlice.actions;
+export const { clearAugerServices, clearAugerServicesFilters } = AugerServiceMgmtSlice.actions;
 export default AugerServiceMgmtSlice.reducer;

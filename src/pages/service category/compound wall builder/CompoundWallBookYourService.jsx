@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import locationBlack from "../../../assets/images/location-black.svg";
@@ -16,13 +16,16 @@ import {
 import { getCompoundWallServiceTypes } from "../../../reduxtoolkit/slices/service category/compoundWallServices";
 
 function CompoundWallBookYourService() {
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.CompoundWallServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     serviceType: "",
     date: "",
     time: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
   const { lat, lng, serviceType, date, time } = formState;
   const navigate = useNavigate();
   const dispatch = useDispatch();

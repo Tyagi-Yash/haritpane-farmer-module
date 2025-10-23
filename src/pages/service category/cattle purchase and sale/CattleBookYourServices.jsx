@@ -14,18 +14,17 @@ import { useSelector } from "react-redux";
 
 function CattleBookYourServices() {
   const filters = useSelector((state) => state.services.CattleServiceMgmtSlice.filters);
-  const [formState, setFormState] = useState(
-    filters || {
-      lat: "",
-      lng: "",
-      selectBreed: "",
-      sectectCattle: "",
-    }
-  );
+  const defaultForm = {
+    lat: "",
+    lng: "",
+    selectBreed: "",
+    sectectCattle: "",
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+  const { lat, lng, selectBreed, sectectCattle } = formState;
+
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
-  const { lat, lng, selectBreed, sectectCattle } = formState;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

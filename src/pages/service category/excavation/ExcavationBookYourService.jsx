@@ -13,19 +13,12 @@ import {
   validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import { equipmentTypesOption } from "../../../constants/service category/excavation service/equipmentOption";
+import { useSelector } from "react-redux";
 
 function ExcavationBookYourService() {
-  const equipmentTypesOption = [
-    "JCB",
-    "Excavator",
-    "Wheel Loader",
-    "Dozer",
-    "Dump",
-    "Mini Excavator",
-    "Long Reach Excavator",
-  ];
-
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.ExcavationServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     equipmentTypes: "",
@@ -34,7 +27,9 @@ function ExcavationBookYourService() {
     fromTime: "",
     hours: "",
     minutes: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
   const { lat, lng, equipmentTypes, fromDate, toDate, fromTime, hours, minutes } = formState;
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});

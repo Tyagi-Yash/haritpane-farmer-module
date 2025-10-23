@@ -30,6 +30,9 @@ const BorewellServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearBorewellServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,6 @@ const BorewellServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearBorewellServices } = BorewellServiceMgmtSlice.actions;
+export const { clearBorewellServices, clearBorewellServicesFilters } =
+  BorewellServiceMgmtSlice.actions;
 export default BorewellServiceMgmtSlice.reducer;

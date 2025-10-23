@@ -127,7 +127,6 @@ function OtpVerify() {
           )}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              {/* <OtpInput length={4} onChange={handleOtpChange} /> */}
               <OtpInput length={4} value={otp} onChange={handleOtpChange} />
 
               {errors.otpError && <p className="error-text">{errors.otpError}</p>}

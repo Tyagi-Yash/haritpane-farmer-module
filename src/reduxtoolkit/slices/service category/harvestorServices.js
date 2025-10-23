@@ -30,6 +30,9 @@ const HarvestorServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearHarvestorServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,6 @@ const HarvestorServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearHarvestorServices } = HarvestorServiceMgmtSlice.actions;
+export const { clearHarvestorServices, clearHarvestorServicesFilters } =
+  HarvestorServiceMgmtSlice.actions;
 export default HarvestorServiceMgmtSlice.reducer;

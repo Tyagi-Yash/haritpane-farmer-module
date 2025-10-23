@@ -30,6 +30,9 @@ const LabourServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearLabourServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,5 @@ const LabourServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearLabourServices } = LabourServiceMgmtSlice.actions;
+export const { clearLabourServices, clearLabourServicesFilters } = LabourServiceMgmtSlice.actions;
 export default LabourServiceMgmtSlice.reducer;

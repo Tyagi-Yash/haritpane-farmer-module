@@ -81,6 +81,7 @@ import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/common components/UserAuthProtect";
 import PublicRoute from "./components/common components/PublicRoute";
 import SyncLogout from "./components/common components/SyncLogout";
+import RouteWatcher from "./components/common components/RouteWatcher";
 
 function App() {
   return (
@@ -97,15 +98,17 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route element={<RootLayout />}>
-            <Route path="dashboard">
-              <Route index element={<Dashboard />} />
-              <Route path="local-shops">
-                <Route index element={<LocalProductsListingModule />} />
-                <Route path="product-details/:id" element={<LocalProductDetails />} />
-              </Route>
-              <Route path="local-manufacturers">
-                <Route index element={<LocalProductsListingModule />} />
-                <Route path="product-details/:id" element={<LocalProductDetails />} />
+            <Route element={<RouteWatcher />}>
+              <Route path="dashboard">
+                <Route index element={<Dashboard />} />
+                <Route path="local-shops">
+                  <Route index element={<LocalProductsListingModule />} />
+                  <Route path="product-details/:id" element={<LocalProductDetails />} />
+                </Route>
+                <Route path="local-manufacturers">
+                  <Route index element={<LocalProductsListingModule />} />
+                  <Route path="product-details/:id" element={<LocalProductDetails />} />
+                </Route>
               </Route>
             </Route>
 
@@ -114,7 +117,9 @@ function App() {
               <Route path="vendor-details" element={<ServiceTrackingVendorDetails />} />
             </Route>
 
-            <Route path="service-category" element={<ServiceCategory />} />
+            <Route element={<RouteWatcher />}>
+              <Route path="service-category" element={<ServiceCategory />} />
+            </Route>
 
             <Route path="land-management">
               <Route index element={<LandManagementServicesSubServices />} />
@@ -144,7 +149,7 @@ function App() {
               <Route index element={<ExcavationBookYourService />} />
               <Route path="available-services">
                 <Route index element={<ExcavationChangeAvailablity />} />
-                <Route path="vendor-details/:id" element={<CattleVendorDetailsPending />} />
+                <Route path="vendor-details/:id" element={<ExcavationVendorDetailsPending />} />
               </Route>
             </Route>
 

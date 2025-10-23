@@ -30,6 +30,9 @@ const CattleServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearCattleServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,5 @@ const CattleServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearCattleServices } = CattleServiceMgmtSlice.actions;
+export const { clearCattleServices, clearCattleServicesFilters } = CattleServiceMgmtSlice.actions;
 export default CattleServiceMgmtSlice.reducer;

@@ -56,6 +56,9 @@ const TransportationServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearTransportServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -91,5 +94,6 @@ const TransportationServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearTransportServices } = TransportationServiceMgmtSlice.actions;
+export const { clearTransportServices, clearTransportServicesFilters } =
+  TransportationServiceMgmtSlice.actions;
 export default TransportationServiceMgmtSlice.reducer;

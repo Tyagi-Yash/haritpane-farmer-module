@@ -14,9 +14,11 @@ import {
   validateTime,
   validateWaterMotor,
 } from "../../../utils/formValidators";
+import { useSelector } from "react-redux";
 
 function BorwellBookYourService() {
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.BorewellServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     depthOfBorewell: "",
@@ -26,7 +28,9 @@ function BorwellBookYourService() {
     toDate: "",
     fromTime: "",
     toTime: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
   const { lat, lng, depthOfBorewell, casingPipe, waterMotor, fromDate, toDate, fromTime, toTime } =
     formState;
   const [disable, setDisable] = useState(false);

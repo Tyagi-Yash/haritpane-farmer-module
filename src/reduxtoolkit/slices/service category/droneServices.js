@@ -30,6 +30,9 @@ const DroneServiceMgmtSlice = createSlice({
       state.services = [];
       state.filters = {};
     },
+    clearDroneServicesFilters: (state) => {
+      state.filters = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +55,5 @@ const DroneServiceMgmtSlice = createSlice({
   },
 });
 
-export const { clearDroneServices } = DroneServiceMgmtSlice.actions;
+export const { clearDroneServices ,clearDroneServicesFilters} = DroneServiceMgmtSlice.actions;
 export default DroneServiceMgmtSlice.reducer;

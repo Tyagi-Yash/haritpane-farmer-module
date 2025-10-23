@@ -19,12 +19,11 @@ import {
   cropValueEnable,
   LabourTypes,
 } from "../../../constants/service category/labor requirement/labour type data";
+import { useSelector } from "react-redux";
 
 function LaborBookYourService() {
-  const [disable, setDisable] = useState(false);
-  const [errors, setErrors] = useState({});
-  
-  const [formState, setFormState] = useState({
+  const filters = useSelector((state) => state.services.LabourServiceMgmtSlice.filters);
+  const defaultForm = {
     lat: "",
     lng: "",
     labourType: "",
@@ -35,7 +34,11 @@ function LaborBookYourService() {
     toDate: "",
     fromTime: "",
     toTime: "",
-  });
+  };
+  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+
+  const [disable, setDisable] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const {
     lat,
