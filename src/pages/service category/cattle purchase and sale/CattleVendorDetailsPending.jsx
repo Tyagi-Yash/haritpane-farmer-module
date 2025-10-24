@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import mobileIcon from "../../../assets/images/mobile.svg";

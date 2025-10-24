@@ -1,45 +1,40 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
+import GoodsTransportService from "../../../assets/images/GoodsTransportService.png";
 import TransportationIcon from "../../../assets/images/Transportation-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 import { getAllServicesTransportation } from "../../../reduxtoolkit/slices/service category/transportationService";
 
 function TransportationChangeAvailablity() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const dispatch = useDispatch();
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-
-  const [filters, setFilters] = useState({
-    lat: 28.40793935,
-    lng: 77.0842600176243,
-    currentLocationOfTransportation: queryParams.get("currentLocationOfTransportation") || "",
-    destinationLocationOfTransportation:
-      queryParams.get("destinationLocationOfTransportation") || "",
-    transportItem: queryParams.get("transportItem") || "",
-    vegetableType: queryParams.get("vegetableType") || "",
-    numberOfCattle: queryParams.get("numberOfCattle") || "",
-    equipmentDimensions: {
-      lengthCm: queryParams.get("lengthCm") || "",
-      widthCm: queryParams.get("widthCm") || "",
-      heightCm: queryParams.get("heightCm") || "",
-    },
-    equipmentWeight: queryParams.get("equipmentWeight") || "",
-    otherWeightKg: queryParams.get("otherWeightKg") || "",
-    typeOfVehicle: queryParams.get("typeOfVehicle") || "",
-    fromDate: queryParams.get("fromDate") || "",
-    toDate: queryParams.get("toDate") || "",
-    fromTime: queryParams.get("fromTime") || "",
-    toTime: queryParams.get("toTime") || "",
-  });
+  const filterValues = Object.fromEntries(queryParams.entries());
+  const initialFilters = (() => {
+    const result = { ...filterValues };
+    if (filterValues.transportItem === "equipment") {
+      result.equipmentDimensions = {
+        lengthCm: filterValues.lengthCm || "",
+        widthCm: filterValues.widthCm || "",
+        heightCm: filterValues.heightCm || "",
+      };
+      delete result.lengthCm;
+      delete result.widthCm;
+      delete result.heightCm;
+    }
+    return result;
+  })();
+  const [filters, setFilters] = useState(initialFilters);
   const { toDate, fromDate } = filters;
-
+  const [errors, setErrors] = useState({});
+  const { services, loading } = useSelector(
+    (state) => state.services.TransportationServiceMgmtSlice
+  );
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
@@ -48,8 +43,6 @@ function TransportationChangeAvailablity() {
     }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
-  const [services, setServices] = useState([]);
 
   const validateForm = () => {
     let newErrors = {};
@@ -78,22 +71,12 @@ function TransportationChangeAvailablity() {
 
   const fetchServices = async () => {
     if (!validateForm()) return;
-    setLoading(true);
     try {
-      const res = await dispatch(getAllServicesTransportation(filters));
-      const { status, data } = res?.payload || {};
-      if (status === 200) {
-        setServices(data?.data?.[0]?.data || []);
-      } else {
-        toast(data?.message || "Failed to load Services");
-      }
-    } catch (error) {
-      toast("Something went wrong");
-    } finally {
-      setLoading(false);
+      await dispatch(getAllServicesTransportation(filters)).unwrap();
+    } catch {
+      toast("Failed to load services");
     }
   };
-
   useEffect(() => {
     fetchServices();
   }, [toDate, fromDate]);
@@ -178,19 +161,25 @@ function TransportationChangeAvailablity() {
                   >
                     <div className="vendor-card">
                       <div className="service-info">
-                        <img src={service.vehicleImg[0]} alt="Service" className="service-image" />
+                        <img
+                          src={service?.vehicleImg?.[0] || GoodsTransportService}
+                          alt="Service"
+                          className="service-image"
+                        />
                         <div className="service-text">
-                          <div className="title"> {service.equipmentDescription}</div>
+                          <div className="title">
+                            {service?.equipmentDescription || "No description"}
+                          </div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service.rating}
+                            {service?.rating ?? "N/A"}
                           </div>
                         </div>
                       </div>
                       {/* <div className="price-info">
-                        <h6>₹ {Number(service.payableAmount).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
                         <small>Additional charges might apply</small>
                       </div> */}
                     </div>

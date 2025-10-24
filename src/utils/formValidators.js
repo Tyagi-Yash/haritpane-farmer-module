@@ -199,22 +199,31 @@ export const validateVehicleType = (item) => {
   }
   return "";
 };
-export const validateLength = (item) => {
-  if (!item || item === "") {
+export const validateLength = (number) => {
+  if (!number || number === "") {
     return "*Length is required";
   }
+  const num = Number(number);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
   return "";
 };
-export const validateWidth = (item) => {
-  if (!item || item === "") {
+export const validateWidth = (number) => {
+  if (!number || number === "") {
     return "*Width is required";
   }
+  const num = Number(number);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
   return "";
 };
-export const validateHeight = (item) => {
-  if (!item || item === "") {
+export const validateHeight = (number) => {
+  if (!number || number === "") {
     return "*Height is required";
   }
+  const num = Number(number);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
   return "";
 };
 

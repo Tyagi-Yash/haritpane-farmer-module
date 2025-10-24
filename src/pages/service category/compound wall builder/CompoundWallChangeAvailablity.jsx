@@ -1,29 +1,24 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
+import NewCompoundWallConstruction from "../../../assets/images/NewCompoundWallConstruction.png";
 import CompoundWallBuilderIcon from "../../../assets/images/CompoundWallBuilder-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 import { getAllServicesCompoundWall } from "../../../reduxtoolkit/slices/service category/compoundWallServices";
 
 function CompoundWallChangeAvailablity() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const dispatch = useDispatch();
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-
-  const [filters, setFilters] = useState({
-    lat: queryParams.get("lat") || "",
-    lng: queryParams.get("lng") || "",
-    serviceType: queryParams.get("serviceType") || "",
-    date: queryParams.get("date") || "",
-    time: queryParams.get("time") || "",
-  });
+  const filterValues = Object.fromEntries(queryParams.entries());
+  const [filters, setFilters] = useState(filterValues);
   const { date } = filters;
+  const { services, loading } = useSelector((state) => state.services.CompoundWallServiceMgmtSlice);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,8 +28,6 @@ function CompoundWallChangeAvailablity() {
     }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
-  const [services, setServices] = useState([]);
 
   const validateForm = () => {
     let newErrors = {};
@@ -52,6 +45,7 @@ function CompoundWallChangeAvailablity() {
     // } else if (new Date(toDate) < today) {
     //   newErrors.toDate = "*To date cannot be in the past";
     // }
+
     // if (date && toDate && new Date(date) > new Date(toDate)) {
     //   newErrors.toDate = "*To date cannot be earlier than from date";
     // }
@@ -62,25 +56,17 @@ function CompoundWallChangeAvailablity() {
 
   const fetchServices = async () => {
     if (!validateForm()) return;
-    setLoading(true);
     try {
-      const res = await dispatch(getAllServicesCompoundWall(filters));
-      const { status, data } = res?.payload || {};
-      if (status === 200) {
-        setServices(data?.data?.[0]?.data || []);
-      } else {
-        toast(data?.message || "Failed to load Services");
-      }
-    } catch (error) {
-      toast("Something went wrong");
-    } finally {
-      setLoading(false);
+      await dispatch(getAllServicesCompoundWall(filters)).unwrap();
+    } catch {
+      toast("Failed to load services");
     }
   };
 
   useEffect(() => {
     fetchServices();
   }, [date]);
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -161,19 +147,25 @@ function CompoundWallChangeAvailablity() {
                   >
                     <div className="vendor-card">
                       <div className="service-info">
-                        <img src={service.toolsImges} alt="Service" className="service-image" />
+                        <img
+                          src={service?.toolsImges || NewCompoundWallConstruction}
+                          alt="Service"
+                          className="service-image"
+                        />
                         <div className="service-text">
-                          <div className="title"> {service.equipmentDescription}</div>
+                          <div className="title">
+                            {service?.equipmentDescription || "No description"}
+                          </div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service.rating}
+                            {service?.rating ?? "N/A"}
                           </div>
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service.payableAmount).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

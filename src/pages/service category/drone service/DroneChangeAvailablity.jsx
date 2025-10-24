@@ -1,30 +1,24 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
+import DroneSprayingService from "../../../assets/images/DroneSprayingService.png";
 import droneServiceIcon from "../../../assets/images/DroneService-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 import { getAllServicesOfDrone } from "../../../reduxtoolkit/slices/service category/droneServices";
 
 function DroneChangeAvailablity() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const dispatch = useDispatch();
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-
-  const [filters, setFilters] = useState({
-    lat: queryParams.get("lat") || "",
-    lng: queryParams.get("lng") || "",
-    cropUnderCultivation: queryParams.get("cropUnderCultivation") || "",
-    areaUnderCultivation: queryParams.get("areaUnderCultivation") || "",
-    date: queryParams.get("date") || "",
-    time: queryParams.get("time") || "",
-  });
+  const filterValues = Object.fromEntries(queryParams.entries());
+  const [filters, setFilters] = useState(filterValues);
   const { date } = filters;
+  const { services, loading } = useSelector((state) => state.services.DroneServiceMgmtSlice);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -34,8 +28,6 @@ function DroneChangeAvailablity() {
     }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
-  const [services, setServices] = useState([]);
 
   const validateForm = () => {
     let newErrors = {};
@@ -63,19 +55,10 @@ function DroneChangeAvailablity() {
 
   const fetchServices = async () => {
     if (!validateForm()) return;
-    setLoading(true);
     try {
-      const res = await dispatch(getAllServicesOfDrone(filters));
-      const { status, data } = res?.payload || {};
-      if (status === 200) {
-        setServices(data?.data?.[0]?.data || []);
-      } else {
-        toast(data?.message || "Failed to load Services");
-      }
-    } catch (error) {
-      toast("Something went wrong");
-    } finally {
-      setLoading(false);
+      await dispatch(getAllServicesOfDrone(filters)).unwrap();
+    } catch {
+      toast("Failed to load services");
     }
   };
 
@@ -162,19 +145,25 @@ function DroneChangeAvailablity() {
                   >
                     <div className="vendor-card">
                       <div className="service-info">
-                        <img src={service.droneImgs[0]} alt="Service" className="service-image" />
+                        <img
+                          src={service?.droneImgs?.[0] || DroneSprayingService}
+                          alt="Service"
+                          className="service-image"
+                        />
                         <div className="service-text">
-                          <div className="title"> {service.equipmentDescription}</div>
+                          <div className="title">
+                            {service?.equipmentDescription || "No description"}
+                          </div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service.rating}
+                            {service?.rating ?? "N/A"}
                           </div>
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service.payableAmount).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

@@ -22,6 +22,7 @@ import {
 } from "../../../utils/formValidators";
 
 function TransportationBookYourService() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [vehicle, setVehicle] = useState([]);
   const fetchVehicle = async () => {
@@ -44,16 +45,14 @@ function TransportationBookYourService() {
 
   const filters = useSelector((state) => state.services.TransportationServiceMgmtSlice.filters);
   const defaultForm = {
-    lat: "",
-    lng: "",
+    lat: 28.40793935,
+    lng: 77.0842600176243,
     currentLocationOfTransportation: "",
     destinationLocationOfTransportation: "",
     transportItem: "",
     vegetableType: "",
     numberOfCattle: "",
-    lengthCm: "",
-    widthCm: "",
-    heightCm: "",
+    equipmentDimensions: { lengthCm: "", widthCm: "", heightCm: "" },
     equipmentWeight: "",
     otherWeightKg: "",
     typeOfVehicle: "",
@@ -63,7 +62,6 @@ function TransportationBookYourService() {
     toTime: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
-
   const {
     lat,
     lng,
@@ -72,9 +70,7 @@ function TransportationBookYourService() {
     transportItem,
     vegetableType,
     numberOfCattle,
-    lengthCm,
-    widthCm,
-    heightCm,
+    equipmentDimensions,
     equipmentWeight,
     otherWeightKg,
     typeOfVehicle,
@@ -83,10 +79,10 @@ function TransportationBookYourService() {
     fromTime,
     toTime,
   } = formState;
+  const { lengthCm, widthCm, heightCm } = equipmentDimensions;
 
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -97,17 +93,17 @@ function TransportationBookYourService() {
         [name]: value,
         vegetableType: "",
         numberOfCattle: "",
-        lengthCm: "",
-        widthCm: "",
-        heightCm: "",
+        equipmentDimensions: { lengthCm: "", widthCm: "", heightCm: "" },
         equipmentWeight: "",
         otherWeightKg: "",
       }));
-    } else {
+    } else if (["lengthCm", "widthCm", "heightCm"].includes(name)) {
       setFormState((prev) => ({
         ...prev,
-        [name]: value,
+        equipmentDimensions: { ...prev.equipmentDimensions, [name]: value },
       }));
+    } else {
+      setFormState((prev) => ({ ...prev, [name]: value }));
     }
 
     setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -174,11 +170,11 @@ function TransportationBookYourService() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
     setDisable(true);
-
     try {
       let formdata = {
+        lat,
+        lng,
         currentLocationOfTransportation,
         destinationLocationOfTransportation,
         typeOfVehicle,
@@ -188,7 +184,6 @@ function TransportationBookYourService() {
         toTime,
         transportItem,
       };
-
       if (transportItem === "vegitable") {
         formdata.vegetableType = vegetableType;
       } else if (transportItem === "cattle") {
@@ -201,7 +196,6 @@ function TransportationBookYourService() {
       } else if (transportItem === "other") {
         formdata.otherWeightKg = otherWeightKg;
       }
-
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {

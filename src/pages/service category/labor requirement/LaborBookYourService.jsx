@@ -104,7 +104,7 @@ function LaborBookYourService() {
       lat: lat.trim(),
       lng: lng.trim(),
       labourType,
-      numberOfLabour,
+      numberOfLabour: numberOfLabour.trim(),
       fromDate,
       toDate,
       fromTime,

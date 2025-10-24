@@ -1,42 +1,30 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
+import LandExcavationService from "../../../assets/images/LandExcavationService.png";
 import ExcavationIcon from "../../../assets/images/Excavation-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfExcavation } from "../../../reduxtoolkit/slices/service category/excavationServices";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 
 function ExcavationChangeAvailablity() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const dispatch = useDispatch();
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-
-  const [filters, setFilters] = useState({
-    lat: queryParams.get("lat") || "",
-    lng: queryParams.get("lng") || "",
-    equipmentTypes: queryParams.get("equipmentTypes") || "",
-    fromDate: queryParams.get("fromDate") || "",
-    toDate: queryParams.get("toDate") || "",
-    fromTime: queryParams.get("fromTime") || "",
-    duration: queryParams.get("duration") || "",
-  });
+  const filterValues = Object.fromEntries(queryParams.entries());
+  const [filters, setFilters] = useState(filterValues);
   const { toDate, fromDate } = filters;
+  const { services, loading } = useSelector((state) => state.services.ExcavationServiceMgmtSlice);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFilters((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
-  const [services, setServices] = useState([]);
 
   const validateForm = () => {
     let newErrors = {};
@@ -65,19 +53,10 @@ function ExcavationChangeAvailablity() {
 
   const fetchServices = async () => {
     if (!validateForm()) return;
-    setLoading(true);
     try {
-      const res = await dispatch(getAllServicesOfExcavation(filters));
-      const { status, data } = res?.payload || {};
-      if (status === 200) {
-        setServices(data?.data?.[0]?.data || []);
-      } else {
-        toast(data?.message || "Failed to load Services");
-      }
-    } catch (error) {
-      toast("Something went wrong");
-    } finally {
-      setLoading(false);
+      await dispatch(getAllServicesOfExcavation(filters)).unwrap();
+    } catch {
+      toast("Failed to load services");
     }
   };
 
@@ -165,19 +144,25 @@ function ExcavationChangeAvailablity() {
                   >
                     <div className="vendor-card">
                       <div className="service-info">
-                        <img src={service.equipmentImage} alt="Service" className="service-image" />
+                        <img
+                          src={service?.equipmentImage || LandExcavationService}
+                          alt="Service"
+                          className="service-image"
+                        />
                         <div className="service-text">
-                          <div className="title"> {service.equipmentDescription}</div>
+                          <div className="title">
+                            {service?.equipmentDescription || "No description"}
+                          </div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service.rating}
+                            {service?.rating ?? "N/A"}
                           </div>
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service.payableAmount).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

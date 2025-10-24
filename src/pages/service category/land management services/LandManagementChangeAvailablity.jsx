@@ -19,6 +19,7 @@ function LandManagementChangeAvailablity() {
   const { toDate, fromDate } = filters;
   const { services, loading } = useSelector((state) => state.services.LandServiceMgmtSlice);
   const [errors, setErrors] = useState({});
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
