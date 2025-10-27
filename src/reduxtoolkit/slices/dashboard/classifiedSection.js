@@ -19,7 +19,6 @@ export const getAllProductsForFarmer = createAsyncThunk(
         });
       }
     } catch (err) {
-      console.log(err);
       return rejectWithValue({
         status: err.response?.status || 500,
         data: err.response?.data || { message: "Network or server error" },
@@ -45,7 +44,6 @@ export const getProductById = createAsyncThunk(
         });
       }
     } catch (err) {
-      console.log(err);
       return rejectWithValue({
         status: err.response?.status || 500,
         data: err.response?.data || { message: "Network or server error" },

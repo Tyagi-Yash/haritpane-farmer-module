@@ -162,7 +162,7 @@ function TransportationChangeAvailablity() {
                     <div className="vendor-card">
                       <div className="service-info">
                         <img
-                          src={service?.vehicleImg?.[0] || GoodsTransportService}
+                          src={service?.vehicleDetails?.vehicleImg?.[0] || GoodsTransportService}
                           alt="Service"
                           className="service-image"
                         />

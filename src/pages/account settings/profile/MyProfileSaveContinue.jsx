@@ -95,7 +95,6 @@ function MyProfileSaveContinue() {
       }
     } catch (error) {
       toast.error("Something went wrong");
-      console.log(error);
     }
   };
 

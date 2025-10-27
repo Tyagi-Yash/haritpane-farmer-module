@@ -38,7 +38,6 @@ function SideNav() {
         toast.error(message || "Failed to logout");
       }
     } catch (error) {
-      console.log(error);
       toast.error("Something went wrong");
     }
   };

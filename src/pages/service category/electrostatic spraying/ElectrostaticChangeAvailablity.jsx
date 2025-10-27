@@ -18,7 +18,7 @@ function ElectrostaticChangeAvailablity() {
   const [filters, setFilters] = useState(filterValues);
   const { toDate, fromDate } = filters;
   const { services, loading } = useSelector(
-    (state) => state.services.DroneServiceMgmtSlice
+    (state) => state.services.ElectrostaticSprayingServiceMgmtSlice
   );
   const [errors, setErrors] = useState({});
 
@@ -62,10 +62,9 @@ function ElectrostaticChangeAvailablity() {
       toast("Failed to load services");
     }
   };
-
   useEffect(() => {
     fetchServices();
-  }, [filters.toDate, filters.fromDate]);
+  }, [toDate, fromDate]);
 
   return (
     <div className="WrapperArea">

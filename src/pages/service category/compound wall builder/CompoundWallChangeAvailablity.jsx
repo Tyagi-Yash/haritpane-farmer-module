@@ -148,7 +148,7 @@ function CompoundWallChangeAvailablity() {
                     <div className="vendor-card">
                       <div className="service-info">
                         <img
-                          src={service?.toolsImges || NewCompoundWallConstruction}
+                          src={service?.toolsImges?.[0] || NewCompoundWallConstruction}
                           alt="Service"
                           className="service-image"
                         />

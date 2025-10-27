@@ -14,7 +14,6 @@ function LandManagementVendorDetailsPending() {
   const { services, filters } = useSelector((state) => state.services.LandServiceMgmtSlice);
 
   const vendor = services.find((v) => v._id === id);
-  console.log(vendor);
 
   return (
     <div className="WrapperArea">

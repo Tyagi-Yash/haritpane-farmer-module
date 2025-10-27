@@ -35,7 +35,6 @@ function TransportationBookYourService() {
         toast(data?.message || "Failed to load Vehicle");
       }
     } catch (error) {
-      console.log(error);
       toast("Something went wrong");
     }
   };
