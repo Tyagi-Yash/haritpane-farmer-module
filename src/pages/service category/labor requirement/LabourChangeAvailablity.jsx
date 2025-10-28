@@ -48,7 +48,7 @@ function LabourChangeAvailablity() {
           titleBox={true}
           title="Labor Requirement"
           secImage={labouricon}
-          navigate="/labor-requirement"
+          navigate="/service-category/labor-requirement"
         />
         <div className="dashboard">
           <div className="option-wrapper">

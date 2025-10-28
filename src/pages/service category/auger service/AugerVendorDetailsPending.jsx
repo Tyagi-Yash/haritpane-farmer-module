@@ -21,7 +21,7 @@ function AugerVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/auger-service/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/auger-service/available-services?${new URLSearchParams(filters).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (

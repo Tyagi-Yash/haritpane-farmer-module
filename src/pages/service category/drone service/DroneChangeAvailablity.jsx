@@ -72,7 +72,7 @@ function DroneChangeAvailablity() {
           titleBox={true}
           title="Drone Service"
           secImage={droneServiceIcon}
-          navigate="/drone-service"
+          navigate="/service-category/drone-service"
         />
         <div className="dashboard">
           <div className="option-wrapper">

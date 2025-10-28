@@ -73,7 +73,7 @@ function ElectrostaticChangeAvailablity() {
           titleBox={true}
           title="Electrostatic Spraying"
           secImage={ElectrostaticSprayingIcon}
-          navigate="/electrostatic-spraying"
+          navigate="/service-category/electrostatic-spraying"
         />
         <div className="dashboard">
           <div className="option-wrapper">

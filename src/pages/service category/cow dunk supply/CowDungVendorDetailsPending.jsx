@@ -20,7 +20,7 @@ function CowDungVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/cow-dunk-supply/available-services?${new URLSearchParams(
+          navigate={`/service-category/cow-dunk-supply/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />

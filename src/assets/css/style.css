@@ -1682,6 +1682,10 @@ ol {
   padding-left: 15px;
 }
 
+.form-label span.required {
+  color: red;
+}
+
 .from-select {
   color: red;
 }

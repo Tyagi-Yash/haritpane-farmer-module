@@ -37,7 +37,7 @@ function CattleChangeAvailablity() {
           titleBox={true}
           title="Cattle Purchase & Sale"
           secImage={cattleIcon}
-          navigate="/cattle-purchase-sale"
+          navigate="/service-category/cattle-purchase-sale"
         />
         <div className="dashboard">
           <div className="option-wrapper">

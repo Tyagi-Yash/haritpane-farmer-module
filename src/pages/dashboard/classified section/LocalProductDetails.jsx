@@ -38,6 +38,8 @@ function LocalProductDetails() {
     loadProductDetails();
   }, []);
 
+  console.log(productDetails);
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -48,9 +50,9 @@ function LocalProductDetails() {
         />
         <div className="dashboard local-product-details">
           <figure className="status-image-tag">
-            <img src={forceTractor} alt="" />
+            <img src={productDetails?.productImage?.[0] || forceTractor} alt="Product Image" />
             <div className="status-tag-share">
-              <img src={shareIcon} alt="" />
+              <img src={shareIcon} alt="shareIcon" />
             </div>
           </figure>
           <div>
@@ -64,7 +66,9 @@ function LocalProductDetails() {
             </div>
             <div className="mb-4">
               <h6 className="normal-heading">Product Description</h6>
-              <p className="grey-para">{productDetails.productDescription}</p>
+              <p className="grey-para">
+                {productDetails?.productDescription || "Description not available"}
+              </p>
             </div>
             {/* Specifications */}
             <div className="mb-4">

@@ -21,7 +21,7 @@ function CattleVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/cattle-purchase-sale/available-services?${new URLSearchParams(
+          navigate={`/service-category/cattle-purchase-sale/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />

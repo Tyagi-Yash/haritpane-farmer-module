@@ -71,7 +71,7 @@ function ExcavationChangeAvailablity() {
           titleBox={true}
           title="Excavation"
           secImage={ExcavationIcon}
-          navigate="/excavation"
+          navigate="/service-category/excavation"
         />
         <div className="dashboard">
           <div className="option-wrapper">

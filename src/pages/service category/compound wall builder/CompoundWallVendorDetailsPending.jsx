@@ -20,7 +20,7 @@ function CompoundWallVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/compound-wall-builder/available-services?${new URLSearchParams(
+          navigate={`/service-category/compound-wall-builder/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />

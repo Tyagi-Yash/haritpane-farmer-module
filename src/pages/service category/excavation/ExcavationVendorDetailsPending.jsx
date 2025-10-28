@@ -20,7 +20,7 @@ function ExcavationVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/excavation/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/excavation/available-services?${new URLSearchParams(filters).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (

@@ -20,7 +20,7 @@ function LabourVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/labor-requirement/available-services?${new URLSearchParams(
+          navigate={`/service-category/labor-requirement/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />

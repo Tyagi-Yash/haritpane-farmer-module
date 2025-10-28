@@ -37,7 +37,7 @@ function ServiceCategory() {
                   <div className="service-header"></div>
                   <div className="service-grid">
                     <div className="service-card">
-                      <Link to="/land-management">
+                      <Link to="land-management">
                         <div className="card-image-part">
                           <img src={landManagementTractorServices} alt="Tractor" />
                         </div>
@@ -45,7 +45,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/harvestor">
+                      <Link to="harvestor">
                         <div className="card-image-part">
                           <img src={harvester} alt="Harvester" />
                         </div>
@@ -53,7 +53,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/cattle-purchase-sale">
+                      <Link to="cattle-purchase-sale">
                         <div className="card-image-part">
                           <img src={cattlePurchageSale} alt="Cattle" />
                         </div>
@@ -70,7 +70,7 @@ function ServiceCategory() {
                   <div className="service-header mt-2"></div>
                   <div className="service-grid">
                     <div className="service-card">
-                      <Link to="/excavation">
+                      <Link to="excavation">
                         <div className="card-image-part">
                           <img src={excavation} alt="Excavation" />
                         </div>
@@ -78,7 +78,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/electrostatic-spraying">
+                      <Link to="electrostatic-spraying">
                         <div className="card-image-part">
                           <img src={electrostatic} alt="Electrostatic Spraying" />
                         </div>
@@ -86,7 +86,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/labor-requirement">
+                      <Link to="labor-requirement">
                         <div className="card-image-part">
                           <img src={laborRequirement} alt="Cattle" />
                         </div>
@@ -103,7 +103,7 @@ function ServiceCategory() {
                   <div className="service-header mt-2"></div>
                   <div className="service-grid">
                     <div className="service-card">
-                      <Link to="/transportation">
+                      <Link to="transportation">
                         <div className="card-image-part">
                           <img src={transportation} alt="Transportation" />
                         </div>
@@ -111,7 +111,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/borewell">
+                      <Link to="borewell">
                         <div className="card-image-part">
                           <img src={borewellConstruction} alt="Borewell Construction" />
                         </div>
@@ -119,7 +119,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/cow-dunk-supply">
+                      <Link to="cow-dunk-supply">
                         <div className="card-image-part">
                           <img src={cowDunkSupply} alt="Cow Dunk Supply" />
                         </div>
@@ -136,7 +136,7 @@ function ServiceCategory() {
                   <div className="service-header mt-2"></div>
                   <div className="service-grid">
                     <div className="service-card compound-wall">
-                      <Link to="/compound-wall-builder">
+                      <Link to="compound-wall-builder">
                         <div className="card-image-part">
                           <img src={compundBuilder} alt="Compound Wall Builder" />
                         </div>
@@ -144,7 +144,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/drone-service">
+                      <Link to="drone-service">
                         <div className="card-image-part">
                           <img src={DroneServices} alt="Drone Services" />
                         </div>
@@ -152,7 +152,7 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="/auger-service">
+                      <Link to="auger-service">
                         <div className="card-image-part">
                           <img src={augerServices} alt="Auger Services" />
                         </div>

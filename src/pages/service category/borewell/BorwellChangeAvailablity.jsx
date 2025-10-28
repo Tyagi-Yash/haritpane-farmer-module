@@ -48,7 +48,7 @@ function BorwellChangeAvailablity() {
           titleBox={true}
           title="Borewell"
           secImage={BorewellIcon}
-          navigate="/borewell"
+          navigate="/service-category/borewell"
         />
         <div className="dashboard">
           <div className="option-wrapper">

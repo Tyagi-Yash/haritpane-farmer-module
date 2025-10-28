@@ -20,7 +20,7 @@ function DroneVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/drone-service/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/drone-service/available-services?${new URLSearchParams(filters).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (

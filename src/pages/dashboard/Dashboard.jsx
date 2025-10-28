@@ -72,14 +72,14 @@ function Dashboard() {
                         <div className="service-section">
                           <div className="service-header" />
                           <div className="service-grid">
-                            <Link to="/land-management" className="service-card">
+                            <Link to="/service-category/land-management" className="service-card">
                               <div className="card-image-part">
                                 <img src={landManagementTractorServices} alt="Tractor" />
                               </div>
                               <div className="label">Land Management / Tractor Services</div>
                             </Link>
                             <div className="service-card">
-                              <Link to="/harvestor">
+                              <Link to="/service-category/harvestor">
                                 <div className="card-image-part">
                                   <img src={harvester} alt="Harvester" />
                                 </div>
@@ -87,7 +87,7 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/cattle-purchase-sale">
+                              <Link to="/service-category/cattle-purchase-sale">
                                 <div className="card-image-part">
                                   <img src={cattlePurchageSale} alt="Cattle" />
                                 </div>
@@ -104,7 +104,7 @@ function Dashboard() {
                           <div className="service-header mt-2"></div>
                           <div className="service-grid">
                             <div className="service-card">
-                              <Link to="/excavation">
+                              <Link to="/service-category/excavation">
                                 <div className="card-image-part">
                                   <img src={excavation} alt="Excavation" />
                                 </div>
@@ -112,7 +112,7 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/electrostatic-spraying">
+                              <Link to="/service-category/electrostatic-spraying">
                                 <div className="card-image-part">
                                   <img src={electrostatic} alt="Electrostatic Spraying" />
                                 </div>
@@ -120,7 +120,7 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/labor-requirement">
+                              <Link to="/service-category/labor-requirement">
                                 <div className="card-image-part">
                                   <img src={laborRequirement} alt="Cattle" />
                                 </div>
@@ -137,7 +137,7 @@ function Dashboard() {
                           <div className="service-header mt-2"></div>
                           <div className="service-grid">
                             <div className="service-card">
-                              <Link to="/transportation">
+                              <Link to="/service-category/transportation">
                                 <div className="card-image-part">
                                   <img src={transportation} alt="Transportation" />
                                 </div>
@@ -145,7 +145,7 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/borewell">
+                              <Link to="/service-category/borewell">
                                 <div className="card-image-part">
                                   <img src={borewellConstruction} alt="Borewell Construction" />
                                 </div>
@@ -153,7 +153,7 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/cow-dunk-supply">
+                              <Link to="/service-category/cow-dunk-supply">
                                 <div className="card-image-part">
                                   <img src={cowDunkSupply} alt="Cow Dunk Supply" />
                                 </div>

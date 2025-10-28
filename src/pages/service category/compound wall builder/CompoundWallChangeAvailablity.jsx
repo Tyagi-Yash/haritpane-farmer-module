@@ -74,7 +74,7 @@ function CompoundWallChangeAvailablity() {
           titleBox={true}
           title="Compound Wall Builder"
           secImage={CompoundWallBuilderIcon}
-          navigate="/compound-wall-builder"
+          navigate="/service-category/compound-wall-builder"
         />
         <div className="dashboard">
           <div className="option-wrapper">

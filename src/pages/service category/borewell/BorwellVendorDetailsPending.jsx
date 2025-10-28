@@ -20,7 +20,7 @@ function BorwellVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/borewell/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/borewell/available-services?${new URLSearchParams(filters).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (

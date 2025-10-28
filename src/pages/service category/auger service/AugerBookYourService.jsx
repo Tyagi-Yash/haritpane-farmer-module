@@ -159,7 +159,9 @@ function AugerBookYourService() {
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">From date*</label>
+                    <label className="form-label">
+                      From date<span className="required">*</span>
+                    </label>
                     <input
                       type="date"
                       className="form-control"
@@ -170,7 +172,9 @@ function AugerBookYourService() {
                     {errors.date && <p className="error-text">{errors.date}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Select time*</label>
+                    <label className="form-label">
+                      Select time<span className="required">*</span>
+                    </label>
                     <input
                       type="time"
                       className="form-control"

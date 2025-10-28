@@ -88,7 +88,7 @@ function TransportationChangeAvailablity() {
           titleBox={true}
           title="Transportation"
           secImage={TransportationIcon}
-          navigate="/transportation"
+          navigate="/service-category/transportation"
         />
         <div className="dashboard">
           <div className="option-wrapper">

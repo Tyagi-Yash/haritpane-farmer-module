@@ -74,7 +74,7 @@ function HarvestorChangeAvailablity() {
           titleBox={true}
           title="Harvester"
           secImage={harvestorIcon}
-          navigate="/harvestor"
+          navigate="/service-category/harvestor"
         />
         <div className="dashboard">
           <div className="option-wrapper">

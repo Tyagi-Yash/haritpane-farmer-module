@@ -22,7 +22,7 @@ function TransportationVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/transportation/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/transportation/available-services?${new URLSearchParams(filters).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (

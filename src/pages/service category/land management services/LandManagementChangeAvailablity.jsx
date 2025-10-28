@@ -74,7 +74,7 @@ function LandManagementChangeAvailablity() {
           titleBox={true}
           title="Land Management Services Listing"
           secImage={landManagementTractorServices}
-          navigate="/land-management"
+          navigate="/service-category/land-management"
         />
         <div className="dashboard">
           <div className="option-wrapper">

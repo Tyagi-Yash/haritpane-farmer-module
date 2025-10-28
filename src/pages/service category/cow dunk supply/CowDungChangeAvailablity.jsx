@@ -72,7 +72,7 @@ function CowDungChangeAvailablity() {
           titleBox={true}
           title="Cow Dunk Supply"
           secImage={CowDunkSupplyIcon}
-          navigate="/cow-dunk-supply"
+          navigate="/service-category/cow-dunk-supply"
         />
         <div className="dashboard">
           <div className="option-wrapper">

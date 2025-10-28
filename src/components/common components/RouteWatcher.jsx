@@ -37,7 +37,7 @@ function RouteWatcher() {
     const currentPath = location.pathname;
 
     Object.entries(serviceResetMap).forEach(([serviceName, resetAction]) => {
-      const isInsideThisServiceFlow = currentPath.startsWith(`/${serviceName}`);
+      const isInsideThisServiceFlow = currentPath.startsWith(`/service-category/${serviceName}`);
 
       if (!isInsideThisServiceFlow) {
         dispatch(resetAction());

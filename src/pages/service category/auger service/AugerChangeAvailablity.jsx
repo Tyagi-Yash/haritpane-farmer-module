@@ -56,7 +56,7 @@ function AugerChangeAvailablity() {
           titleBox={true}
           title="Auger Service"
           secImage={AugerServiceIcon}
-          navigate="/auger-service"
+          navigate="/service-category/auger-service"
         />
         <div className="dashboard">
           <div className="option-wrapper">

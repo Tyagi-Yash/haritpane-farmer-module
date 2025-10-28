@@ -27,7 +27,7 @@ function LandManagementServicesSubServices() {
     toDate: "",
     fromTime: "",
   };
-  
+
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
 
   const [disable, setDisable] = useState(false);
@@ -231,7 +231,9 @@ function LandManagementServicesSubServices() {
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
-                    <label className="form-label">From date*</label>
+                    <label className="form-label">
+                      From date<span className="required">*</span>
+                    </label>
                     <input
                       type="date"
                       className="form-control"
@@ -242,7 +244,9 @@ function LandManagementServicesSubServices() {
                     {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
                   <div className="col-md-4">
-                    <label className="form-label">Till date*</label>
+                    <label className="form-label">
+                      Till date<span className="required">*</span>
+                    </label>
                     <input
                       type="date"
                       className="form-control"
@@ -253,7 +257,9 @@ function LandManagementServicesSubServices() {
                     {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   </div>
                   <div className="col-md-4">
-                    <label className="form-label">Start time*</label>
+                    <label className="form-label">
+                      Start time<span className="required">*</span>
+                    </label>
                     <input
                       type="time"
                       className="form-control"

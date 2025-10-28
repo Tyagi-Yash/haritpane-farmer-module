@@ -22,7 +22,7 @@ function ElectrostaticVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/electrostatic-spraying/available-services?${new URLSearchParams(
+          navigate={`/service-category/electrostatic-spraying/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />

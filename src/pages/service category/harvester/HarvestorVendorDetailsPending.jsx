@@ -20,7 +20,7 @@ function HarvestorVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/harvestor/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/harvestor/available-services?${new URLSearchParams(filters).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (

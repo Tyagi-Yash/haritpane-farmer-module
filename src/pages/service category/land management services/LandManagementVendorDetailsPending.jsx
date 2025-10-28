@@ -21,7 +21,7 @@ function LandManagementVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/land-management/available-services?${new URLSearchParams(
+          navigate={`/service-category/land-management/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />
