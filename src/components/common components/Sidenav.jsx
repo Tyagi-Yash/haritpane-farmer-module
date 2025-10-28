@@ -5,7 +5,8 @@ import { Dropdown } from "react-bootstrap";
 import logo from "../../assets/images/Logo.png";
 import profile from "../../assets/images/profile.svg";
 import dashboard from "../../assets/images/dashboard.svg";
-import services from "../../assets/images/services.svg";
+import userRectangle from "../../assets/images/user-rectangle.svg";
+import notepad from "../../assets/images/notepad.svg";
 import chat from "../../assets/images/chat.svg";
 import notification from "../../assets/images/notification.svg";
 import language from "../../assets/images/language.svg";
@@ -63,7 +64,7 @@ function SideNav() {
             <li>
               <NavLink to="/service-tracking">
                 <span className="Icon">
-                  <img src={services} alt="" />
+                  <img src={notepad} alt="" />
                 </span>
                 <span className="Text">Progress</span>
               </NavLink>
@@ -71,7 +72,7 @@ function SideNav() {
             <li>
               <NavLink to="/service-category">
                 <span className="Icon">
-                  <img src={services} alt="" />
+                  <img src={userRectangle} alt="" />
                 </span>
                 <span className="Text">Service Category</span>
               </NavLink>

@@ -27,7 +27,13 @@ function MyProfile() {
     try {
       const res = await dispatch(getFarmerProfile());
       const { status, data } = res?.payload || {};
+      const farmerProfile = {
+        name: data?.data?.name ?? "",
+        profileImage: data?.data?.profileImage ?? "",
+        languageSelector: data?.data?.languageSelector ?? "",
+      };
       if (status === 200) {
+        localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));
         setFormState({
           farmerName: data?.data?.name || "",
           phone: data?.data?.phone || "",
@@ -54,11 +60,7 @@ function MyProfile() {
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal
-            titleBox={true}
-            title="My Profile"
-            navigate="/dashboard"
-          />
+          <TopbarModal titleBox={true} title="My Profile" navigate="/dashboard" />
           <div className="dashboard">
             {loading ? (
               <ProfileSkeleton />
