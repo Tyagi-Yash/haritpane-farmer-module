@@ -60,7 +60,7 @@ function CattleChangeAvailablity() {
                     <div className="vendor-card">
                       <div className="service-info">
                         <img
-                          src={service?.images?.[0] || MilkProductionSupport}
+                          src={service?.basicInfo?.images?.[0] || MilkProductionSupport}
                           alt="Service"
                           className="service-image"
                         />

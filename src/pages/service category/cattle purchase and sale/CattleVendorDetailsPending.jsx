@@ -6,6 +6,7 @@ import mobileIcon from "../../../assets/images/mobile.svg";
 import locationIcon from "../../../assets/images/location-icon.png";
 import userIcon from "../../../assets/images/user-icon.svg";
 import cattlestatus from "../../../assets/images/cattlestatus.png";
+import RamPrasadSingh from "../../../assets/images/RamPrasadSingh.svg";
 
 function CattleVendorDetailsPending() {
   const { id } = useParams();
@@ -33,7 +34,7 @@ function CattleVendorDetailsPending() {
           ) : (
             <>
               <figure className="status-image-tag" style={{ minHeight: "200px" }}>
-                <img src={vendor?.images?.[0] || cattlestatus} alt="Service Image" />
+                <img src={vendor?.basicInfo?.images?.[0] || cattlestatus} alt="Service Image" />
                 <div className="status-tag-pending">Pending</div>
               </figure>
 
@@ -166,7 +167,7 @@ function CattleVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -183,7 +184,7 @@ function CattleVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -200,7 +201,7 @@ function CattleVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -217,7 +218,7 @@ function CattleVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>

@@ -4,8 +4,8 @@ import { sendOtp } from "../../reduxtoolkit/slices/auth/auth";
 import { toast } from "react-toastify";
 
 function OtpResend({ cooldown = 30, phoneNumber, setErrors, setOtp }) {
-  const [timeLeft, setTimeLeft] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(cooldown);
+  const [isActive, setIsActive] = useState(true);
   const otploader = useSelector((state) => state.authMgmtSlice?.otploader) || false;
   const dispatch = useDispatch();
 

@@ -6,6 +6,7 @@ import mobileIcon from "../../../assets/images/mobile.svg";
 import locationIcon from "../../../assets/images/location-icon.png";
 import userIcon from "../../../assets/images/user-icon.svg";
 import landstatus from "../../../assets/images/landstatus.png";
+import RamPrasadSingh from "../../../assets/images/RamPrasadSingh.svg";
 
 function LandManagementVendorDetailsPending() {
   const { id } = useParams();
@@ -33,7 +34,7 @@ function LandManagementVendorDetailsPending() {
           ) : (
             <>
               <figure className="status-image-tag" style={{ minHeight: "200px" }}>
-                <img src={vendor?.attachmentImage || landstatus} alt="Service Image" />
+                <img src={vendor?.attachmentImage?.[0] || landstatus} alt="Service Image" />
                 <div className="status-tag-pending">Pending</div>
               </figure>
               <div className="CommonTabs mt-0">
@@ -157,7 +158,7 @@ function LandManagementVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -174,7 +175,7 @@ function LandManagementVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -191,7 +192,7 @@ function LandManagementVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -208,7 +209,7 @@ function LandManagementVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>

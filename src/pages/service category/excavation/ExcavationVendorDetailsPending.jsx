@@ -6,6 +6,7 @@ import mobileIcon from "../../../assets/images/mobile.svg";
 import locationIcon from "../../../assets/images/location-icon.png";
 import userIcon from "../../../assets/images/user-icon.svg";
 import excavationstatus from "../../../assets/images/excavationstatus.png";
+import RamPrasadSingh from "../../../assets/images/RamPrasadSingh.svg";
 
 function ExcavationVendorDetailsPending() {
   const { id } = useParams();
@@ -20,7 +21,9 @@ function ExcavationVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/service-category/excavation/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/excavation/available-services?${new URLSearchParams(
+            filters
+          ).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (
@@ -100,10 +103,12 @@ function ExcavationVendorDetailsPending() {
                                     <td>Service Cost</td>
                                     <td>₹ {Number(vendor?.priceInfo?.price ?? 0).toFixed(2)}</td>
                                   </tr>
-                                  <tr>
-                                    <td>Transportation Charges</td>
-                                    <td>₹ {Number(vendor?.additionCharges ?? 0).toFixed(2)}</td>
-                                  </tr>
+                                  {vendor.extrachages === true && (
+                                    <tr>
+                                      <td>Transportation Charges</td>
+                                      <td>₹ {Number(vendor?.additionalCharges ?? 0).toFixed(2)}</td>
+                                    </tr>
+                                  )}
                                 </tbody>
                                 <tfoot>
                                   <tr>
@@ -159,7 +164,7 @@ function ExcavationVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -176,7 +181,7 @@ function ExcavationVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -193,7 +198,7 @@ function ExcavationVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -210,7 +215,7 @@ function ExcavationVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>

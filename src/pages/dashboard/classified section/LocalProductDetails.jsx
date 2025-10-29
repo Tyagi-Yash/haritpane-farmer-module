@@ -38,8 +38,6 @@ function LocalProductDetails() {
     loadProductDetails();
   }, []);
 
-  console.log(productDetails);
-
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -83,23 +81,38 @@ function LocalProductDetails() {
                 <tbody>
                   <tr>
                     <td>Service Type</td>
-                    <td>Tractor Rental for Plowing, Harrowing, and Seeding</td>
+                    <td>
+                      N/A
+                      {/* Tractor Rental for Plowing, Harrowing, and Seeding */}
+                    </td>
                   </tr>
                   <tr>
                     <td>Tractor Type</td>
-                    <td>45 HP 4WD – Mahindra Yuvo 575 DI</td>
+                    <td>
+                      N/A
+                      {/* 45 HP 4WD – Mahindra Yuvo 575 DI */}
+                    </td>
                   </tr>
                   <tr>
                     <td>Operator Included</td>
-                    <td>Yes</td>
+                    <td>
+                      N/A
+                      {/* Yes */}
+                    </td>
                   </tr>
                   <tr>
                     <td>Fuel Charges</td>
-                    <td>Included up to 4 hours</td>
+                    <td>
+                      N/A
+                      {/* Included up to 4 hours */}
+                    </td>
                   </tr>
                   <tr>
                     <td>Hourly Rate</td>
-                    <td>₹450/hour</td>
+                    <td>
+                      N/A
+                      {/* ₹450/hour */}
+                    </td>
                   </tr>
                 </tbody>
               </table>

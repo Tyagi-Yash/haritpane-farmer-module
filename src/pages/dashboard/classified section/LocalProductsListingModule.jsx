@@ -104,8 +104,10 @@ function LocalProductsListingModule() {
                     </div>
                     <div className="card-text-part">
                       <h6 className="normal-heading">{product.productName}</h6>
-                      <p className="normal-para">Vendor Name: Grain Edge</p>
-                      <p className="normal-para">Sameypur, Rajpura Block, Meerut</p>
+                      <p className="normal-para">Vendor Name: {product?.provider?.name || "N/A"}</p>
+                      <p className="normal-para">
+                        {product?.provider?.address || "Address not Available"}
+                      </p>
                     </div>
                     <div className="available-service-btn">
                       <button onClick={() => handleEnquiryClick(product._id)} className="send-btn">

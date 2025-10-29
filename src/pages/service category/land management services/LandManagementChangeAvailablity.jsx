@@ -19,7 +19,7 @@ function LandManagementChangeAvailablity() {
   const { toDate, fromDate } = filters;
   const { services, loading } = useSelector((state) => state.services.LandServiceMgmtSlice);
   const [errors, setErrors] = useState({});
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
@@ -148,7 +148,7 @@ function LandManagementChangeAvailablity() {
                     <div className="vendor-card">
                       <div className="service-info">
                         <img
-                          src={service?.attachmentImage || PoweringPrecisionFarming}
+                          src={service?.attachmentImage?.[0] || PoweringPrecisionFarming}
                           alt="Service"
                           className="service-image"
                         />

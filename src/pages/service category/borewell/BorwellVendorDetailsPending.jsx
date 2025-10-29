@@ -6,6 +6,7 @@ import mobileIcon from "../../../assets/images/mobile.svg";
 import locationIcon from "../../../assets/images/location-icon.png";
 import userIcon from "../../../assets/images/user-icon.svg";
 import borwellstatus from "../../../assets/images/borwellstatus.png";
+import RamPrasadSingh from "../../../assets/images/RamPrasadSingh.svg";
 
 function BorwellVendorDetailsPending() {
   const { id } = useParams();
@@ -20,7 +21,9 @@ function BorwellVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/service-category/borewell/available-services?${new URLSearchParams(filters).toString()}`}
+          navigate={`/service-category/borewell/available-services?${new URLSearchParams(
+            filters
+          ).toString()}`}
         />
         <div className="dashboard">
           {!vendor ? (
@@ -162,7 +165,7 @@ function BorwellVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -179,7 +182,7 @@ function BorwellVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -196,7 +199,7 @@ function BorwellVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/RamPrasadSingh.svg" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Ram Prasad Singh</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>
@@ -213,7 +216,7 @@ function BorwellVendorDetailsPending() {
                         <div className="review-card">
                           <div className="review-header">
                             <div className="reviewer-info">
-                              <img src="assets/images/BhagwanSinghRathore.png" alt="User Photo" />
+                              <img src={RamPrasadSingh} alt="User Photo" />
                               <strong>Bhagwan Singh Rathore</strong>
                             </div>
                             <div className="review-date">20/05/2025</div>

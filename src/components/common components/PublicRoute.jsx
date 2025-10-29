@@ -1,9 +1,8 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 const PublicRoute = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("farmerProfile");
-  return <Outlet />;
+  const isAuthenticated = localStorage.getItem("token");
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/dashboard" />;
 };
 
 export default PublicRoute;
