@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import mobileIcon from "../../../assets/images/mobile.svg";
@@ -15,6 +15,7 @@ function LandManagementVendorDetailsPending() {
   const { services, filters } = useSelector((state) => state.services.LandServiceMgmtSlice);
 
   const vendor = services.find((v) => v._id === id);
+  const [selectedAvailability, setSelectedAvailability] = useState("");
 
   return (
     <div className="WrapperArea">
@@ -101,10 +102,12 @@ function LandManagementVendorDetailsPending() {
                                     <td>Service Cost</td>
                                     <td>₹ {Number(vendor?.priceInfo?.price ?? 0).toFixed(2)}</td>
                                   </tr>
-                                  <tr>
-                                    <td>Transportation Charges</td>
-                                    <td>₹ {Number(vendor?.additionalCharges ?? 0).toFixed(2)}</td>
-                                  </tr>
+                                  {vendor.extrachages === true && (
+                                    <tr>
+                                      <td>Transportation Charges</td>
+                                      <td>₹ {Number(vendor?.additionalCharges ?? 0).toFixed(2)}</td>
+                                    </tr>
+                                  )}
                                 </tbody>
                                 <tfoot>
                                   <tr>
@@ -128,21 +131,66 @@ function LandManagementVendorDetailsPending() {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td className="date-cell">20/05/2025</td>
-                            <td className="time-cell" data-time="8:00:00 AM">
+                          <tr onClick={() => setSelectedAvailability(1)}>
+                            <td
+                              className={
+                                selectedAvailability === 1
+                                  ? "availability-cells date-cell "
+                                  : "date-cell"
+                              }
+                            >
+                              20/05/2025
+                            </td>
+                            <td
+                              className={
+                                selectedAvailability === 1
+                                  ? "availability-cells time-cell"
+                                  : "time-cell"
+                              }
+                              data-time="8:00:00 AM"
+                            >
                               8:00:00 AM
                             </td>
                           </tr>
-                          <tr>
-                            <td className="date-cell">21/05/2025</td>
-                            <td className="time-cell" data-time="4:00:00 PM">
+                          <tr onClick={() => setSelectedAvailability(2)}>
+                            <td
+                              className={
+                                selectedAvailability === 2
+                                  ? "availability-cells date-cell "
+                                  : "date-cell"
+                              }
+                            >
+                              21/05/2025
+                            </td>
+                            <td
+                              className={
+                                selectedAvailability === 2
+                                  ? "availability-cells time-cell"
+                                  : "time-cell"
+                              }
+                              data-time="4:00:00 PM"
+                            >
                               4:00:00 PM
                             </td>
                           </tr>
-                          <tr>
-                            <td className="date-cell">22/05/2025</td>
-                            <td className="time-cell" data-time="2:30:00 PM">
+                          <tr onClick={() => setSelectedAvailability(3)}>
+                            <td
+                              className={
+                                selectedAvailability === 3
+                                  ? "availability-cells date-cell "
+                                  : "date-cell"
+                              }
+                            >
+                              22/05/2025
+                            </td>
+                            <td
+                              className={
+                                selectedAvailability === 3
+                                  ? "availability-cells time-cell"
+                                  : "time-cell"
+                              }
+                              data-time="2:30:00 PM"
+                            >
                               2:30:00 PM
                             </td>
                           </tr>

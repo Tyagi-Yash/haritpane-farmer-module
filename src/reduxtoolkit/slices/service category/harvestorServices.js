@@ -1,6 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
 
+export const getAllCroptypes = createAsyncThunk(
+  "HarvestorService/getAllCroptypes",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/getAllCroptypes");
+      return { status: response.status, data: response.data };
+    } catch (err) {
+      return rejectWithValue({
+        status: err.response?.status || 500,
+        data: err.response?.data || { message: "Network or server error" },
+      });
+    }
+  }
+);
+
 export const getAllServicesOfHarvester = createAsyncThunk(
   "HarvestorService/getAllServicesOfHarvester",
   async (filters, { rejectWithValue }) => {

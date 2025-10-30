@@ -666,6 +666,12 @@ ol {
   cursor: pointer;
 }
 
+.topbar .question-icon {
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+}
+
 /* Profile */
 .topbar .profile {
   display: flex;
@@ -1043,6 +1049,14 @@ ol {
 .option-wrapper table tr th,
 .option-wrapper table tr td {
   text-align: right;
+}
+
+.option-wrapper table tr:hover .date-cell,
+.option-wrapper table tr:hover .time-cell {
+  background-color: #cdffe8 !important;
+}
+.availability-cells {
+  background-color: #cdffe8 !important;
 }
 
 .review-card {

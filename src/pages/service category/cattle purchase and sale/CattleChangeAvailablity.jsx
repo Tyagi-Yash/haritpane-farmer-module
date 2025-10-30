@@ -54,8 +54,8 @@ function CattleChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`vendor-details/${service._id}`}
-                    key={service._id}
+                    to={`vendor-details/${service.basicInfo._id}`}
+                    key={service.basicInfo._id}
                   >
                     <div className="vendor-card">
                       <div className="service-info">

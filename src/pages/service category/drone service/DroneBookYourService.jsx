@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import locationBlack from "../../../assets/images/location-black.svg";
 import droneServiceIcon from "../../../assets/images/DroneService-icon.png";
@@ -9,15 +11,13 @@ import {
   validateArea,
   validateCrop,
   validateFromDate,
-  validateLat,
-  validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
-import { useSelector } from "react-redux";
 
 function DroneBookYourService() {
   const filters = useSelector((state) => state.services.DroneServiceMgmtSlice.filters);
   const defaultForm = {
+    address: "",
     lat: "",
     lng: "",
     cropUnderCultivation: "",
@@ -25,12 +25,29 @@ function DroneBookYourService() {
     date: "",
     time: "",
   };
+
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const { lat, lng, cropUnderCultivation, areaUnderCultivation, date, time } = formState;
+  const { address, lat, lng, cropUnderCultivation, areaUnderCultivation, date, time } = formState;
+
+  const handleSelect = async (value) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const { lat, lng } = await getLatLng(results[0]);
+      setFormState((prev) => ({
+        ...prev,
+        address: value,
+        lat: lat.toString(),
+        lng: lng.toString(),
+      }));
+      setErrors((prev) => ({ ...prev, address: "" }));
+    } catch (error) {
+      toast.error("Failed to fetch location coordinates");
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,11 +61,7 @@ function DroneBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    const latError = validateLat(lat);
-    if (latError) newErrors.lat = latError;
-
-    const lngError = validateLng(lng);
-    if (lngError) newErrors.lng = lngError;
+    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
 
     const cropError = validateCrop(cropUnderCultivation.trim());
     if (cropError) newErrors.cropUnderCultivation = cropError;
@@ -87,6 +100,7 @@ function DroneBookYourService() {
       setDisable(false);
     }
   };
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -102,37 +116,46 @@ function DroneBookYourService() {
               <div className="form-section">
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
-                  {/*need to remove this after geo api implemented */}
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Latitude*"
-                      name="lat"
-                      value={lat}
-                      onChange={handleInputChange}
-                    />
-                    {errors.lat && <p className="error-text">{errors.lat}</p>}
+                  <div className="col-md-12">
+                    <div className="location-wrapper">
+                      <PlacesAutocomplete
+                        value={address}
+                        onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
+                        onSelect={handleSelect}
+                      >
+                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                          <div>
+                            <input
+                              {...getInputProps({
+                                placeholder: "Field location*",
+                                className: "form-control",
+                              })}
+                            />
+                            <div className="autocomplete-dropdown-container">
+                              {loading && <div>Loading...</div>}
+                              {suggestions.map((suggestion) => {
+                                const className = suggestion.active
+                                  ? "suggestion-item--active"
+                                  : "suggestion-item";
+                                return (
+                                  <div
+                                    {...getSuggestionItemProps(suggestion, {
+                                      className,
+                                    })}
+                                    key={suggestion.placeId}
+                                  >
+                                    <span>{suggestion.description}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            {errors.address && <p className="error-text">{errors.address}</p>}
+                          </div>
+                        )}
+                      </PlacesAutocomplete>
+                      <img src={locationBlack} alt="" className="location-icon" />
+                    </div>
                   </div>
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Longitude*"
-                      name="lng"
-                      value={lng}
-                      onChange={handleInputChange}
-                    />
-                    {errors.lng && <p className="error-text">{errors.lng}</p>}
-                  </div>
-                  {/* <div className="col-md-12">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Farm location*"
-                    required
-                  />
-                </div> */}
                   <div className="col-md-6">
                     <input
                       type="text"

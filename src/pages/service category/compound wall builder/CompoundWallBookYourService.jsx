@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import locationBlack from "../../../assets/images/location-black.svg";
 import CompoundWallBuilderIcon from "../../../assets/images/CompoundWallBuilder-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import {
   validateFromDate,
-  validateLat,
-  validateLng,
   validateSelectTime,
   validateWallserviceType,
 } from "../../../utils/formValidators";
@@ -18,6 +17,7 @@ import { getCompoundWallServiceTypes } from "../../../reduxtoolkit/slices/servic
 function CompoundWallBookYourService() {
   const filters = useSelector((state) => state.services.CompoundWallServiceMgmtSlice.filters);
   const defaultForm = {
+    address: "",
     lat: "",
     lng: "",
     serviceType: "",
@@ -26,7 +26,7 @@ function CompoundWallBookYourService() {
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
 
-  const { lat, lng, serviceType, date, time } = formState;
+  const { address, lat, lng, serviceType, date, time } = formState;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [disable, setDisable] = useState(false);
@@ -51,6 +51,22 @@ function CompoundWallBookYourService() {
     fetchServiceType();
   }, []);
 
+  const handleSelect = async (value) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const { lat, lng } = await getLatLng(results[0]);
+      setFormState((prev) => ({
+        ...prev,
+        address: value,
+        lat: lat.toString(),
+        lng: lng.toString(),
+      }));
+      setErrors((prev) => ({ ...prev, address: "" }));
+    } catch (error) {
+      toast.error("Failed to fetch location coordinates");
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormState((prev) => ({
@@ -63,11 +79,7 @@ function CompoundWallBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    const latError = validateLat(lat);
-    if (latError) newErrors.lat = latError;
-
-    const lngError = validateLng(lng);
-    if (lngError) newErrors.lng = lngError;
+    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
 
     const serviceTypeErrors = validateWallserviceType(serviceType);
     if (serviceTypeErrors) newErrors.serviceType = serviceTypeErrors;
@@ -115,35 +127,44 @@ function CompoundWallBookYourService() {
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    {/*need to remove this after geo api implemented */}
                     <div className="location-wrapper">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Latitude*"
-                        name="lat"
-                        value={lat}
-                        onChange={handleInputChange}
-                      />
-                      {errors.lat && <p className="error-text">{errors.lat}</p>}
+                      <PlacesAutocomplete
+                        value={address}
+                        onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
+                        onSelect={handleSelect}
+                      >
+                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                          <div>
+                            <input
+                              {...getInputProps({
+                                placeholder: "Field location*",
+                                className: "form-control",
+                              })}
+                            />
+                            <div className="autocomplete-dropdown-container">
+                              {loading && <div>Loading...</div>}
+                              {suggestions.map((suggestion) => {
+                                const className = suggestion.active
+                                  ? "suggestion-item--active"
+                                  : "suggestion-item";
+                                return (
+                                  <div
+                                    {...getSuggestionItemProps(suggestion, {
+                                      className,
+                                    })}
+                                    key={suggestion.placeId}
+                                  >
+                                    <span>{suggestion.description}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            {errors.address && <p className="error-text">{errors.address}</p>}
+                          </div>
+                        )}
+                      </PlacesAutocomplete>
+                      <img src={locationBlack} alt="" className="location-icon" />
                     </div>
-                    <div className="location-wrapper">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Longitude*"
-                        name="lng"
-                        value={lng}
-                        onChange={handleInputChange}
-                      />
-                      {errors.lng && <p className="error-text">{errors.lng}</p>}
-                    </div>
-                    {/* <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Farm location*"
-                      required
-                    /> */}
                   </div>
                   <div className="col-md-6">
                     <select

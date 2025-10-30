@@ -91,7 +91,7 @@ function LocalProductsListingModule() {
             {loading ? (
               <ClassifiedSectionSkeleton />
             ) : products.length === 0 ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>No product found.</p>
+              <p style={{ color: "gray", marginTop: "10px" }}>No product Available.</p>
             ) : (
               products.map((product) => (
                 <div className="col-md-4 mb-3" key={product._id}>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import cattleIcon from "../../../assets/images/cattle-icon.png";
 import locationBlack from "../../../assets/images/location-black.svg";
@@ -10,21 +12,37 @@ import {
   breedOptions,
   cattleData,
 } from "../../../constants/service category/cattle purchase and sale/cattleAndBreedData";
-import { useSelector } from "react-redux";
 
 function CattleBookYourServices() {
   const filters = useSelector((state) => state.services.CattleServiceMgmtSlice.filters);
   const defaultForm = {
+    address: "",
     lat: "",
     lng: "",
     selectBreed: "",
     sectectCattle: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
-  const { lat, lng, selectBreed, sectectCattle } = formState;
+  const { address, lat, lng, selectBreed, sectectCattle } = formState;
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const handleSelect = async (value) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const { lat, lng } = await getLatLng(results[0]);
+      setFormState((prev) => ({
+        ...prev,
+        address: value,
+        lat: lat.toString(),
+        lng: lng.toString(),
+      }));
+      setErrors((prev) => ({ ...prev, address: "" }));
+    } catch (error) {
+      toast.error("Failed to fetch location coordinates");
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,16 +56,8 @@ function CattleBookYourServices() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!lat.trim()) {
-      newErrors.lat = "*Latitude is required";
-    } else if (isNaN(lat) || lat < -90 || lat > 90) {
-      newErrors.lat = "*Latitude must be a number between -90 and 90";
-    }
-    if (!lng.trim()) {
-      newErrors.lng = "*Longitude is required";
-    } else if (isNaN(lng) || lng < -180 || lng > 180) {
-      newErrors.lng = "*Longitude must be a number between -180 and 180";
-    }
+    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+
     if (!sectectCattle) {
       newErrors.sectectCattle = "*Please select a Cattle";
     }
@@ -87,37 +97,45 @@ function CattleBookYourServices() {
                   <h4 className="book-heading">Book your service</h4>
                   <div className="row g-3">
                     <div className="col-md-4">
-                      {/* <div className="location-wrapper">
-                          <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Farm location*"
-                          />
-                          <img src={locationBlack} alt="" className="location-icon" />
-                        </div> */}
-
-                      {/*need to remove this after geo api implemented */}
                       <div className="location-wrapper">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Latitude*"
-                          name="lat"
-                          value={lat}
-                          onChange={handleInputChange}
-                        />
-                        {errors.lat && <p className="error-text">{errors.lat}</p>}
-                      </div>
-                      <div className="location-wrapper">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Longitude*"
-                          name="lng"
-                          value={lng}
-                          onChange={handleInputChange}
-                        />
-                        {errors.lng && <p className="error-text">{errors.lng}</p>}
+                        <PlacesAutocomplete
+                          value={address}
+                          onChange={(value) =>
+                            setFormState((prev) => ({ ...prev, address: value }))
+                          }
+                          onSelect={handleSelect}
+                        >
+                          {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                            <div>
+                              <input
+                                {...getInputProps({
+                                  placeholder: "Farm location*",
+                                  className: "form-control",
+                                })}
+                              />
+                              <div className="autocomplete-dropdown-container">
+                                {loading && <div>Loading...</div>}
+                                {suggestions.map((suggestion) => {
+                                  const className = suggestion.active
+                                    ? "suggestion-item--active"
+                                    : "suggestion-item";
+                                  return (
+                                    <div
+                                      {...getSuggestionItemProps(suggestion, {
+                                        className,
+                                      })}
+                                      key={suggestion.placeId}
+                                    >
+                                      <span>{suggestion.description}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                              {errors.address && <p className="error-text">{errors.address}</p>}
+                            </div>
+                          )}
+                        </PlacesAutocomplete>
+                        <img src={locationBlack} alt="" className="location-icon" />
                       </div>
                     </div>
                     {/* Cattle Dropdown */}

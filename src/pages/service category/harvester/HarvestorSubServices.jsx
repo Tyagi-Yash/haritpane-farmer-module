@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import locationBlack from "../../../assets/images/location-black.svg";
 import TractorHarvester from "../../../assets/images/TractorHarvester.png";
@@ -11,16 +13,15 @@ import {
   validateArea,
   validateCrop,
   validateDates,
-  validateLat,
-  validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
-import { useSelector } from "react-redux";
+import { getAllCroptypes } from "../../../reduxtoolkit/slices/service category/harvestorServices";
 
 function HarvestorSubServices() {
   const filters = useSelector((state) => state.services.HarvestorServiceMgmtSlice.filters);
   const defaultForm = {
     selectSubCategory: "combine_harvester",
+    address: "",
     lat: "",
     lng: "",
     typeOfCrop: "",
@@ -30,6 +31,24 @@ function HarvestorSubServices() {
     fromTime: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+  const [cropTypes, setCropTypes] = useState([]);
+  const dispatch = useDispatch();
+  const fetchCropType = async () => {
+    try {
+      const res = await dispatch(getAllCroptypes());
+      const { status, data } = res?.payload || {};
+      if (status === 200) {
+        setCropTypes(data?.data || []);
+      } else {
+        toast(data?.message || "Failed to load Crop Types");
+      }
+    } catch (error) {
+      toast("Something went wrong");
+    }
+  };
+  useEffect(() => {
+    fetchCropType();
+  }, []);
 
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
@@ -37,6 +56,7 @@ function HarvestorSubServices() {
 
   const {
     selectSubCategory,
+    address,
     lat,
     lng,
     typeOfCrop,
@@ -45,6 +65,22 @@ function HarvestorSubServices() {
     toDate,
     fromTime,
   } = formState;
+
+  const handleSelect = async (value) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const { lat, lng } = await getLatLng(results[0]);
+      setFormState((prev) => ({
+        ...prev,
+        address: value,
+        lat: lat.toString(),
+        lng: lng.toString(),
+      }));
+      setErrors((prev) => ({ ...prev, address: "" }));
+    } catch (error) {
+      toast.error("Failed to fetch location coordinates");
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,11 +94,7 @@ function HarvestorSubServices() {
   const validateForm = () => {
     let newErrors = {};
 
-    const latError = validateLat(lat);
-    if (latError) newErrors.lat = latError;
-
-    const lngError = validateLng(lng);
-    if (lngError) newErrors.lng = lngError;
+    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
 
     const cropError = validateCrop(typeOfCrop.trim());
     if (cropError) newErrors.typeOfCrop = cropError;
@@ -158,43 +190,61 @@ function HarvestorSubServices() {
                 <h5 className="mb-4 book-heading">Book your service</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
-                    {/*need to remove this after geo api implemented */}
                     <div className="location-wrapper">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Latitude*"
-                        name="lat"
-                        value={lat}
-                        onChange={handleInputChange}
-                      />
-                      {errors.lat && <p className="error-text">{errors.lat}</p>}
-                    </div>
-                    <div className="location-wrapper">
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Longitude*"
-                        name="lng"
-                        value={lng}
-                        onChange={handleInputChange}
-                      />
-                      {errors.lng && <p className="error-text">{errors.lng}</p>}
-                    </div>
-                    {/* <div className="location-wrapper">
-                      <input type="text" className="form-control" placeholder="Farm location*" />
+                      <PlacesAutocomplete
+                        value={address}
+                        onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
+                        onSelect={handleSelect}
+                      >
+                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                          <div>
+                            <input
+                              {...getInputProps({
+                                placeholder: "Field location*",
+                                className: "form-control",
+                              })}
+                            />
+                            <div className="autocomplete-dropdown-container">
+                              {loading && <div>Loading...</div>}
+                              {suggestions.map((suggestion) => {
+                                const className = suggestion.active
+                                  ? "suggestion-item--active"
+                                  : "suggestion-item";
+                                return (
+                                  <div
+                                    {...getSuggestionItemProps(suggestion, {
+                                      className,
+                                    })}
+                                    key={suggestion.placeId}
+                                  >
+                                    <span>{suggestion.description}</span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            {errors.address && <p className="error-text">{errors.address}</p>}
+                          </div>
+                        )}
+                      </PlacesAutocomplete>
                       <img src={locationBlack} alt="" className="location-icon" />
-                    </div> */}
+                    </div>
                   </div>
                   <div className="col-md-4">
-                    <input
-                      type="text"
-                      placeholder="Name of Crop under Cultivation*"
+                    <select
                       className="form-control"
                       name="typeOfCrop"
                       value={typeOfCrop}
                       onChange={handleInputChange}
-                    />
+                    >
+                      <option value="" disabled>
+                        Name of Crop under Cultivation*
+                      </option>
+                      {cropTypes.map((type) => (
+                        <option value={type} className="form-control" key={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
                     {errors.typeOfCrop && <p className="error-text">{errors.typeOfCrop}</p>}
                   </div>
                   <div className="col-md-4">

@@ -14,7 +14,9 @@ function CompoundWallVendorDetailsPending() {
 
   const { services, filters } = useSelector((state) => state.services.CompoundWallServiceMgmtSlice);
 
-  const vendor = services.find((v) => v._id === id);
+  const vendor = services.find((v) => v.compoundMaterialsInfo?._id === id);
+  const [selectedAvailability, setSelectedAvailability] = useState("");
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -101,7 +103,10 @@ function CompoundWallVendorDetailsPending() {
                                 <tbody>
                                   <tr>
                                     <td>Service Cost</td>
-                                    <td>₹ {Number(vendor?.ratePerHr ?? 0).toFixed(2)}</td>
+                                    <td>
+                                      ₹{" "}
+                                      {Number(vendor?.compoundMaterialsInfo?.rate ?? 0).toFixed(2)}
+                                    </td>
                                   </tr>
                                   <tr>
                                     <td>Transportation Charges</td>
@@ -131,21 +136,66 @@ function CompoundWallVendorDetailsPending() {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td className="date-cell">20/05/2025</td>
-                            <td className="time-cell" data-time="8:00:00 AM">
+                          <tr onClick={() => setSelectedAvailability(1)}>
+                            <td
+                              className={
+                                selectedAvailability === 1
+                                  ? "availability-cells date-cell "
+                                  : "date-cell"
+                              }
+                            >
+                              20/05/2025
+                            </td>
+                            <td
+                              className={
+                                selectedAvailability === 1
+                                  ? "availability-cells time-cell"
+                                  : "time-cell"
+                              }
+                              data-time="8:00:00 AM"
+                            >
                               8:00:00 AM
                             </td>
                           </tr>
-                          <tr>
-                            <td className="date-cell">21/05/2025</td>
-                            <td className="time-cell" data-time="4:00:00 PM">
+                          <tr onClick={() => setSelectedAvailability(2)}>
+                            <td
+                              className={
+                                selectedAvailability === 2
+                                  ? "availability-cells date-cell "
+                                  : "date-cell"
+                              }
+                            >
+                              21/05/2025
+                            </td>
+                            <td
+                              className={
+                                selectedAvailability === 2
+                                  ? "availability-cells time-cell"
+                                  : "time-cell"
+                              }
+                              data-time="4:00:00 PM"
+                            >
                               4:00:00 PM
                             </td>
                           </tr>
-                          <tr>
-                            <td className="date-cell">22/05/2025</td>
-                            <td className="time-cell" data-time="2:30:00 PM">
+                          <tr onClick={() => setSelectedAvailability(3)}>
+                            <td
+                              className={
+                                selectedAvailability === 3
+                                  ? "availability-cells date-cell "
+                                  : "date-cell"
+                              }
+                            >
+                              22/05/2025
+                            </td>
+                            <td
+                              className={
+                                selectedAvailability === 3
+                                  ? "availability-cells time-cell"
+                                  : "time-cell"
+                              }
+                              data-time="2:30:00 PM"
+                            >
                               2:30:00 PM
                             </td>
                           </tr>

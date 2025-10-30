@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
+import locationBlack from "../../../assets/images/location-black.svg";
 import AugerServiceIcon from "../../../assets/images/AugerService-icon.png";
 import {
   validateDurationFields,
   validateFromDate,
-  validateLat,
-  validateLng,
   validateSelectTime,
 } from "../../../utils/formValidators";
-import { useSelector } from "react-redux";
 
 function AugerBookYourService() {
   const filters = useSelector((state) => state.services.AugerServiceMgmtSlice.filters);
   const defaultForm = {
+    address: "",
     lat: "",
     lng: "",
     date: "",
@@ -24,10 +25,26 @@ function AugerBookYourService() {
     minutes: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
-  const { lat, lng, date, time, hours, minutes } = formState;
+  const { address, lat, lng, date, time, hours, minutes } = formState;
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const handleSelect = async (value) => {
+    try {
+      const results = await geocodeByAddress(value);
+      const { lat, lng } = await getLatLng(results[0]);
+      setFormState((prev) => ({
+        ...prev,
+        address: value,
+        lat: lat.toString(),
+        lng: lng.toString(),
+      }));
+      setErrors((prev) => ({ ...prev, address: "" }));
+    } catch (error) {
+      toast.error("Failed to fetch location coordinates");
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,11 +58,7 @@ function AugerBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    const latError = validateLat(lat);
-    if (latError) newErrors.lat = latError;
-
-    const lngError = validateLng(lng);
-    if (lngError) newErrors.lng = lngError;
+    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
 
     const dateErrors = validateFromDate(date);
     if (dateErrors) newErrors.date = dateErrors;
@@ -96,38 +109,46 @@ function AugerBookYourService() {
             <div className="option-wrapper">
               <div className="form-section">
                 <h5 className="book-heading">Book your service</h5>
-                <div className="row g-3">
-                  {/*need to remove this after geo api implemented */}
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Latitude*"
-                      name="lat"
-                      value={lat}
-                      onChange={handleInputChange}
-                    />
-                    {errors.lat && <p className="error-text">{errors.lat}</p>}
+                {/* ✅ Google Places Autocomplete */}
+                <div className="col-md-12 mb-3">
+                  <div className="location-wrapper">
+                    <PlacesAutocomplete
+                      value={address}
+                      onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
+                      onSelect={handleSelect}
+                    >
+                      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                        <div>
+                          <input
+                            {...getInputProps({
+                              placeholder: "Job location*",
+                              className: "form-control",
+                            })}
+                          />
+                          <div className="autocomplete-dropdown-container">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion) => {
+                              const className = suggestion.active
+                                ? "suggestion-item--active"
+                                : "suggestion-item";
+                              return (
+                                <div
+                                  {...getSuggestionItemProps(suggestion, {
+                                    className,
+                                  })}
+                                  key={suggestion.placeId}
+                                >
+                                  <span>{suggestion.description}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                          {errors.address && <p className="error-text">{errors.address}</p>}
+                        </div>
+                      )}
+                    </PlacesAutocomplete>
+                    <img src={locationBlack} alt="" className="location-icon" />
                   </div>
-                  <div className="col-md-6">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Longitude*"
-                      name="lng"
-                      value={lng}
-                      onChange={handleInputChange}
-                    />
-                    {errors.lng && <p className="error-text">{errors.lng}</p>}
-                  </div>
-                  {/* <div className="col-md-12">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Job location*"
-                    required
-                  />
-                </div> */}
                 </div>
                 <h5 className="book-heading">Estimate Job Duration</h5>
                 <div className="row g-3">

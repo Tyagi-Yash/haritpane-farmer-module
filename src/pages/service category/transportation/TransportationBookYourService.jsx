@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import TransportationIcon from "../../../assets/images/Transportation-icon.png";
 import { getVehicleTypesForTransportation } from "../../../reduxtoolkit/slices/service category/transportationService";
-import { useDispatch, useSelector } from "react-redux";
 import {
   validateCurrentLocation,
   validateDates,
@@ -44,8 +45,8 @@ function TransportationBookYourService() {
 
   const filters = useSelector((state) => state.services.TransportationServiceMgmtSlice.filters);
   const defaultForm = {
-    lat: 28.40793935,
-    lng: 77.0842600176243,
+    lat: "",
+    lng: "",
     currentLocationOfTransportation: "",
     destinationLocationOfTransportation: "",
     transportItem: "",
@@ -364,28 +365,118 @@ function TransportationBookYourService() {
                   )}
                   <div className="col-md-3">
                     <label className="form-label">Current location*</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="location"
-                      name="currentLocationOfTransportation"
+                    <PlacesAutocomplete
                       value={currentLocationOfTransportation}
-                      onChange={handleInputChange}
-                    />
+                      onChange={(address) =>
+                        setFormState((prev) => ({
+                          ...prev,
+                          currentLocationOfTransportation: address,
+                        }))
+                      }
+                      onSelect={async (address) => {
+                        try {
+                          const results = await geocodeByAddress(address);
+                          const { lat, lng } = await getLatLng(results[0]);
+                          setFormState((prev) => ({
+                            ...prev,
+                            currentLocationOfTransportation: address,
+                            lat,
+                            lng,
+                          }));
+                          setErrors((prev) => ({ ...prev, currentLocationOfTransportation: "" }));
+                        } catch (error) {
+                          console.error("Error getting location details:", error);
+                        }
+                      }}
+                    >
+                      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                        <div>
+                          <input
+                            {...getInputProps({
+                              placeholder: "Enter current location",
+                              className: "form-control",
+                              name: "currentLocationOfTransportation",
+                            })}
+                          />
+                          <div className="autocomplete-dropdown">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion, index) => {
+                              const className = suggestion.active
+                                ? "suggestion-item--active"
+                                : "suggestion-item";
+                              return (
+                                <div
+                                  key={index}
+                                  {...getSuggestionItemProps(suggestion, { className })}
+                                  style={{
+                                    backgroundColor: suggestion.active ? "#f0f0f0" : "#fff",
+                                    padding: "8px",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  {suggestion.description}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </PlacesAutocomplete>
                     {errors.currentLocationOfTransportation && (
                       <p className="error-text">{errors.currentLocationOfTransportation}</p>
                     )}
                   </div>
                   <div className="col-md-3">
                     <label className="form-label">Travel location*</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="location"
-                      name="destinationLocationOfTransportation"
+                    <PlacesAutocomplete
                       value={destinationLocationOfTransportation}
-                      onChange={handleInputChange}
-                    />
+                      onChange={(address) =>
+                        setFormState((prev) => ({
+                          ...prev,
+                          destinationLocationOfTransportation: address,
+                        }))
+                      }
+                      onSelect={(address) => {
+                        setFormState((prev) => ({
+                          ...prev,
+                          destinationLocationOfTransportation: address,
+                        }));
+                        setErrors((prev) => ({ ...prev, destinationLocationOfTransportation: "" }));
+                      }}
+                    >
+                      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                        <div>
+                          <input
+                            {...getInputProps({
+                              placeholder: "Enter Travel location",
+                              className: "form-control",
+                              name: "destinationLocationOfTransportation",
+                            })}
+                          />
+                          <div className="autocomplete-dropdown">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion, index) => {
+                              const className = suggestion.active
+                                ? "suggestion-item--active"
+                                : "suggestion-item";
+                              return (
+                                <div
+                                  key={index}
+                                  {...getSuggestionItemProps(suggestion, { className })}
+                                  style={{
+                                    backgroundColor: suggestion.active ? "#f0f0f0" : "#fff",
+                                    padding: "8px",
+                                    cursor: "pointer",
+                                  }}
+                                >
+                                  {suggestion.description}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </PlacesAutocomplete>
                     {errors.destinationLocationOfTransportation && (
                       <p className="error-text">{errors.destinationLocationOfTransportation}</p>
                     )}
