@@ -2,8 +2,19 @@ import { Link } from "react-router-dom";
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
 import dryCattleManagement from "../../assets/images/DryCattleManagement.png";
 import TopbarModal from "../../components/common components/TopbarModal";
+import { useState } from "react";
 
 function ServiceTracking() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("Sort");
+
+  const toggleSortMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const selectSortOption = (option) => {
+    setSelectedSort(option);
+    setIsOpen(false);
+  };
   return (
     <>
       <div className="WrapperArea">
@@ -41,18 +52,28 @@ function ServiceTracking() {
                   {/* Sort Dropdown */}
                   <div className="col-md-4 mb-3">
                     <div className="sort-box" id="sortBox">
-                      <div className="sort-toggle">
+                      <div className="sort-toggle" onClick={toggleSortMenu}>
                         <span>
-                          <span id="sortSelectedLabel" className="sort-label">
-                            Sort
-                          </span>
+                          <span className="sort-label">{selectedSort}</span>
                           <img src={sortArrowDown} alt="Sort Icon" />
                         </span>
                       </div>
-                      <div className="sort-menu">
-                        <div className="sort-option">Top rating</div>
-                        <div className="sort-option">Out of Radius</div>
-                      </div>
+                      {isOpen && (
+                        <div className="sort-menu">
+                          <div
+                            className="sort-option"
+                            onClick={() => selectSortOption("Top rating")}
+                          >
+                            Top rating
+                          </div>
+                          <div
+                            className="sort-option"
+                            onClick={() => selectSortOption("Out of Radius")}
+                          >
+                            Out of Radius
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

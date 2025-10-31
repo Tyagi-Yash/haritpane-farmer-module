@@ -23,7 +23,7 @@ function LabourVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/service-category/labor-requirement/available-services?${new URLSearchParams(
+          navigate={`/service-category/labour-requirement/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />
@@ -107,7 +107,12 @@ function LabourVendorDetailsPending() {
                                   </tr>
                                   <tr>
                                     <td>Transportation Charges</td>
-                                    <td>₹ {Number(vendor?.additionCharges ?? 0).toFixed(2)}</td>
+                                    <td>
+                                      ₹{" "}
+                                      {Number(vendor?.labourInfo?.additionalCharges ?? 0).toFixed(
+                                        2
+                                      )}
+                                    </td>
                                   </tr>
                                 </tbody>
                                 <tfoot>

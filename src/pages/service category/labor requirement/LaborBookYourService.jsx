@@ -142,7 +142,7 @@ function LaborBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Labor Requirement"
+          title="Labour Requirement"
           secImage={labouricon}
           navigate="/service-category"
         />

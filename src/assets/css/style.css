@@ -842,6 +842,7 @@ ol {
   color: #7b7b7b;
   font-size: 13px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .hide {
@@ -2243,6 +2244,7 @@ table tr td {
   padding: 10px;
   border-radius: 12px;
   border: 1px solid #ededed;
+  cursor: pointer;
 }
 
 .local-shops .product-card:hover {
@@ -2658,12 +2660,10 @@ input[type="date" i] {
   background: white;
   font-family: "Roboto";
   font-size: 14px;
-  color: #a1a1aa;
   cursor: pointer;
 }
 
 .sort-label {
-  color: #a1a1aa;
   transition: color 0.2s;
 }
 
@@ -2693,13 +2693,8 @@ input[type="date" i] {
   border-top: none;
   border-radius: 0 0 12px 12px;
   background-color: white;
-  display: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
   z-index: 100;
-}
-
-.sort-box.open .sort-menu {
-  display: block;
 }
 
 .sort-option {
@@ -2899,8 +2894,4 @@ input[type="date" i] {
   font-size: 14px !important;
   margin-top: 4px !important;
   padding-left: 15px !important;
-}
-
-.ads-height {
-  height: 280px;
 }

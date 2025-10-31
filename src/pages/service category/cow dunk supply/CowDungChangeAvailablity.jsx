@@ -20,6 +20,17 @@ function CowDungChangeAvailablity() {
   const { services, loading } = useSelector((state) => state.services.CowDunkServiceMgmtSlice);
   const [errors, setErrors] = useState({});
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("Top rating");
+
+  const toggleSortMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const selectSortOption = (option) => {
+    setSelectedSort(option);
+    setIsOpen(false);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
@@ -70,9 +81,9 @@ function CowDungChangeAvailablity() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Cow Dunk Supply"
+          title="Cow Dung Supply"
           secImage={CowDunkSupplyIcon}
-          navigate="/service-category/cow-dunk-supply"
+          navigate="/service-category/cow-dung-supply"
         />
         <div className="dashboard">
           <div className="option-wrapper">
@@ -109,18 +120,25 @@ function CowDungChangeAvailablity() {
                 </div>
                 <div className="col-md-4 mb-3">
                   <div className="sort-box" id="sortBox">
-                    <div className="sort-toggle">
+                    <div className="sort-toggle" onClick={toggleSortMenu}>
                       <span>
-                        <span id="sortSelectedLabel" className="sort-label">
-                          Sort
-                        </span>
+                        <span className="sort-label">{selectedSort}</span>
                         <img src={sortArrowDown} alt="Sort Icon" />
                       </span>
                     </div>
-                    <div className="sort-menu">
-                      <div className="sort-option">Top rating</div>
-                      <div className="sort-option">Out of Radius</div>
-                    </div>
+                    {isOpen && (
+                      <div className="sort-menu">
+                        <div className="sort-option" onClick={() => selectSortOption("Top rating")}>
+                          Top rating
+                        </div>
+                        <div
+                          className="sort-option"
+                          onClick={() => selectSortOption("Out of Radius")}
+                        >
+                          Out of Radius
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

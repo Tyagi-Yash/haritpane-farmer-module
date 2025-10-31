@@ -14,7 +14,7 @@ import { validateDates, validateSelectTime } from "../../../utils/formValidators
 function LandManagementServicesSubServices() {
   const filters = useSelector((state) => state.services.LandServiceMgmtSlice.filters);
   const defaultForm = {
-    selectSubCategory: "trackter_attachments",
+    selectSubCategory: "tracktor_attachments",
     address: "",
     lat: "",
     lng: "",
@@ -77,7 +77,7 @@ function LandManagementServicesSubServices() {
       newErrors.selectAttachment = "*Please select an attachment";
     }
 
-    if (selectSubCategory === "trackter_attachments" && !hpOfTractor) {
+    if (selectSubCategory === "tracktor_attachments" && !hpOfTractor) {
       newErrors.hpOfTractor = "*Please select tractor category";
     }
 
@@ -103,7 +103,7 @@ function LandManagementServicesSubServices() {
       fromDate,
       toDate,
       fromTime,
-      ...(selectSubCategory === "trackter_attachments" && { hpOfTractor }),
+      ...(selectSubCategory === "tracktor_attachments" && { hpOfTractor }),
     };
     try {
       const query = new URLSearchParams(formdata).toString();
@@ -135,10 +135,10 @@ function LandManagementServicesSubServices() {
                       <input
                         type="radio"
                         name="selectSubCategory"
-                        value="trackter_attachments"
+                        value="tracktor_attachments"
                         className="radio-input"
                         onChange={handleInputChange}
-                        checked={selectSubCategory === "trackter_attachments"}
+                        checked={selectSubCategory === "tracktor_attachments"}
                       />
                       <div className="radio-card">
                         <img src={TractorandAttachment} alt="Tractor & Attachment" />
@@ -211,7 +211,7 @@ function LandManagementServicesSubServices() {
                       <img src={locationBlack} alt="" className="location-icon" />
                     </div>
                   </div>
-                  {selectSubCategory === "trackter_attachments" && (
+                  {selectSubCategory === "tracktor_attachments" && (
                     <div className="col-md-4">
                       <select
                         className="form-control"

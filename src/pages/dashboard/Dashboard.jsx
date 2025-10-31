@@ -10,13 +10,21 @@ import electrostatic from "../../assets/images/electrostatic.png";
 import laborRequirement from "../../assets/images/labor-requirement.png";
 import transportation from "../../assets/images/transportation.png";
 import borewellConstruction from "../../assets/images/borewell-construction.png";
+import compundBuilder from "../../assets/images/compund-builder.png";
+import DroneServices from "../../assets/images/drone-services.png";
+import augerServices from "../../assets/images/auger-services.png";
 import cowDunkSupply from "../../assets/images/cow-dunk-supply.png";
 import cowImageRecent from "../../assets/images/cow-image-recent.png";
 
 import DashboardCarousel from "../../components/dashboard/DashboardCarousel";
 import TopbarModal from "../../components/common components/TopbarModal";
+import { useState } from "react";
 
 function Dashboard() {
+  const [showAll, setShowAll] = useState(false);
+  const toggleShow = () => {
+    setShowAll((prev) => !prev);
+  };
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -24,39 +32,9 @@ function Dashboard() {
         <div className="dashboard-page">
           <div className="dashboard">
             <div>
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h4 className="heading">Classified Section</h4>
-              </div>
               <div className="row">
                 <div className="col-md-9">
                   <section className="mb-3">
-                    <div className="Classified-Tiles">
-                      <div className="ClassifiedBox">
-                        <Link to="local-shops">
-                          <figure>
-                            <span>
-                              <img src={localShop} alt="" />
-                            </span>
-                          </figure>
-                          <p className="">View Local Shop</p>
-                        </Link>
-                      </div>
-                      <div className="ClassifiedBox">
-                        <Link to="local-manufacturers">
-                          <figure>
-                            <span>
-                              <img src={localManufacturer} alt="" />
-                            </span>
-                          </figure>
-                          <p>View Local Manufacturer</p>
-                        </Link>
-                      </div>
-                    </div>
-                  </section>
-
-                  <DashboardCarousel />
-
-                  <section>
                     <div className="row m-0">
                       <div className="col-sm-12">
                         <div className="headline-sort">
@@ -64,9 +42,9 @@ function Dashboard() {
                             <h4 className="heading">Service Category</h4>
                           </div>
                           <div>
-                            <Link className="seemore" to="/service-category">
-                              See More
-                            </Link>
+                            <div className="seemore" onClick={toggleShow}>
+                              {showAll ? "See Less" : "See More"}
+                            </div>
                           </div>
                         </div>
                         <div className="service-section">
@@ -120,11 +98,11 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/service-category/labor-requirement">
+                              <Link to="/service-category/labour-requirement">
                                 <div className="card-image-part">
                                   <img src={laborRequirement} alt="Cattle" />
                                 </div>
-                                <div className="label">Labor Requirement</div>
+                                <div className="label">Labour Requirement</div>
                               </Link>
                             </div>
                           </div>
@@ -153,19 +131,85 @@ function Dashboard() {
                               </Link>
                             </div>
                             <div className="service-card">
-                              <Link to="/service-category/cow-dunk-supply">
+                              <Link to="/service-category/cow-dung-supply">
                                 <div className="card-image-part">
-                                  <img src={cowDunkSupply} alt="Cow Dunk Supply" />
+                                  <img src={cowDunkSupply} alt="Cow Dung Supply" />
                                 </div>
-                                <div className="label">Cow Dunk Supply</div>
+                                <div className="label">Cow Dung Supply</div>
                               </Link>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                    {showAll && (
+                      <div className="row m-0">
+                        <div className="col-sm-12">
+                          <div className="service-section">
+                            <div className="service-header mt-2"></div>
+                            <div className="service-grid">
+                              <div className="service-card">
+                                <Link to="/service-category/compound-wall-builder">
+                                  <div className="card-image-part">
+                                    <img src={compundBuilder} alt="Compound Wall Builder" />
+                                  </div>
+                                  <div className="label">Compound Wall Builder</div>
+                                </Link>
+                              </div>
+                              <div className="service-card">
+                                <Link to="/service-category/drone-service">
+                                  <div className="card-image-part">
+                                    <img src={DroneServices} alt="Drone Services" />
+                                  </div>
+                                  <div className="label">Drone Services</div>
+                                </Link>
+                              </div>
+                              <div className="service-card">
+                                <Link to="/service-category/auger-service">
+                                  <div className="card-image-part">
+                                    <img src={augerServices} alt="Auger Services" />
+                                  </div>
+                                  <div className="label">Auger Services</div>
+                                </Link>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </section>
+
+                  <DashboardCarousel />
+
+                  <section className="mb-3">
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <h4 className="heading">Classified Section</h4>
+                    </div>
+                    <div className="Classified-Tiles">
+                      <div className="ClassifiedBox">
+                        <Link to="local-shops">
+                          <figure>
+                            <span>
+                              <img src={localShop} alt="" />
+                            </span>
+                          </figure>
+                          <p className="">View Local Shop</p>
+                        </Link>
+                      </div>
+                      <div className="ClassifiedBox">
+                        <Link to="local-manufacturers">
+                          <figure>
+                            <span>
+                              <img src={localManufacturer} alt="" />
+                            </span>
+                          </figure>
+                          <p>View Local Manufacturer</p>
+                        </Link>
+                      </div>
+                    </div>
                   </section>
                 </div>
+
                 <div className="col-md-3">
                   <div className="row">
                     <div className="col-md-12 mb-3">

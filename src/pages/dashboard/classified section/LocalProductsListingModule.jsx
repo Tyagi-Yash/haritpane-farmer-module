@@ -19,6 +19,17 @@ function LocalProductsListingModule() {
   const location = useLocation();
   const pathname = location.pathname;
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("Sort");
+
+  const toggleSortMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const selectSortOption = (option) => {
+    setSelectedSort(option);
+    setIsOpen(false);
+  };
+
   const loadProducts = async () => {
     setLoading(true);
     const paramData = {
@@ -72,18 +83,22 @@ function LocalProductsListingModule() {
                 <img src={locationBlack} alt="" className="location-icon" />
               </div>
               <div className="sort-box" id="sortBox">
-                <div className="sort-toggle">
+                <div className="sort-toggle" onClick={toggleSortMenu}>
                   <span>
-                    <span id="sortSelectedLabel" className="sort-label">
-                      Sort
-                    </span>
+                    <span className="sort-label">{selectedSort}</span>
                     <img src={sortArrowDown} alt="Sort Icon" />
                   </span>
                 </div>
-                <div className="sort-menu">
-                  <div className="sort-option">Top rating</div>
-                  <div className="sort-option">Out of Radius</div>
-                </div>
+                {isOpen && (
+                  <div className="sort-menu">
+                    <div className="sort-option" onClick={() => selectSortOption("Top rating")}>
+                      Top rating
+                    </div>
+                    <div className="sort-option" onClick={() => selectSortOption("Out of Radius")}>
+                      Out of Radius
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -95,7 +110,7 @@ function LocalProductsListingModule() {
             ) : (
               products.map((product) => (
                 <div className="col-md-4 mb-3" key={product._id}>
-                  <div className="product-card">
+                  <div className="product-card" onClick={() => handleEnquiryClick(product._id)}>
                     <div className="image-part">
                       <img
                         src={product.productImage?.[0] || productImage}
@@ -110,9 +125,7 @@ function LocalProductsListingModule() {
                       </p>
                     </div>
                     <div className="available-service-btn">
-                      <button onClick={() => handleEnquiryClick(product._id)} className="send-btn">
-                        Send Enquiry
-                      </button>
+                      <button className="send-btn">Send Enquiry</button>
                     </div>
                   </div>
                 </div>

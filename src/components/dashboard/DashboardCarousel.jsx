@@ -33,14 +33,14 @@ const DashboardCarousel = () => {
   }, []);
 
   return (
-    <section >
+    <section>
       <div>
         <h3 className="heading text-center mb-5">Feature for you</h3>
       </div>
       {loading ? (
         <CarouselAdsSkeleton />
       ) : ads.length > 0 ? (
-        <Carousel className="mb-4 ads-height" pause="hover" data-bs-theme="dark">
+        <Carousel className="mb-4" pause="hover" data-bs-theme="dark">
           {ads.map((ad) => (
             <Carousel.Item key={ad.ads_id}>
               <img className="d-block w-100" src={ad.adsImage[0]} alt="Advertisement" />

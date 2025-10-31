@@ -167,7 +167,7 @@ function App() {
                   </Route>
                 </Route>
 
-                <Route path="labor-requirement">
+                <Route path="labour-requirement">
                   <Route index element={<LaborBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<LabourChangeAvailablity />} />
@@ -194,7 +194,7 @@ function App() {
                   </Route>
                 </Route>
 
-                <Route path="cow-dunk-supply">
+                <Route path="cow-dung-supply">
                   <Route index element={<CowDungBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<CowDungChangeAvailablity />} />

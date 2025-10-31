@@ -8,7 +8,7 @@ import TopbarModal from "../../../components/common components/TopbarModal";
 import locationBlack from "../../../assets/images/location-black.svg";
 import AugerServiceIcon from "../../../assets/images/AugerService-icon.png";
 import {
-  validateDurationFields,
+  // validateDurationFields,
   validateFromDate,
   validateSelectTime,
 } from "../../../utils/formValidators";
@@ -66,8 +66,8 @@ function AugerBookYourService() {
     const timeError = validateSelectTime(date, time);
     if (timeError) newErrors.time = timeError;
 
-    const durationErrors = validateDurationFields(hours, minutes);
-    newErrors = { ...newErrors, ...durationErrors };
+    // const durationErrors = validateDurationFields(hours, minutes);
+    // newErrors = { ...newErrors, ...durationErrors };
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -83,7 +83,9 @@ function AugerBookYourService() {
       lng: lng.trim(),
       date,
       time,
-      estimatedTime: Number(totalDuration).toFixed(2),
+      ...((hours || minutes) && {
+        estimatedTime: Number(totalDuration).toFixed(2),
+      }),
     };
     try {
       const query = new URLSearchParams(formdata).toString();
@@ -156,7 +158,7 @@ function AugerBookYourService() {
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Hours*"
+                      placeholder="Hours"
                       name="hours"
                       min="0"
                       value={hours}
@@ -168,7 +170,7 @@ function AugerBookYourService() {
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Minutes (0-59)*"
+                      placeholder="Minutes (0-59)"
                       name="minutes"
                       min="0"
                       value={minutes}

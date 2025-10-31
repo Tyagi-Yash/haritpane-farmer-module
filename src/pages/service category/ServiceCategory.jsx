@@ -86,11 +86,11 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="labor-requirement">
+                      <Link to="labour-requirement">
                         <div className="card-image-part">
-                          <img src={laborRequirement} alt="Cattle" />
+                          <img src={laborRequirement} alt="labour" />
                         </div>
-                        <div className="label">Labor Requirement</div>
+                        <div className="label">Labour Requirement</div>
                       </Link>
                     </div>
                   </div>
@@ -119,11 +119,11 @@ function ServiceCategory() {
                       </Link>
                     </div>
                     <div className="service-card">
-                      <Link to="cow-dunk-supply">
+                      <Link to="cow-dung-supply">
                         <div className="card-image-part">
-                          <img src={cowDunkSupply} alt="Cow Dunk Supply" />
+                          <img src={cowDunkSupply} alt="Cow Dung Supply" />
                         </div>
-                        <div className="label">Cow Dunk Supply</div>
+                        <div className="label">Cow Dung Supply</div>
                       </Link>
                     </div>
                   </div>
