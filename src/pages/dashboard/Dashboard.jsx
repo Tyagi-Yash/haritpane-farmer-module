@@ -82,11 +82,11 @@ function Dashboard() {
                           <div className="service-header mt-2"></div>
                           <div className="service-grid">
                             <div className="service-card">
-                              <Link to="/service-category/excavation">
+                              <Link to="/service-category/earth-movers">
                                 <div className="card-image-part">
-                                  <img src={excavation} alt="Excavation" />
+                                  <img src={excavation} alt="Earth Movers" />
                                 </div>
-                                <div className="label">Excavation</div>
+                                <div className="label">Earth Movers</div>
                               </Link>
                             </div>
                             <div className="service-card">

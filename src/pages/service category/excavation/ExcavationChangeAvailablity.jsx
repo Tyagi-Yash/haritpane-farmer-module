@@ -80,9 +80,9 @@ function ExcavationChangeAvailablity() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Excavation"
+          title="Earth Movers"
           secImage={ExcavationIcon}
-          navigate="/service-category/excavation"
+          navigate="/service-category/earth-movers"
         />
         <div className="dashboard">
           <div className="option-wrapper">

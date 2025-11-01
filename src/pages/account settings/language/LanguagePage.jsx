@@ -58,7 +58,7 @@ function LanguagePage() {
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal titleBox={false} />
+        <TopbarModal titleBox={true} title="Language" navigate="/dashboard" />
         <div className="dashboard">
           <div className="language-page option-wrapper mt-4">
             <div className="row">

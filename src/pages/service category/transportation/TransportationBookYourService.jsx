@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import TransportationIcon from "../../../assets/images/Transportation-icon.png";
-import { getVehicleTypesForTransportation } from "../../../reduxtoolkit/slices/service category/transportationService";
 import {
   validateCurrentLocation,
   validateDates,
   validateDestinationLocation,
+  validateFromTimeOnly,
   validateHeight,
   validateItemType,
   validateLength,
   validateNumberOfCattle,
-  validateTime,
   validateVegeType,
   validateVehicleType,
   validateWeight,
@@ -24,24 +23,12 @@ import {
 
 function TransportationBookYourService() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [vehicle, setVehicle] = useState([]);
-  const fetchVehicle = async () => {
-    try {
-      const res = await dispatch(getVehicleTypesForTransportation());
-      const { status, data } = res?.payload || {};
-      if (status === 200) {
-        setVehicle(data?.data || []);
-      } else {
-        toast(data?.message || "Failed to load Vehicle");
-      }
-    } catch (error) {
-      toast("Something went wrong");
-    }
-  };
-  useEffect(() => {
-    fetchVehicle();
-  }, []);
+  const vehicle = [
+    "Tata Ace - Mahindra Maximo (600-715kg)",
+    "Tata Ace ZIP - Mahindra Jeeto (715-750kg)",
+    "Bolero Pickup (750-1700kg)",
+    "Tractor-Trolley (1700-3000kg)",
+  ];
 
   const filters = useSelector((state) => state.services.TransportationServiceMgmtSlice.filters);
   const defaultForm = {
@@ -130,7 +117,7 @@ function TransportationBookYourService() {
       const dateErrors = validateDates(fromDate, toDate);
       newErrors = { ...newErrors, ...dateErrors };
 
-      const timeError = validateTime(fromDate, toDate, fromTime, toTime);
+      const timeError = validateFromTimeOnly(fromDate, toDate, fromTime, toTime);
       newErrors = { ...newErrors, ...timeError };
 
       if (transportItem === "vegitable") {
@@ -221,7 +208,9 @@ function TransportationBookYourService() {
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">Transport Item*</label>
+                    <label className="form-label">
+                      Transport Item<span className="required">*</span>
+                    </label>
                     <select
                       className="form-control"
                       name="transportItem"
@@ -248,7 +237,9 @@ function TransportationBookYourService() {
                   </div>
                   {transportItem === "vegitable" && (
                     <div className="col-md-6">
-                      <label className="form-label">Vegetable Type*</label>
+                      <label className="form-label">
+                        Vegetable Type<span className="required">*</span>
+                      </label>
                       <select
                         className="form-control"
                         name="vegetableType"
@@ -279,7 +270,9 @@ function TransportationBookYourService() {
                   )}
                   {transportItem === "cattle" && (
                     <div className="col-md-6">
-                      <label className="form-label">Number of cattle*</label>
+                      <label className="form-label">
+                        Number of cattle<span className="required">*</span>
+                      </label>
                       <input
                         type="text"
                         className="form-control"
@@ -296,7 +289,9 @@ function TransportationBookYourService() {
                   {transportItem === "equipment" && (
                     <>
                       <div className="col-md-6">
-                        <label className="form-label">Equipment Dimension*</label>
+                        <label className="form-label">
+                          Equipment Dimension<span className="required">*</span>
+                        </label>
                         <div className="row">
                           <div className="col-md-4">
                             <input
@@ -334,7 +329,9 @@ function TransportationBookYourService() {
                         </div>
                       </div>
                       <div className="col-md-6">
-                        <label className="form-label">Equipment Weight*</label>
+                        <label className="form-label">
+                          Equipment Weight<span className="required">*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -351,7 +348,9 @@ function TransportationBookYourService() {
                   )}
                   {transportItem === "other" && (
                     <div className="col-md-6">
-                      <label className="form-label">Object Weight*</label>
+                      <label className="form-label">
+                        Object Weight<span className="required">*</span>
+                      </label>
                       <input
                         type="text"
                         className="form-control"
@@ -364,7 +363,9 @@ function TransportationBookYourService() {
                     </div>
                   )}
                   <div className="col-md-3">
-                    <label className="form-label">Current location*</label>
+                    <label className="form-label">
+                      Current location<span className="required">*</span>
+                    </label>
                     <PlacesAutocomplete
                       value={currentLocationOfTransportation}
                       onChange={(address) =>
@@ -427,7 +428,9 @@ function TransportationBookYourService() {
                     )}
                   </div>
                   <div className="col-md-3">
-                    <label className="form-label">Travel location*</label>
+                    <label className="form-label">
+                      Travel location<span className="required">*</span>
+                    </label>
                     <PlacesAutocomplete
                       value={destinationLocationOfTransportation}
                       onChange={(address) =>
@@ -482,7 +485,9 @@ function TransportationBookYourService() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Vehicle Type*</label>
+                    <label className="form-label">
+                      Vehicle Type<span className="required">*</span>
+                    </label>
                     <select
                       className="form-control"
                       name="typeOfVehicle"
@@ -504,7 +509,9 @@ function TransportationBookYourService() {
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">From date*</label>
+                    <label className="form-label">
+                      From date<span className="required">*</span>
+                    </label>
                     <input
                       type="date"
                       className="form-control"
@@ -515,7 +522,9 @@ function TransportationBookYourService() {
                     {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Till date*</label>
+                    <label className="form-label">
+                      Till date<span className="required">*</span>
+                    </label>
                     <input
                       type="date"
                       className="form-control"
@@ -526,7 +535,9 @@ function TransportationBookYourService() {
                     {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Start time*</label>
+                    <label className="form-label">
+                      Start time<span className="required">*</span>
+                    </label>
                     <input
                       type="time"
                       className="form-control"
@@ -537,7 +548,7 @@ function TransportationBookYourService() {
                     {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">End time*</label>
+                    <label className="form-label">End time</label>
                     <input
                       type="time"
                       className="form-control"

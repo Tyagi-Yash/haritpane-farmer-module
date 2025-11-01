@@ -11,9 +11,9 @@ import {
   validateArea,
   validateCrop,
   validateDates,
+  validateFromTimeOnly,
   validateLabourType,
   validateNumberOfLabour,
-  validateTime,
 } from "../../../utils/formValidators";
 import {
   cropValueEnable,
@@ -102,7 +102,7 @@ function LaborBookYourService() {
     const dateErrors = validateDates(fromDate, toDate);
     newErrors = { ...newErrors, ...dateErrors };
 
-    const timeError = validateTime(fromDate, toDate, fromTime, toTime);
+    const timeError = validateFromTimeOnly(fromDate, toDate, fromTime, toTime);
     newErrors = { ...newErrors, ...timeError };
 
     setErrors(newErrors);
@@ -293,9 +293,7 @@ function LaborBookYourService() {
                     {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">
-                      End time<span className="required">*</span>
-                    </label>
+                    <label className="form-label">End time</label>
                     <input
                       type="time"
                       className="form-control"

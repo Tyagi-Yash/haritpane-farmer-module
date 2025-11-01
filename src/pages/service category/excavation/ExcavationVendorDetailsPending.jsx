@@ -23,7 +23,7 @@ function ExcavationVendorDetailsPending() {
         <TopbarModal
           titleBox={true}
           title="Vendor Details"
-          navigate={`/service-category/excavation/available-services?${new URLSearchParams(
+          navigate={`/service-category/earth-movers/available-services?${new URLSearchParams(
             filters
           ).toString()}`}
         />

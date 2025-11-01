@@ -148,7 +148,7 @@ function App() {
                   </Route>
                 </Route>
 
-                <Route path="excavation">
+                <Route path="earth-movers">
                   <Route index element={<ExcavationBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<ExcavationChangeAvailablity />} />

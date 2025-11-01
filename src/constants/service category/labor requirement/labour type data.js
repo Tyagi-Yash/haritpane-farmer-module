@@ -1,19 +1,19 @@
 export const LabourTypes = [
-  { name: "Land Clearing Weed removal", value: "Land_Clearing_Weed_removal" },
-  { name: "Plantion Seeding", value: "Plantion_Seeding" },
+  { name: "Land Clearing-Weed removal", value: "Land_Clearing_Weed_removal" },
+  { name: "Plantation-Seedling", value: "Plantation_Seedling" },
   {
-    name: "Pesticide Application knapsack Pump Operator",
-    value: "Pesticide_Application_knapsack_Pump_Operator",
+    name: "Pesticide Application-Knapsack Pump Operator",
+    value: "Pesticide_Application_Knapsack_Pump_operator",
   },
   { name: "Tractor Driver", value: "Tractor_Driver" },
-  { name: "Harvesting Work", value: "Harvesting_Work" },
-  { name: "Packaging Work", value: "Packaging_Work" },
+  { name: "Harvesting Work", value: "Harvesting_work" },
+  { name: "Packaging Work", value: "Packaging_work" },
   { name: "Unskilled Labor", value: "Unskilled_Labor" },
-  { name: "Specialty Crew", value: "Specialty_Crew" },
+  { name: "Other-Work", value: "Other_Work" },
 ];
 
 export const cropValueEnable = [
-  "Land_Clearing_Weed_removal",
-  "Plantion_Seeding",
-  "Harvesting_Work",
+  "Plantation_Seedling",
+  "Pesticide_Application_Knapsack_Pump_operator",
+  "Harvesting_work",
 ];

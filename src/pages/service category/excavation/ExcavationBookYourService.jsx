@@ -14,6 +14,7 @@ import {
   validateSelectTime,
 } from "../../../utils/formValidators";
 import { equipmentTypesOption } from "../../../constants/service category/excavation service/equipmentOption";
+import { Dropdown } from "react-bootstrap";
 
 function ExcavationBookYourService() {
   const filters = useSelector((state) => state.services.ExcavationServiceMgmtSlice.filters);
@@ -111,7 +112,7 @@ function ExcavationBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Excavation"
+          title="Earth Movers"
           secImage={ExcavationIcon}
           navigate="/service-category"
         />
@@ -161,23 +162,32 @@ function ExcavationBookYourService() {
                       <img src={locationBlack} alt="" className="location-icon" />
                     </div>
                   </div>
-                  <div className="col-md-6">
-                    <select
-                      className="form-control"
-                      name="equipmentTypes"
-                      value={equipmentTypes}
-                      onChange={handleInputChange}
+                  <div className="col-md-6 excavation-types">
+                    <Dropdown
+                      onSelect={(key) => {
+                        setFormState((prev) => ({ ...prev, equipmentTypes: key }));
+                        setErrors((prev) => ({ ...prev, equipmentTypes: "" }));
+                      }}
                     >
-                      <option value="" disabled>
-                        Select Specific Service*
-                      </option>
-                      {equipmentTypesOption.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
+                      <Dropdown.Toggle className="btn w-100 dropdown-toggle">
+                        {equipmentTypes || "Select Specific Service*"}
+                      </Dropdown.Toggle>
 
+                      <Dropdown.Menu>
+                        {equipmentTypesOption.map((option) => (
+                          <Dropdown.Item
+                            key={option.name}
+                            eventKey={option.name}
+                            className="custom-item"
+                          >
+                            <span className="Icon">
+                              <img src={option.image} alt={option.name} />
+                            </span>
+                            <span className="DText">{option.name}</span>
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown.Menu>
+                    </Dropdown>
                     {errors.equipmentTypes && <p className="error-text">{errors.equipmentTypes}</p>}
                   </div>
                 </div>

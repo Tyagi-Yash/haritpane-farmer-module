@@ -1,16 +1,3 @@
-export const validateLat = (lat) => {
-  if (!lat.trim()) return "*Latitude is required";
-  if (isNaN(lat) || lat < -90 || lat > 90) return "*Latitude must be a number between -90 and 90";
-  return "";
-};
-
-export const validateLng = (lng) => {
-  if (!lng.trim()) return "*Longitude is required";
-  if (isNaN(lng) || lng < -180 || lng > 180)
-    return "*Longitude must be a number between -180 and 180";
-  return "";
-};
-
 export const validateDates = (fromDate, toDate) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -41,6 +28,27 @@ export const validateTime = (fromDate, toDate, fromTime, toTime) => {
 
   if (toDateTime <= fromDateTime) {
     return { toTime: "*End time must be after start time" };
+  }
+
+  return {};
+};
+
+export const validateFromTimeOnly = (fromDate, toDate, fromTime, toTime) => {
+  if (!fromTime) return { fromTime: "*Start time is required" };
+
+  const fromDateTime = new Date(`${fromDate}T${fromTime}`);
+  const now = new Date();
+
+  if (fromDateTime.toDateString() === now.toDateString() && fromDateTime <= now) {
+    return { fromTime: "*Start time must be in the future" };
+  }
+
+  if (toTime) {
+    const toDateTime = new Date(`${toDate}T${toTime}`);
+
+    if (toDateTime <= fromDateTime) {
+      return { toTime: "*End time must be after start time" };
+    }
   }
 
   return {};
@@ -79,11 +87,15 @@ export const validateEquipmentTypes = (equipmentTypes) => {
 export const validateDurationFields = (hours, minutes) => {
   let errors = {};
 
-  if (hours === "" || isNaN(hours) || hours < 0) {
+  if (hours === "" && minutes === "") {
+    return errors;
+  }
+
+  if (hours !== "" && (isNaN(hours) || hours < 0)) {
     errors.hours = "Please enter valid hours";
   }
 
-  if (minutes === "" || isNaN(minutes) || minutes < 0 || minutes >= 60) {
+  if (minutes !== "" && (isNaN(minutes) || minutes < 0 || minutes >= 60)) {
     errors.minutes = "Please enter valid minutes (0-59)";
   }
 

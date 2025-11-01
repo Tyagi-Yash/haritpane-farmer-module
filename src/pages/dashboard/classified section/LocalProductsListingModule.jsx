@@ -79,7 +79,7 @@ function LocalProductsListingModule() {
             </div>
             <div className="search-sort">
               <div className="location-wrapper">
-                <input type="text" className="form-control" placeholder="Farm location*" required />
+                <input type="text" className="form-control" placeholder="location" required />
                 <img src={locationBlack} alt="" className="location-icon" />
               </div>
               <div className="sort-box" id="sortBox">

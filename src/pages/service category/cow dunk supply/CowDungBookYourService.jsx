@@ -15,14 +15,16 @@ import {
 } from "../../../utils/formValidators";
 
 function CowDungBookYourService() {
-  const dryDunkOptions = [
-    { value: "trolly", name: "1-2 Dry (Trolly)" },
-    { value: "truck", name: "5-6 Dry (Truck)" },
+  const dryDungOptions = [
+    { value: "trolly", name: "1–2 tons Dry (Trolley)" },
+    { value: "truck", name: "5–6 tons Dry (Truck)" },
   ];
-  const wetDunkOptions = [
-    { value: "trolly", name: "3-4 Wet (Trolly)" },
-    { value: "truck", name: "10-12 Wet (Truck)" },
+
+  const wetDungOptions = [
+    { value: "trolly", name: "3–4 tons Wet (Trolley)" },
+    { value: "truck", name: "10–12 tons Wet (Truck)" },
   ];
+
   const filters = useSelector((state) => state.services.CowDunkServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -190,10 +192,10 @@ function CowDungBookYourService() {
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
-                        Select quantity*
+                        Select quantity(in tons)*
                       </option>
                       {typeOfCowDunk &&
-                        (typeOfCowDunk === "dry" ? dryDunkOptions : wetDunkOptions).map((type) => (
+                        (typeOfCowDunk === "dry" ? dryDungOptions : wetDungOptions).map((type) => (
                           <option key={type.value} className="form-control" value={type.value}>
                             {type.name}
                           </option>

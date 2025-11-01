@@ -8,7 +8,7 @@ import TopbarModal from "../../../components/common components/TopbarModal";
 import locationBlack from "../../../assets/images/location-black.svg";
 import AugerServiceIcon from "../../../assets/images/AugerService-icon.png";
 import {
-  // validateDurationFields,
+  validateDurationFields,
   validateFromDate,
   validateSelectTime,
 } from "../../../utils/formValidators";
@@ -66,8 +66,8 @@ function AugerBookYourService() {
     const timeError = validateSelectTime(date, time);
     if (timeError) newErrors.time = timeError;
 
-    // const durationErrors = validateDurationFields(hours, minutes);
-    // newErrors = { ...newErrors, ...durationErrors };
+    const durationErrors = validateDurationFields(hours, minutes);
+    newErrors = { ...newErrors, ...durationErrors };
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -111,7 +111,6 @@ function AugerBookYourService() {
             <div className="option-wrapper">
               <div className="form-section">
                 <h5 className="book-heading">Book your service</h5>
-                {/* ✅ Google Places Autocomplete */}
                 <div className="col-md-12 mb-3">
                   <div className="location-wrapper">
                     <PlacesAutocomplete

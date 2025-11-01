@@ -36,7 +36,7 @@ function Notification() {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchNotification();
   }, []);
@@ -65,7 +65,7 @@ function Notification() {
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal />
+        <TopbarModal titleBox={true} title="Notification" navigate="/dashboard" />
         <div className="dashboard">
           <div className="option-wrapper">
             <div>
