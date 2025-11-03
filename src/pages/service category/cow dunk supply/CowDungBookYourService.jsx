@@ -2,29 +2,22 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
-import locationBlack from "../../../assets/images/location-black.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import CowDunkSupplyIcon from "../../../assets/images/CowDunkSupply-icon.png";
+import LocationInput from "../../../components/common components/LocationInput";
 import {
   validateCowDunkType,
   validateFromDate,
   validateQuantity,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import {
+  dryDungOptions,
+  wetDungOptions,
+} from "../../../constants/service category/cow dung service/cowDungOptions";
 
 function CowDungBookYourService() {
-  const dryDungOptions = [
-    { value: "trolly", name: "1–2 tons Dry (Trolley)" },
-    { value: "truck", name: "5–6 tons Dry (Truck)" },
-  ];
-
-  const wetDungOptions = [
-    { value: "trolly", name: "3–4 tons Wet (Trolley)" },
-    { value: "truck", name: "10–12 tons Wet (Truck)" },
-  ];
-
   const filters = useSelector((state) => state.services.CowDunkServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -42,20 +35,9 @@ function CowDungBookYourService() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleSelect = async (value) => {
-    try {
-      const results = await geocodeByAddress(value);
-      const { lat, lng } = await getLatLng(results[0]);
-      setFormState((prev) => ({
-        ...prev,
-        address: value,
-        lat: lat.toString(),
-        lng: lng.toString(),
-      }));
-      setErrors((prev) => ({ ...prev, address: "" }));
-    } catch (error) {
-      toast.error("Failed to fetch location coordinates");
-    }
+  const handleSelectLocation = ({ address, lat, lng }) => {
+    setFormState((prev) => ({ ...prev, address, lat, lng }));
+    setErrors((prev) => ({ ...prev, address: "" }));
   };
 
   const handleInputChange = (e) => {
@@ -129,44 +111,12 @@ function CowDungBookYourService() {
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
                   <div className="col-md-12">
-                    <div className="location-wrapper">
-                      <PlacesAutocomplete
-                        value={address}
-                        onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
-                        onSelect={handleSelect}
-                      >
-                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                          <div>
-                            <input
-                              {...getInputProps({
-                                placeholder: "Farm location*",
-                                className: "form-control",
-                              })}
-                            />
-                            <div className="autocomplete-dropdown-container">
-                              {loading && <div>Loading...</div>}
-                              {suggestions.map((suggestion) => {
-                                const className = suggestion.active
-                                  ? "suggestion-item--active"
-                                  : "suggestion-item";
-                                return (
-                                  <div
-                                    {...getSuggestionItemProps(suggestion, {
-                                      className,
-                                    })}
-                                    key={suggestion.placeId}
-                                  >
-                                    <span>{suggestion.description}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                            {errors.address && <p className="error-text">{errors.address}</p>}
-                          </div>
-                        )}
-                      </PlacesAutocomplete>
-                      <img src={locationBlack} alt="" className="location-icon" />
-                    </div>
+                    <LocationInput
+                      value={address}
+                      onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
+                      onSelectLocation={handleSelectLocation}
+                      error={errors.address}
+                    />
                   </div>
                   <div className="col-md-6">
                     <select
@@ -183,7 +133,6 @@ function CowDungBookYourService() {
                     </select>
                     {errors.typeOfCowDunk && <p className="error-text">{errors.typeOfCowDunk}</p>}
                   </div>
-
                   <div className="col-md-6">
                     <select
                       className="form-control"

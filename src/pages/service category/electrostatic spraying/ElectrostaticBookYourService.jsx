@@ -2,11 +2,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
-import locationBlack from "../../../assets/images/location-black.svg";
 import ElectrostaticSprayingIcon from "../../../assets/images/Electrostatic-Spraying-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
+import LocationInput from "../../../components/common components/LocationInput";
 import { validateArea, validateFromDate, validateSelectTime } from "../../../utils/formValidators";
 
 function ElectrostaticBookYourService() {
@@ -29,20 +28,9 @@ function ElectrostaticBookYourService() {
 
   const { address, lat, lng, areaUnderCultivation, fromDate, fromTime } = formState;
 
-  const handleSelect = async (value) => {
-    try {
-      const results = await geocodeByAddress(value);
-      const { lat, lng } = await getLatLng(results[0]);
-      setFormState((prev) => ({
-        ...prev,
-        address: value,
-        lat: lat.toString(),
-        lng: lng.toString(),
-      }));
-      setErrors((prev) => ({ ...prev, address: "" }));
-    } catch (error) {
-      toast.error("Failed to fetch location coordinates");
-    }
+  const handleSelectLocation = ({ address, lat, lng }) => {
+    setFormState((prev) => ({ ...prev, address, lat, lng }));
+    setErrors((prev) => ({ ...prev, address: "" }));
   };
 
   const handleInputChange = (e) => {
@@ -108,44 +96,12 @@ function ElectrostaticBookYourService() {
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <div className="location-wrapper">
-                      <PlacesAutocomplete
-                        value={address}
-                        onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
-                        onSelect={handleSelect}
-                      >
-                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                          <div>
-                            <input
-                              {...getInputProps({
-                                placeholder: "Farm location*",
-                                className: "form-control",
-                              })}
-                            />
-                            <div className="autocomplete-dropdown-container">
-                              {loading && <div>Loading...</div>}
-                              {suggestions.map((suggestion) => {
-                                const className = suggestion.active
-                                  ? "suggestion-item--active"
-                                  : "suggestion-item";
-                                return (
-                                  <div
-                                    {...getSuggestionItemProps(suggestion, {
-                                      className,
-                                    })}
-                                    key={suggestion.placeId}
-                                  >
-                                    <span>{suggestion.description}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                            {errors.address && <p className="error-text">{errors.address}</p>}
-                          </div>
-                        )}
-                      </PlacesAutocomplete>
-                      <img src={locationBlack} alt="" className="location-icon" />
-                    </div>
+                    <LocationInput
+                      value={address}
+                      onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
+                      onSelectLocation={handleSelectLocation}
+                      error={errors.address}
+                    />
                   </div>
                   <div className="col-md-6">
                     <input

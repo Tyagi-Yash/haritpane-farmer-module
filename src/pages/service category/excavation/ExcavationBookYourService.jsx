@@ -2,19 +2,18 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { Dropdown } from "react-bootstrap";
 
-import locationBlack from "../../../assets/images/location-black.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import ExcavationIcon from "../../../assets/images/Excavation-icon.png";
+import { equipmentTypesOption } from "../../../constants/service category/excavation service/equipmentOption";
+import LocationInput from "../../../components/common components/LocationInput";
 import {
   validateDates,
   validateDurationFields,
   validateEquipmentTypes,
   validateSelectTime,
 } from "../../../utils/formValidators";
-import { equipmentTypesOption } from "../../../constants/service category/excavation service/equipmentOption";
-import { Dropdown } from "react-bootstrap";
 
 function ExcavationBookYourService() {
   const filters = useSelector((state) => state.services.ExcavationServiceMgmtSlice.filters);
@@ -37,20 +36,9 @@ function ExcavationBookYourService() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleSelect = async (value) => {
-    try {
-      const results = await geocodeByAddress(value);
-      const { lat, lng } = await getLatLng(results[0]);
-      setFormState((prev) => ({
-        ...prev,
-        address: value,
-        lat: lat.toString(),
-        lng: lng.toString(),
-      }));
-      setErrors((prev) => ({ ...prev, address: "" }));
-    } catch (error) {
-      toast.error("Failed to fetch location coordinates");
-    }
+  const handleSelectLocation = ({ address, lat, lng }) => {
+    setFormState((prev) => ({ ...prev, address, lat, lng }));
+    setErrors((prev) => ({ ...prev, address: "" }));
   };
 
   const handleInputChange = (e) => {
@@ -123,44 +111,12 @@ function ExcavationBookYourService() {
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <div className="location-wrapper">
-                      <PlacesAutocomplete
-                        value={address}
-                        onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
-                        onSelect={handleSelect}
-                      >
-                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                          <div>
-                            <input
-                              {...getInputProps({
-                                placeholder: "Farm location*",
-                                className: "form-control",
-                              })}
-                            />
-                            <div className="autocomplete-dropdown-container">
-                              {loading && <div>Loading...</div>}
-                              {suggestions.map((suggestion) => {
-                                const className = suggestion.active
-                                  ? "suggestion-item--active"
-                                  : "suggestion-item";
-                                return (
-                                  <div
-                                    {...getSuggestionItemProps(suggestion, {
-                                      className,
-                                    })}
-                                    key={suggestion.placeId}
-                                  >
-                                    <span>{suggestion.description}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                            {errors.address && <p className="error-text">{errors.address}</p>}
-                          </div>
-                        )}
-                      </PlacesAutocomplete>
-                      <img src={locationBlack} alt="" className="location-icon" />
-                    </div>
+                    <LocationInput
+                      value={address}
+                      onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
+                      onSelectLocation={handleSelectLocation}
+                      error={errors.address}
+                    />
                   </div>
                   <div className="col-md-6 excavation-types">
                     <Dropdown

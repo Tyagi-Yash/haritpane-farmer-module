@@ -2108,6 +2108,7 @@ table tr td {
   padding: 8px 40px;
   border-radius: 8px;
   background-color: #fff;
+  width: 185px;
 }
 
 .Logout-modal .btn-logout-modal:hover {

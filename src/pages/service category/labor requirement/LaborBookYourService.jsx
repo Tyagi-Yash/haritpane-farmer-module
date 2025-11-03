@@ -2,11 +2,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
-import locationBlack from "../../../assets/images/location-black.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import labouricon from "../../../assets/images/labour-icon.png";
+import LocationInput from "../../../components/common components/LocationInput";
 import {
   validateArea,
   validateCrop,
@@ -21,6 +20,7 @@ import {
 } from "../../../constants/service category/labor requirement/labour type data";
 
 function LaborBookYourService() {
+  const navigate = useNavigate();
   const filters = useSelector((state) => state.services.LabourServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -36,10 +36,8 @@ function LaborBookYourService() {
     toTime: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
-
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
-
   const {
     address,
     lat,
@@ -54,22 +52,9 @@ function LaborBookYourService() {
     toTime,
   } = formState;
 
-  const navigate = useNavigate();
-
-  const handleSelect = async (value) => {
-    try {
-      const results = await geocodeByAddress(value);
-      const { lat, lng } = await getLatLng(results[0]);
-      setFormState((prev) => ({
-        ...prev,
-        address: value,
-        lat: lat.toString(),
-        lng: lng.toString(),
-      }));
-      setErrors((prev) => ({ ...prev, address: "" }));
-    } catch (error) {
-      toast.error("Failed to fetch location coordinates");
-    }
+  const handleSelectLocation = ({ address, lat, lng }) => {
+    setFormState((prev) => ({ ...prev, address, lat, lng }));
+    setErrors((prev) => ({ ...prev, address: "" }));
   };
 
   const handleInputChange = (e) => {
@@ -153,44 +138,12 @@ function LaborBookYourService() {
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
-                    <div className="location-wrapper">
-                      <PlacesAutocomplete
-                        value={address}
-                        onChange={(value) => setFormState((prev) => ({ ...prev, address: value }))}
-                        onSelect={handleSelect}
-                      >
-                        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                          <div>
-                            <input
-                              {...getInputProps({
-                                placeholder: "Field location*",
-                                className: "form-control",
-                              })}
-                            />
-                            <div className="autocomplete-dropdown-container">
-                              {loading && <div>Loading...</div>}
-                              {suggestions.map((suggestion) => {
-                                const className = suggestion.active
-                                  ? "suggestion-item--active"
-                                  : "suggestion-item";
-                                return (
-                                  <div
-                                    {...getSuggestionItemProps(suggestion, {
-                                      className,
-                                    })}
-                                    key={suggestion.placeId}
-                                  >
-                                    <span>{suggestion.description}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                            {errors.address && <p className="error-text">{errors.address}</p>}
-                          </div>
-                        )}
-                      </PlacesAutocomplete>
-                      <img src={locationBlack} alt="" className="location-icon" />
-                    </div>
+                    <LocationInput
+                      value={address}
+                      onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
+                      onSelectLocation={handleSelectLocation}
+                      error={errors.address}
+                    />
                   </div>
                   <div className="col-md-4">
                     <select
@@ -221,7 +174,7 @@ function LaborBookYourService() {
                       onChange={handleInputChange}
                     />
                     {errors.numberOfLabour && <p className="error-text">{errors.numberOfLabour}</p>}
-                  </div>{" "}
+                  </div>
                   {cropValueEnable.includes(labourType) && (
                     <>
                       <div className="col-md-6">

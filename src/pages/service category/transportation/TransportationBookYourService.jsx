@@ -20,16 +20,10 @@ import {
   validateWeight,
   validateWidth,
 } from "../../../utils/formValidators";
+import { vehicle } from "../../../constants/service category/transportation service/transportationData";
 
 function TransportationBookYourService() {
   const navigate = useNavigate();
-  const vehicle = [
-    "Tata Ace - Mahindra Maximo (600-715kg)",
-    "Tata Ace ZIP - Mahindra Jeeto (715-750kg)",
-    "Bolero Pickup (750-1700kg)",
-    "Tractor-Trolley (1700-3000kg)",
-  ];
-
   const filters = useSelector((state) => state.services.TransportationServiceMgmtSlice.filters);
   const defaultForm = {
     lat: "",

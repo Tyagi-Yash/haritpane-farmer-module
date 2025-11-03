@@ -8,7 +8,7 @@ export const LabourTypes = [
   { name: "Tractor Driver", value: "Tractor_Driver" },
   { name: "Harvesting Work", value: "Harvesting_work" },
   { name: "Packaging Work", value: "Packaging_work" },
-  { name: "Unskilled Labor", value: "Unskilled_Labor" },
+  { name: "Unskilled Labour", value: "Unskilled_Labor" },
   { name: "Other-Work", value: "Other_Work" },
 ];
 

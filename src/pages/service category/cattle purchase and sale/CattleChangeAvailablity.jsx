@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
+import filter from "../../../assets/images/filter.png";
 import cattleIcon from "../../../assets/images/cattle-icon.png";
 import MilkProductionSupport from "../../../assets/images/MilkProductionSupport.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
@@ -18,6 +20,26 @@ function CattleChangeAvailablity() {
   const [filters, setFilters] = useState(filterValues);
 
   const { services, loading } = useSelector((state) => state.services.CattleServiceMgmtSlice);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("Sort");
+  const toggleSortMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const selectSortOption = (option) => {
+    setSelectedSort(option);
+    setIsOpen(false);
+  };
+
+  const [selectedFilter, setSelectedFilter] = useState("Filter");
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
+  const toggleFilterMenu = () => {
+    setIsFilterMenuOpen((prev) => !prev);
+  };
+  const selectFilterOption = (option) => {
+    setSelectedFilter(option);
+    setIsFilterMenuOpen(false);
+  };
 
   const fetchServices = async () => {
     try {
@@ -49,7 +71,80 @@ function CattleChangeAvailablity() {
               </p>
             ) : (
               <>
-                <h3 className="main-heading">Available Vendor</h3>
+                <div className="row align-items-end ">
+                  <div className="col-md-6 mb-4">
+                    <h3 className="main-heading">Available Vendor</h3>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <div className="row align-items-end">
+                      <div className="col-md-6 ">
+                        <div className="sort-box" id="sortBox">
+                          <div className="sort-toggle" onClick={toggleFilterMenu}>
+                            <span>
+                              <span className="sort-label">{selectedFilter}</span>
+                              <img src={filter} alt="Sort Icon" />
+                            </span>
+                          </div>
+                          {isFilterMenuOpen && (
+                            <div className="sort-menu">
+                              <div
+                                className="sort-option"
+                                onClick={() => selectFilterOption("Breed")}
+                              >
+                                Breed
+                              </div>
+                              <div
+                                className="sort-option"
+                                onClick={() => selectFilterOption("Age")}
+                              >
+                                Age
+                              </div>
+                              <div
+                                className="sort-option"
+                                onClick={() => selectFilterOption("Price")}
+                              >
+                                Price
+                              </div>
+                              <div
+                                className="sort-option"
+                                onClick={() => selectFilterOption("State")}
+                              >
+                                State
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="sort-box" id="sortBox">
+                          <div className="sort-toggle" onClick={toggleSortMenu}>
+                            <span>
+                              <span className="sort-label">{selectedSort}</span>
+                              <img src={sortArrowDown} alt="Sort Icon" />
+                            </span>
+                          </div>
+                          {isOpen && (
+                            <div className="sort-menu">
+                              <div
+                                className="sort-option"
+                                onClick={() => selectSortOption("Top rating")}
+                              >
+                                Top rating
+                              </div>
+                              <div
+                                className="sort-option"
+                                onClick={() => selectSortOption("Out of Radius")}
+                              >
+                                Out of Radius
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <h6 className="form-label-max">Choose from in your radius</h6>
                 {services.map((service) => (
                   <Link
