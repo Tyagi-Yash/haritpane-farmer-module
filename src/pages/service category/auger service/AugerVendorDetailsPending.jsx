@@ -92,7 +92,8 @@ function AugerVendorDetailsPending() {
                         <div className="col align-items-center">
                           <div className="option-wrapper booking-area">
                             <h5 className="normal-heading">Booking Details</h5>
-                            <p>Service Name: {vendor?.basicInfo?.Description || "N/A"}</p>
+                            <p>Service Name: Auger Service</p>
+                            <p>Business Name: {vendor?.businessName || "N/A"}</p>
                           </div>
                         </div>
                         <div className="col">
@@ -102,7 +103,7 @@ function AugerVendorDetailsPending() {
                               <table className="table table-borderless">
                                 <tbody>
                                   <tr>
-                                    <td>Service Cost</td>
+                                    <td>Service Cost(Per Hour)</td>
                                     <td>₹ {Number(vendor?.ratePerHr ?? 0).toFixed(2)}</td>
                                   </tr>
                                   <tr>

@@ -92,7 +92,8 @@ function CattleVendorDetailsPending() {
                         <div className="col align-items-center">
                           <div className="option-wrapper booking-area">
                             <h5 className="normal-heading">Booking Details</h5>
-                            <p>Service Name: {vendor?.basicInfo?.animalDescription || "N/A"}</p>
+                            <p>Service Name: Cattle Purchase & Sale</p>
+                            <p>Business Name: {vendor?.businessName || "N/A"}</p>
                           </div>
                         </div>
                         <div className="col">

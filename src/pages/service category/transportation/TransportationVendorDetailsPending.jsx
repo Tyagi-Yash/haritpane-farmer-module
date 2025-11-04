@@ -97,7 +97,8 @@ function TransportationVendorDetailsPending() {
                         <div className="col align-items-center">
                           <div className="option-wrapper booking-area">
                             <h5 className="normal-heading">Booking Details</h5>
-                            <p>Service Name: {vendor?.basicInfo?.Description || "N/A"}</p>
+                            <p>Service Name: Transportation</p>
+                            <p>Business Name: {vendor?.businessName || "N/A"}</p>
                           </div>
                         </div>
                         <div className="col">

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import CowDunkSupplyIcon from "../../../assets/images/CowDunkSupply-icon.png";
@@ -16,28 +16,40 @@ import {
   dryDungOptions,
   wetDungOptions,
 } from "../../../constants/service category/cow dung service/cowDungOptions";
+import { createCowDungJobOrder } from "../../../reduxtoolkit/slices/service category/cowDunkServices";
 
 function CowDungBookYourService() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const filters = useSelector((state) => state.services.CowDunkServiceMgmtSlice.filters);
+
   const defaultForm = {
-    address: "",
+    currentLocation: "",
     lat: "",
     lng: "",
-    typeOfCowDunk: "",
-    quantity: "",
-    date: "",
-    time: "",
+    cowDunkType: "",
+    cowDunkVehicleType: "",
+    fromDate: "",
+    startTime: "",
   };
+
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
 
-  const { address, lat, lng, date, time, quantity, typeOfCowDunk } = formState;
+  const { currentLocation, lat, lng, fromDate, startTime, cowDunkVehicleType, cowDunkType } =
+    formState;
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleSelectLocation = ({ address, lat, lng }) => {
-    setFormState((prev) => ({ ...prev, address, lat, lng }));
-    setErrors((prev) => ({ ...prev, address: "" }));
+    setFormState((prev) => ({
+      ...prev,
+      currentLocation: address,
+      lat,
+      lng,
+    }));
+    setErrors((prev) => ({ ...prev, currentLocation: "" }));
   };
 
   const handleInputChange = (e) => {
@@ -46,7 +58,7 @@ function CowDungBookYourService() {
     setFormState((prev) => ({
       ...prev,
       [name]: value,
-      ...(name === "typeOfCowDunk" ? { quantity: "" } : {}),
+      ...(name === "cowDunkType" ? { cowDunkVehicleType: "" } : {}),
     }));
 
     setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -55,19 +67,20 @@ function CowDungBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!currentLocation || !lat || !lng)
+      newErrors.currentLocation = "Please select a valid location.";
 
-    const typeError = validateCowDunkType(typeOfCowDunk);
-    if (typeError) newErrors.typeOfCowDunk = typeError;
+    const typeError = validateCowDunkType(cowDunkType);
+    if (typeError) newErrors.cowDunkType = typeError;
 
-    const quantityError = typeOfCowDunk && validateQuantity(quantity);
-    if (quantityError) newErrors.quantity = quantityError;
+    const quantityError = cowDunkType && validateQuantity(cowDunkVehicleType);
+    if (quantityError) newErrors.cowDunkVehicleType = quantityError;
 
-    const dateErrors = validateFromDate(date);
-    if (dateErrors) newErrors.date = dateErrors;
+    const dateErrors = validateFromDate(fromDate);
+    if (dateErrors) newErrors.fromDate = dateErrors;
 
-    const timeError = validateSelectTime(date, time);
-    if (timeError) newErrors.time = timeError;
+    const timeError = validateSelectTime(fromDate, startTime);
+    if (timeError) newErrors.startTime = timeError;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -77,17 +90,36 @@ function CowDungBookYourService() {
     e.preventDefault();
     if (!validateForm()) return;
     setDisable(true);
+
+    let cowDunkQuantity = "";
+    if (cowDunkType === "Dry") {
+      cowDunkQuantity = cowDunkVehicleType === "Trolley" ? "1-2" : "5-6";
+    } else if (cowDunkType === "Wet") {
+      cowDunkQuantity = cowDunkVehicleType === "Trolley" ? "3-4" : "10-12";
+    }
     const formdata = {
-      lat: lat.trim(),
-      lng: lng.trim(),
-      typeOfCowDunk,
-      quantity,
-      date,
-      time,
+      jobOrderFor: "cowdung",
+      currentLocationCoordinates: {
+        type: "Point",
+        coordinates: [Number(lng), Number(lat)],
+      },
+      currentLocation,
+      cowDunkType,
+      cowDunkVehicleType,
+      cowDunkQuantity,
+      fromDate,
+      startTime,
     };
     try {
-      const query = new URLSearchParams(formdata).toString();
-      navigate(`available-services?${query}`);
+      const res = await dispatch(createCowDungJobOrder(formdata));
+      const { status, data } = res?.payload || {};
+      if (status === 200) {
+        // toast.success(data?.message || "Booking Request Created successfully");
+        // navigate("/dashboard");
+        setShowSuccessModal(true);
+      } else {
+        toast.error(data?.message || "Failed to Send Booking Request");
+      }
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -112,48 +144,54 @@ function CowDungBookYourService() {
                 <div className="row g-3">
                   <div className="col-md-12">
                     <LocationInput
-                      value={address}
-                      onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
+                      value={currentLocation}
+                      onChange={(val) =>
+                        setFormState((prev) => ({ ...prev, currentLocation: val }))
+                      }
                       onSelectLocation={handleSelectLocation}
-                      error={errors.address}
+                      error={errors.currentLocation}
+                      placeholder="Farm Location*"
                     />
                   </div>
                   <div className="col-md-6">
                     <select
                       className="form-control"
-                      name="typeOfCowDunk"
-                      value={typeOfCowDunk}
+                      name="cowDunkType"
+                      value={cowDunkType}
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
                         Select type*
                       </option>
-                      <option value="dry">Dry</option>
-                      <option value="wet">Wet</option>
+                      <option value="Dry">Dry</option>
+                      <option value="Wet">Wet</option>
                     </select>
-                    {errors.typeOfCowDunk && <p className="error-text">{errors.typeOfCowDunk}</p>}
+                    {errors.cowDunkType && <p className="error-text">{errors.cowDunkType}</p>}
                   </div>
                   <div className="col-md-6">
                     <select
                       className="form-control"
-                      name="quantity"
-                      value={quantity}
+                      name="cowDunkVehicleType"
+                      value={cowDunkVehicleType}
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
                         Select quantity(in tons)*
                       </option>
-                      {typeOfCowDunk &&
-                        (typeOfCowDunk === "dry" ? dryDungOptions : wetDungOptions).map((type) => (
+                      {cowDunkType &&
+                        (cowDunkType === "Dry" ? dryDungOptions : wetDungOptions).map((type) => (
                           <option key={type.value} className="form-control" value={type.value}>
                             {type.name}
                           </option>
                         ))}
                     </select>
-                    {errors.quantity && <p className="error-text">{errors.quantity}</p>}
+                    {errors.cowDunkVehicleType && (
+                      <p className="error-text">{errors.cowDunkVehicleType}</p>
+                    )}
 
                     <span className="note d-block mt-1">
-                      {quantity && `You'll get a ${quantity} for the selected quantity.`}
+                      {cowDunkVehicleType &&
+                        `You'll get a ${cowDunkVehicleType} for the selected quantity.`}
                     </span>
                   </div>
                 </div>
@@ -166,11 +204,11 @@ function CowDungBookYourService() {
                     <input
                       type="date"
                       className="form-control"
-                      name="date"
-                      value={date}
+                      name="fromDate"
+                      value={fromDate}
                       onChange={handleInputChange}
                     />
-                    {errors.date && <p className="error-text">{errors.date}</p>}{" "}
+                    {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}{" "}
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
@@ -179,22 +217,39 @@ function CowDungBookYourService() {
                     <input
                       type="time"
                       className="form-control"
-                      name="time"
-                      value={time}
+                      name="startTime"
+                      value={startTime}
                       onChange={handleInputChange}
                     />
-                    {errors.time && <p className="error-text">{errors.time}</p>}
+                    {errors.startTime && <p className="error-text">{errors.startTime}</p>}
                   </div>
                 </div>
               </div>
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                {disable ? "Loading..." : "See Available Service"}
+                {disable ? "Sending Request..." : "Send Booking Request"}
               </button>
             </div>
           </form>
         </div>
+        {showSuccessModal && (
+          <div className="custom-modal-backdrop">
+            <div className="custom-modal">
+              <h4>Request Created </h4>
+              <p>Your cow dung supply booking request has been created successfully.</p>
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  navigate("/dashboard");
+                }}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

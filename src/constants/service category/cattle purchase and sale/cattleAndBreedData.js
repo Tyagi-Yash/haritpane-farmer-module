@@ -65,7 +65,17 @@ export const breedOptions = {
     "Sindhanoor",
   ],
   Ox: ["Brahma", "Ongole"],
-  Chicken: [],
+  Chicken: [
+    "Kadaknath - Kali Masi",
+    "Aseel",
+    "Chittagong - Malay",
+    "Busra",
+    "Nicobari",
+    "White Leghorn",
+    "Rhode Island Red",
+    "Hybirds",
+    "Broiler - Cornish",
+  ],
   Horse: [],
   Others: [],
 };

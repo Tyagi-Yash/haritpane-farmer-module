@@ -9,6 +9,7 @@ import ElectrostaticSprayingIcon from "../../../assets/images/Electrostatic-Spra
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfElectrostatic } from "../../../reduxtoolkit/slices/service category/electrostaticSprayingServices";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
+import { validateFromDateRequired } from "../../../utils/formValidators";
 
 function ElectrostaticChangeAvailablity() {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function ElectrostaticChangeAvailablity() {
   const queryParams = new URLSearchParams(location.search);
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
-  const { toDate, fromDate } = filters;
+  const { toDate = "", fromDate } = filters;
   const { services, loading } = useSelector(
     (state) => state.services.ElectrostaticSprayingServiceMgmtSlice
   );
@@ -43,24 +44,9 @@ function ElectrostaticChangeAvailablity() {
   };
   const validateForm = () => {
     let newErrors = {};
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
 
-    if (!fromDate) {
-      newErrors.fromDate = "*From date is required";
-    } else if (new Date(fromDate) < today) {
-      newErrors.fromDate = "*From date cannot be in the past";
-    }
-
-    // if (!toDate) {
-    //   newErrors.toDate = "*To date is required";
-    // } else if (new Date(toDate) < today) {
-    //   newErrors.toDate = "*To date cannot be in the past";
-    // }
-
-    // if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
-    //   newErrors.toDate = "*To date cannot be earlier than from date";
-    // }
+    const dateErrors = validateFromDateRequired(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -170,9 +156,7 @@ function ElectrostaticChangeAvailablity() {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <div className="title">
-                            {service?.equipmentDescription || "No description"}
-                          </div>
+                          <div className="title">{service?.businessName || "No description"}</div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />

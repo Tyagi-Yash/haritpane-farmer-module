@@ -105,6 +105,7 @@ function AugerBookYourService() {
                     onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                     onSelectLocation={handleSelectLocation}
                     error={errors.address}
+                    placeholder="Job Location*"
                   />
                 </div>
                 <h5 className="book-heading">Estimate Job Duration</h5>

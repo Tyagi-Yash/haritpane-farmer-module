@@ -89,7 +89,8 @@ function LandManagementVendorDetailsPending() {
                         <div className="col align-items-center">
                           <div className="option-wrapper booking-area">
                             <h5 className="normal-heading">Booking Details</h5>
-                            <p>Service Name: {vendor?.equipmentDescription || "N/A"}</p>
+                            <p>Service Name: Land Management Services</p>
+                            <p>Business Name: {vendor?.businessName || "N/A"}</p>
                           </div>
                         </div>
                         <div className="col">
@@ -99,8 +100,8 @@ function LandManagementVendorDetailsPending() {
                               <table className="table table-borderless">
                                 <tbody>
                                   <tr>
-                                    <td>Service Cost</td>
-                                    <td>₹ {Number(vendor?.priceInfo?.price ?? 0).toFixed(2)}</td>
+                                    <td>Service Cost({vendor?.Info?.priceType})</td>
+                                    <td>₹ {Number(vendor?.Info?.price ?? 0).toFixed(2)}</td>
                                   </tr>
                                   {vendor.extrachages === true && (
                                     <tr>

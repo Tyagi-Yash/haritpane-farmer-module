@@ -16,7 +16,7 @@ function DroneChangeAvailablity() {
   const queryParams = new URLSearchParams(location.search);
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
-  const { date } = filters;
+  const { date, toDate = "" } = filters;
   const { services, loading } = useSelector((state) => state.services.DroneServiceMgmtSlice);
   const [errors, setErrors] = useState({});
 
@@ -51,14 +51,14 @@ function DroneChangeAvailablity() {
       newErrors.date = "*From date cannot be in the past";
     }
 
-    // if (!toDate) {
-    //   newErrors.toDate = "*To date is required";
-    // } else if (new Date(toDate) < today) {
-    //   newErrors.toDate = "*To date cannot be in the past";
-    // }
-    // if (date && toDate && new Date(date) > new Date(toDate)) {
-    //   newErrors.toDate = "*To date cannot be earlier than from date";
-    // }
+    if (toDate) {
+      if (new Date(toDate) < today) {
+        newErrors.toDate = "*To date cannot be in the past";
+      }
+      if (date && toDate && new Date(date) > new Date(toDate)) {
+        newErrors.toDate = "*To date cannot be earlier than from date";
+      }
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -75,7 +75,8 @@ function DroneChangeAvailablity() {
 
   useEffect(() => {
     fetchServices();
-  }, [date]);
+  }, [date, toDate]);
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -105,7 +106,7 @@ function DroneChangeAvailablity() {
                   </div>
                 </div>
                 <div className="col-md-4 mb-3">
-                  {/* <label className="form-label">Select End Date</label>
+                  <label className="form-label">Select End Date</label>
                   {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
                     <input
@@ -116,7 +117,7 @@ function DroneChangeAvailablity() {
                       value={toDate}
                       onChange={handleInputChange}
                     />
-                  </div> */}
+                  </div>
                 </div>
                 <div className="col-md-4 mb-3">
                   <div className="sort-box" id="sortBox">
@@ -169,9 +170,7 @@ function DroneChangeAvailablity() {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <div className="title">
-                            {service?.equipmentDescription || "No description"}
-                          </div>
+                          <div className="title">{service?.businessName || "No description"}</div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />

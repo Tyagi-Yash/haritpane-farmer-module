@@ -9,6 +9,7 @@ import labouricon from "../../../assets/images/labour-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfLabour } from "../../../reduxtoolkit/slices/service category/labourServices";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
+import { validateFromDateRequired } from "../../../utils/formValidators";
 
 function LabourChangeAvailablity() {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function LabourChangeAvailablity() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState("Top rating");
+  console.log(filters);
 
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
@@ -40,7 +42,18 @@ function LabourChangeAvailablity() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  const validateForm = () => {
+    let newErrors = {};
+
+    const dateErrors = validateFromDateRequired(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const fetchServices = async () => {
+    if (!validateForm()) return;
     try {
       await dispatch(getAllServicesOfLabour(filters)).unwrap();
     } catch {
@@ -145,9 +158,7 @@ function LabourChangeAvailablity() {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <div className="title">
-                            {service?.equipmentDescription || "No description"}
-                          </div>
+                          <div className="title">{service?.businessName || "No description"}</div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />

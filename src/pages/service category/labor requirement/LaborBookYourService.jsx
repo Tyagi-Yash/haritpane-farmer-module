@@ -143,6 +143,7 @@ function LaborBookYourService() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
+                      placeholder="Farm Location*"
                     />
                   </div>
                   <div className="col-md-4">

@@ -160,6 +160,7 @@ function LandManagementServicesSubServices() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
+                      placeholder="Farm Location*"
                     />
                   </div>
                   {selectSubCategory === "tracktor_attachments" && (

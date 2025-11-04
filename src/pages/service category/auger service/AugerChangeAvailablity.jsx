@@ -8,7 +8,6 @@ import AugerDrillingService from "../../../assets/images/AugerDrillingService.pn
 import AugerServiceIcon from "../../../assets/images/AugerService-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfAuger } from "../../../reduxtoolkit/slices/service category/augerServices";
-import { validateFromDate } from "../../../utils/formValidators";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 
 function AugerChangeAvailablity() {
@@ -17,7 +16,7 @@ function AugerChangeAvailablity() {
   const queryParams = new URLSearchParams(location.search);
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
-  const { date } = filters;
+  const { date, toDate = "" } = filters;
   const { services, loading } = useSelector((state) => state.services.AugerServiceMgmtSlice);
   const [errors, setErrors] = useState({});
 
@@ -40,8 +39,23 @@ function AugerChangeAvailablity() {
 
   const validateForm = () => {
     let newErrors = {};
-    const dateErrors = validateFromDate(date);
-    if (dateErrors) newErrors.date = dateErrors;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (!date) {
+      newErrors.date = "*From date is required";
+    } else if (new Date(date) < today) {
+      newErrors.date = "*From date cannot be in the past";
+    }
+
+    if (toDate) {
+      if (new Date(toDate) < today) {
+        newErrors.toDate = "*To date cannot be in the past";
+      }
+      if (date && toDate && new Date(date) > new Date(toDate)) {
+        newErrors.toDate = "*To date cannot be earlier than from date";
+      }
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -58,7 +72,7 @@ function AugerChangeAvailablity() {
 
   useEffect(() => {
     fetchServices();
-  }, [date]);
+  }, [date, toDate]);
 
   return (
     <div className="WrapperArea">
@@ -89,10 +103,18 @@ function AugerChangeAvailablity() {
                   </div>
                 </div>
                 <div className="col-md-4 mb-3">
-                  {/* <label className="form-label">Select End Date</label>
+                  <label className="form-label">Select End Date</label>
+                  {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
-                    <input type="date" className="form-control" placeholder="From date*" required />
-                  </div> */}
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="Till date*"
+                      name="toDate"
+                      value={toDate}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </div>
                 <div className="col-md-4 mb-3">
                   <div className="sort-box" id="sortBox">
@@ -145,9 +167,7 @@ function AugerChangeAvailablity() {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <div className="title">
-                            {service?.equipmentDescription || "No description"}
-                          </div>
+                          <div className="title">{service?.businessName || "No description"}</div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />

@@ -92,7 +92,8 @@ function HarvestorVendorDetailsPending() {
                         <div className="col align-items-center">
                           <div className="option-wrapper booking-area">
                             <h5 className="normal-heading">Booking Details</h5>
-                            <p>Service Name: {vendor?.basicInfo?.Description || "N/A"}</p>
+                            <p>Service Name: Harvester</p>
+                            <p>Business Name: {vendor?.businessName || "N/A"}</p>
                           </div>
                         </div>
                         <div className="col">
@@ -103,7 +104,6 @@ function HarvestorVendorDetailsPending() {
                                 <tbody>
                                   <tr>
                                     <td>Service Cost</td>
-                                    {/* <td>₹ {Number(vendor?.priceInfo?.price ?? 0).toFixed(2)}</td> */}
                                     <td>
                                       ₹
                                       {Number(

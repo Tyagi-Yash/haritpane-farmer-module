@@ -110,6 +110,7 @@ function DroneBookYourService() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
+                      placeholder="Field Location*"
                     />
                   </div>
                   <div className="col-md-6">

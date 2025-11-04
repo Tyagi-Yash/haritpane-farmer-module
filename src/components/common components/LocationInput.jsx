@@ -3,7 +3,7 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-au
 import { toast } from "react-toastify";
 import locationBlack from "../../assets/images/location-black.svg";
 
-function LocationInput({ value, onChange, onSelectLocation, error, placeholder = "Job location*" }) {
+function LocationInput({ value, onChange, onSelectLocation, error, placeholder = "location*" }) {
   const [loading, setLoading] = useState(false);
 
   const handleSelect = async (value) => {

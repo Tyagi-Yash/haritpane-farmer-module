@@ -9,6 +9,7 @@ import BorewellIcon from "../../../assets/images/Borewell-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfBorewell } from "../../../reduxtoolkit/slices/service category/borewellServices";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
+import { validateFromDateRequired } from "../../../utils/formValidators";
 
 function BorwellChangeAvailablity() {
   const dispatch = useDispatch();
@@ -40,7 +41,18 @@ function BorwellChangeAvailablity() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
+  const validateForm = () => {
+    let newErrors = {};
+
+    const dateErrors = validateFromDateRequired(fromDate, toDate);
+    newErrors = { ...newErrors, ...dateErrors };
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const fetchServices = async () => {
+    if (!validateForm()) return;
     try {
       await dispatch(getAllServicesOfBorewell(filters)).unwrap();
     } catch {
@@ -145,9 +157,7 @@ function BorwellChangeAvailablity() {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <div className="title">
-                            {service?.equipmentDescription || "No description"}
-                          </div>
+                          <div className="title">{service?.businessName || "No description"}</div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
