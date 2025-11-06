@@ -9,6 +9,10 @@ function ClassifiedSectionSkeleton() {
       <SkeletonProductCard />
       <SkeletonProductCard />
       <SkeletonProductCard />
+      <SkeletonProductCard />
+      <SkeletonProductCard />
+      <SkeletonProductCard />
+      <SkeletonProductCard />
     </>
   );
 }

@@ -265,6 +265,24 @@ export const validateNumberOfCattle = (number) => {
   return "";
 };
 
+export const validateWeightOfCattle = (number) => {
+  if (number === "") return "*Weight of cattle is required";
+
+  const num = Number(number);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
+  return "";
+};
+
+export const validateWeightOfVegetable = (number) => {
+  if (number === "") return "*Weight of Vegetable is required";
+
+  const num = Number(number);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
+  return "";
+};
+
 export const validateWeight = (number) => {
   if (number === "") return "*Weight is required";
 

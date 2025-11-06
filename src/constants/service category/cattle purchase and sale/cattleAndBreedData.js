@@ -76,6 +76,16 @@ export const breedOptions = {
     "Hybirds",
     "Broiler - Cornish",
   ],
-  Horse: [],
+  Horse: [
+    "Marwari",
+    "Kathiawari",
+    "Manipuri Pony",
+    "Spiti Pony",
+    "Zanskari",
+    "Bhutia Pony",
+    "Thoroughbred",
+    "Arabian",
+    "Indian Hald-Bred",
+  ],
   Others: [],
 };

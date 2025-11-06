@@ -6,6 +6,7 @@ import dumpTruckIcon from "../../../assets/images/dump-truck-icon.jpg";
 import caterpillarExcavatorIcon from "../../../assets/images/caterpillar-excavator-icon.jpg";
 import miniExcavatorIcon from "../../../assets/images/mini-excavator-icon.jpg";
 import longReachExcavatorIcon from "../../../assets/images/long-reach-excavator-icon.jpg";
+import hydraCraneIcon from "../../../assets/images/hydra-crane-icon.webp";
 
 export const equipmentTypesOption = [
   { name: "JCB Back Hoe loader", value: "JCB", image: JCBBackhoeLoaderIcon },
@@ -13,7 +14,12 @@ export const equipmentTypesOption = [
   { name: "Wheel Loader", value: "Wheel Loader", image: wheelLoaderIcon },
   { name: "Dozer", value: "Dozer", image: dozerIcon },
   { name: "Dump Truck", value: "Dump", image: dumpTruckIcon },
-  { name: "Caterpillar Excavator", value: "Caterpillar Excavator", image: caterpillarExcavatorIcon },
+  {
+    name: "Caterpillar Excavator",
+    value: "Caterpillar Excavator",
+    image: caterpillarExcavatorIcon,
+  },
   { name: "Mini Excavator", value: "Mini Excavator", image: miniExcavatorIcon },
   { name: "Long Reach Excavator", value: "Long Reach Excavator", image: longReachExcavatorIcon },
+  { name: "Hydra Crane", value: "Hydra Crane", image: hydraCraneIcon },
 ];

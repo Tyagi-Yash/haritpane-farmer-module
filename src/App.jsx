@@ -175,7 +175,7 @@ function App() {
                   </Route>
                 </Route>
 
-                <Route path="transportation">
+                {/* <Route path="transportation">
                   <Route index element={<TransportationBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<TransportationChangeAvailablity />} />
@@ -184,7 +184,8 @@ function App() {
                       element={<TransportationVendorDetailsPending />}
                     />
                   </Route>
-                </Route>
+                </Route> */}
+                <Route path="transportation" element={<TransportationBookYourService />} />
 
                 <Route path="borewell">
                   <Route index element={<BorwellBookYourService />} />
@@ -194,13 +195,14 @@ function App() {
                   </Route>
                 </Route>
 
-                <Route path="cow-dung-supply">
+                {/* <Route path="cow-dung-supply">
                   <Route index element={<CowDungBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<CowDungChangeAvailablity />} />
                     <Route path="vendor-details/:id" element={<CowDungVendorDetailsPending />} />
                   </Route>
-                </Route>
+                </Route> */}
+                <Route path="cow-dung-supply" element={<CowDungBookYourService />} />
 
                 <Route path="compound-wall-builder">
                   <Route index element={<CompoundWallBookYourService />} />

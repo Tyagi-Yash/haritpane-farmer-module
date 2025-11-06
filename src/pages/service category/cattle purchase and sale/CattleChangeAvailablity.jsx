@@ -111,6 +111,12 @@ function CattleChangeAvailablity() {
                               >
                                 State
                               </div>
+                              <div
+                                className="sort-option"
+                                onClick={() => selectFilterOption("Lactation")}
+                              >
+                                Lactation
+                              </div>
                             </div>
                           )}
                         </div>

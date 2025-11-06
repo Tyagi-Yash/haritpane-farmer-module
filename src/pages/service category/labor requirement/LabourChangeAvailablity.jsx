@@ -23,7 +23,6 @@ function LabourChangeAvailablity() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState("Top rating");
-  console.log(filters);
 
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);

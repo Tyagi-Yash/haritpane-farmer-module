@@ -14,7 +14,8 @@ function LandManagementVendorDetailsPending() {
 
   const { services, filters } = useSelector((state) => state.services.LandServiceMgmtSlice);
 
-  const vendor = services.find((v) => v._id === id);
+  const vendor = services.find((v) => v.Info?._id === id);
+
   const [selectedAvailability, setSelectedAvailability] = useState("");
 
   return (
@@ -35,7 +36,7 @@ function LandManagementVendorDetailsPending() {
           ) : (
             <>
               <figure className="status-image-tag" style={{ minHeight: "200px" }}>
-                <img src={vendor?.attachmentImage?.[0] || landstatus} alt="Service Image" />
+                <img src={vendor?.Info?.images?.[0] || landstatus} alt="Service Image" />
                 <div className="status-tag-pending">Pending</div>
               </figure>
               <div className="CommonTabs mt-0">

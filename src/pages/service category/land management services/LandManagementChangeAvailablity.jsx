@@ -146,13 +146,13 @@ function LandManagementChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`vendor-details/${service._id}`}
-                    key={service._id}
+                    to={`vendor-details/${service.Info._id}`}
+                    key={service.Info._id}
                   >
                     <div className="vendor-card">
                       <div className="service-info">
                         <img
-                          src={service?.attachmentImage?.[0] || PoweringPrecisionFarming}
+                          src={service?.Info?.images?.[0] || PoweringPrecisionFarming}
                           alt="Service"
                           className="service-image"
                         />

@@ -1,22 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
 
-export const getAllServiceCowDunk = createAsyncThunk(
-  "cowDunkService/getAllServiceCowDunk",
-  async (filters, { rejectWithValue }) => {
-    try {
-      const response = await axios.get("/getAllServiceCowDunk", { params: filters });
-
-      return { status: response.status, data: response.data, filters };
-    } catch (error) {
-      return rejectWithValue({
-        status: error.response?.status || 500,
-        data: error.response?.data || { message: "Network or server error" },
-      });
-    }
-  }
-);
-
 export const createCowDungJobOrder = createAsyncThunk(
   "cowDunkService/createCowDungJobOrder",
   async (payload, { rejectWithValue }) => {
@@ -61,23 +45,7 @@ const CowDunkServiceMgmtSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(getAllServiceCowDunk.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getAllServiceCowDunk.fulfilled, (state, action) => {
-        const { status, data, filters } = action.payload;
-        if (status === 200) {
-          state.services = data?.data?.[0]?.data || [];
-          state.filters = filters;
-        }
-        state.loading = false;
-      })
-      .addCase(getAllServiceCowDunk.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+    builder;
   },
 });
 

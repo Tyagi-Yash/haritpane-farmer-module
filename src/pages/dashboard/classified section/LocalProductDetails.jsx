@@ -48,7 +48,11 @@ function LocalProductDetails() {
         />
         <div className="dashboard local-product-details">
           <figure className="status-image-tag">
-            <img src={productDetails?.productImage?.[0] || forceTractor} alt="Product Image" />
+            <img
+              class="product-image"
+              src={productDetails?.productImage?.[0] || forceTractor}
+              alt="Product Image"
+            />
             <div className="status-tag-share">
               <img src={shareIcon} alt="shareIcon" />
             </div>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import CowDunkSupplyIcon from "../../../assets/images/CowDunkSupply-icon.png";
@@ -21,7 +21,6 @@ import { createCowDungJobOrder } from "../../../reduxtoolkit/slices/service cate
 function CowDungBookYourService() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const filters = useSelector((state) => state.services.CowDunkServiceMgmtSlice.filters);
 
   const defaultForm = {
     currentLocation: "",
@@ -33,7 +32,7 @@ function CowDungBookYourService() {
     startTime: "",
   };
 
-  const [formState, setFormState] = useState({ ...defaultForm, ...filters });
+  const [formState, setFormState] = useState(defaultForm);
 
   const { currentLocation, lat, lng, fromDate, startTime, cowDunkVehicleType, cowDunkType } =
     formState;
@@ -114,8 +113,7 @@ function CowDungBookYourService() {
       const res = await dispatch(createCowDungJobOrder(formdata));
       const { status, data } = res?.payload || {};
       if (status === 200) {
-        // toast.success(data?.message || "Booking Request Created successfully");
-        // navigate("/dashboard");
+        toast.success(data?.message || "Booking Request Created successfully");
         setShowSuccessModal(true);
       } else {
         toast.error(data?.message || "Failed to Send Booking Request");

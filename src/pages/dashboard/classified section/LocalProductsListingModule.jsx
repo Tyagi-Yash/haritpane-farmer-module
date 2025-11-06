@@ -9,10 +9,18 @@ import productImage from "../../../assets/images/product-image.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllProductsForFarmer } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
 import ClassifiedSectionSkeleton from "../../../components/skeletons/ClassifiedSectionSkeleton";
+import { Commonpagination } from "../../../components/common components/Commonpagination";
 
 function LocalProductsListingModule() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [activePage, setActivePage] = useState(1);
+  const [paginationData, setPaginationData] = useState({
+    total: 0,
+    page: 1,
+    isNext: false,
+    isPrev: false,
+  });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,17 +38,26 @@ function LocalProductsListingModule() {
     setIsOpen(false);
   };
 
-  const loadProducts = async () => {
+  const handlePageChange = (pageNumber) => {
+    setActivePage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const loadProducts = async (pageNumber = 1) => {
     setLoading(true);
     const paramData = {
       createdBy: pathname === "/dashboard/local-shops" ? "just_dial" : "india_mart",
+      page: pageNumber,
     };
 
     try {
       const res = await dispatch(getAllProductsForFarmer(paramData));
       const { status, data } = res?.payload || {};
+
       if (status === 200) {
+        const metadata = data?.data?.[0]?.metadata?.[0] || {};
         setProducts(data?.data?.[0]?.data || []);
+        setPaginationData(metadata);
       } else {
         toast(data?.message || "Failed to load Products");
       }
@@ -52,8 +69,8 @@ function LocalProductsListingModule() {
   };
 
   useEffect(() => {
-    loadProducts();
-  }, [pathname]);
+    loadProducts(activePage);
+  }, [pathname, activePage]);
 
   const handleEnquiryClick = (id) => {
     navigate(`product-details/${id}`, {
@@ -125,13 +142,24 @@ function LocalProductsListingModule() {
                       </p>
                     </div>
                     <div className="available-service-btn">
-                      <button className="send-btn">Send Enquiry</button>
+                      <button className="send-btn">View Business</button>
                     </div>
                   </div>
                 </div>
               ))
             )}
           </div>
+          {!loading && products.length > 0 && (
+            <div className="d-flex justify-content-center mt-4">
+              <Commonpagination
+                ActivePage={paginationData?.page || 1}
+                ItemsCountPerPage={10}
+                TotalItemsCount={paginationData?.total || 0}
+                PageRangeDisplayed={5}
+                Onchange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
