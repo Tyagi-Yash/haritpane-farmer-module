@@ -102,19 +102,31 @@ function AugerVendorDetailsPending() {
                               <h5 className="normal-heading">Total Booking Price</h5>
                               <table className="table table-borderless">
                                 <tbody>
-                                  <tr>
-                                    <td>Service Cost(Per Hour)</td>
-                                    <td>₹ {Number(vendor?.ratePerHr ?? 0).toFixed(2)}</td>
-                                  </tr>
+                                  {vendor.ratePerHr ? (
+                                    <tr>
+                                      <td>Service Cost(/hour)</td>
+                                      <td>₹{Number(vendor?.ratePerHr ?? 0).toFixed(2)}</td>
+                                    </tr>
+                                  ) : vendor.drillInfo[0].ratePerInch ? (
+                                    <tr>
+                                      <td>Service Cost(/Running ft)</td>
+                                      <td>
+                                        ₹
+                                        {Number(vendor?.drillInfo?.[0]?.ratePerInch ?? 0).toFixed(
+                                          2
+                                        )}
+                                      </td>
+                                    </tr>
+                                  ) : null}
                                   <tr>
                                     <td>Transportation Charges</td>
-                                    <td>₹ {Number(vendor?.additionCharges ?? 0).toFixed(2)}</td>
+                                    <td>₹{Number(vendor?.additionCharges ?? 0).toFixed(2)}</td>
                                   </tr>
                                 </tbody>
                                 <tfoot>
                                   <tr>
                                     <td>Total Payable Amount</td>
-                                    <td>₹ {Number(vendor?.payableAmount ?? 0).toFixed(2)}</td>
+                                    <td>₹{Number(vendor?.payableAmount ?? 0).toFixed(2)}</td>
                                   </tr>
                                 </tfoot>
                               </table>

@@ -176,10 +176,25 @@ function AugerChangeAvailablity() {
                           </div>
                         </div>
                       </div>
-                      <div className="price-info">
-                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
+
+                      {service.payableAmount ? (
+                        <div className="price-info">
+                          <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
+                          <small>Additional charges might apply</small>
+                        </div>
+                      ) : service.ratePerHr ? (
+                        <div className="price-info">
+                          <h6>₹ {Number(service?.ratePerHr ?? 0).toFixed(2)}/hour</h6>
+                          <small>Additional charges might apply</small>
+                        </div>
+                      ) : service.drillInfo[0].ratePerInch ? (
+                        <div className="price-info">
+                          <h6>
+                            ₹ {Number(service?.drillInfo?.[0]?.ratePerInch ?? 0).toFixed(2)}/Running ft
+                          </h6>
+                          <small>Additional charges might apply</small>
+                        </div>
+                      ) : null}
                     </div>
                   </Link>
                 ))}

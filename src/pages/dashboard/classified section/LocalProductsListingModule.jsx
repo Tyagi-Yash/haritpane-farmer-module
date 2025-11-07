@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -7,75 +7,52 @@ import locationBlack from "../../../assets/images/location-black.svg";
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import productImage from "../../../assets/images/product-image.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
-import { getAllProductsForFarmer } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
 import ClassifiedSectionSkeleton from "../../../components/skeletons/ClassifiedSectionSkeleton";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
+import {
+  getAllProductsForFarmer,
+  LoadPaginationPage,
+} from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
 
 function LocalProductsListingModule() {
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [activePage, setActivePage] = useState(1);
-  const [paginationData, setPaginationData] = useState({
-    total: 0,
-    page: 1,
-    isNext: false,
-    isPrev: false,
-  });
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
-  const pathname = location.pathname;
+  const { pathname } = useLocation();
+  const { filters, loading, products, paginationData } = useSelector(
+    (state) => state.services.ClassifiedSectionMgmtSlice
+  );
+  const currentPage = filters.page || 1;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Sort");
+  const getParams = useCallback(
+    () => ({
+      createdBy: pathname === "/dashboard/local-shops" ? "just_dial" : "india_mart",
+      page: currentPage,
+    }),
+    [pathname, currentPage]
+  );
 
-  const toggleSortMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
-  const selectSortOption = (option) => {
-    setSelectedSort(option);
-    setIsOpen(false);
-  };
+  const loadProducts = useCallback(async () => {
+    try {
+      await dispatch(getAllProductsForFarmer(getParams())).unwrap();
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong while fetching products");
+    }
+  }, [dispatch, getParams]);
+
+  useEffect(() => {
+    loadProducts();
+  }, [loadProducts]);
 
   const handlePageChange = (pageNumber) => {
-    setActivePage(pageNumber);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const loadProducts = async (pageNumber = 1) => {
-    setLoading(true);
-    const paramData = {
-      createdBy: pathname === "/dashboard/local-shops" ? "just_dial" : "india_mart",
-      page: pageNumber,
-    };
-
-    try {
-      const res = await dispatch(getAllProductsForFarmer(paramData));
-      const { status, data } = res?.payload || {};
-
-      if (status === 200) {
-        const metadata = data?.data?.[0]?.metadata?.[0] || {};
-        setProducts(data?.data?.[0]?.data || []);
-        setPaginationData(metadata);
-      } else {
-        toast(data?.message || "Failed to load Products");
-      }
-    } catch (error) {
-      toast("Something went wrong");
-    } finally {
-      setLoading(false);
+    if (pageNumber !== currentPage) {
+      dispatch(LoadPaginationPage(pageNumber));
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  useEffect(() => {
-    loadProducts(activePage);
-  }, [pathname, activePage]);
-
   const handleEnquiryClick = (id) => {
-    navigate(`product-details/${id}`, {
-      state: { from: pathname },
-    });
+    navigate(`product-details/${id}`, { state: { from: pathname } });
   };
 
   return (
@@ -97,33 +74,24 @@ function LocalProductsListingModule() {
             <div className="search-sort">
               <div className="location-wrapper">
                 <input type="text" className="form-control" placeholder="location" required />
-                <img src={locationBlack} alt="" className="location-icon" />
+                <img src={locationBlack} alt="location" className="location-icon" />
               </div>
               <div className="sort-box" id="sortBox">
-                <div className="sort-toggle" onClick={toggleSortMenu}>
+                <div className="sort-toggle">
                   <span>
-                    <span className="sort-label">{selectedSort}</span>
+                    <span className="sort-label">Sort</span>
                     <img src={sortArrowDown} alt="Sort Icon" />
                   </span>
                 </div>
-                {isOpen && (
-                  <div className="sort-menu">
-                    <div className="sort-option" onClick={() => selectSortOption("Top rating")}>
-                      Top rating
-                    </div>
-                    <div className="sort-option" onClick={() => selectSortOption("Out of Radius")}>
-                      Out of Radius
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
+
           <div className="row">
             {loading ? (
               <ClassifiedSectionSkeleton />
             ) : products.length === 0 ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>No product Available.</p>
+              <p style={{ color: "gray", marginTop: "10px" }}>No products available.</p>
             ) : (
               products.map((product) => (
                 <div className="col-md-4 mb-3" key={product._id}>
@@ -136,9 +104,9 @@ function LocalProductsListingModule() {
                     </div>
                     <div className="card-text-part">
                       <h6 className="normal-heading">{product.productName}</h6>
-                      <p className="normal-para">Vendor Name: {product?.provider?.name || "N/A"}</p>
+                      <p className="normal-para">Vendor: {product?.provider?.name || "N/A"}</p>
                       <p className="normal-para">
-                        {product?.provider?.address || "Address not Available"}
+                        {product?.provider?.address || "Address not available"}
                       </p>
                     </div>
                     <div className="available-service-btn">
@@ -149,13 +117,14 @@ function LocalProductsListingModule() {
               ))
             )}
           </div>
+
           {!loading && products.length > 0 && (
             <div className="d-flex justify-content-center mt-4">
               <Commonpagination
                 ActivePage={paginationData?.page || 1}
                 ItemsCountPerPage={10}
                 TotalItemsCount={paginationData?.total || 0}
-                PageRangeDisplayed={5}
+                pageRangeDisplayed={5}
                 Onchange={handlePageChange}
               />
             </div>

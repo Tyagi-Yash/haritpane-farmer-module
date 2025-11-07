@@ -13,6 +13,7 @@ import { clearHarvestorServicesFilters } from "../../reduxtoolkit/slices/service
 import { clearLabourServicesFilters } from "../../reduxtoolkit/slices/service category/labourServices";
 import { clearLandServicesFilters } from "../../reduxtoolkit/slices/service category/landManagementServices";
 import { clearTransportServicesFilters } from "../../reduxtoolkit/slices/service category/transportationService";
+import { clearClassifiedData } from "../../reduxtoolkit/slices/dashboard/classifiedSection";
 
 const serviceResetMap = {
   "land-management": clearLandServicesFilters,
@@ -43,6 +44,18 @@ function RouteWatcher() {
         dispatch(resetAction());
       }
     });
+  }, [location.pathname, dispatch]);
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    const isInsideClassifiedFlow =
+      currentPath.startsWith("/dashboard/local-shops") ||
+      currentPath.startsWith("/dashboard/local-manufacturers");
+
+    if (!isInsideClassifiedFlow) {
+      dispatch(clearClassifiedData());
+    }
   }, [location.pathname, dispatch]);
 
   return <Outlet />;
