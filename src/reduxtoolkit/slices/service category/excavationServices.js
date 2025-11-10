@@ -23,34 +23,36 @@ const ExcavationServiceMgmtSlice = createSlice({
     services: [],
     filters: {},
     loading: false,
-    error: null,
+    paginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   },
   reducers: {
     clearExcavationServices: (state) => {
       state.services = [];
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
     clearExcavationServicesFilters: (state) => {
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllServicesOfExcavation.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(getAllServicesOfExcavation.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;
         if (status === 200) {
+          const metadata = data?.data?.[0]?.metadata?.[0] || {};
           state.services = data?.data?.[0]?.data || [];
           state.filters = filters;
+          state.paginationData = metadata;
         }
         state.loading = false;
       })
       .addCase(getAllServicesOfExcavation.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
       });
   },
 });

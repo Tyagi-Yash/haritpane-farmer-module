@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -9,36 +9,30 @@ import productImage from "../../../assets/images/product-image.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import ClassifiedSectionSkeleton from "../../../components/skeletons/ClassifiedSectionSkeleton";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
-import {
-  getAllProductsForFarmer,
-  LoadPaginationPage,
-} from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
+import { getAllProductsForFarmer } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
 
 function LocalProductsListingModule() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { filters, loading, products, paginationData } = useSelector(
+
+  const { loading, products, paginationData } = useSelector(
     (state) => state.services.ClassifiedSectionMgmtSlice
   );
-  const currentPage = filters.page || 1;
 
-  const getParams = useCallback(
-    () => ({
-      createdBy: pathname === "/dashboard/local-shops" ? "just_dial" : "india_mart",
-      page: currentPage,
-    }),
-    [pathname, currentPage]
-  );
+  const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
 
   const loadProducts = useCallback(async () => {
     try {
-      await dispatch(getAllProductsForFarmer(getParams())).unwrap();
+      const params = {
+        createdBy: pathname === "/dashboard/local-shops" ? "just_dial" : "india_mart",
+        page: currentPage,
+      };
+      await dispatch(getAllProductsForFarmer(params)).unwrap();
     } catch (err) {
-      console.error(err);
       toast.error("Something went wrong while fetching products");
     }
-  }, [dispatch, getParams]);
+  }, [dispatch, pathname, currentPage]);
 
   useEffect(() => {
     loadProducts();
@@ -46,7 +40,7 @@ function LocalProductsListingModule() {
 
   const handlePageChange = (pageNumber) => {
     if (pageNumber !== currentPage) {
-      dispatch(LoadPaginationPage(pageNumber));
+      setCurrentPage(pageNumber);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -124,7 +118,7 @@ function LocalProductsListingModule() {
                 ActivePage={paginationData?.page || 1}
                 ItemsCountPerPage={10}
                 TotalItemsCount={paginationData?.total || 0}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={3}
                 Onchange={handlePageChange}
               />
             </div>

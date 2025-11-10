@@ -38,35 +38,39 @@ const HarvestorServiceMgmtSlice = createSlice({
     services: [],
     filters: {},
     loading: false,
-    error: null,
+    paginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   },
   reducers: {
     clearHarvestorServices: (state) => {
       state.services = [];
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
     clearHarvestorServicesFilters: (state) => {
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
   },
   extraReducers: (builder) => {
     builder
+      //getAllServicesOfHarvester
       .addCase(getAllServicesOfHarvester.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(getAllServicesOfHarvester.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;
         if (status === 200) {
+          const metadata = data?.data?.[0]?.metadata?.[0] || {};
           state.services = data?.data?.[0]?.data || [];
           state.filters = filters;
+          state.paginationData = metadata;
         }
         state.loading = false;
       })
       .addCase(getAllServicesOfHarvester.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
       });
+    
   },
 });
 

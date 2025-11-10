@@ -38,15 +38,17 @@ const CompoundWallServiceMgmtSlice = createSlice({
     services: [],
     filters: {},
     loading: false,
-    error: null,
+    paginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   },
   reducers: {
     clearCompoundWallServices: (state) => {
       state.services = [];
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
     clearCompoundWallServicesFilters: (state) => {
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
   },
   extraReducers: (builder) => {
@@ -66,19 +68,19 @@ const CompoundWallServiceMgmtSlice = createSlice({
       // getAllServicesCompoundWall
       .addCase(getAllServicesCompoundWall.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(getAllServicesCompoundWall.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;
         if (status === 200) {
+          const metadata = data?.data?.[0]?.metadata?.[0] || {};
           state.services = data?.data?.[0]?.data || [];
           state.filters = filters;
+          state.paginationData = metadata;
         }
         state.loading = false;
       })
       .addCase(getAllServicesCompoundWall.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
       });
   },
 });

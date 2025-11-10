@@ -20,37 +20,39 @@ export const getAllServicesOfBorewell = createAsyncThunk(
 const BorewellServiceMgmtSlice = createSlice({
   name: "borewellService",
   initialState: {
+    loading: false,
     services: [],
     filters: {},
-    loading: false,
-    error: null,
+    paginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   },
   reducers: {
     clearBorewellServices: (state) => {
       state.services = [];
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
     clearBorewellServicesFilters: (state) => {
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllServicesOfBorewell.pending, (state) => {
         state.loading = true;
-        state.error = null;
       })
       .addCase(getAllServicesOfBorewell.fulfilled, (state, action) => {
         const { status, data, filters } = action.payload;
         if (status === 200) {
+          const metadata = data?.data?.[0]?.metadata?.[0] || {};
           state.services = data?.data?.[0]?.data || [];
           state.filters = filters;
+          state.paginationData = metadata;
         }
         state.loading = false;
       })
       .addCase(getAllServicesOfBorewell.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
       });
   },
 });

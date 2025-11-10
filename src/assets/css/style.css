@@ -1612,6 +1612,7 @@ ol {
   font-weight: 500;
   font-size: 13px;
   cursor: pointer;
+  width: 100%;
 }
 .CommonTabs .nav-tabs .nav-item .nav-link.active {
   font-family: "Roboto";
@@ -1619,7 +1620,6 @@ ol {
   color: #06030e;
   font-weight: 500;
   font-size: 13px;
-  width: 100%;
 }
 
 /* ---------------------------------------------------------------------- */

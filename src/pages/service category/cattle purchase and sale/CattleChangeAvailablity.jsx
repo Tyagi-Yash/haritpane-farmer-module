@@ -10,17 +10,18 @@ import MilkProductionSupport from "../../../assets/images/MilkProductionSupport.
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfCattle } from "../../../reduxtoolkit/slices/service category/cattlePurchaseServices";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
+import { Commonpagination } from "../../../components/common components/Commonpagination";
 
 function CattleChangeAvailablity() {
   const dispatch = useDispatch();
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
-
-  const { services, loading } = useSelector((state) => state.services.CattleServiceMgmtSlice);
-
+  const { services, loading, paginationData } = useSelector(
+    (state) => state.services.CattleServiceMgmtSlice
+  );
+  const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState("Sort");
   const toggleSortMenu = () => {
@@ -30,7 +31,12 @@ function CattleChangeAvailablity() {
     setSelectedSort(option);
     setIsOpen(false);
   };
-
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber !== currentPage) {
+      setCurrentPage(pageNumber);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   const [selectedFilter, setSelectedFilter] = useState("Filter");
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const toggleFilterMenu = () => {
@@ -40,16 +46,19 @@ function CattleChangeAvailablity() {
     setSelectedFilter(option);
     setIsFilterMenuOpen(false);
   };
-
   const fetchServices = async () => {
+    const params = { ...filters, page: currentPage };
     try {
-      await dispatch(getAllServicesOfCattle(filters)).unwrap();
+      await dispatch(getAllServicesOfCattle(params)).unwrap();
     } catch {
       toast("Failed to load services");
     }
   };
   useEffect(() => {
     fetchServices();
+  }, [filters, currentPage]);
+  useEffect(() => {
+    setCurrentPage(1);
   }, [filters]);
 
   return (
@@ -186,6 +195,17 @@ function CattleChangeAvailablity() {
               </>
             )}
           </div>
+          {!loading && services.length > 0 && (
+            <div className="d-flex justify-content-center mt-4">
+              <Commonpagination
+                ActivePage={paginationData?.page || 1}
+                ItemsCountPerPage={10}
+                TotalItemsCount={paginationData?.total || 0}
+                pageRangeDisplayed={3}
+                Onchange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import droneServiceIcon from "../../../assets/images/DroneService-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 import { getAllServicesOfDrone } from "../../../reduxtoolkit/slices/service category/droneServices";
+import { Commonpagination } from "../../../components/common components/Commonpagination";
 
 function DroneChangeAvailablity() {
   const dispatch = useDispatch();
@@ -17,12 +18,13 @@ function DroneChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { date, toDate = "" } = filters;
-  const { services, loading } = useSelector((state) => state.services.DroneServiceMgmtSlice);
+  const { services, loading, paginationData } = useSelector(
+    (state) => state.services.DroneServiceMgmtSlice
+  );
+  const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState("Top rating");
-
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -30,27 +32,26 @@ function DroneChangeAvailablity() {
     setSelectedSort(option);
     setIsOpen(false);
   };
-
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber !== currentPage) {
+      setCurrentPage(pageNumber);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFilters((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFilters((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
-
   const validateForm = () => {
     let newErrors = {};
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
     if (!date) {
       newErrors.date = "*From date is required";
     } else if (new Date(date) < today) {
       newErrors.date = "*From date cannot be in the past";
     }
-
     if (toDate) {
       if (new Date(toDate) < today) {
         newErrors.toDate = "*To date cannot be in the past";
@@ -59,24 +60,24 @@ function DroneChangeAvailablity() {
         newErrors.toDate = "*To date cannot be earlier than from date";
       }
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const fetchServices = async () => {
     if (!validateForm()) return;
+    const params = { ...filters, page: currentPage };
     try {
-      await dispatch(getAllServicesOfDrone(filters)).unwrap();
+      await dispatch(getAllServicesOfDrone(params)).unwrap();
     } catch {
       toast("Failed to load services");
     }
   };
-
   useEffect(() => {
     fetchServices();
+  }, [date, toDate, currentPage]);
+  useEffect(() => {
+    setCurrentPage(1);
   }, [date, toDate]);
-
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -189,6 +190,17 @@ function DroneChangeAvailablity() {
               </>
             )}
           </div>
+          {!loading && services.length > 0 && (
+            <div className="d-flex justify-content-center mt-4">
+              <Commonpagination
+                ActivePage={paginationData?.page || 1}
+                ItemsCountPerPage={10}
+                TotalItemsCount={paginationData?.total || 0}
+                pageRangeDisplayed={3}
+                Onchange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
