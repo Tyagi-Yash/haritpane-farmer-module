@@ -18,6 +18,7 @@ import {
   validateVehicleType,
   validateWeight,
   validateWeightOfCattle,
+  validateWeightOfVegetable,
   validateWidth,
 } from "../../../utils/formValidators";
 import { vehicle } from "../../../constants/service category/transportation service/transportationData";

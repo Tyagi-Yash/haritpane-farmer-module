@@ -946,7 +946,7 @@ ol {
   border-radius: 12px;
   color: #ffffff;
   background-color: #eab308;
-  padding: 10px 100px;
+  padding: 10px 50px;
   text-decoration: none;
   text-align: center;
   font-family: "Roboto";
@@ -1137,6 +1137,12 @@ ol {
   overflow: hidden;
 }
 
+.status-image-tag .image-cover {
+  width: 100%;
+  min-height: 210px;
+  background-color: #f8f8f8;
+  border-radius: 8px;
+}
 .status-image-tag .product-image {
   width: 100%;
   min-height: 210px;
@@ -3056,7 +3062,7 @@ input[type="date" i] {
   border-color: #22c55e;
 }
 
-.pagination li.disabled {
+.pagination li.disabled a{
   opacity: 0.5;
   cursor: not-allowed;
 }

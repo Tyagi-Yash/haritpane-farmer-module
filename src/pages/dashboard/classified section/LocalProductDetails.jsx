@@ -48,11 +48,15 @@ function LocalProductDetails() {
         />
         <div className="dashboard local-product-details">
           <figure className="status-image-tag">
-            <img
-              className="product-image"
-              src={productDetails?.productImage?.[0] || forceTractor}
-              alt="Product Image"
-            />
+            <div className="image-cover">
+              {!loading && (
+                <img
+                  className="product-image"
+                  src={productDetails?.productImage?.[0] || forceTractor}
+                  alt="Product Image"
+                />
+              )}
+            </div>
             <div className="status-tag-share">
               <img src={shareIcon} alt="shareIcon" />
             </div>
@@ -60,7 +64,9 @@ function LocalProductDetails() {
           <div>
             {/* Title & Rating */}
             <div className="mb-3">
-              <h4 className="mb-0 me-2 main-heading">FieldTrac Services</h4>
+              <h4 className="mb-0 me-2 main-heading">
+                {productDetails?.productName || "Name not available"}
+              </h4>
               <div>
                 <span className="rating-badge">{productDetails.rating}</span>
                 <span className="text-warning">★★★★★</span>

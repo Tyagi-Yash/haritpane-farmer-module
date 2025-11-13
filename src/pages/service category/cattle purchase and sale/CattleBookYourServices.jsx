@@ -51,8 +51,15 @@ function CattleBookYourServices() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    const formdata = {
+      lat: lat.trim(),
+      lng: lng.trim(),
+      selectBreed,
+      sectectCattle,
+    };
     try {
-      const query = new URLSearchParams(formState).toString();
+      const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
       toast.error("Something went wrong");

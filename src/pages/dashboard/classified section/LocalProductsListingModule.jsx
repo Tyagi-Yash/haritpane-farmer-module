@@ -98,9 +98,11 @@ function LocalProductsListingModule() {
                     </div>
                     <div className="card-text-part">
                       <h6 className="normal-heading">{product.productName}</h6>
-                      <p className="normal-para">Vendor: {product?.provider?.name || "N/A"}</p>
                       <p className="normal-para">
-                        {product?.provider?.address || "Address not available"}
+                        Vendor: {product?.providerDetails?.name || "N/A"}
+                      </p>
+                      <p className="normal-para">
+                        {product?.providerDetails?.address || "Address not available"}
                       </p>
                     </div>
                     <div className="available-service-btn">
