@@ -112,11 +112,11 @@ function TransportationBookYourService() {
     if (transportItemError) newErrors.transportItem = transportItemError;
 
     if (!transportItemError) {
-      const currentLocationError = validateCurrentLocation(currentLocation.trim());
-      if (currentLocationError) newErrors.currentLocation = currentLocationError;
+      if (!currentLocation || !currentLocationLat || !currentLocationLng)
+        newErrors.currentLocation = "Please select a valid location.";
 
-      const targetLocationError = validateDestinationLocation(destinationLocation.trim());
-      if (targetLocationError) newErrors.destinationLocation = targetLocationError;
+      if (!destinationLocation || !destinationLocationLat || !destinationLocationLng)
+        newErrors.destinationLocation = "Please select a valid location.";
 
       const vehicleTypeError = validateVehicleType(typeOfVehicle.trim());
       if (vehicleTypeError) newErrors.typeOfVehicle = vehicleTypeError;
@@ -130,9 +130,7 @@ function TransportationBookYourService() {
       if (transportItem === "vegitable") {
         const vegeTypeError = validateVegeType(vegetableType.trim());
         if (vegeTypeError) newErrors.vegetableType = vegeTypeError;
-      }
 
-      if (transportItem === "vegitable") {
         const vegetableWeightError = validateWeightOfVegetable(vegetableWeight.trim());
         if (vegetableWeightError) newErrors.vegetableWeight = vegetableWeightError;
       }
@@ -140,9 +138,7 @@ function TransportationBookYourService() {
       if (transportItem === "cattle") {
         const cattleError = validateNumberOfCattle(numberOfCattle.trim());
         if (cattleError) newErrors.numberOfCattle = cattleError;
-      }
 
-      if (transportItem === "cattle") {
         const cattleWeightError = validateWeightOfCattle(cattleWeight.trim());
         if (cattleWeightError) newErrors.cattleWeight = cattleWeightError;
       }
@@ -646,7 +642,10 @@ function TransportationBookYourService() {
           <div className="custom-modal-backdrop">
             <div className="custom-modal">
               <h4>Request Created </h4>
-              <p>Your transportation booking request has been created successfully.</p>
+              <p>
+                Your transportation service request has been generated, we will notify you with the
+                driver’s offers, you can then select the best offer.
+              </p>
               <button
                 className="btn btn-primary"
                 onClick={() => {

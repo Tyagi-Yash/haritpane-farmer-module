@@ -235,7 +235,10 @@ function CowDungBookYourService() {
           <div className="custom-modal-backdrop">
             <div className="custom-modal">
               <h4>Request Created </h4>
-              <p>Your cow dung supply booking request has been created successfully.</p>
+              <p>
+                Your Cow Dung requirement order has been generated, we will notify you with the
+                vendor's offers, you can then select the best offer.
+              </p>
               <button
                 className="btn btn-primary"
                 onClick={() => {

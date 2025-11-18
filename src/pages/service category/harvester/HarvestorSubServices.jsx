@@ -30,25 +30,25 @@ function HarvestorSubServices() {
     fromTime: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
-  const [cropTypes, setCropTypes] = useState([]);
-  const dispatch = useDispatch();
-  const fetchCropType = async () => {
-    try {
-      const res = await dispatch(getAllCroptypes());
-      const { status, data } = res?.payload || {};
-      if (status === 200) {
-        setCropTypes(data?.data || []);
-      } else {
-        toast(data?.message || "Failed to load Crop Types");
-      }
-    } catch (error) {
-      toast("Something went wrong");
-    }
-  };
-  
-  useEffect(() => {
-    fetchCropType();
-  }, []);
+  // const [cropTypes, setCropTypes] = useState([]);
+  // const dispatch = useDispatch();
+  // const fetchCropType = async () => {
+  //   try {
+  //     const res = await dispatch(getAllCroptypes());
+  //     const { status, data } = res?.payload || {};
+  //     if (status === 200) {
+  //       setCropTypes(data?.data || []);
+  //     } else {
+  //       toast(data?.message || "Failed to load Crop Types");
+  //     }
+  //   } catch (error) {
+  //     toast("Something went wrong");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchCropType();
+  // }, []);
 
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
@@ -188,7 +188,7 @@ function HarvestorSubServices() {
                     />
                   </div>
                   <div className="col-md-4">
-                    <select
+                    {/* <select
                       className="form-control"
                       name="typeOfCrop"
                       value={typeOfCrop}
@@ -202,7 +202,15 @@ function HarvestorSubServices() {
                           {type}
                         </option>
                       ))}
-                    </select>
+                    </select> */}
+                    <input
+                      type="text"
+                      placeholder="Name of Crop under Cultivation*"
+                      className="form-control"
+                      name="typeOfCrop"
+                      value={typeOfCrop}
+                      onChange={handleInputChange}
+                    />
                     {errors.typeOfCrop && <p className="error-text">{errors.typeOfCrop}</p>}
                   </div>
                   <div className="col-md-4">
