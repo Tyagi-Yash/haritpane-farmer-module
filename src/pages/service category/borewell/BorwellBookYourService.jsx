@@ -136,7 +136,7 @@ function BorwellBookYourService() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Approximate depth of borewell(in feet)*"
+                      placeholder="Approximate depth of borewell(in ft)*"
                       name="depthOfBorewell"
                       value={depthOfBorewell}
                       onChange={handleInputChange}

@@ -12,6 +12,9 @@ import notification from "../../assets/images/notification.svg";
 import language from "../../assets/images/language.svg";
 import myFarm from "../../assets/images/my-farm.svg";
 import help from "../../assets/images/help.svg";
+import complaint from "../../assets/images/complaint.svg";
+import call from "../../assets/images/call.svg";
+import gmail from "../../assets/images/gmail.svg";
 import LogoutModal from "./LogoutModal";
 import { toast } from "react-toastify";
 import { logout } from "../../reduxtoolkit/slices/auth/auth";
@@ -142,28 +145,36 @@ function SideNav() {
 
                 <Dropdown.Menu as="ol">
                   <li>
-                    <NavLink>
-                      <span className="Icon">{/* <img src={notification} alt="" /> */}</span>
+                    <Link>
+                      <span className="Icon">
+                        <img src={complaint} alt="" />
+                      </span>
                       <span className="DText">Raise a Complaint</span>
-                    </NavLink>
+                    </Link>
                   </li>
                   <li>
-                    <NavLink>
-                      <span className="Icon">{/* <img src={language} alt="" /> */}</span>
+                    <Link>
+                      <span className="Icon">
+                        <img src={gmail} alt="" />
+                      </span>
                       <span className="DText">Email Us</span>
-                    </NavLink>
+                    </Link>
                   </li>
                   <li>
-                    <NavLink>
-                      <span className="Icon">{/* <img src={profile} alt="" /> */}</span>
+                    <Link>
+                      <span className="Icon">
+                        <img src={call} alt="" />
+                      </span>
                       <span className="DText">Call Us</span>
-                    </NavLink>
+                    </Link>
                   </li>
                   <li>
-                    <NavLink>
-                      <span className="Icon">{/* <img src={myFarm} alt="" /> */}</span>
+                    <Link>
+                      <span className="Icon">
+                        <img src={chat} alt="" />
+                      </span>
                       <span className="DText">Chat with Us</span>
-                    </NavLink>
+                    </Link>
                   </li>
                 </Dropdown.Menu>
               </Dropdown>

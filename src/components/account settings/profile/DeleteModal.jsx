@@ -19,7 +19,8 @@ function DeleteModal({ show, onClose }) {
       const message = res?.payload?.data?.message;
 
       if (status === 200) {
-        localStorage.clear();
+        localStorage.removeItem("token");
+        localStorage.removeItem("farmerProfile");
         navigate("/signup");
         toast.success(message || "Account deleted successfully");
       } else {
