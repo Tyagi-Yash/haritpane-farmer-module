@@ -11,6 +11,7 @@ import chat from "../../assets/images/chat.svg";
 import notification from "../../assets/images/notification.svg";
 import language from "../../assets/images/language.svg";
 import myFarm from "../../assets/images/my-farm.svg";
+import help from "../../assets/images/help.svg";
 import LogoutModal from "./LogoutModal";
 import { toast } from "react-toastify";
 import { logout } from "../../reduxtoolkit/slices/auth/auth";
@@ -125,6 +126,43 @@ function SideNav() {
                         <img src={myFarm} alt="" />
                       </span>
                       <span className="DText">My Farm</span>
+                    </NavLink>
+                  </li>
+                </Dropdown.Menu>
+              </Dropdown>
+            </li>
+            <li>
+              <Dropdown>
+                <Dropdown.Toggle as="a">
+                  <span className="Icon">
+                    <img src={help} alt="help" />
+                  </span>
+                  <span className="Text">Help Center</span>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu as="ol">
+                  <li>
+                    <NavLink>
+                      <span className="Icon">{/* <img src={notification} alt="" /> */}</span>
+                      <span className="DText">Raise a Complaint</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink>
+                      <span className="Icon">{/* <img src={language} alt="" /> */}</span>
+                      <span className="DText">Email Us</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink>
+                      <span className="Icon">{/* <img src={profile} alt="" /> */}</span>
+                      <span className="DText">Call Us</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink>
+                      <span className="Icon">{/* <img src={myFarm} alt="" /> */}</span>
+                      <span className="DText">Chat with Us</span>
                     </NavLink>
                   </li>
                 </Dropdown.Menu>
