@@ -13,6 +13,7 @@ import CowDunkServiceMgmtSlice from "./slices/service category/cowDunkServices";
 import CompoundWallServiceMgmtSlice from "./slices/service category/compoundWallServices";
 import DroneServiceMgmtSlice from "./slices/service category/droneServices";
 import AugerServiceMgmtSlice from "./slices/service category/augerServices";
+import bookingSlice from "./slices/service category/bookingSlice";
 import CarouselAdsMgmtSlice from "./slices/dashboard/carouselAds";
 import ClassifiedSectionMgmtSlice from "./slices/dashboard/classifiedSection";
 import StaticContentMgmtSlice from "./slices/static content/staticContent";
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   CompoundWallServiceMgmtSlice,
   DroneServiceMgmtSlice,
   AugerServiceMgmtSlice,
+  bookingSlice,
   CarouselAdsMgmtSlice,
   ClassifiedSectionMgmtSlice,
   StaticContentMgmtSlice,

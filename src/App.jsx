@@ -22,54 +22,36 @@ import {
   ServiceTrackingVendorDetails,
   AugerBookYourService,
   AugerChangeAvailablity,
-  AugerVendorDetailsAccepted,
   AugerVendorDetailsPending,
   BorwellBookYourService,
   BorwellChangeAvailablity,
-  BorwellVendorDetailsAccepted,
   BorwellVendorDetailsPending,
   CattleBookYourServices,
   CattleChangeAvailablity,
-  CattleVendorDetailsAccepted,
   CattleVendorDetailsPending,
   CompoundWallBookYourService,
   CompoundWallChangeAvailablity,
-  CompoundWallVendorDetailsAccepted,
   CompoundWallVendorDetailsPending,
-  CowDungAwaitingQuote,
   CowDungBookYourService,
-  CowDungChangeAvailablity,
-  CowDungVendorDetailsAccepted,
-  CowDungVendorDetailsPending,
   DroneBookYourService,
   DroneChangeAvailablity,
-  DroneVendorDetailsAccepted,
   DroneVendorDetailsPending,
   ElectrostaticBookYourService,
   ElectrostaticChangeAvailablity,
-  ElectrostaticVendorDetailsAccepted,
   ElectrostaticVendorDetailsPending,
   ExcavationBookYourService,
   ExcavationChangeAvailablity,
-  ExcavationVendorDetailsAccepted,
   ExcavationVendorDetailsPending,
   HarvestorChangeAvailablity,
   HarvestorSubServices,
   HarvestorVendorDetailsPending,
-  HarvestorsVendorDetailsAccepted,
   LaborBookYourService,
   LabourChangeAvailablity,
-  LabourVendorDetailsAccepted,
   LabourVendorDetailsPending,
   LandManagementChangeAvailablity,
   LandManagementServicesSubServices,
-  LandManagementVendorDetailsAccepted,
-  LandManagementVendorDetailsPending,
-  TransportationAwaitingQuote,
+  LandManagementVendorDetails,
   TransportationBookYourService,
-  TransportationChangeAvailablity,
-  TransportationVendorDetailsAccepted,
-  TransportationVendorDetailsPending,
   ServiceCategory,
   LocalProductsListingModule,
   LocalProductDetails,
@@ -125,10 +107,7 @@ function App() {
                   <Route index element={<LandManagementServicesSubServices />} />
                   <Route path="available-services">
                     <Route index element={<LandManagementChangeAvailablity />} />
-                    <Route
-                      path="vendor-details/:id"
-                      element={<LandManagementVendorDetailsPending />}
-                    />
+                    <Route path="vendor-details/:id" element={<LandManagementVendorDetails />} />
                   </Route>
                 </Route>
 
@@ -175,16 +154,6 @@ function App() {
                   </Route>
                 </Route>
 
-                {/* <Route path="transportation">
-                  <Route index element={<TransportationBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<TransportationChangeAvailablity />} />
-                    <Route
-                      path="vendor-details/:id"
-                      element={<TransportationVendorDetailsPending />}
-                    />
-                  </Route>
-                </Route> */}
                 <Route path="transportation" element={<TransportationBookYourService />} />
 
                 <Route path="borewell">
@@ -195,13 +164,6 @@ function App() {
                   </Route>
                 </Route>
 
-                {/* <Route path="cow-dung-supply">
-                  <Route index element={<CowDungBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<CowDungChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<CowDungVendorDetailsPending />} />
-                  </Route>
-                </Route> */}
                 <Route path="cow-dung-supply" element={<CowDungBookYourService />} />
 
                 <Route path="compound-wall-builder">

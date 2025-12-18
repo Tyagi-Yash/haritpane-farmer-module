@@ -8,7 +8,16 @@ import userIcon from "../../../assets/images/user-icon.svg";
 import landstatus from "../../../assets/images/landstatus.png";
 import RamPrasadSingh from "../../../assets/images/RamPrasadSingh.svg";
 
-function LandManagementVendorDetailsPending() {
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  createBooking,
+  cancelBooking,
+  getBookingStatus,
+} from "../../../reduxtoolkit/slices/service category/bookingSlice";
+import { toast } from "react-toastify";
+
+function LandManagementVendorDetails() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
 
@@ -16,7 +25,89 @@ function LandManagementVendorDetailsPending() {
 
   const vendor = services.find((v) => v.Info?._id === id);
 
-  const [selectedAvailability, setSelectedAvailability] = useState("");
+  const dispatch = useDispatch();
+
+  const { isBooking, bookingData, loading } = useSelector((state) => state.services.bookingSlice);
+  const [bookingId, setBookingId] = useState(null);
+
+  // useEffect(async () => {
+  //   if (vendor?.Info?._id && vendor?.provider?._id) {
+  //     try {
+  //       const res = await dispatch(
+  //         getBookingStatus({
+  //           bookingFor: "land_management",
+  //           providerId: vendor.providerId,
+  //           serviceId: vendor._id,
+  //           categoryId: vendor.categoryId,
+  //           tractorInfoId: vendor.Info._id,
+  //         })
+  //       ).unwrap();
+  //       console.log(res);
+  //       setBookingId(res.data.bookingId);
+  //     } catch (error) {
+  //       toast.error("Failed to fetch status");
+  //     }
+  //   }
+  // }, [vendor]);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      if (vendor?.Info?._id && vendor?.provider?._id) {
+        try {
+          const res = await dispatch(
+            getBookingStatus({
+              bookingFor: "land_management",
+              providerId: vendor.providerId,
+              serviceId: vendor._id,
+              categoryId: vendor.categoryId,
+              tractorInfoId: vendor.Info._id,
+            })
+          ).unwrap();
+          setBookingId(res?.data?.bookingId || null);
+        } catch (error) {
+          toast.error("Failed to fetch booking status");
+        }
+      }
+    };
+
+    fetchStatus();
+  }, [vendor]);
+
+  const handleBookService = async () => {
+    const payload = {
+      bookingFor: "land_management",
+      serviceId: vendor._id,
+      providerId: vendor.providerId,
+      categoryId: vendor.categoryId,
+      tractorInfoId: vendor.Info._id,
+      hpOfTractor: filters.hpOfTractor,
+      bookingFromDate: filters.fromDate,
+      bookingTillDate: filters.toDate,
+    };
+    try {
+      const res = await dispatch(createBooking(payload)).unwrap();
+      setBookingId(res?.data?.bookingId || null);
+      toast.success(res?.message || "Booking created successfully");
+    } catch (err) {
+      toast.error(err?.message || "Failed to create booking");
+    }
+  };
+
+  const handleCancelBooking = async () => {
+    try {
+      const res = await dispatch(
+        cancelBooking({
+          bookingId: bookingId,
+          status: "cancelled",
+          reasonForRejection: "User cancelled booking",
+        })
+      ).unwrap();
+
+      toast.success(res?.message || "Booking cancelled successfully");
+    } catch (err) {
+      toast.error(err?.message || "Failed to cancel booking");
+    }
+  };
 
   return (
     <div className="WrapperArea">
@@ -37,7 +128,8 @@ function LandManagementVendorDetailsPending() {
             <>
               <figure className="status-image-tag" style={{ minHeight: "200px" }}>
                 <img src={vendor?.Info?.images?.[0] || landstatus} alt="Service Image" />
-                <div className="status-tag-pending">Pending</div>
+
+                {isBooking && <div className="status-tag-pending">Pending</div>}
               </figure>
               <div className="CommonTabs mt-0">
                 <ul className="nav nav-tabs">
@@ -123,81 +215,27 @@ function LandManagementVendorDetailsPending() {
                         </div>
                       </div>
                     </div>
-                    <div className="option-wrapper">
-                      <h5 className="normal-heading">Select Availability</h5>
-                      <table className="table table-borderless">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr onClick={() => setSelectedAvailability(1)}>
-                            <td
-                              className={
-                                selectedAvailability === 1
-                                  ? "availability-cells date-cell "
-                                  : "date-cell"
-                              }
-                            >
-                              20/05/2025
-                            </td>
-                            <td
-                              className={
-                                selectedAvailability === 1
-                                  ? "availability-cells time-cell"
-                                  : "time-cell"
-                              }
-                              data-time="8:00:00 AM"
-                            >
-                              8:00:00 AM
-                            </td>
-                          </tr>
-                          <tr onClick={() => setSelectedAvailability(2)}>
-                            <td
-                              className={
-                                selectedAvailability === 2
-                                  ? "availability-cells date-cell "
-                                  : "date-cell"
-                              }
-                            >
-                              21/05/2025
-                            </td>
-                            <td
-                              className={
-                                selectedAvailability === 2
-                                  ? "availability-cells time-cell"
-                                  : "time-cell"
-                              }
-                              data-time="4:00:00 PM"
-                            >
-                              4:00:00 PM
-                            </td>
-                          </tr>
-                          <tr onClick={() => setSelectedAvailability(3)}>
-                            <td
-                              className={
-                                selectedAvailability === 3
-                                  ? "availability-cells date-cell "
-                                  : "date-cell"
-                              }
-                            >
-                              22/05/2025
-                            </td>
-                            <td
-                              className={
-                                selectedAvailability === 3
-                                  ? "availability-cells time-cell"
-                                  : "time-cell"
-                              }
-                              data-time="2:30:00 PM"
-                            >
-                              2:30:00 PM
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div className="d-flex justify-content-end align-items-center mt-5">
+                      {!isBooking ? (
+                        <button onClick={handleBookService} disabled={loading} className="btn-edit">
+                          {loading ? "Booking..." : "Book this Service"}
+                        </button>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            className="btn-delete"
+                            disabled={loading}
+                            onClick={handleCancelBooking}
+                          >
+                            {loading ? "Cancelling..." : "Cancel Booking"}
+                          </button>
+
+                          <button type="submit" className="btn-edit">
+                            Raise Enquiry
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 )}
@@ -284,4 +322,4 @@ function LandManagementVendorDetailsPending() {
   );
 }
 
-export default LandManagementVendorDetailsPending;
+export default LandManagementVendorDetails;
