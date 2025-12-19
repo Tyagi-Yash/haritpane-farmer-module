@@ -1,5 +1,4 @@
 import profile from "../../assets/images/profile.svg";
-
 import { Link } from "react-router-dom";
 
 function TopbarModal({ titleBox, navigate, secImage, title }) {

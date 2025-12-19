@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import TractorHarvester from "../../../assets/images/TractorHarvester.png";
 import StandardHarvesterCombined from "../../../assets/images/StandardHarvesterCombined.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import harvestorIcon from "../../../assets/images/harvestor-icon.png";
-import { getAllCroptypes } from "../../../reduxtoolkit/slices/service category/harvestorServices";
 import LocationInput from "../../../components/common components/LocationInput";
 import {
   validateArea,
@@ -30,25 +29,6 @@ function HarvestorSubServices() {
     fromTime: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
-  // const [cropTypes, setCropTypes] = useState([]);
-  // const dispatch = useDispatch();
-  // const fetchCropType = async () => {
-  //   try {
-  //     const res = await dispatch(getAllCroptypes());
-  //     const { status, data } = res?.payload || {};
-  //     if (status === 200) {
-  //       setCropTypes(data?.data || []);
-  //     } else {
-  //       toast(data?.message || "Failed to load Crop Types");
-  //     }
-  //   } catch (error) {
-  //     toast("Something went wrong");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchCropType();
-  // }, []);
 
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
@@ -188,21 +168,6 @@ function HarvestorSubServices() {
                     />
                   </div>
                   <div className="col-md-4">
-                    {/* <select
-                      className="form-control"
-                      name="typeOfCrop"
-                      value={typeOfCrop}
-                      onChange={handleInputChange}
-                    >
-                      <option value="" disabled>
-                        Name of Crop under Cultivation*
-                      </option>
-                      {cropTypes.map((type) => (
-                        <option value={type} className="form-control" key={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select> */}
                     <input
                       type="text"
                       placeholder="Name of Crop under Cultivation*"

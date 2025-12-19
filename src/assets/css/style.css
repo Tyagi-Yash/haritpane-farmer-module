@@ -3062,7 +3062,16 @@ input[type="date" i] {
   border-color: #22c55e;
 }
 
-.pagination li.disabled a{
+.pagination li.disabled a {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.cancilation-input::placeholder {
+  font-size: 16px;
+}
+
+.cancilation-input {
+  width: 100%;
+  padding-left: 5px;
 }
