@@ -1,404 +1,134 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getMyBookings } from "../../reduxtoolkit/slices/progress/bookingList";
+
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
 import dryCattleManagement from "../../assets/images/DryCattleManagement.png";
 import TopbarModal from "../../components/common components/TopbarModal";
-import { useState } from "react";
+import { Commonpagination } from "../../components/common components/Commonpagination";
+import { statusOptions } from "../../constants/progress/statusOptions";
 
 function ServiceTracking() {
+  const dispatch = useDispatch();
+
+  const { loading, services, paginationData } = useSelector(
+    (state) => state.services.bookingListSlice
+  );
+
+  const [page, setPage] = useState(1);
+  const [selectedStatus, setSelectedStatus] = useState("pending");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Sort");
+
+  useEffect(() => {
+    dispatch(
+      getMyBookings({
+        status: selectedStatus,
+        page,
+      })
+    );
+  }, [selectedStatus, page]);
 
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
   };
-  const selectSortOption = (option) => {
-    setSelectedSort(option);
+
+  const selectStatusOption = (option) => {
+    setSelectedStatus(option);
+    setPage(1);
     setIsOpen(false);
   };
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
   return (
-    <>
-      <div className="WrapperArea">
-        <div className="WrapperBox">
-          <TopbarModal titleBox={true} title="Service Tracking" navigate="/dashboard" />
-          <div className="dashboard service-tracking">
-            <div className="option-wrapper">
-              <h3 className="main-heading">Change Availability Date</h3>
-              <div className="filter-area">
-                <div className="row align-items-end">
-                  {/* Start Date */}
-                  <div className="col-md-4 mb-3">
-                    <label className="form-label">Select Start Date</label>
-                    <div className="input-group">
-                      <input
-                        type="date"
-                        className="form-control"
-                        placeholder="From date*"
-                        required
-                      />
+    <div className="WrapperArea">
+      <div className="WrapperBox">
+        <TopbarModal titleBox={true} title="Service Tracking" navigate="/dashboard" />
+
+        <div className="dashboard service-tracking">
+          <div className="option-wrapper">
+            <h3 className="main-heading">Change Availability Date</h3>
+            <div className="filter-area">
+              <div className="row align-items-end">
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Select Start Date</label>
+                  <input type="date" className="form-control" />
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Select End Date</label>
+                  <input type="date" className="form-control" />
+                </div>
+                <div className="col-md-4 mb-3">
+                  <label className="form-label">Select Status</label>
+                  <div className="sort-box">
+                    <div className="sort-toggle" onClick={toggleSortMenu}>
+                      <span>
+                        <span className="sort-label">{selectedStatus}</span>
+                        <img src={sortArrowDown} alt="Sort" />
+                      </span>
                     </div>
-                  </div>
-                  {/* End Date */}
-                  <div className="col-md-4 mb-3">
-                    <label className="form-label">Select End Date</label>
-                    <div className="input-group">
-                      <input
-                        type="date"
-                        className="form-control"
-                        placeholder="From date*"
-                        required
-                      />
-                    </div>
-                  </div>
-                  {/* Sort Dropdown */}
-                  <div className="col-md-4 mb-3">
-                    <div className="sort-box" id="sortBox">
-                      <div className="sort-toggle" onClick={toggleSortMenu}>
-                        <span>
-                          <span className="sort-label">{selectedSort}</span>
-                          <img src={sortArrowDown} alt="Sort Icon" />
-                        </span>
-                      </div>
-                      {isOpen && (
-                        <div className="sort-menu">
+                    {isOpen && (
+                      <div className="sort-menu">
+                        {statusOptions.map((status) => (
                           <div
+                            key={status}
                             className="sort-option"
-                            onClick={() => selectSortOption("Top rating")}
+                            onClick={() => selectStatusOption(status)}
                           >
-                            Top rating
+                            {status}
                           </div>
-                          <div
-                            className="sort-option"
-                            onClick={() => selectSortOption("Out of Radius")}
-                          >
-                            Out of Radius
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              </div>
-            </div>
-            <div className="CommonTabs mt-0">
-              <ul className="nav nav-tabs">
-                <li className="nav-item">
-                  <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#Complete">
-                    Complete
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" data-bs-toggle="tab" data-bs-target="#Pending">
-                    Pending
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" data-bs-toggle="tab" data-bs-target="#In-Progress">
-                    In-Progress
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="tab-content">
-              <div className="tab-pane active" id="Complete">
-                <div className="option-wrapper">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h3 className="main-heading">Available Vendor</h3>
-                      <h6 className="form-label-max">Choose from in your radius</h6>
-                    </div>
-                    <div className="status-badge-completed">
-                      <span className="dot" />
-                      Completed
-                    </div>
-                  </div>
-                  {/* Card 1 (Selected) */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 2 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 3 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 4 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-              <div className="tab-pane fade" id="Pending">
-                <div className="option-wrapper">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h3 className="main-heading">Available Vendor</h3>
-                      <h6 className="form-label-max">Choose from in your radius</h6>
-                    </div>
-                    <div className="status-badge-pending">
-                      <span className="dot" />
-                      Pending
-                    </div>
-                  </div>
-                  {/* Card 1 (Selected) */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 2 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 3 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 4 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-              {/* enquiry */}
-              <div className="tab-pane fade" id="In-Progress">
-                <div className="option-wrapper">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                      <h3 className="main-heading">Available Vendor</h3>
-                      <h6 className="form-label-max">Choose from in your radius</h6>
-                    </div>
-                    <div className="status-badge-progress">
-                      <span className="dot" />
-                      In-Progress
-                    </div>
-                  </div>
-                  {/* Card 1 (Selected) */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 2 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 3 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
-                  {/* Card 4 */}
-                  <Link className="vendor-card-link" to="vendor-details">
-                    <div className="vendor-card">
-                      <div className="service-info">
-                        <img src={dryCattleManagement} alt="Service" className="service-image" />
-                        <div className="service-text">
-                          <div className="title">Dry Cattle Management</div>
-                          <div className="rating">
-                            <span>
-                              <i className="fa-solid fa-star star-icon" />
-                            </span>{" "}
-                            4.2
-                          </div>
-                        </div>
-                      </div>
-                      <div className="price-info">
-                        <h6>₹ 699.00</h6>
-                        <small>Additional charges might apply</small>
-                      </div>
-                    </div>
-                  </Link>
                 </div>
               </div>
             </div>
           </div>
+
+          <div className="option-wrapper">
+            {loading && <p className="text-center">Loading...</p>}
+            {!loading && services.length === 0 && <p className="text-center">No bookings found</p>}
+            {!loading &&
+              services.map((item) => (
+                <Link key={item._id} className="vendor-card-link" to={`vendor-details/${item._id}`}>
+                  <div className="vendor-card">
+                    <div className="service-info">
+                      <img src={dryCattleManagement} alt="Service" className="service-image" />
+                      <div className="service-text">
+                        <div className="title">{item.bookingFor}</div>
+                        <div className="rating">
+                          <i className="fa-solid fa-star star-icon" /> 0
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="price-info">
+                      <h6>₹ 0.00</h6>
+                      <small>Additional charges might apply</small>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+          </div>
+          {!loading && services.length > 0 && (
+            <div className="d-flex justify-content-center mt-4">
+              <Commonpagination
+                ActivePage={paginationData?.page || 1}
+                ItemsCountPerPage={10}
+                TotalItemsCount={paginationData?.total || 0}
+                pageRangeDisplayed={3}
+                Onchange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

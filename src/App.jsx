@@ -44,7 +44,7 @@ import {
   ExcavationVendorDetailsPending,
   HarvestorChangeAvailablity,
   HarvestorSubServices,
-  HarvestorVendorDetailsPending,
+  HarvestorVendorDetails,
   LaborBookYourService,
   LabourChangeAvailablity,
   LabourVendorDetailsPending,
@@ -96,7 +96,7 @@ function App() {
 
             <Route path="service-tracking">
               <Route index element={<ServiceTracking />} />
-              <Route path="vendor-details" element={<ServiceTrackingVendorDetails />} />
+              <Route path="vendor-details/:id" element={<ServiceTrackingVendorDetails />} />
             </Route>
 
             <Route element={<RouteWatcher />}>
@@ -115,7 +115,7 @@ function App() {
                   <Route index element={<HarvestorSubServices />} />
                   <Route path="available-services">
                     <Route index element={<HarvestorChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<HarvestorVendorDetailsPending />} />
+                    <Route path="vendor-details/:id" element={<HarvestorVendorDetails />} />
                   </Route>
                 </Route>
 

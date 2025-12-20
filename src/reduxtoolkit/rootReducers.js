@@ -1,6 +1,7 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import authMgmtSlice from "./slices/auth/auth";
 import profileMgmtSlice from "./slices/account settings/profile";
+import bookingListSlice from "./slices/progress/bookingList";
 import LandServiceMgmtSlice from "./slices/service category/landManagementServices";
 import HarvestorServiceMgmtSlice from "./slices/service category/harvestorServices";
 import CattleServiceMgmtSlice from "./slices/service category/cattlePurchaseServices";
@@ -21,6 +22,7 @@ import StaticContentMgmtSlice from "./slices/static content/staticContent";
 const rootReducer = combineReducers({
   authMgmtSlice,
   profileMgmtSlice,
+  bookingListSlice,
   LandServiceMgmtSlice,
   HarvestorServiceMgmtSlice,
   CattleServiceMgmtSlice,

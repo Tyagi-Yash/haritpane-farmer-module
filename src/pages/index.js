@@ -44,7 +44,7 @@ import ExcavationChangeAvailablity from "./service category/excavation/Excavatio
 import ExcavationVendorDetailsPending from "./service category/excavation/ExcavationVendorDetailsPending";
 import HarvestorChangeAvailablity from "./service category/harvester/HarvestorChangeAvailablity";
 import HarvestorSubServices from "./service category/harvester/HarvestorSubServices";
-import HarvestorVendorDetailsPending from "./service category/harvester/HarvestorVendorDetailsPending";
+import HarvestorVendorDetails from "./service category/harvester/HarvestorVendorDetails";
 import LaborBookYourService from "./service category/labor requirement/LaborBookYourService";
 import LabourChangeAvailablity from "./service category/labor requirement/LabourChangeAvailablity";
 import LabourVendorDetailsPending from "./service category/labor requirement/LabourVendorDetailsPending";
@@ -101,7 +101,7 @@ export {
   ExcavationVendorDetailsPending,
   HarvestorChangeAvailablity,
   HarvestorSubServices,
-  HarvestorVendorDetailsPending,
+  HarvestorVendorDetails,
   LaborBookYourService,
   LabourChangeAvailablity,
   LabourVendorDetailsPending,
