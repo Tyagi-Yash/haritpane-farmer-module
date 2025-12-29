@@ -2,9 +2,9 @@ export const statusOptions = [
   "pending",
   "accepted",
   "rejected",
-  "completed",
-  "onHold",
-  "onGoing",
   "started",
+  "onGoing",
+  "onHold",
+  "completed",
   "cancelled",
 ];
