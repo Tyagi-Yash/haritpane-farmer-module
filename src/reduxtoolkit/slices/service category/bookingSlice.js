@@ -16,12 +16,20 @@ export const createBooking = createAsyncThunk(
 export const getBookingStatus = createAsyncThunk(
   "booking/getBookingStatus",
   async (
-    { providerId, serviceId, categoryId, bookingFor, tractorInfoId, typeOfCrop },
+    { providerId, serviceId, categoryId, bookingFor, tractorInfoId, typeOfCrop, cattlebasicInfoId },
     { rejectWithValue }
   ) => {
     try {
       const res = await axios.get("/getBookingStatusOfFarmer", {
-        params: { providerId, serviceId, categoryId, bookingFor, tractorInfoId, typeOfCrop },
+        params: {
+          providerId,
+          serviceId,
+          categoryId,
+          bookingFor,
+          tractorInfoId,
+          typeOfCrop,
+          cattlebasicInfoId,
+        },
       });
       return res.data;
     } catch (err) {
@@ -78,9 +86,16 @@ const bookingSlice = createSlice({
       })
 
       /* cancel booking */
+      .addCase(cancelBooking.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(cancelBooking.fulfilled, (state) => {
         state.isBooking = false;
         state.bookingData = null;
+        state.loading = false;
+      })
+      .addCase(cancelBooking.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

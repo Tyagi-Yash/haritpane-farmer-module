@@ -28,10 +28,11 @@ function LandManagementVendorDetails() {
 
   const vendor = services.find((v) => v.Info?._id === id);
 
-  const { isBooking, loading, bookService, cancelServiceBooking } = useLandManagementBooking({
-    vendor,
-    filters,
-  });
+  const { isBooking, loading, bookingStatus, bookService, cancelServiceBooking } =
+    useLandManagementBooking({
+      vendor,
+      filters,
+    });
 
   return (
     <>
@@ -52,7 +53,11 @@ function LandManagementVendorDetails() {
               </p>
             ) : (
               <>
-                <VendorHeader image={vendor?.Info?.images?.[0]} isBooking={isBooking} />
+                <VendorHeader
+                  image={vendor?.Info?.images?.[0]}
+                  isBooking={isBooking}
+                  bookingStatus={bookingStatus}
+                />
                 <VendorTabs activeTab={activeTab} setActiveTab={setActiveTab} />
                 {activeTab === "service" && (
                   <>

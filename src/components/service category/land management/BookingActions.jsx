@@ -10,8 +10,7 @@ const BookingActions = ({ isBooking, loading, onBook, onCancelClick }) => {
           <button type="button" className="btn-delete" disabled={loading} onClick={onCancelClick}>
             {loading ? "Cancelling..." : "Cancel Booking"}
           </button>
-
-          <button className="btn-edit">Contact Vendor</button>
+          <button className="btn-edit">Raise Enquiry</button>
         </>
       )}
     </div>

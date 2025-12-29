@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
+import { bookingAdapters } from "../../../utils/bookingAdapters";
 
 export const getMyBookings = createAsyncThunk(
   "bookingList/getMyBookings",
@@ -51,9 +52,17 @@ const bookingListSlice = createSlice({
         const { status, data, filters } = action.payload;
 
         if (status === 200) {
-          const metadata = data?.data?.[0]?.metadata?.[0] || {};
-          state.services = data?.data?.[0]?.data || [];
-          state.paginationData = metadata;
+          const meta = data?.data?.[0]?.metadata?.[0] || {};
+          const rawBookings = data?.data?.[0]?.data || [];
+
+          state.services = rawBookings
+            .map((item) => {
+              const adapter = bookingAdapters[item.bookingFor];
+              return adapter ? adapter(item) : null;
+            })
+            .filter(Boolean);
+
+          state.paginationData = meta;
           state.filters = filters;
         }
 

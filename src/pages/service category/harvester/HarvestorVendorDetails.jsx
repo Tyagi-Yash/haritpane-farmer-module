@@ -20,6 +20,7 @@ function HarvestorVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [bookingId, setBookingId] = useState(null);
+  const [bookingStatus, setBookingStatus] = useState("");
 
   const { services, filters } = useSelector((state) => state.services.HarvestorServiceMgmtSlice);
 
@@ -42,6 +43,7 @@ function HarvestorVendorDetails() {
             })
           ).unwrap();
           setBookingId(res?.data?.bookingId || null);
+          setBookingStatus(res?.data?.status || "");
         } catch (error) {
           toast.error("Failed to fetch booking status");
         }
@@ -60,6 +62,7 @@ function HarvestorVendorDetails() {
       typeOfCrop: filters.typeOfCrop,
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
+      amount: vendor.payableAmount?.toString(),
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();
@@ -107,7 +110,9 @@ function HarvestorVendorDetails() {
               <>
                 <figure className="status-image-tag" style={{ minHeight: "200px" }}>
                   <img src={vendor?.images?.[0] || harvestorStatus} alt="Service Image" />
-                  {isBooking && <div className="status-tag-pending">Booking Approval Pending</div>}
+                  {isBooking && (
+                    <div className="status-tag-pending">Booking Approval {bookingStatus}</div>
+                  )}
                 </figure>
 
                 <div className="CommonTabs mt-0">

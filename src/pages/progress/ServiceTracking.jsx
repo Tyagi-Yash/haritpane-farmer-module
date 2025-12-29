@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyBookings } from "../../reduxtoolkit/slices/progress/bookingList";
 
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
-import dryCattleManagement from "../../assets/images/DryCattleManagement.png";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { Commonpagination } from "../../components/common components/Commonpagination";
 import { statusOptions } from "../../constants/progress/statusOptions";
@@ -13,14 +12,12 @@ import { statusOptions } from "../../constants/progress/statusOptions";
 function ServiceTracking() {
   const dispatch = useDispatch();
 
-  const { loading, services, paginationData } = useSelector(
+  const { loading, services, paginationData, filters } = useSelector(
     (state) => state.services.bookingListSlice
   );
-
   const [page, setPage] = useState(1);
-  const [selectedStatus, setSelectedStatus] = useState("pending");
+  const [selectedStatus, setSelectedStatus] = useState(filters?.status||"pending");
   const [isOpen, setIsOpen] = useState(false);
-
   useEffect(() => {
     dispatch(
       getMyBookings({
@@ -29,17 +26,14 @@ function ServiceTracking() {
       })
     );
   }, [selectedStatus, page]);
-
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
   };
-
   const selectStatusOption = (option) => {
     setSelectedStatus(option);
     setPage(1);
     setIsOpen(false);
   };
-
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
   };
@@ -92,23 +86,30 @@ function ServiceTracking() {
 
           <div className="option-wrapper">
             {loading && <p className="text-center">Loading...</p>}
-            {!loading && services.length === 0 && <p className="text-center">No bookings found</p>}
+            {!loading && services.length === 0 && (
+              <p className="text-center">No bookings found for {selectedStatus} status</p>
+            )}
             {!loading &&
               services.map((item) => (
-                <Link key={item._id} className="vendor-card-link" to={`vendor-details/${item._id}`}>
+                <Link
+                  key={item.id}
+                  to={`/service-tracking/${item.bookingFor}/${item.id}`}
+                  className="vendor-card-link"
+                >
                   <div className="vendor-card">
                     <div className="service-info">
-                      <img src={dryCattleManagement} alt="Service" className="service-image" />
+                      <img src={item.image} alt="Service" className="service-image" />
                       <div className="service-text">
-                        <div className="title">{item.bookingFor}</div>
+                        <div className="title">{item.businessName}</div>
                         <div className="rating">
-                          <i className="fa-solid fa-star star-icon" /> 0
+                          <i className="fa-solid fa-star star-icon" />
+                          {item.rating ?? "N/A"}
                         </div>
                       </div>
                     </div>
 
                     <div className="price-info">
-                      <h6>₹ 0.00</h6>
+                      <h6>₹ {Number(item.amount ?? 0).toFixed(2)}</h6>
                       <small>Additional charges might apply</small>
                     </div>
                   </div>

@@ -1499,9 +1499,10 @@ ol {
   padding: 8px 40px;
 }
 
-.progress-vendor-details .btn-delete {
+/* .progress-vendor-details .btn-delete {
   color: #7b7b7b;
-}
+} */
+ 
 .notification-row {
   /* border-bottom: 1px solid #f0f0f0; */
   padding: 10px 0;

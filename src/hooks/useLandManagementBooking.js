@@ -13,6 +13,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
   const { isBooking, loading } = useSelector((state) => state.services.bookingSlice);
 
   const [bookingId, setBookingId] = useState(null);
+  const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
     const fetchBookingStatus = async () => {
@@ -23,9 +24,12 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
             bookingFor: "land_management",
             providerId: vendor.providerId,
             serviceId: vendor._id,
+            categoryId: vendor.categoryId,
+            tractorInfoId: vendor.Info?._id,
           })
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
+        setBookingStatus(res?.data?.status || "");
       } catch {
         toast.error("Failed to fetch booking status");
       }
@@ -41,6 +45,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       providerId: vendor.providerId,
       categoryId: vendor.categoryId,
       tractorInfoId: vendor.Info?._id,
+      amount: vendor.payableAmount?.toString(),
       hpOfTractor: filters.hpOfTractor,
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
@@ -78,6 +83,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
     isBooking,
     loading,
     bookingId,
+    bookingStatus,
     bookService,
     cancelServiceBooking,
   };

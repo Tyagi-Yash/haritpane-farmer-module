@@ -28,7 +28,7 @@ import {
   BorwellVendorDetailsPending,
   CattleBookYourServices,
   CattleChangeAvailablity,
-  CattleVendorDetailsPending,
+  CattleVendorDetails,
   CompoundWallBookYourService,
   CompoundWallChangeAvailablity,
   CompoundWallVendorDetailsPending,
@@ -96,7 +96,7 @@ function App() {
 
             <Route path="service-tracking">
               <Route index element={<ServiceTracking />} />
-              <Route path="vendor-details/:id" element={<ServiceTrackingVendorDetails />} />
+              <Route path=":serviceType/:bookingId" element={<ServiceTrackingVendorDetails />} />
             </Route>
 
             <Route element={<RouteWatcher />}>
@@ -123,7 +123,7 @@ function App() {
                   <Route index element={<CattleBookYourServices />} />
                   <Route path="available-services">
                     <Route index element={<CattleChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<CattleVendorDetailsPending />} />
+                    <Route path="vendor-details/:id" element={<CattleVendorDetails />} />
                   </Route>
                 </Route>
 

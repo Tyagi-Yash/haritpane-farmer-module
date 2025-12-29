@@ -28,7 +28,7 @@ import BorwellChangeAvailablity from "./service category/borewell/BorwellChangeA
 import BorwellVendorDetailsPending from "./service category/borewell/BorwellVendorDetailsPending";
 import CattleBookYourServices from "./service category/cattle purchase and sale/CattleBookYourServices";
 import CattleChangeAvailablity from "./service category/cattle purchase and sale/CattleChangeAvailablity";
-import CattleVendorDetailsPending from "./service category/cattle purchase and sale/CattleVendorDetailsPending";
+import CattleVendorDetails from "./service category/cattle purchase and sale/CattleVendorDetails";
 import CompoundWallBookYourService from "./service category/compound wall builder/CompoundWallBookYourService";
 import CompoundWallChangeAvailablity from "./service category/compound wall builder/CompoundWallChangeAvailablity";
 import CompoundWallVendorDetailsPending from "./service category/compound wall builder/CompoundWallVendorDetailsPending";
@@ -85,7 +85,7 @@ export {
   BorwellVendorDetailsPending,
   CattleBookYourServices,
   CattleChangeAvailablity,
-  CattleVendorDetailsPending,
+  CattleVendorDetails,
   CompoundWallBookYourService,
   CompoundWallChangeAvailablity,
   CompoundWallVendorDetailsPending,

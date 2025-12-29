@@ -1,0 +1,120 @@
+import userIcon from "../../assets/images/user-icon.svg";
+import locationIcon from "../../assets/images/location-icon.png";
+import mobile from "../../assets/images/mobile.svg";
+import CancelBookingModal from "../common components/CancelBookingModal";
+import { useState } from "react";
+import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookingSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+
+function CattleDetails({ data }) {
+  const service = data.serviceDetails;
+  const provider = data.providerDetails;
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleCancelBooking = async (reason) => {
+    try {
+      const res = await dispatch(
+        cancelBooking({
+          bookingId: data._id,
+          status: "cancelled",
+          reasonForRejection: reason,
+        })
+      ).unwrap();
+      toast.success(res?.message || "Booking cancelled successfully");
+      setShowCancelModal(false);
+      navigate("/service-tracking");
+    } catch (err) {
+      toast.error(err?.message || "Failed to cancel booking");
+    }
+  };
+
+  return (
+    <>
+      <div className="tab-pane active">
+        <div className="option-wrapper">
+          <h5 className="normal-heading">Vendor Information</h5>
+          <h6>
+            <span>
+              <img src={userIcon} alt="" />
+            </span>
+            {provider?.name || "N/A"}
+          </h6>
+          <h6>
+            <span>
+              <img src={locationIcon} alt="" />
+            </span>
+            {provider?.address || "N/A"}
+          </h6>
+          <h6>
+            <span>
+              {" "}
+              <img src={mobile} alt="" />
+            </span>
+            {provider?.phone ? `+91 ${provider.phone.slice(0, -6) + "X".repeat(6)}` : "N/A"}
+          </h6>
+        </div>
+        <div>
+          <div className="row align-items-center">
+            <div className="col align-items-center">
+              <div className="option-wrapper booking-area">
+                <h5 className="normal-heading">Booking Details</h5>
+                <p>Service Name: Cattle Purchase & Sale</p>
+                <p>Business Name: {service?.businessName || "N/A"}</p>
+              </div>
+            </div>
+            <div className="col">
+              <div className="bookingPriceTableParent">
+                <div className="option-wrapper bookingPriceTable">
+                  <h5 className="normal-heading">Total Booking Price</h5>
+                  <table className="table table-borderless">
+                    <tbody>
+                      <tr>
+                        <td>Service Cost</td>
+                        <td>
+                          ₹{" "}
+                          {Number(
+                            service?.basicInfo?.find((p) => p._id === data?.basicInfoId)
+                              ?.sellingPrice ?? 0
+                          ).toFixed(2)}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Transportation Charges</td>
+                        <td>₹ {Number(service?.transportationCharges ?? 0).toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td>Total Payable Amount</td>
+                        <td>₹ {Number(data?.amount ?? 0).toFixed(2)}</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="d-flex justify-content-end align-items-center mt-5">
+          {["pending", "accepted", "started"].includes(data.status) && (
+            <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
+              Cancel Booking
+            </button>
+          )}
+          <button className="btn-edit">Raise Enquiry</button>
+        </div>
+      </div>
+      <CancelBookingModal
+        show={showCancelModal}
+        onClose={() => setShowCancelModal(false)}
+        onCancel={handleCancelBooking}
+      />
+    </>
+  );
+}
+
+export default CattleDetails;
