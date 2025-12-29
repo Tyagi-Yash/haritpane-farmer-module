@@ -5,19 +5,15 @@ import { lazy, Suspense } from "react";
 
 import { useLandManagementBooking } from "../../../hooks/useLandManagementBooking";
 
+import PriceBreakdown from "../../../components/service category/land management/PriceBreakdown";
+import ReviewTabSkeleton from "../../../components/skeletons/ReviewTabSkeleton";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import CancelBookingModal from "../../../components/common components/CancelBookingModal";
-import VendorHeader from "../../../components/service category/land management/VendorHeader";
-import VendorTabs from "../../../components/service category/land management/VendorTabs";
-import VendorInfo from "../../../components/service category/land management/VendorInfo";
-import BookingSummary from "../../../components/service category/land management/BookingSummary";
-import PriceBreakdown from "../../../components/service category/land management/PriceBreakdown";
-import BookingActions from "../../../components/service category/land management/BookingActions";
-import ReviewTabSkeleton from "../../../components/skeletons/ReviewTabSkeleton";
-
-const ReviewTab = lazy(() =>
-  import("../../../components/service category/land management/ReviewTab")
-);
+import VendorTabs from "../../../components/common components/VendorTabs";
+import VendorInfo from "../../../components/common components/VendorInfo";
+import BookingSummary from "../../../components/common components/BookingSummary";
+import BookingActions from "../../../components/common components/BookingActions";
+const ReviewTab = lazy(() => import("../../../components/common components/ReviewTab"));
 
 function LandManagementVendorDetails() {
   const { id } = useParams();
