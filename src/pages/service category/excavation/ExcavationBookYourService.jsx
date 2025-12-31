@@ -196,7 +196,7 @@ function ExcavationBookYourService() {
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Hours*"
+                      placeholder="Hours"
                       name="hours"
                       min="0"
                       value={hours}
@@ -208,7 +208,7 @@ function ExcavationBookYourService() {
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Minutes (0-59)*"
+                      placeholder="Minutes (0-59)"
                       name="minutes"
                       min="0"
                       value={minutes}

@@ -17,7 +17,7 @@ import ReviewTabSkeleton from "../../../components/skeletons/ReviewTabSkeleton";
 
 const ReviewTab = lazy(() => import("../../../components/common components/ReviewTab"));
 
-function LandManagementVendorDetails() {
+function ExcavationVendorDetails() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -103,4 +103,4 @@ function LandManagementVendorDetails() {
   );
 }
 
-export default LandManagementVendorDetails;
+export default ExcavationVendorDetails;

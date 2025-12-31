@@ -41,7 +41,7 @@ import ElectrostaticChangeAvailablity from "./service category/electrostatic spr
 import ElectrostaticVendorDetailsPending from "./service category/electrostatic spraying/ElectrostaticVendorDetailsPending";
 import ExcavationBookYourService from "./service category/excavation/ExcavationBookYourService";
 import ExcavationChangeAvailablity from "./service category/excavation/ExcavationChangeAvailablity";
-import ExcavationVendorDetailsPending from "./service category/excavation/ExcavationVendorDetailsPending";
+import ExcavationVendorDetails from "./service category/excavation/ExcavationVendorDetails";
 import HarvestorChangeAvailablity from "./service category/harvester/HarvestorChangeAvailablity";
 import HarvestorSubServices from "./service category/harvester/HarvestorSubServices";
 import HarvestorVendorDetails from "./service category/harvester/HarvestorVendorDetails";
@@ -98,7 +98,7 @@ export {
   ElectrostaticVendorDetailsPending,
   ExcavationBookYourService,
   ExcavationChangeAvailablity,
-  ExcavationVendorDetailsPending,
+  ExcavationVendorDetails,
   HarvestorChangeAvailablity,
   HarvestorSubServices,
   HarvestorVendorDetails,

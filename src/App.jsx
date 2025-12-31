@@ -41,7 +41,7 @@ import {
   ElectrostaticVendorDetailsPending,
   ExcavationBookYourService,
   ExcavationChangeAvailablity,
-  ExcavationVendorDetailsPending,
+  ExcavationVendorDetails,
   HarvestorChangeAvailablity,
   HarvestorSubServices,
   HarvestorVendorDetails,
@@ -131,7 +131,7 @@ function App() {
                   <Route index element={<ExcavationBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<ExcavationChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<ExcavationVendorDetailsPending />} />
+                    <Route path="vendor-details/:id" element={<ExcavationVendorDetails />} />
                   </Route>
                 </Route>
 
