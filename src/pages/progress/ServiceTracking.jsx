@@ -16,7 +16,7 @@ function ServiceTracking() {
     (state) => state.services.bookingListSlice
   );
   const [page, setPage] = useState(1);
-  const [selectedStatus, setSelectedStatus] = useState(filters?.status||"pending");
+  const [selectedStatus, setSelectedStatus] = useState(filters?.status || "pending");
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     dispatch(
@@ -109,7 +109,7 @@ function ServiceTracking() {
                     </div>
 
                     <div className="price-info">
-                      <h6>₹ {Number(item.amount ?? 0).toFixed(2)}</h6>
+                      <h6>₹ {item.amount}</h6>
                       <small>Additional charges might apply</small>
                     </div>
                   </div>

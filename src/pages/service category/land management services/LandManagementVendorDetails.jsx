@@ -11,6 +11,7 @@ import TopbarModal from "../../../components/common components/TopbarModal";
 import CancelBookingModal from "../../../components/common components/CancelBookingModal";
 import VendorTabs from "../../../components/common components/VendorTabs";
 import VendorInfo from "../../../components/common components/VendorInfo";
+import VendorHeader from "../../../components/common components/VendorHeader";
 import BookingSummary from "../../../components/common components/BookingSummary";
 import BookingActions from "../../../components/common components/BookingActions";
 const ReviewTab = lazy(() => import("../../../components/common components/ReviewTab"));
@@ -60,7 +61,10 @@ function LandManagementVendorDetails() {
                     <VendorInfo provider={vendor.provider} />
                     <div className="row align-items-center">
                       <div className="col">
-                        <BookingSummary businessName={vendor.businessName} />
+                        <BookingSummary
+                          businessName={vendor.businessName}
+                          serviceName={"Land Management"}
+                        />
                       </div>
                       <div className="col">
                         <PriceBreakdown

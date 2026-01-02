@@ -22,7 +22,7 @@ import {
   ServiceTrackingVendorDetails,
   AugerBookYourService,
   AugerChangeAvailablity,
-  AugerVendorDetailsPending,
+  AugerVendorDetails,
   BorwellBookYourService,
   BorwellChangeAvailablity,
   BorwellVendorDetailsPending,
@@ -189,7 +189,7 @@ function App() {
                   <Route index element={<AugerBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<AugerChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<AugerVendorDetailsPending />} />
+                    <Route path="vendor-details/:id" element={<AugerVendorDetails />} />
                   </Route>
                 </Route>
               </Route>

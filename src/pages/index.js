@@ -22,7 +22,7 @@ import ServiceTracking from "./progress/ServiceTracking";
 import ServiceTrackingVendorDetails from "./progress/ServiceTrackingVendorDetails";
 import AugerBookYourService from "./service category/auger service/AugerBookYourService";
 import AugerChangeAvailablity from "./service category/auger service/AugerChangeAvailablity";
-import AugerVendorDetailsPending from "./service category/auger service/AugerVendorDetailsPending";
+import AugerVendorDetails from "./service category/auger service/AugerVendorDetails";
 import BorwellBookYourService from "./service category/borewell/BorwellBookYourService";
 import BorwellChangeAvailablity from "./service category/borewell/BorwellChangeAvailablity";
 import BorwellVendorDetailsPending from "./service category/borewell/BorwellVendorDetailsPending";
@@ -79,7 +79,7 @@ export {
   ServiceTrackingVendorDetails,
   AugerBookYourService,
   AugerChangeAvailablity,
-  AugerVendorDetailsPending,
+  AugerVendorDetails,
   BorwellBookYourService,
   BorwellChangeAvailablity,
   BorwellVendorDetailsPending,

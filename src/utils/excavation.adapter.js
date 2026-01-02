@@ -5,7 +5,7 @@ export const excavationAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: item.serviceDetails?.equipmentImage?.[0] || "",
     businessName: item.serviceDetails?.businessName || "",
-    amount: Number(item.amount || 0),
+    amount: Number(item.amount || 0).toFixed(2),
     rating: item.serviceDetails?.rating ?? "N/A",
 
     raw: item,
