@@ -47,7 +47,7 @@ import HarvestorSubServices from "./service category/harvester/HarvestorSubServi
 import HarvestorVendorDetails from "./service category/harvester/HarvestorVendorDetails";
 import LaborBookYourService from "./service category/labor requirement/LaborBookYourService";
 import LabourChangeAvailablity from "./service category/labor requirement/LabourChangeAvailablity";
-import LabourVendorDetailsPending from "./service category/labor requirement/LabourVendorDetailsPending";
+import LabourVendorDetails from "./service category/labor requirement/LabourVendorDetails";
 import LandManagementChangeAvailablity from "./service category/land management services/LandManagementChangeAvailablity";
 import LandManagementServicesSubServices from "./service category/land management services/LandManagementServicesSubServices";
 import LandManagementVendorDetails from "./service category/land management services/LandManagementVendorDetails";
@@ -104,7 +104,7 @@ export {
   HarvestorVendorDetails,
   LaborBookYourService,
   LabourChangeAvailablity,
-  LabourVendorDetailsPending,
+  LabourVendorDetails,
   LandManagementChangeAvailablity,
   LandManagementServicesSubServices,
   LandManagementVendorDetails,

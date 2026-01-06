@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import BookingDetailsRenderer from "../../components/progress/BookingDetailsRenderer";
+import serviceImg from "../../assets/images/service.png";
 
 function ServiceTrackingVendorDetails() {
   const { bookingId } = useParams();
@@ -28,7 +29,7 @@ function ServiceTrackingVendorDetails() {
         />
         <div className="dashboard progress-vendor-details">
           <figure className="status-image-tag" style={{ minHeight: "200px" }}>
-            <img src={booking.image} alt="Service Image" />
+            <img src={booking.image || serviceImg} alt="Service Image" />
           </figure>
 
           <div className="CommonTabs mt-0">

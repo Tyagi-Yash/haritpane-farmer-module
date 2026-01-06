@@ -4,6 +4,7 @@ import CattleDetails from "../components/progress/CattleDetails ";
 import ExcavationDetails from "../components/progress/ExcavationDetails";
 import AugerDetails from "../components/progress/AugerDetails";
 import ElectrostaticDetails from "../components/progress/ElectrostaticDetails";
+import LabourDetails from "../components/progress/LabourDetails";
 
 export const bookingDetailRenderers = {
   land_management: LandManagementDetails,
@@ -12,4 +13,5 @@ export const bookingDetailRenderers = {
   excavation: ExcavationDetails,
   auger: AugerDetails,
   electrostatic: ElectrostaticDetails,
+  labour: LabourDetails,
 };

@@ -4,6 +4,7 @@ import { cattleAdapter } from "./cattleSales.adapter";
 import { excavationAdapter } from "./excavation.adapter";
 import { electrostaticAdapter } from "./electrostatic.adapter";
 import { augerAdapter } from "./auger.adapter";
+import { labourAdapter } from "./labour.adapter";
 
 export const bookingAdapters = {
   land_management: landManagementAdapter,
@@ -12,4 +13,5 @@ export const bookingAdapters = {
   excavation: excavationAdapter,
   electrostatic: electrostaticAdapter,
   auger: augerAdapter,
+  labour: labourAdapter,
 };

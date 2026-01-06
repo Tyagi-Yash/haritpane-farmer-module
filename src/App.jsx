@@ -47,7 +47,7 @@ import {
   HarvestorVendorDetails,
   LaborBookYourService,
   LabourChangeAvailablity,
-  LabourVendorDetailsPending,
+  LabourVendorDetails,
   LandManagementChangeAvailablity,
   LandManagementServicesSubServices,
   LandManagementVendorDetails,
@@ -150,7 +150,7 @@ function App() {
                   <Route index element={<LaborBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<LabourChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<LabourVendorDetailsPending />} />
+                    <Route path="vendor-details/:id" element={<LabourVendorDetails />} />
                   </Route>
                 </Route>
 

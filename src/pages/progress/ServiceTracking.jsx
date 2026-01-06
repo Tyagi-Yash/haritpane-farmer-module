@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getMyBookings } from "../../reduxtoolkit/slices/progress/bookingList";
 
+import serviceImg from "../../assets/images/service.png";
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { Commonpagination } from "../../components/common components/Commonpagination";
@@ -98,7 +99,7 @@ function ServiceTracking() {
                 >
                   <div className="vendor-card">
                     <div className="service-info">
-                      <img src={item.image} alt="Service" className="service-image" />
+                      <img src={item.image || serviceImg} alt="Service" className="service-image" />
                       <div className="service-text">
                         <div className="title">{item.businessName}</div>
                         <div className="rating">

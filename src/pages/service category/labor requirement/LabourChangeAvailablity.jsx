@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
-import FarmLaborService from "../../../assets/images/FarmLaborService.png";
+import FarmLaborService from "../../../assets/images/labourstatus.png";
 import labouricon from "../../../assets/images/labour-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfLabour } from "../../../reduxtoolkit/slices/service category/labourServices";
