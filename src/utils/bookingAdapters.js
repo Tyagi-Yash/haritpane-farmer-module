@@ -5,6 +5,8 @@ import { excavationAdapter } from "./excavation.adapter";
 import { electrostaticAdapter } from "./electrostatic.adapter";
 import { augerAdapter } from "./auger.adapter";
 import { labourAdapter } from "./labour.adapter";
+import { borewellAdapter } from "./borewell.adapter";
+import { droneAdapter } from "./drone.adapter";
 
 export const bookingAdapters = {
   land_management: landManagementAdapter,
@@ -14,4 +16,6 @@ export const bookingAdapters = {
   electrostatic: electrostaticAdapter,
   auger: augerAdapter,
   labour: labourAdapter,
+  borewell: borewellAdapter,
+  drone: droneAdapter,
 };

@@ -101,7 +101,7 @@ function ServiceTracking() {
                     <div className="service-info">
                       <img src={item.image || serviceImg} alt="Service" className="service-image" />
                       <div className="service-text">
-                        <div className="title">{item.businessName}</div>
+                        <div className="title">{item.businessName || "No Discription"}</div>
                         <div className="rating">
                           <i className="fa-solid fa-star star-icon" />
                           {item.rating ?? "N/A"}

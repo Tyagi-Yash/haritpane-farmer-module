@@ -25,7 +25,7 @@ import {
   AugerVendorDetails,
   BorwellBookYourService,
   BorwellChangeAvailablity,
-  BorwellVendorDetailsPending,
+  BorwellVendorDetails,
   CattleBookYourServices,
   CattleChangeAvailablity,
   CattleVendorDetails,
@@ -35,10 +35,10 @@ import {
   CowDungBookYourService,
   DroneBookYourService,
   DroneChangeAvailablity,
-  DroneVendorDetailsPending,
+  DroneVendorDetails,
   ElectrostaticBookYourService,
   ElectrostaticChangeAvailablity,
-  ElectrostaticVendorDetailsPending,
+  ElectrostaticVendorDetails,
   ExcavationBookYourService,
   ExcavationChangeAvailablity,
   ExcavationVendorDetails,
@@ -139,10 +139,7 @@ function App() {
                   <Route index element={<ElectrostaticBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<ElectrostaticChangeAvailablity />} />
-                    <Route
-                      path="vendor-details/:id"
-                      element={<ElectrostaticVendorDetailsPending />}
-                    />
+                    <Route path="vendor-details/:id" element={<ElectrostaticVendorDetails />} />
                   </Route>
                 </Route>
 
@@ -160,7 +157,7 @@ function App() {
                   <Route index element={<BorwellBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<BorwellChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<BorwellVendorDetailsPending />} />
+                    <Route path="vendor-details/:id" element={<BorwellVendorDetails />} />
                   </Route>
                 </Route>
 
@@ -181,7 +178,7 @@ function App() {
                   <Route index element={<DroneBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<DroneChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<DroneVendorDetailsPending />} />
+                    <Route path="vendor-details/:id" element={<DroneVendorDetails />} />
                   </Route>
                 </Route>
 

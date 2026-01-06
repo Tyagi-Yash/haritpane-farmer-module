@@ -25,7 +25,7 @@ import AugerChangeAvailablity from "./service category/auger service/AugerChange
 import AugerVendorDetails from "./service category/auger service/AugerVendorDetails";
 import BorwellBookYourService from "./service category/borewell/BorwellBookYourService";
 import BorwellChangeAvailablity from "./service category/borewell/BorwellChangeAvailablity";
-import BorwellVendorDetailsPending from "./service category/borewell/BorwellVendorDetailsPending";
+import BorwellVendorDetails from "./service category/borewell/BorwellVendorDetails";
 import CattleBookYourServices from "./service category/cattle purchase and sale/CattleBookYourServices";
 import CattleChangeAvailablity from "./service category/cattle purchase and sale/CattleChangeAvailablity";
 import CattleVendorDetails from "./service category/cattle purchase and sale/CattleVendorDetails";
@@ -35,10 +35,10 @@ import CompoundWallVendorDetailsPending from "./service category/compound wall b
 import CowDungBookYourService from "./service category/cow dunk supply/CowDungBookYourService";
 import DroneBookYourService from "./service category/drone service/DroneBookYourService";
 import DroneChangeAvailablity from "./service category/drone service/DroneChangeAvailablity";
-import DroneVendorDetailsPending from "./service category/drone service/DroneVendorDetailsPending";
+import DroneVendorDetails from "./service category/drone service/DroneVendorDetails";
 import ElectrostaticBookYourService from "./service category/electrostatic spraying/ElectrostaticBookYourService";
 import ElectrostaticChangeAvailablity from "./service category/electrostatic spraying/ElectrostaticChangeAvailablity";
-import ElectrostaticVendorDetailsPending from "./service category/electrostatic spraying/ElectrostaticVendorDetailsPending";
+import ElectrostaticVendorDetails from "./service category/electrostatic spraying/ElectrostaticVendorDetails";
 import ExcavationBookYourService from "./service category/excavation/ExcavationBookYourService";
 import ExcavationChangeAvailablity from "./service category/excavation/ExcavationChangeAvailablity";
 import ExcavationVendorDetails from "./service category/excavation/ExcavationVendorDetails";
@@ -82,7 +82,7 @@ export {
   AugerVendorDetails,
   BorwellBookYourService,
   BorwellChangeAvailablity,
-  BorwellVendorDetailsPending,
+  BorwellVendorDetails,
   CattleBookYourServices,
   CattleChangeAvailablity,
   CattleVendorDetails,
@@ -92,10 +92,10 @@ export {
   CowDungBookYourService,
   DroneBookYourService,
   DroneChangeAvailablity,
-  DroneVendorDetailsPending,
+  DroneVendorDetails,
   ElectrostaticBookYourService,
   ElectrostaticChangeAvailablity,
-  ElectrostaticVendorDetailsPending,
+  ElectrostaticVendorDetails,
   ExcavationBookYourService,
   ExcavationChangeAvailablity,
   ExcavationVendorDetails,

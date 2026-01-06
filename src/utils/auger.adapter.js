@@ -20,7 +20,7 @@ export const augerAdapter = (item) => {
     bookingId: item._id,
     bookingFor: item.bookingFor,
     image: service.augerImg?.[0] || "",
-    businessName: service.businessName || "",
+    businessName: service.businessName || "No Discription",
     rating: service.rating ?? "N/A",
     amount: Number(priceValue || 0).toFixed(2) + priceUnit,
 

@@ -5,6 +5,8 @@ import ExcavationDetails from "../components/progress/ExcavationDetails";
 import AugerDetails from "../components/progress/AugerDetails";
 import ElectrostaticDetails from "../components/progress/ElectrostaticDetails";
 import LabourDetails from "../components/progress/LabourDetails";
+import BorewellDetails from "../components/progress/BorewellDetails";
+import DroneDetails from "../components/progress/DroneDetails";
 
 export const bookingDetailRenderers = {
   land_management: LandManagementDetails,
@@ -14,4 +16,6 @@ export const bookingDetailRenderers = {
   auger: AugerDetails,
   electrostatic: ElectrostaticDetails,
   labour: LabourDetails,
+  borewell: BorewellDetails,
+  drone: DroneDetails,
 };
