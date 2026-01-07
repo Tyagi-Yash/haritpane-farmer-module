@@ -246,6 +246,7 @@ export const validateWidth = (number) => {
 
   return "";
 };
+
 export const validateHeight = (number) => {
   if (!number || number === "") {
     return "*Height is required";

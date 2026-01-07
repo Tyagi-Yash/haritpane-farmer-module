@@ -7,6 +7,7 @@ import ElectrostaticDetails from "../components/progress/ElectrostaticDetails";
 import LabourDetails from "../components/progress/LabourDetails";
 import BorewellDetails from "../components/progress/BorewellDetails";
 import DroneDetails from "../components/progress/DroneDetails";
+import CompoundWallDetails from "../components/progress/CompoundWallDetails";
 
 export const bookingDetailRenderers = {
   land_management: LandManagementDetails,
@@ -18,4 +19,5 @@ export const bookingDetailRenderers = {
   labour: LabourDetails,
   borewell: BorewellDetails,
   drone: DroneDetails,
+  compoundWall: CompoundWallDetails,
 };

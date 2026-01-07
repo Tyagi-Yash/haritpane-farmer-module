@@ -9,6 +9,8 @@ import { getCompoundWallServiceTypes } from "../../../reduxtoolkit/slices/servic
 import LocationInput from "../../../components/common components/LocationInput";
 import {
   validateFromDate,
+  validateHeight,
+  validateLength,
   validateSelectTime,
   validateWallserviceType,
 } from "../../../utils/formValidators";
@@ -20,12 +22,14 @@ function CompoundWallBookYourService() {
     lat: "",
     lng: "",
     serviceType: "",
+    height: "",
+    length: "",
     date: "",
     time: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
 
-  const { address, lat, lng, serviceType, date, time } = formState;
+  const { address, lat, lng, serviceType, date, time, height, length } = formState;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [disable, setDisable] = useState(false);
@@ -78,6 +82,11 @@ function CompoundWallBookYourService() {
     const timeError = validateSelectTime(date, time);
     if (timeError) newErrors.time = timeError;
 
+    const lengthError = validateLength(length);
+    if (lengthError) newErrors.length = lengthError;
+    const hieghtError = validateHeight(height);
+    if (hieghtError) newErrors.height = hieghtError;
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -93,6 +102,8 @@ function CompoundWallBookYourService() {
       serviceType,
       date,
       time,
+      heightOfWall: height,
+      lengthOfWall: length,
     }).toString();
 
     navigate(`available-services?${query}`);
@@ -141,6 +152,37 @@ function CompoundWallBookYourService() {
                     </select>
 
                     {errors.serviceType && <p className="error-text">{errors.serviceType}</p>}
+                  </div>
+                </div>
+                <h5 className="book-heading">Wall Dimension</h5>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      Wall Height<span className="required">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Enter wall height (in meter)"
+                      name="height"
+                      value={height}
+                      onChange={handleInputChange}
+                    />
+                    {errors.height && <p className="error-text">{errors.height}</p>}{" "}
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">
+                      Wall Length<span className="required">*</span>
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Enter wall length (in meter)"
+                      name="length"
+                      value={length}
+                      onChange={handleInputChange}
+                    />
+                    {errors.length && <p className="error-text">{errors.length}</p>}{" "}
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>

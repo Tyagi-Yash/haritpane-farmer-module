@@ -31,7 +31,7 @@ import {
   CattleVendorDetails,
   CompoundWallBookYourService,
   CompoundWallChangeAvailablity,
-  CompoundWallVendorDetailsPending,
+  CompoundWallVendorDetails,
   CowDungBookYourService,
   DroneBookYourService,
   DroneChangeAvailablity,
@@ -167,10 +167,7 @@ function App() {
                   <Route index element={<CompoundWallBookYourService />} />
                   <Route path="available-services">
                     <Route index element={<CompoundWallChangeAvailablity />} />
-                    <Route
-                      path="vendor-details/:id"
-                      element={<CompoundWallVendorDetailsPending />}
-                    />
+                    <Route path="vendor-details/:id" element={<CompoundWallVendorDetails />} />
                   </Route>
                 </Route>
 

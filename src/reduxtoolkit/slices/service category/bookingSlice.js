@@ -16,7 +16,16 @@ export const createBooking = createAsyncThunk(
 export const getBookingStatus = createAsyncThunk(
   "booking/getBookingStatus",
   async (
-    { providerId, serviceId, categoryId, bookingFor, tractorInfoId, typeOfCrop, cattlebasicInfoId },
+    {
+      providerId,
+      serviceId,
+      categoryId,
+      bookingFor,
+      tractorInfoId,
+      typeOfCrop,
+      cattlebasicInfoId,
+      materialInfoId,
+    },
     { rejectWithValue }
   ) => {
     try {
@@ -29,6 +38,7 @@ export const getBookingStatus = createAsyncThunk(
           tractorInfoId,
           typeOfCrop,
           cattlebasicInfoId,
+          materialInfoId,
         },
       });
       return res.data;

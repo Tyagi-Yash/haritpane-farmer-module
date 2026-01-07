@@ -31,7 +31,7 @@ import CattleChangeAvailablity from "./service category/cattle purchase and sale
 import CattleVendorDetails from "./service category/cattle purchase and sale/CattleVendorDetails";
 import CompoundWallBookYourService from "./service category/compound wall builder/CompoundWallBookYourService";
 import CompoundWallChangeAvailablity from "./service category/compound wall builder/CompoundWallChangeAvailablity";
-import CompoundWallVendorDetailsPending from "./service category/compound wall builder/CompoundWallVendorDetailsPending";
+import CompoundWallVendorDetails from "./service category/compound wall builder/CompoundWallVendorDetails";
 import CowDungBookYourService from "./service category/cow dunk supply/CowDungBookYourService";
 import DroneBookYourService from "./service category/drone service/DroneBookYourService";
 import DroneChangeAvailablity from "./service category/drone service/DroneChangeAvailablity";
@@ -88,7 +88,7 @@ export {
   CattleVendorDetails,
   CompoundWallBookYourService,
   CompoundWallChangeAvailablity,
-  CompoundWallVendorDetailsPending,
+  CompoundWallVendorDetails,
   CowDungBookYourService,
   DroneBookYourService,
   DroneChangeAvailablity,
