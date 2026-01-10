@@ -18,6 +18,8 @@ import bookingSlice from "./slices/service category/bookingSlice";
 import CarouselAdsMgmtSlice from "./slices/dashboard/carouselAds";
 import ClassifiedSectionMgmtSlice from "./slices/dashboard/classifiedSection";
 import StaticContentMgmtSlice from "./slices/static content/staticContent";
+// import ChatsMgmtSlice from "./slices/chats/chats";
+import chatSlice from "./slices/chats/chats";
 
 const rootReducer = combineReducers({
   authMgmtSlice,
@@ -39,5 +41,7 @@ const rootReducer = combineReducers({
   CarouselAdsMgmtSlice,
   ClassifiedSectionMgmtSlice,
   StaticContentMgmtSlice,
+  // ChatsMgmtSlice,
+  chatSlice,
 });
 export default rootReducer;

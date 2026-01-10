@@ -102,7 +102,7 @@ function LandManagementDetails({ data }) {
               Cancel Booking
             </button>
           )}
-          {["pending", "accepted", "started"].includes(data.status) && (
+          {["accepted"].includes(data.status) && (
             <button type="button" className="btn-edit">
               Chat
             </button>
