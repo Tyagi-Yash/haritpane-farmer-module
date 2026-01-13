@@ -32,6 +32,17 @@ function AugerDetails({ data }) {
     }
   };
 
+  const handleStartChat = () => {
+    navigate("/chats", {
+      state: {
+        roomId: data._id,
+        farmerId: data.farmerId,
+        serviceProviderId: data.providerDetails._id,
+        providerDetails: data.providerDetails,
+      },
+    });
+  };
+  
   return (
     <>
       <div className="tab-pane active">
@@ -104,6 +115,11 @@ function AugerDetails({ data }) {
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
               Cancel Booking
+            </button>
+          )}
+          {data.status === "accepted" && (
+            <button type="button" className="btn-edit" onClick={handleStartChat}>
+              Start Chat
             </button>
           )}
           <button className="btn-edit">Raise Enquiry</button>

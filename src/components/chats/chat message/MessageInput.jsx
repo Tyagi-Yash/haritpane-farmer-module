@@ -64,6 +64,13 @@ export default function MessageInput() {
 
   const fileInputRef = useRef(null);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
+
   return (
     <div className="chat-footer">
       {previewUrl && (
@@ -84,6 +91,7 @@ export default function MessageInput() {
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Type your message..."
           disabled={uploading}
         />

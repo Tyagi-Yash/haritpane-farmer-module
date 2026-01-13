@@ -32,6 +32,17 @@ function LandManagementDetails({ data }) {
   };
   const tractorDetail = service?.Info?.find((p) => p._id === data.tractorInfoId);
 
+  const handleStartChat = () => {
+    navigate("/chats", {
+      state: {
+        roomId: data._id,
+        farmerId: data.farmerId,
+        serviceProviderId: data.providerDetails._id,
+        providerDetails: data.providerDetails,
+      },
+    });
+  };
+
   return (
     <>
       <div className="tab-pane active">
@@ -102,9 +113,9 @@ function LandManagementDetails({ data }) {
               Cancel Booking
             </button>
           )}
-          {["accepted"].includes(data.status) && (
-            <button type="button" className="btn-edit">
-              Chat
+          {data.status === "accepted" && (
+            <button type="button" className="btn-edit" onClick={handleStartChat}>
+              Start Chat
             </button>
           )}
           <button className="btn-edit">Raise Enquiry</button>

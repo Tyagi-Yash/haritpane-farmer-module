@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMessages, setActiveChat } from "../../../reduxtoolkit/slices/chats/chats";
-import { useEffect } from "react";
+import { setActiveChat } from "../../../reduxtoolkit/slices/chats/chats";
+import profilePic from "../../../assets/images/user-icon.svg";
 
 export default function ChatList() {
   const { chatList, activeChat } = useSelector((s) => s.services.chatSlice);
@@ -8,9 +8,7 @@ export default function ChatList() {
 
   const openChat = (chat) => {
     dispatch(setActiveChat(chat));
-    dispatch(fetchMessages(chat.roomId));
   };
- 
 
   return (
     <div className="col-sm-5">
@@ -22,13 +20,15 @@ export default function ChatList() {
               className={`chat-item ${activeChat?._id === chat._id ? "active" : ""}`}
               onClick={() => openChat(chat)}
             >
-              <img src={chat.providerDetails.profileImage} />
+              <img src={chat?.providerDetails?.profileImage || profilePic} />
               <div>
-                <h4>{chat.providerDetails.name}</h4>
+                <h4>{chat?.providerDetails?.name}</h4>
                 <p>{chat.lastMessage?.message}</p>
               </div>
               <span className="time">
-                {new Date(chat.lastMessage.createdAt).toLocaleTimeString()}
+                {chat?.lastMessage?.createdAt
+                  ? new Date(chat.lastMessage.createdAt).toLocaleTimeString()
+                  : ""}
               </span>
             </div>
           ))}

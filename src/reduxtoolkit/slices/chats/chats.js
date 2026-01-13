@@ -25,13 +25,17 @@ const chatSlice = createSlice({
       state.activeChat = action.payload;
       state.messages = [];
     },
-
     addMessage: (state, action) => {
       state.messages.push({
         ...action.payload,
         createdAt: action.payload.timestamp || action.payload.createdAt,
       });
     },
+    resetChatState: () => ({
+      chatList: [],
+      messages: [],
+      activeChat: null,
+    }),
   },
   extraReducers: (builder) => {
     builder
@@ -44,5 +48,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setActiveChat, addMessage } = chatSlice.actions;
-export default chatSlice.reducer;
+export const { setActiveChat, addMessage, resetChatState } = chatSlice.actions;
+export default chatSlice.reducer; 

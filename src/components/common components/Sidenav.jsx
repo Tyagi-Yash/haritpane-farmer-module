@@ -19,6 +19,8 @@ import LogoutModal from "./LogoutModal";
 import { toast } from "react-toastify";
 import { logout } from "../../reduxtoolkit/slices/auth/auth";
 import { useDispatch } from "react-redux";
+import { resetChatState } from "../../reduxtoolkit/slices/chats/chats";
+import { disconnectSocket } from "../../socket/socket";
 
 function SideNav() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -38,6 +40,8 @@ function SideNav() {
         localStorage.removeItem("farmerProfile");
         toast.success(message || "Logged out sucessfully!");
         setShowLogoutModal(false);
+        dispatch(resetChatState());
+        disconnectSocket();
         navigate("/signup");
       } else {
         toast.error(message || "Failed to logout");

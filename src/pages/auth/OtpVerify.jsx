@@ -14,7 +14,6 @@ function OtpVerify() {
   const dispatch = useDispatch();
 
   const [otp, setOtp] = useState("");
-  const [check, setCheck] = useState(false);
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
   const loginloader = useSelector((state) => state.authMgmtSlice?.loader) || false;
@@ -42,10 +41,7 @@ function OtpVerify() {
       setErrors(newErrors);
       return valid;
     }
-    if (!check) {
-      newErrors.checkError = "*You must agree to terms and privacy policy";
-      valid = false;
-    }
+
     if (!otp.trim()) {
       newErrors.otpError = "*OTP is required";
       valid = false;
@@ -141,41 +137,6 @@ function OtpVerify() {
               <button className="Button" disabled={disable}>
                 {loginloader ? "Verifying..." : "Verify & Continue"}
               </button>
-            </div>
-
-            <div className="Checkboxs">
-              <label className="CheckBox" htmlFor="check">
-                <input
-                  type="checkbox"
-                  id="check"
-                  checked={check}
-                  onChange={(e) => {
-                    setCheck(e.target.checked);
-                    setErrors((prev) => ({ ...prev, checkError: "" }));
-                  }}
-                />
-                <span className="authCheckmark" />
-                By signing up, you agree to the{" "}
-                <Link
-                  to="/terms-of-service"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="Green"
-                >
-                  terms of service{" "}
-                </Link>
-                and{" "}
-                <Link
-                  to="/privacy-policy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="Green"
-                >
-                  privacy policy
-                </Link>
-                .
-              </label>
-              {errors.checkError && <p className="error-text">{errors.checkError}</p>}
             </div>
           </form>
         </section>

@@ -4,6 +4,7 @@ import { getSocket } from "../../../socket/socket";
 import { addMessage, fetchMessages } from "../../../reduxtoolkit/slices/chats/chats";
 import MessageBubble from "./MessageBubble";
 import MessageInput from "./MessageInput";
+import profilePic from "../../../assets/images/user-icon.svg";
 
 export default function ChatWindow() {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ export default function ChatWindow() {
       </div>
 
       <div className="chat-body" ref={chatBodyRef}>
-        {messages.map((msg) => (
+        {messages?.map((msg) => (
           <MessageBubble key={msg._id || msg.createdAt} msg={msg} />
         ))}
       </div>
