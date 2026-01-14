@@ -163,7 +163,7 @@ function CompoundWallBookYourService() {
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Enter wall height (in meter)"
+                      placeholder="Enter wall height (in ft)"
                       name="height"
                       value={height}
                       onChange={handleInputChange}
@@ -177,7 +177,7 @@ function CompoundWallBookYourService() {
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Enter wall length (in meter)"
+                      placeholder="Enter wall length (in ft)"
                       name="length"
                       value={length}
                       onChange={handleInputChange}

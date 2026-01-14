@@ -9,6 +9,7 @@ import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { Commonpagination } from "../../components/common components/Commonpagination";
 import { statusOptions } from "../../constants/progress/statusOptions";
+import { toast } from "react-toastify";
 
 function ServiceTracking() {
   const dispatch = useDispatch();
@@ -16,17 +17,50 @@ function ServiceTracking() {
   const { loading, services, paginationData, filters } = useSelector(
     (state) => state.services.bookingListSlice
   );
+
   const [page, setPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState(filters?.status || "pending");
+  const [fromDate, setFromDate] = useState(filters?.fromDate || "");
+  const [toDate, setToDate] = useState(filters?.toDate || "");
+
   const [isOpen, setIsOpen] = useState(false);
+
+  const validateDateRange = (start, end) => {
+    if (!start || !end) return true;
+    return new Date(start) <= new Date(end);
+  };
+
+  const handleFromDateChange = (e) => {
+    const value = e.target.value;
+    if (!validateDateRange(value, toDate)) {
+      toast.error("End date cannot be before start date");
+      return;
+    }
+    setFromDate(value);
+    setPage(1);
+  };
+
+  const handleToDateChange = (e) => {
+    const value = e.target.value;
+    if (!validateDateRange(fromDate, value)) {
+      toast.error("End date cannot be before start date");
+      return;
+    }
+    setToDate(value);
+    setPage(1);
+  };
+
   useEffect(() => {
     dispatch(
       getMyBookings({
         status: selectedStatus,
+        fromDate,
+        toDate,
         page,
       })
     );
-  }, [selectedStatus, page]);
+  }, [selectedStatus, fromDate, toDate, page]);
+
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -51,16 +85,29 @@ function ServiceTracking() {
               <div className="row align-items-end">
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Select Start Date</label>
-                  <input type="date" className="form-control" />
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={fromDate}
+                    onChange={handleFromDateChange}
+                  />
                 </div>
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Select End Date</label>
-                  <input type="date" className="form-control" />
+                  <input
+                    type="date"
+                    className="form-control"
+                    value={toDate}
+                    onChange={handleToDateChange}
+                  />
                 </div>
                 <div className="col-md-4 mb-3">
                   <label className="form-label">Select Status</label>
                   <div className="sort-box">
-                    <div className="sort-toggle" onClick={toggleSortMenu}>
+                    <div
+                      className={`sort-toggle status-${selectedStatus.toLowerCase()}`}
+                      onClick={toggleSortMenu}
+                    >
                       <span>
                         <span className="sort-label">{selectedStatus}</span>
                         <img src={sortArrowDown} alt="Sort" />
@@ -71,7 +118,7 @@ function ServiceTracking() {
                         {statusOptions.map((status) => (
                           <div
                             key={status}
-                            className="sort-option"
+                            className={`sort-option status-${status.toLowerCase()}`}
                             onClick={() => selectStatusOption(status)}
                           >
                             {status}

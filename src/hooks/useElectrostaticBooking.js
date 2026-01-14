@@ -45,7 +45,7 @@ export const useElectrostaticBooking = ({ vendor, filters }) => {
       areaUnderCultivation: filters.areaUnderCultivation,
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
-      bookingStartTime:filters.fromTime
+      bookingStartTime: filters.fromTime,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();
@@ -70,7 +70,7 @@ export const useElectrostaticBooking = ({ vendor, filters }) => {
           reasonForRejection: reason,
         })
       ).unwrap();
-      toast.success(res?.message || "Booking cancelled successfully");
+      toast.success("Booking cancelled successfully");
       setBookingId(null);
     } catch (err) {
       toast.error(err?.message || "Failed to cancel booking");

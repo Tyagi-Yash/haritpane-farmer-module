@@ -24,7 +24,7 @@ function AugerDetails({ data }) {
           reasonForRejection: reason,
         })
       ).unwrap();
-      toast.success(res?.message || "Booking cancelled successfully");
+      toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
       navigate("/service-tracking");
     } catch (err) {
@@ -42,7 +42,7 @@ function AugerDetails({ data }) {
       },
     });
   };
-  
+
   return (
     <>
       <div className="tab-pane active">
@@ -85,12 +85,12 @@ function AugerDetails({ data }) {
                     <tbody>
                       {service.ratePerHr ? (
                         <tr>
-                          <td>Service Cost(/hour)</td>
+                          <td>Service Cost(per hour)</td>
                           <td>₹{Number(service?.ratePerHr ?? 0).toFixed(2)}</td>
                         </tr>
                       ) : service.drillInfo[0].ratePerInch ? (
                         <tr>
-                          <td>Service Cost(/Running ft)</td>
+                          <td>Service Cost(per Running ft)</td>
                           <td>₹{Number(service?.drillInfo?.[0]?.ratePerInch ?? 0).toFixed(2)}</td>
                         </tr>
                       ) : null}

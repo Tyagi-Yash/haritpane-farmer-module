@@ -19,11 +19,11 @@ const chatSlice = createSlice({
     chatList: [],
     messages: [],
     activeChat: null,
+    messagesLoading: false,
   },
   reducers: {
     setActiveChat: (state, action) => {
       state.activeChat = action.payload;
-      state.messages = [];
     },
     addMessage: (state, action) => {
       state.messages.push({
@@ -39,14 +39,22 @@ const chatSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
       .addCase(fetchChatList.fulfilled, (state, action) => {
         state.chatList = action.payload;
       })
+      .addCase(fetchMessages.pending, (state) => {
+        state.messagesLoading = true;
+      })
       .addCase(fetchMessages.fulfilled, (state, action) => {
         state.messages = action.payload;
+        state.messagesLoading = false;
+      })
+      .addCase(fetchMessages.rejected, (state) => {
+        state.messagesLoading = false;
       });
   },
 });
 
 export const { setActiveChat, addMessage, resetChatState } = chatSlice.actions;
-export default chatSlice.reducer; 
+export default chatSlice.reducer;

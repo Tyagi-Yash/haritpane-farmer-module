@@ -59,7 +59,7 @@ function OtpVerify() {
 
     //remove this after 3rd party otp api implemented
     if (otp != localStorage.getItem("otp")) {
-      toast.error("Please Enter correct OPT");
+      toast.error("Please Enter correct OTP");
       return;
     }
 

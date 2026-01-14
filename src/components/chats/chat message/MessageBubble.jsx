@@ -4,7 +4,12 @@ export default function MessageBubble({ msg }) {
   const formatTime = (date) => {
     if (!date) return "";
     const d = new Date(date);
-    return isNaN(d.getTime()) ? "" : d.toLocaleTimeString();
+    return isNaN(d.getTime())
+      ? ""
+      : d.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
   };
 
   return (

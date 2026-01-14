@@ -132,7 +132,7 @@ function LandManagementServicesSubServices() {
                     </label>
                   </div>
                   <div className="col">
-                    <label id="attachmentOption" className="tile">
+                    {/* <label id="attachmentOption" className="tile">
                       <input
                         type="radio"
                         name="selectSubCategory"
@@ -145,7 +145,7 @@ function LandManagementServicesSubServices() {
                         <img src={onlyAttachment} alt="Only Attachment" />
                         <span className="radio-label">Only Attachment</span>
                       </div>
-                    </label>
+                    </label> */}
                   </div>
                 </div>
               </div>

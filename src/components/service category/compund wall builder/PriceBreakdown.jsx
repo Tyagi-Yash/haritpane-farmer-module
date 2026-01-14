@@ -6,7 +6,7 @@ const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
       <table className="table table-borderless">
         <tbody>
           <tr>
-            <td>Service Cost </td>
+            <td>Service Cost (per square ft)</td>
             <td>₹ {Number(info?.rate ?? 0).toFixed(2)}</td>
           </tr>
 

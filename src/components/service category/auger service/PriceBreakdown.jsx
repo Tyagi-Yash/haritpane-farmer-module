@@ -7,12 +7,12 @@ const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
         <tbody>
           {info.ratePerHr ? (
             <tr>
-              <td>Service Cost(/hour)</td>
+              <td>Service Cost(per hour)</td>
               <td>₹{Number(info?.ratePerHr ?? 0).toFixed(2)}</td>
             </tr>
           ) : info.drillInfo[0].ratePerInch ? (
             <tr>
-              <td>Service Cost(/Running ft)</td>
+              <td>Service Cost(per Running ft)</td>
               <td>₹{Number(info?.drillInfo?.[0]?.ratePerInch ?? 0).toFixed(2)}</td>
             </tr>
           ) : null}

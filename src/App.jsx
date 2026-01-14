@@ -216,7 +216,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
-      <ToastContainer position="top-right" autoClose={2000} />
+      <ToastContainer position="top-right" autoClose={2000} draggable limit={2} />
     </>
   );
 }

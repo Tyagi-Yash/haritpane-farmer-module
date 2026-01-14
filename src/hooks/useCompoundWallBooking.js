@@ -76,7 +76,7 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
           reasonForRejection: reason,
         })
       ).unwrap();
-      toast.success(res?.message || "Booking cancelled successfully");
+      toast.success("Booking cancelled successfully");
       setBookingId(null);
     } catch (err) {
       toast.error(err?.message || "Failed to cancel booking");

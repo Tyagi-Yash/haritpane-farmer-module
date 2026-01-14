@@ -14,7 +14,7 @@ export default function LocationInput({
   error = "",
   placeholder = "location*",
 }) {
-  const apiKey = "AIzaSyB0GpgT-Dwbv1OIx7JaSdcVzO5aseFfsXM";
+  const apiKey = "AIzaSyCg61BL0ZrrrlwgGk9F-239jx_xXFsI76Y";
   const { isLoaded, loadError } = useJsApiLoader({ googleMapsApiKey: apiKey, libraries });
 
   // input + suggestions

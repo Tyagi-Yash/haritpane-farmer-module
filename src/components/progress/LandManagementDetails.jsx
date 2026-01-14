@@ -23,7 +23,7 @@ function LandManagementDetails({ data }) {
           reasonForRejection: reason,
         })
       ).unwrap();
-      toast.success(res?.message || "Booking cancelled successfully");
+      toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
       navigate("/service-tracking");
     } catch (err) {

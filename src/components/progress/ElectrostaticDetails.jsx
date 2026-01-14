@@ -24,7 +24,7 @@ function ElectrostaticDetails({ data }) {
           reasonForRejection: reason,
         })
       ).unwrap();
-      toast.success(res?.message || "Booking cancelled successfully");
+      toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
       navigate("/service-tracking");
     } catch (err) {
@@ -84,7 +84,7 @@ function ElectrostaticDetails({ data }) {
                   <table className="table table-borderless">
                     <tbody>
                       <tr>
-                        <td>Service Cost</td>
+                        <td>Service Cost (per acre)</td>
                         <td>₹{Number(service?.basicInfo?.chargePerAcre ?? 0).toFixed(2)}</td>
                       </tr>
                       <tr>

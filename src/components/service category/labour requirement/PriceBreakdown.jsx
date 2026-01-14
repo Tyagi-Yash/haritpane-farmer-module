@@ -6,7 +6,7 @@ const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
       <table className="table table-borderless">
         <tbody>
           <tr>
-            <td>Service Cost</td>
+            <td>Service Cost (per person per day)</td>
             <td>₹ {Number(info?.dailyWage ?? 0).toFixed(2)}</td>
           </tr>
 

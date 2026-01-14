@@ -21,13 +21,16 @@ export default function ChatList() {
               onClick={() => openChat(chat)}
             >
               <img src={chat?.providerDetails?.profileImage || profilePic} />
-              <div>
+              <div className="chat-item-content">
                 <h4>{chat?.providerDetails?.name}</h4>
-                <p>{chat.lastMessage?.message}</p>
+                <p className="last-message">{chat.lastMessage?.message}</p>
               </div>
               <span className="time">
                 {chat?.lastMessage?.createdAt
-                  ? new Date(chat.lastMessage.createdAt).toLocaleTimeString()
+                  ? new Date(chat.lastMessage.createdAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
                   : ""}
               </span>
             </div>
