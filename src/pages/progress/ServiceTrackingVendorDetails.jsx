@@ -1,11 +1,11 @@
 import profile from "../../assets/images/profile.png";
-import RamPrasadSingh from "../../assets/images/RamPrasadSingh.svg";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import BookingDetailsRenderer from "../../components/progress/BookingDetailsRenderer";
 import serviceImg from "../../assets/images/service.png";
+import ReviewTab from "../../components/common components/ReviewTab";
 
 function ServiceTrackingVendorDetails() {
   const { bookingId } = useParams();
@@ -17,6 +17,7 @@ function ServiceTrackingVendorDetails() {
   if (!booking) {
     return <p className="text-center">Loading vendor details...</p>;
   }
+  console.log(booking);
 
   return (
     <div className="WrapperArea">
@@ -56,76 +57,7 @@ function ServiceTrackingVendorDetails() {
           <div className="tab-content">
             {activeTab === "service" && <BookingDetailsRenderer booking={booking} />}
 
-            {activeTab === "review" && (
-              <div className="tab-pane active">
-                <div className="row">
-                  <div className="col-6">
-                    <div className="review-card">
-                      <div className="review-header">
-                        <div className="reviewer-info">
-                          <img src={RamPrasadSingh} alt="User Photo" />
-                          <strong>Ram Prasad Singh</strong>
-                        </div>
-                        <div className="review-date">20/05/2025</div>
-                      </div>
-                      <div className="stars">★ ★ ★ ★ ★</div>
-                      <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver
-                        arrived on time, and the work was done smoothly. Highly reliable service!”
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="review-card">
-                      <div className="review-header">
-                        <div className="reviewer-info">
-                          <img src={RamPrasadSingh} alt="User Photo" />
-                          <strong>Bhagwan Singh Rathore</strong>
-                        </div>
-                        <div className="review-date">20/05/2025</div>
-                      </div>
-                      <div className="stars">★ ★ ★ ★ ★</div>
-                      <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver
-                        arrived on time, and the work was done smoothly. Highly reliable service!”
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="review-card">
-                      <div className="review-header">
-                        <div className="reviewer-info">
-                          <img src={RamPrasadSingh} alt="User Photo" />
-                          <strong>Ram Prasad Singh</strong>
-                        </div>
-                        <div className="review-date">20/05/2025</div>
-                      </div>
-                      <div className="stars">★ ★ ★ ★ ★</div>
-                      <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver
-                        arrived on time, and the work was done smoothly. Highly reliable service!”
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-6">
-                    <div className="review-card">
-                      <div className="review-header">
-                        <div className="reviewer-info">
-                          <img src={RamPrasadSingh} alt="User Photo" />
-                          <strong>Bhagwan Singh Rathore</strong>
-                        </div>
-                        <div className="review-date">20/05/2025</div>
-                      </div>
-                      <div className="stars">★ ★ ★ ★ ★</div>
-                      <div className="review-text">
-                        “Booked a tractor through HaritPane for ploughing my field. The driver
-                        arrived on time, and the work was done smoothly. Highly reliable service!”
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            {activeTab === "review" && <ReviewTab serviceId={booking.raw.serviceId} />}
           </div>
         </div>
       </div>

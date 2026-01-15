@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { lazy, Suspense } from "react";
 
 import { useElectrostaticBooking } from "../../../hooks/useElectrostaticBooking";
 
@@ -13,9 +12,7 @@ import VendorInfo from "../../../components/common components/VendorInfo";
 import BookingSummary from "../../../components/common components/BookingSummary";
 import PriceBreakdown from "../../../components/service category/electrostatic spraying/PriceBreakdown";
 import BookingActions from "../../../components/common components/BookingActions";
-import ReviewTabSkeleton from "../../../components/skeletons/ReviewTabSkeleton";
-
-const ReviewTab = lazy(() => import("../../../components/common components/ReviewTab"));
+import ReviewTab from "../../../components/common components/ReviewTab";
 
 function ExcavationVendorDetails() {
   const { id } = useParams();
@@ -83,11 +80,7 @@ function ExcavationVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && (
-                  <Suspense fallback={<ReviewTabSkeleton />}>
-                    <ReviewTab />
-                  </Suspense>
-                )}
+                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
               </>
             )}
           </div>

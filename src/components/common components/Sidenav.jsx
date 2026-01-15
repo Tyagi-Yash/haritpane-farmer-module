@@ -1,26 +1,21 @@
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Dropdown } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 
 import logo from "../../assets/images/Logo.png";
 import profile from "../../assets/images/profile.svg";
-import dashboard from "../../assets/images/dashboard.svg";
-import userRectangle from "../../assets/images/user-rectangle.svg";
-import notepad from "../../assets/images/notepad.svg";
-import chat from "../../assets/images/chat.svg";
-import notification from "../../assets/images/notification.svg";
-import language from "../../assets/images/language.svg";
-import myFarm from "../../assets/images/my-farm.svg";
+
 import help from "../../assets/images/help.svg";
-import complaint from "../../assets/images/complaint.svg";
-import call from "../../assets/images/call.svg";
-import gmail from "../../assets/images/gmail.svg";
+
 import LogoutModal from "./LogoutModal";
 import { toast } from "react-toastify";
 import { logout } from "../../reduxtoolkit/slices/auth/auth";
 import { useDispatch } from "react-redux";
 import { resetChatState } from "../../reduxtoolkit/slices/chats/chats";
 import { disconnectSocket } from "../../socket/socket";
+import { clearBookingList } from "../../reduxtoolkit/slices/progress/bookingList";
+import DropdownMenu from "./DropdownMenu";
+import NavItem from "./NavItem";
+import { accountMenu, helpMenu, mainMenu } from "../../constants/sidenav/sidenavData";
 
 function SideNav() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -41,6 +36,7 @@ function SideNav() {
         toast.success(message || "Logged out sucessfully!");
         setShowLogoutModal(false);
         dispatch(resetChatState());
+        dispatch(clearBookingList());
         disconnectSocket();
         navigate("/signup");
       } else {
@@ -56,135 +52,21 @@ function SideNav() {
       <div className="SidenavArea">
         <div className="SidenavHead">
           <figure>
-            <img src={logo} />
+            <img src={logo} alt="Logo" />
           </figure>
         </div>
+
         <div className="SidenavBody">
           <ul>
-            <li>
-              <NavLink to="/dashboard">
-                <span className="Icon">
-                  <img src={dashboard} alt="" />
-                </span>
-                <span className="Text">Dashboard</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/service-tracking">
-                <span className="Icon">
-                  <img src={notepad} alt="" />
-                </span>
-                <span className="Text">Progress</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/service-category">
-                <span className="Icon">
-                  <img src={userRectangle} alt="" />
-                </span>
-                <span className="Text">Service Category</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/chats">
-                <span className="Icon">
-                  <img src={chat} alt="" />
-                </span>
-                <span className="Text">Chats</span>
-              </NavLink>
-            </li>
-            <li>
-              <Dropdown>
-                <Dropdown.Toggle as="a">
-                  <span className="Icon">
-                    <img src={profile} alt="profile" />
-                  </span>
-                  <span className="Text">Account Settings</span>
-                </Dropdown.Toggle>
+            {mainMenu.map((item) => (
+              <NavItem key={item.to} {...item} />
+            ))}
 
-                <Dropdown.Menu as="ol">
-                  <li>
-                    <NavLink to="/notification">
-                      <span className="Icon">
-                        <img src={notification} alt="" />
-                      </span>
-                      <span className="DText">Notification</span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/language">
-                      <span className="Icon">
-                        <img src={language} alt="" />
-                      </span>
-                      <span className="DText">Language</span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/profile">
-                      <span className="Icon">
-                        <img src={profile} alt="" />
-                      </span>
-                      <span className="DText">Profile</span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/farm-home">
-                      <span className="Icon">
-                        <img src={myFarm} alt="" />
-                      </span>
-                      <span className="DText">My Farm</span>
-                    </NavLink>
-                  </li>
-                </Dropdown.Menu>
-              </Dropdown>
-            </li>
-            <li>
-              <Dropdown>
-                <Dropdown.Toggle as="a">
-                  <span className="Icon">
-                    <img src={help} alt="help" />
-                  </span>
-                  <span className="Text">Help Center</span>
-                </Dropdown.Toggle>
+            <DropdownMenu icon={profile} label="Account Settings" items={accountMenu} />
+            <DropdownMenu icon={help} label="Help Center" items={helpMenu} />
 
-                <Dropdown.Menu as="ol">
-                  <li>
-                    <Link>
-                      <span className="Icon">
-                        <img src={complaint} alt="" />
-                      </span>
-                      <span className="DText">Raise a Complaint</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link>
-                      <span className="Icon">
-                        <img src={gmail} alt="" />
-                      </span>
-                      <span className="DText">Email Us</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link>
-                      <span className="Icon">
-                        <img src={call} alt="" />
-                      </span>
-                      <span className="DText">Call Us</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link>
-                      <span className="Icon">
-                        <img src={chat} alt="" />
-                      </span>
-                      <span className="DText">Chat with Us</span>
-                    </Link>
-                  </li>
-                </Dropdown.Menu>
-              </Dropdown>
-            </li>
-            <li className="logout-sidenav" data-bs-toggle="modal" data-bs-target="#LogoutModal">
-              <Link className=".d-block" onClick={() => setShowLogoutModal(true)}>
+            <li className="logout-sidenav">
+              <Link className="d-block" onClick={() => setShowLogoutModal(true)}>
                 <span className="Text red">Logout</span>
               </Link>
             </li>

@@ -14,21 +14,7 @@ export default function MessageBubble({ msg }) {
 
   return (
     <div className={`msg ${isMine ? "from" : "to"}`}>
-      {msg.msgType === "image" && msg.fileUrl && (
-        <img
-          src={msg.fileUrl}
-          className="chat-img"
-          onLoad={() => {
-            document.querySelector(".chat-body")?.scrollTo({
-              top: document.querySelector(".chat-body").scrollHeight,
-              behavior: "smooth",
-            });
-          }}
-        />
-      )}
-
-      {msg.message && <div>{msg.message}</div>}
-
+      <div>{msg.message}</div>
       <div className="send-info">
         <small>{formatTime(msg.createdAt)}</small>
       </div>

@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { lazy, Suspense } from "react";
 
 import { useHarvestorBooking } from "../../../hooks/useHarvestorBooking";
 
 import PriceBreakdown from "../../../components/service category/harvestor/PriceBreakdown";
-import ReviewTabSkeleton from "../../../components/skeletons/ReviewTabSkeleton";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import CancelBookingModal from "../../../components/common components/CancelBookingModal";
 import VendorHeader from "../../../components/common components/VendorHeader";
@@ -14,7 +12,7 @@ import VendorTabs from "../../../components/common components/VendorTabs";
 import VendorInfo from "../../../components/common components/VendorInfo";
 import BookingSummary from "../../../components/common components/BookingSummary";
 import BookingActions from "../../../components/common components/BookingActions";
-const ReviewTab = lazy(() => import("../../../components/common components/ReviewTab"));
+import ReviewTab from "../../../components/common components/ReviewTab";
 
 function HarvestorVendorDetails() {
   const { id } = useParams();
@@ -83,11 +81,8 @@ function HarvestorVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && (
-                  <Suspense fallback={<ReviewTabSkeleton />}>
-                    <ReviewTab />
-                  </Suspense>
-                )}
+
+                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
               </>
             )}
           </div>

@@ -1,72 +1,46 @@
-import RamPrasadSingh from "../../assets/images/RamPrasadSingh.svg"
-const ReviewTab = () => {
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import profilePic from "../../assets/images/user-icon.svg";
+import { fetchServiceReviews } from "../../reduxtoolkit/slices/rate and reviews/rateReview";
+import ReviewTabSkeleton from "../skeletons/ReviewTabSkeleton";
+
+const ReviewTab = ({ serviceId }) => {
+  const dispatch = useDispatch();
+  const { reviewList, loading } = useSelector((state) => state.services.reviewSlice);
+
+  useEffect(() => {
+    if (serviceId) {
+      dispatch(fetchServiceReviews(serviceId));
+    }
+  }, [dispatch, serviceId]);
+
+  if (loading) return <ReviewTabSkeleton/>;
+
   return (
     <div className="tab-pane active">
       <div className="row">
-        <div className="col-6">
-          <div className="review-card">
-            <div className="review-header">
-              <div className="reviewer-info">
-                <img src={RamPrasadSingh} alt="User Photo" />
-                <strong>Ram Prasad Singh</strong>
+        {reviewList.length === 0 && <p>No reviews found</p>}
+
+        {reviewList.map((review) => (
+          <div className="col-6" key={review._id}>
+            <div className="review-card">
+              <div className="review-header">
+                <div className="reviewer-info">
+                  <img src={review?.farmer?.profileImage || profilePic} alt="User" />
+                  <strong>{review?.farmer?.name || "Anonymous"}</strong>
+                </div>
+                <div className="review-date">{new Date(review.createdAt).toLocaleDateString()}</div>
               </div>
-              <div className="review-date">20/05/2025</div>
-            </div>
-            <div className="stars">★ ★ ★ ★ ★</div>
-            <div className="review-text">
-              “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-              time, and the work was done smoothly. Highly reliable service!”
+
+              <div className="stars">
+                {"★".repeat(review.rating)}
+                {"☆".repeat(5 - review.rating)}
+              </div>
+
+              <div className="review-text">{review.feedbacks}</div>
             </div>
           </div>
-        </div>
-        <div className="col-6">
-          <div className="review-card">
-            <div className="review-header">
-              <div className="reviewer-info">
-                <img src={RamPrasadSingh} alt="User Photo" />
-                <strong>Bhagwan Singh Rathore</strong>
-              </div>
-              <div className="review-date">20/05/2025</div>
-            </div>
-            <div className="stars">★ ★ ★ ★ ★</div>
-            <div className="review-text">
-              “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-              time, and the work was done smoothly. Highly reliable service!”
-            </div>
-          </div>
-        </div>
-        <div className="col-6">
-          <div className="review-card">
-            <div className="review-header">
-              <div className="reviewer-info">
-                <img src={RamPrasadSingh} alt="User Photo" />
-                <strong>Ram Prasad Singh</strong>
-              </div>
-              <div className="review-date">20/05/2025</div>
-            </div>
-            <div className="stars">★ ★ ★ ★ ★</div>
-            <div className="review-text">
-              “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-              time, and the work was done smoothly. Highly reliable service!”
-            </div>
-          </div>
-        </div>
-        <div className="col-6">
-          <div className="review-card">
-            <div className="review-header">
-              <div className="reviewer-info">
-                <img src={RamPrasadSingh} alt="User Photo" />
-                <strong>Bhagwan Singh Rathore</strong>
-              </div>
-              <div className="review-date">20/05/2025</div>
-            </div>
-            <div className="stars">★ ★ ★ ★ ★</div>
-            <div className="review-text">
-              “Booked a tractor through HaritPane for ploughing my field. The driver arrived on
-              time, and the work was done smoothly. Highly reliable service!”
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

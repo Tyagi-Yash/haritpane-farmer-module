@@ -15,7 +15,6 @@ export default function MessageInput() {
   const sendMessage = () => {
     if (!text.trim()) return;
     if (!activeChat) return;
-
     const payload = {
       roomId: activeChat.roomId,
       senderId: activeChat.farmerId,
@@ -24,9 +23,7 @@ export default function MessageInput() {
       senderType: "farmer",
       fileUrl: "",
     };
-
     getSocket()?.emit("sendMessage", payload);
-
     setText("");
   };
 
@@ -46,7 +43,6 @@ export default function MessageInput() {
           onKeyDown={handleKeyDown}
           placeholder="Type your message..."
         />
-
         <button className="send" onClick={sendMessage}>
           <img src={sendIcon} alt="send" className="link-icon" />
         </button>
