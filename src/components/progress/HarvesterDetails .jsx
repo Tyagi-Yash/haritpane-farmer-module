@@ -96,7 +96,7 @@ function HarvesterDetails({ data }) {
                       </tr>
                       <tr>
                         <td>Transportation Charges</td>
-                        <td>₹ {Number(service?.additionCharges ?? 0).toFixed(2)}</td>
+                        <td>₹ {Number(service?.Info?.additionalCharges ?? 0).toFixed(2)}</td>
                       </tr>
                     </tbody>
                     <tfoot>

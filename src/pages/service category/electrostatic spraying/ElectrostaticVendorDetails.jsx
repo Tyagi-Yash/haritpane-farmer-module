@@ -68,7 +68,9 @@ function ExcavationVendorDetails() {
                         <PriceBreakdown
                           info={vendor.basicInfo}
                           additionalCharges={vendor.basicInfo.additionalCharges}
+                          extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
+                          areaUnderCultivation={filters.areaUnderCultivation}
                         />
                       </div>
                     </div>

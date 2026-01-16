@@ -68,8 +68,10 @@ function HarvestorVendorDetails() {
                           info={vendor.priceInfo.find(
                             (p) => p.cropType.toLowerCase() === filters.typeOfCrop.toLowerCase()
                           )}
-                          additionalCharges={vendor.additionalCharges}
+                          additionalCharges={vendor.Info.additionalCharges}
+                          extrachages={vendor.extrachages}
                           payableAmount={vendor.payableAmount}
+                          areaUnderCultivation={filters.areaUnderCultivation}
                         />
                       </div>
                     </div>

@@ -193,7 +193,7 @@ function LaborBookYourService() {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Area Under Cultivation(per acre)*"
+                          placeholder="Area Under Cultivation(in acre)*"
                           value={areaUnderCultivation}
                           name="areaUnderCultivation"
                           onChange={handleInputChange}

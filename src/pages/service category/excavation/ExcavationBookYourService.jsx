@@ -21,7 +21,7 @@ function ExcavationBookYourService() {
     address: "",
     lat: "",
     lng: "",
-    equipmentTypes: "",
+    sectectEquipmentType: "",
     fromDate: "",
     toDate: "",
     fromTime: "",
@@ -30,7 +30,7 @@ function ExcavationBookYourService() {
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
 
-  const { address, lat, lng, equipmentTypes, fromDate, toDate, fromTime, hours, minutes } =
+  const { address, lat, lng, sectectEquipmentType, fromDate, toDate, fromTime, hours, minutes } =
     formState;
   const [disable, setDisable] = useState(false);
   const [errors, setErrors] = useState({});
@@ -55,8 +55,8 @@ function ExcavationBookYourService() {
 
     if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
 
-    const equipmentError = validateEquipmentTypes(equipmentTypes);
-    if (equipmentError) newErrors.equipmentTypes = equipmentError;
+    const equipmentError = validateEquipmentTypes(sectectEquipmentType);
+    if (equipmentError) newErrors.sectectEquipmentType = equipmentError;
 
     const dateErrors = validateDates(fromDate, toDate);
     newErrors = { ...newErrors, ...dateErrors };
@@ -79,7 +79,7 @@ function ExcavationBookYourService() {
     const formdata = {
       lat: lat.trim(),
       lng: lng.trim(),
-      equipmentTypes: equipmentTypes,
+      sectectEquipmentType: sectectEquipmentType,
       fromDate,
       toDate,
       fromTime,
@@ -122,19 +122,21 @@ function ExcavationBookYourService() {
                   <div className="col-md-6 excavation-types">
                     <Dropdown
                       onSelect={(key) => {
-                        setFormState((prev) => ({ ...prev, equipmentTypes: key }));
-                        setErrors((prev) => ({ ...prev, equipmentTypes: "" }));
+                        setFormState((prev) => ({ ...prev, sectectEquipmentType: key }));
+                        setErrors((prev) => ({ ...prev, sectectEquipmentType: "" }));
                       }}
                     >
                       <Dropdown.Toggle className="btn w-100 dropdown-toggle">
-                        {equipmentTypes || "Select Specific Service*"}
+                        {sectectEquipmentType
+                          ? equipmentTypesOption.find((o) => o.value === sectectEquipmentType)?.name
+                          : "Select Specific Service*"}
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
                         {equipmentTypesOption.map((option) => (
                           <Dropdown.Item
                             key={option.name}
-                            eventKey={option.name}
+                            eventKey={option.value}
                             className="custom-item"
                           >
                             <span className="Icon">
@@ -145,7 +147,9 @@ function ExcavationBookYourService() {
                         ))}
                       </Dropdown.Menu>
                     </Dropdown>
-                    {errors.equipmentTypes && <p className="error-text">{errors.equipmentTypes}</p>}
+                    {errors.sectectEquipmentType && (
+                      <p className="error-text">{errors.sectectEquipmentType}</p>
+                    )}
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>

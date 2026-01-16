@@ -107,7 +107,7 @@ function ElectrostaticBookYourService() {
                   <div className="col-md-6">
                     <input
                       type="text"
-                      placeholder="Area Under Cultivation(per acre)*"
+                      placeholder="Area Under Cultivation(in acre)*"
                       className="form-control"
                       name="areaUnderCultivation"
                       value={areaUnderCultivation}

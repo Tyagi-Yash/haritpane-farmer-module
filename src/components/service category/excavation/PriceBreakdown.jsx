@@ -1,4 +1,13 @@
-const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
+import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
+
+const PriceBreakdown = ({ info, additionalCharges, extrachages, payableAmount }) => {
+  const price = Number(info?.price ?? 0);
+  const priceType = info?.priceType;
+  const transportCharge = extrachages ? Number(additionalCharges ?? 0) : 0;
+  const serviceAmount = extrachages ? payableAmount - transportCharge : payableAmount;
+  const units = price > 0 ? serviceAmount / price : 0;
+
+  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
   return (
     <div className="option-wrapper bookingPriceTable">
       <h5 className="normal-heading">Total Booking Price</h5>
@@ -6,22 +15,36 @@ const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
       <table className="table table-borderless">
         <tbody>
           <tr>
-            <td>Service Cost ({info.priceType})</td>
-            <td>₹ {Number(info?.price ?? 0).toFixed(2)}</td>
+            <td>
+              Service Charges
+              {priceType === "Hourly" && (
+                <div className="text-muted small">
+                  {formatPrice(price)} (per Hour) × {formatHoursMinutes(units)}
+                </div>
+              )}
+              {priceType === "Daily" && (
+                <div className="text-muted small">
+                  {formatPrice(price)} (per Day) × {units} day
+                  {units > 1 ? "s" : ""}
+                  <div className="text-muted small">
+                    * Daily charges are calculated by rounding total duration to full days.
+                  </div>
+                </div>
+              )}
+            </td>
+            <td>{formatPrice(serviceAmount)}</td>
           </tr>
 
-          {additionalCharges && (
-            <tr>
-              <td>Transportation Charges</td>
-              <td>₹ {Number(additionalCharges).toFixed(2)}</td>
-            </tr>
-          )}
+          <tr>
+            <td>Transportation Charges</td>
+            <td>{formatPrice(transportCharge)}</td>
+          </tr>
         </tbody>
 
         <tfoot>
-          <tr>
-            <td>Total Payable Amount</td>
-            <td>₹ {Number(payableAmount ?? 0).toFixed(2)}</td>
+          <tr className="fw-bold border-top">
+            <td>Total Amount to Pay</td>
+            <td>{formatPrice(payableAmount)}</td>
           </tr>
         </tfoot>
       </table>

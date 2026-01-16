@@ -181,7 +181,7 @@ function HarvestorSubServices() {
                   <div className="col-md-4">
                     <input
                       type="text"
-                      placeholder="Area Under Cultivation(per acre)*"
+                      placeholder="Area Under Cultivation(in acre)*"
                       className="form-control"
                       name="areaUnderCultivation"
                       value={areaUnderCultivation}
