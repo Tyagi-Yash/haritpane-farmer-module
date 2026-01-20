@@ -36,7 +36,7 @@ function ExcavationVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/earth-movers/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -66,7 +66,7 @@ function ExcavationVendorDetails() {
                         <PriceBreakdown
                           info={vendor.priceInfo}
                           additionalCharges={vendor.additionalCharges}
-                          extrachages={vendor.extrachages}
+                          extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                         />
                       </div>
@@ -79,7 +79,7 @@ function ExcavationVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

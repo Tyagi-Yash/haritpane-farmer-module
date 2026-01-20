@@ -26,7 +26,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
             tractorInfoId: vendor.Info?._id,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -49,6 +49,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       hpOfTractor: filters.hpOfTractor,
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
+      extraCharges: vendor.extraCharges,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();
@@ -71,7 +72,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

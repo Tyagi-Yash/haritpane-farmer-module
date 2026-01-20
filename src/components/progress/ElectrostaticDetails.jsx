@@ -79,7 +79,7 @@ function ElectrostaticDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                <div className="option-wrapper bookingPriceTable">
+                {/* <div className="option-wrapper bookingPriceTable">
                   <h5 className="normal-heading">Total Booking Price</h5>
                   <table className="table table-borderless">
                     <tbody>
@@ -99,7 +99,13 @@ function ElectrostaticDetails({ data }) {
                       </tr>
                     </tfoot>
                   </table>
-                </div>
+                </div> */}
+                <PriceBreakdown
+                  info={service.basicInfo}
+                  additionalCharges={service.basicInfo.additionalCharges}
+                  extraCharges={data.extraCharges}
+                  payableAmount={data.amount}
+                />
               </div>
             </div>
           </div>

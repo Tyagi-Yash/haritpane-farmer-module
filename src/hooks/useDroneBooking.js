@@ -47,6 +47,7 @@ export const useDroneBooking = ({ vendor, filters }) => {
       bookingFromDate: filters.date,
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.time,
+      extraCharges: vendor.extraCharges,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

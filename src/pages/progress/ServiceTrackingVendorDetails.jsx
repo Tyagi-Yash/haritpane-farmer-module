@@ -17,7 +17,6 @@ function ServiceTrackingVendorDetails() {
   if (!booking) {
     return <p className="text-center">Loading vendor details...</p>;
   }
-  console.log(booking);
 
   return (
     <div className="WrapperArea">
@@ -57,7 +56,7 @@ function ServiceTrackingVendorDetails() {
           <div className="tab-content">
             {activeTab === "service" && <BookingDetailsRenderer booking={booking} />}
 
-            {activeTab === "review" && <ReviewTab serviceId={booking.raw.serviceId} />}
+            {activeTab === "review" && <ReviewTab serviceId={booking.raw.providerId} />}
           </div>
         </div>
       </div>

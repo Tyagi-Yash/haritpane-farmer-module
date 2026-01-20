@@ -7,6 +7,7 @@ import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookin
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import PriceBreakdown from "../service category/borewell/PriceBreakdown";
 
 function BorewellDetails({ data }) {
   const service = data.serviceDetails;
@@ -17,12 +18,8 @@ function BorewellDetails({ data }) {
 
   const handleCancelBooking = async (reason) => {
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId: data._id,
-          status: "cancelled",
-          reasonForRejection: reason,
-        })
+      await dispatch(
+        cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -102,6 +99,12 @@ function BorewellDetails({ data }) {
                     </tfoot>
                   </table>
                 </div>
+                <PriceBreakdown
+                  info={service.borewellInfo}
+                  additionalCharges={service.borewellInfo.chargesforOutsideRadius}
+                  extraCharges={data.extraCharges}
+                  payableAmount={data.amount}
+                />
               </div>
             </div>
           </div>

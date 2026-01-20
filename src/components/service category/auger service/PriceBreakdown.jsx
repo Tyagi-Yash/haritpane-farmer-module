@@ -1,34 +1,39 @@
-const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
+import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
+
+const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }) => {
+  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+
+  const ratePerHr = Number(info ?? 0);
+  const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
+
+  const billableHours = ratePerHr > 0 ? payableAmount / ratePerHr : 0;
+
   return (
     <div className="option-wrapper bookingPriceTable">
       <h5 className="normal-heading">Total Booking Price</h5>
 
       <table className="table table-borderless">
         <tbody>
-          {info.ratePerHr ? (
-            <tr>
-              <td>Service Cost(per hour)</td>
-              <td>₹{Number(info?.ratePerHr ?? 0).toFixed(2)}</td>
-            </tr>
-          ) : info.drillInfo[0].ratePerInch ? (
-            <tr>
-              <td>Service Cost(per Running ft)</td>
-              <td>₹{Number(info?.drillInfo?.[0]?.ratePerInch ?? 0).toFixed(2)}</td>
-            </tr>
-          ) : null}
+          <tr>
+            <td>
+              Service Charges
+              <div className="text-muted small">
+                {formatPrice(ratePerHr)} (Per Hour) × {formatHoursMinutes(billableHours)}
+              </div>
+            </td>
+            <td>{formatPrice(payableAmount - transportCharge)}</td>
+          </tr>
 
-          {additionalCharges && (
-            <tr>
-              <td>Transportation Charges</td>
-              <td>₹ {Number(additionalCharges).toFixed(2)}</td>
-            </tr>
-          )}
+          <tr>
+            <td>Transportation Charges</td>
+            <td>{formatPrice(transportCharge)}</td>
+          </tr>
         </tbody>
 
         <tfoot>
-          <tr>
-            <td>Total Payable Amount</td>
-            <td>₹ {Number(payableAmount ?? 0).toFixed(2)}</td>
+          <tr className="fw-bold border-top">
+            <td>Total Amount to Pay</td>
+            <td>{formatPrice(payableAmount)}</td>
           </tr>
         </tfoot>
       </table>

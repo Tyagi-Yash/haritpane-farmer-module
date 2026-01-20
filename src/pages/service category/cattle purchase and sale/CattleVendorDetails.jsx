@@ -80,7 +80,7 @@ function CattleVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

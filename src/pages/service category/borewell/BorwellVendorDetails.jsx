@@ -66,7 +66,9 @@ function BorwellVendorDetails() {
                         <PriceBreakdown
                           info={vendor.borewellInfo}
                           additionalCharges={vendor.borewellInfo.chargesforOutsideRadius}
+                          extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
+                          depthOfBorewell={filters.depthOfBorewell}
                         />
                       </div>
                     </div>
@@ -78,7 +80,7 @@ function BorwellVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

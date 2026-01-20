@@ -1,18 +1,14 @@
-const PriceBreakdown = ({
-  info,
-  additionalCharges,
-  extraCharges,
-  payableAmount,
-  areaUnderCultivation,
-}) => {
+const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
   const ratePerAcre = Number(info?.chargePerAcre ?? 0);
-  const area = Number(areaUnderCultivation ?? 0);
-
-  const serviceCost = ratePerAcre * area;
-
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
+
+  const serviceAmount = extraCharges
+    ? Number(payableAmount ?? 0) - transportCharge
+    : Number(payableAmount ?? 0);
+
+  const area = ratePerAcre > 0 ? serviceAmount / ratePerAcre : 0;
 
   return (
     <div className="option-wrapper bookingPriceTable">
@@ -24,16 +20,18 @@ const PriceBreakdown = ({
             <td>
               Service Charges
               <div className="text-muted small">
-                {formatPrice(ratePerAcre)} (Per Acre) × {area} acres
+                {formatPrice(ratePerAcre)} (Per Acre) × {area.toFixed(2)} acres
               </div>
             </td>
-            <td>{formatPrice(serviceCost)}</td>
+            <td>{formatPrice(serviceAmount)}</td>
           </tr>
+
           <tr>
             <td>Transportation Charges</td>
             <td>{formatPrice(transportCharge)}</td>
           </tr>
         </tbody>
+
         <tfoot>
           <tr className="fw-bold border-top">
             <td>Total Amount to Pay</td>

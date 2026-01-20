@@ -22,14 +22,14 @@ function CompoundWallBookYourService() {
     lat: "",
     lng: "",
     serviceType: "",
-    height: "",
-    length: "",
+    heightOfWall: "",
+    lengthOfWall: "",
     date: "",
     time: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
 
-  const { address, lat, lng, serviceType, date, time, height, length } = formState;
+  const { address, lat, lng, serviceType, date, time, heightOfWall, lengthOfWall } = formState;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [disable, setDisable] = useState(false);
@@ -82,10 +82,10 @@ function CompoundWallBookYourService() {
     const timeError = validateSelectTime(date, time);
     if (timeError) newErrors.time = timeError;
 
-    const lengthError = validateLength(length);
-    if (lengthError) newErrors.length = lengthError;
-    const hieghtError = validateHeight(height);
-    if (hieghtError) newErrors.height = hieghtError;
+    const lengthError = validateLength(lengthOfWall);
+    if (lengthError) newErrors.lengthOfWall = lengthError;
+    const hieghtError = validateHeight(heightOfWall);
+    if (hieghtError) newErrors.heightOfWall = hieghtError;
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -102,8 +102,8 @@ function CompoundWallBookYourService() {
       serviceType,
       date,
       time,
-      heightOfWall: height,
-      lengthOfWall: length,
+      heightOfWall: heightOfWall,
+      lengthOfWall: lengthOfWall,
     }).toString();
 
     navigate(`available-services?${query}`);
@@ -164,11 +164,11 @@ function CompoundWallBookYourService() {
                       type="number"
                       className="form-control"
                       placeholder="Enter wall height (in ft)"
-                      name="height"
-                      value={height}
+                      name="heightOfWall"
+                      value={heightOfWall}
                       onChange={handleInputChange}
                     />
-                    {errors.height && <p className="error-text">{errors.height}</p>}{" "}
+                    {errors.heightOfWall && <p className="error-text">{errors.heightOfWall}</p>}{" "}
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
@@ -178,11 +178,11 @@ function CompoundWallBookYourService() {
                       type="number"
                       className="form-control"
                       placeholder="Enter wall length (in ft)"
-                      name="length"
-                      value={length}
+                      name="lengthOfWall"
+                      value={lengthOfWall}
                       onChange={handleInputChange}
                     />
-                    {errors.length && <p className="error-text">{errors.length}</p>}{" "}
+                    {errors.lengthOfWall && <p className="error-text">{errors.lengthOfWall}</p>}{" "}
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>

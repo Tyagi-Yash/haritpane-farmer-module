@@ -65,8 +65,9 @@ function AugerVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor}
+                          info={vendor.ratePerHr}
                           additionalCharges={vendor.additionCharges}
+                          extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                         />
                       </div>
@@ -79,7 +80,7 @@ function AugerVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

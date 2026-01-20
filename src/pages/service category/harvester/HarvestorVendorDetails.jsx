@@ -37,7 +37,7 @@ function HarvestorVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/harvestor/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -66,10 +66,10 @@ function HarvestorVendorDetails() {
                       <div className="col">
                         <PriceBreakdown
                           info={vendor.priceInfo.find(
-                            (p) => p.cropType.toLowerCase() === filters.typeOfCrop.toLowerCase()
+                            (p) => p.cropType.toLowerCase() === filters.typeOfCrop.toLowerCase(),
                           )}
                           additionalCharges={vendor.Info.additionalCharges}
-                          extrachages={vendor.extrachages}
+                          extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           areaUnderCultivation={filters.areaUnderCultivation}
                         />
@@ -84,7 +84,7 @@ function HarvestorVendorDetails() {
                   </>
                 )}
 
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

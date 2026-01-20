@@ -7,6 +7,7 @@ import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookin
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import PriceBreakdown from "../service category/drone service/PriceBreakdown";
 
 function DroneDetails({ data }) {
   const service = data.serviceDetails;
@@ -17,12 +18,8 @@ function DroneDetails({ data }) {
 
   const handleCancelBooking = async (reason) => {
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId: data._id,
-          status: "cancelled",
-          reasonForRejection: reason,
-        })
+      await dispatch(
+        cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -79,7 +76,7 @@ function DroneDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                <div className="option-wrapper bookingPriceTable">
+                {/* <div className="option-wrapper bookingPriceTable">
                   <h5 className="normal-heading">Total Booking Price</h5>
                   <table className="table table-borderless">
                     <tbody>
@@ -99,7 +96,13 @@ function DroneDetails({ data }) {
                       </tr>
                     </tfoot>
                   </table>
-                </div>
+                </div> */}
+                <PriceBreakdown
+                  info={service.chargePerAcre}
+                  additionalCharges={service.additionalCharges}
+                  extraCharges={data.extraCharges}
+                  payableAmount={data.amount}
+                />
               </div>
             </div>
           </div>

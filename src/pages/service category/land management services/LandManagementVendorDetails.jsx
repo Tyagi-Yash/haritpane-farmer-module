@@ -37,7 +37,7 @@ function LandManagementVendorDetails() {
             titleBox
             title="Vendor Details"
             navigate={`/service-category/land-management/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
 
@@ -67,7 +67,7 @@ function LandManagementVendorDetails() {
                       <div className="col">
                         <PriceBreakdown
                           info={vendor.Info}
-                          extrachages={vendor.extrachages}
+                          extraCharges={vendor.extraCharges}
                           additionalCharges={vendor.additionalCharges}
                           payableAmount={vendor.payableAmount}
                         />
@@ -81,7 +81,7 @@ function LandManagementVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

@@ -48,6 +48,7 @@ export const useLabourBooking = ({ vendor, filters }) => {
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.fromTime,
       bookingEndTime: filters.toTime,
+      extraCharges: vendor.extraCharges,
       amount: vendor.payableAmount?.toString(),
       ...(cropValueEnable && {
         areaUnderCultivation: filters.areaUnderCultivation,

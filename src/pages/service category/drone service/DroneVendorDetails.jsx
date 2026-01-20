@@ -65,7 +65,9 @@ function DroneVendorDetails() {
                         <PriceBreakdown
                           info={vendor.chargePerAcre}
                           additionalCharges={vendor.additionalCharges}
+                          extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
+                          areaUnderCultivation={filters.areaUnderCultivation}
                         />
                       </div>
                     </div>
@@ -77,7 +79,7 @@ function DroneVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

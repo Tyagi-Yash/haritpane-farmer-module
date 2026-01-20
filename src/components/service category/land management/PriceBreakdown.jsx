@@ -1,6 +1,6 @@
-const PriceBreakdown = ({ info, extrachages, additionalCharges, payableAmount }) => {
+const PriceBreakdown = ({ info, extraCharges, additionalCharges, payableAmount }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
-  const transportCharge = extrachages ? additionalCharges : 0;
+  const transportCharge = extraCharges ? additionalCharges : 0;
 
   return (
     <div className="option-wrapper bookingPriceTable">

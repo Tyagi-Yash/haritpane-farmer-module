@@ -7,6 +7,7 @@ import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookin
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import PriceBreakdown from "../service category/compund wall builder/PriceBreakdown";
 
 function CompoundWallDetails({ data }) {
   const service = data.serviceDetails;
@@ -17,12 +18,8 @@ function CompoundWallDetails({ data }) {
 
   const handleCancelBooking = async (reason) => {
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId: data._id,
-          status: "cancelled",
-          reasonForRejection: reason,
-        })
+      await dispatch(
+        cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -79,7 +76,7 @@ function CompoundWallDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                <div className="option-wrapper bookingPriceTable">
+                {/* <div className="option-wrapper bookingPriceTable">
                   <h5 className="normal-heading">Total Booking Price</h5>
                   <table className="table table-borderless">
                     <tbody>
@@ -89,8 +86,8 @@ function CompoundWallDetails({ data }) {
                           ₹
                           {Number(
                             service?.compoundMaterialsInfo.find(
-                              (item) => item._id === data.materialInfoId
-                            ).rate ?? 0
+                              (item) => item._id === data.materialInfoId,
+                            )?.rate ?? 0,
                           ).toFixed(2)}
                         </td>
                       </tr>
@@ -106,7 +103,14 @@ function CompoundWallDetails({ data }) {
                       </tr>
                     </tfoot>
                   </table>
-                </div>
+                </div> */}
+                <PriceBreakdown
+                  info={service?.compoundMaterialsInfo.find(
+                    (item) => item._id === data.materialInfoId,
+                  )}
+                  additionalCharges={service.additionCharges}
+                  payableAmount={data.amount}
+                />
               </div>
             </div>
           </div>

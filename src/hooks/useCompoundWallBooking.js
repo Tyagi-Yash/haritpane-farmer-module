@@ -18,8 +18,6 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
   useEffect(() => {
     const fetchBookingStatus = async () => {
       try {
-        console.log(vendor.compoundMaterialsInfo._id);
-
         const res = await dispatch(
           getBookingStatus({
             bookingFor: "compoundWall",

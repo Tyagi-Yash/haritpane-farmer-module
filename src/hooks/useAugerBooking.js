@@ -46,6 +46,7 @@ export const useAugerBooking = ({ vendor, filters }) => {
       bookingTillDate: filters.toDate,
       estimatedTime: filters.estimatedTime,
       bookingStartTime: filters.time,
+      extraCharges:vendor.extraCharges
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookingSlice";
 import { toast } from "react-toastify";
 import CancelBookingModal from "../common components/CancelBookingModal";
+import PriceBreakdown from "../service category/land management/PriceBreakdown";
 
 function LandManagementDetails({ data }) {
   const service = data.serviceDetails;
@@ -16,12 +17,8 @@ function LandManagementDetails({ data }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const handleCancelBooking = async (reason) => {
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId: data._id,
-          status: "cancelled",
-          reasonForRejection: reason,
-        })
+      await dispatch(
+        cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -78,7 +75,7 @@ function LandManagementDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                <div className="option-wrapper bookingPriceTable">
+                {/* <div className="option-wrapper bookingPriceTable">
                   <h5 className="normal-heading">Total Booking Price</h5>
                   <table className="table table-borderless">
                     <tbody>
@@ -87,12 +84,10 @@ function LandManagementDetails({ data }) {
                         <td>₹ {Number(tractorDetail?.price ?? 0).toFixed(2)}</td>
                       </tr>
 
-                      {service.additionalCharges && (
-                        <tr>
-                          <td>Transportation Charges</td>
-                          <td>₹ {Number(service.additionalCharges).toFixed(2)}</td>
-                        </tr>
-                      )}
+                      <tr>
+                        <td>Transportation Charges</td>
+                        <td>₹ {Number(service.additionalCharges).toFixed(2)}</td>
+                      </tr>
                     </tbody>
 
                     <tfoot>
@@ -102,7 +97,13 @@ function LandManagementDetails({ data }) {
                       </tr>
                     </tfoot>
                   </table>
-                </div>
+                </div> */}
+                <PriceBreakdown
+                  info={tractorDetail}
+                  extraCharges={data.extraCharges}
+                  additionalCharges={service.additionalCharges}
+                  payableAmount={data.amount}
+                />
               </div>
             </div>
           </div>

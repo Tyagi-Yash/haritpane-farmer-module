@@ -25,7 +25,7 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
             providerId: vendor.providerId,
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -46,6 +46,7 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       amount: vendor.payableAmount?.toString(),
+      extraCharges: vendor.extraCharges,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();
@@ -68,7 +69,7 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

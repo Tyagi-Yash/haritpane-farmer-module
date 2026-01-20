@@ -24,7 +24,7 @@ export const useExcavationBooking = ({ vendor, filters }) => {
             providerId: vendor.providerId,
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -42,10 +42,12 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       providerId: vendor.providerId,
       categoryId: vendor.categoryId,
       amount: vendor.payableAmount?.toString(),
+      amount: vendor.payableAmount?.toString(),
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       durationOfExavation: filters.duration,
       excavationType: filters.equipmentTypes,
+      extraCharges: vendor.extraCharges,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();
@@ -68,7 +70,7 @@ export const useExcavationBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

@@ -68,7 +68,9 @@ function LabourVendorDetails() {
                         <PriceBreakdown
                           info={vendor.labourInfo}
                           additionalCharges={vendor.labourInfo.additionalCharges}
+                          extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
+                          numberOfLabour={filters.numberOfLabour}
                         />
                       </div>
                     </div>
@@ -80,7 +82,7 @@ function LabourVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor._id} />}
+                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
               </>
             )}
           </div>

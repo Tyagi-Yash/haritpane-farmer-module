@@ -16,6 +16,7 @@ import { clearBookingList } from "../../reduxtoolkit/slices/progress/bookingList
 import DropdownMenu from "./DropdownMenu";
 import NavItem from "./NavItem";
 import { accountMenu, helpMenu, mainMenu } from "../../constants/sidenav/sidenavData";
+import { resetReviewList } from "../../reduxtoolkit/slices/rate and reviews/rateReview";
 
 function SideNav() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -37,6 +38,7 @@ function SideNav() {
         setShowLogoutModal(false);
         dispatch(resetChatState());
         dispatch(clearBookingList());
+        dispatch(resetReviewList());
         disconnectSocket();
         navigate("/signup");
       } else {

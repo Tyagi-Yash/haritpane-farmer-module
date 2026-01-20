@@ -7,6 +7,7 @@ import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookin
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import PriceBreakdown from "../service category/excavation/PriceBreakdown";
 
 function ExcavationDetails({ data }) {
   const service = data.serviceDetails;
@@ -17,12 +18,8 @@ function ExcavationDetails({ data }) {
 
   const handleCancelBooking = async (reason) => {
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId: data._id,
-          status: "cancelled",
-          reasonForRejection: reason,
-        })
+      await dispatch(
+        cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason })
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -78,7 +75,7 @@ function ExcavationDetails({ data }) {
               </div>
             </div>
             <div className="col">
-              <div className="bookingPriceTableParent">
+              {/* <div className="bookingPriceTableParent">
                 <div className="option-wrapper bookingPriceTable">
                   <h5 className="normal-heading">Total Booking Price</h5>
                   <table className="table table-borderless">
@@ -100,7 +97,13 @@ function ExcavationDetails({ data }) {
                     </tfoot>
                   </table>
                 </div>
-              </div>
+              </div> */}
+              <PriceBreakdown
+                info={service.priceInfo}
+                additionalCharges={service.additionalCharges}
+                extraCharges={data.extraCharges}
+                payableAmount={data.amount}
+              />
             </div>
           </div>
         </div>

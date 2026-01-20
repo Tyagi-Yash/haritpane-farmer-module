@@ -46,6 +46,7 @@ export const useElectrostaticBooking = ({ vendor, filters }) => {
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.fromTime,
+      extraCharges: vendor.extraCharges,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();
