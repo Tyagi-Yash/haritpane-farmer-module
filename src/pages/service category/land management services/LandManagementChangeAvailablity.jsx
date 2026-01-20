@@ -20,7 +20,7 @@ function LandManagementChangeAvailablity() {
   const [filters, setFilters] = useState(filterValues);
   const { toDate, fromDate } = filters;
   const { services, loading, paginationData } = useSelector(
-    (state) => state.services.LandServiceMgmtSlice
+    (state) => state.services.LandServiceMgmtSlice,
   );
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
@@ -164,7 +164,7 @@ function LandManagementChangeAvailablity() {
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service?.rating ?? "N/A"}
+                            {service?.provider?.averageRating ?? "N/A"}
                           </div>
                         </div>
                       </div>

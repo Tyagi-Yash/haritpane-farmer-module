@@ -76,7 +76,7 @@ function BorewellDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                <div className="option-wrapper bookingPriceTable">
+                {/* <div className="option-wrapper bookingPriceTable">
                   <h5 className="normal-heading">Total Booking Price</h5>
                   <table className="table table-borderless">
                     <tbody>
@@ -98,7 +98,7 @@ function BorewellDetails({ data }) {
                       </tr>
                     </tfoot>
                   </table>
-                </div>
+                </div> */}
                 <PriceBreakdown
                   info={service.borewellInfo}
                   additionalCharges={service.borewellInfo.chargesforOutsideRadius}

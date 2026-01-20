@@ -9,7 +9,7 @@ export const labourAdapter = (item) => {
     image: "",
     businessName: service.businessName || "No Discription",
     amount: priceValue.toFixed(2),
-    rating: service.rating ?? "N/A",
+    rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,
   };

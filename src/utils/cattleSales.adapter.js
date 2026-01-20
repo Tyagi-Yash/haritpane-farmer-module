@@ -10,7 +10,7 @@ export const cattleAdapter = (item) => {
     image: basicInfo?.images?.[0] || "",
     businessName: item.serviceDetails?.businessName || "No Discription",
     amount: Number(basicInfo?.sellingPrice || 0).toFixed(2),
-    rating: item.serviceDetails?.rating ?? "N/A",
+    rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,
   };

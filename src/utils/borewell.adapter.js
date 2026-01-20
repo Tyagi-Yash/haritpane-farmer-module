@@ -9,7 +9,7 @@ export const borewellAdapter = (item) => {
     image: service.borewellInfo.borewellImg?.[0] || "",
     businessName: service.businessName || "No Discription",
     amount: priceValue.toFixed(2),
-    rating: service.rating ?? "N/A",
+    rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,
   };

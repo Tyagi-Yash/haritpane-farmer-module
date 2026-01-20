@@ -8,7 +8,7 @@ export const landManagementAdapter = (item) => {
     image: info?.images?.[0] || "",
     businessName: item.serviceDetails?.businessName || "No Discription",
     amount: Number(item.amount || 0).toFixed(2),
-    rating: item.serviceDetails?.rating ?? "N/A",
+    rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,
   };

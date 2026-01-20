@@ -21,7 +21,7 @@ export const augerAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: service.augerImg?.[0] || "",
     businessName: service.businessName || "No Discription",
-    rating: service.rating ?? "N/A",
+    rating: item.providerDetails?.averageRating ?? "N/A",
     amount: Number(priceValue || 0).toFixed(2) + priceUnit,
 
     raw: item,

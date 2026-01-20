@@ -19,7 +19,7 @@ function AugerChangeAvailablity() {
   const [filters, setFilters] = useState(filterValues);
   const { date, toDate = "" } = filters;
   const { services, loading, paginationData } = useSelector(
-    (state) => state.services.AugerServiceMgmtSlice
+    (state) => state.services.AugerServiceMgmtSlice,
   );
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
@@ -180,7 +180,7 @@ function AugerChangeAvailablity() {
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service?.rating ?? "N/A"}
+                            {service?.provider?.averageRating ?? "N/A"}
                           </div>
                         </div>
                       </div>

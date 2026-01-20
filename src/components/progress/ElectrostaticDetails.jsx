@@ -7,6 +7,7 @@ import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookin
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import PriceBreakdown from "../service category/electrostatic spraying/PriceBreakdown";
 
 function ElectrostaticDetails({ data }) {
   const service = data.serviceDetails;

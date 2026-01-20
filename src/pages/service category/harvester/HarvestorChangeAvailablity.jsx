@@ -20,7 +20,7 @@ function HarvestorChangeAvailablity() {
   const [filters, setFilters] = useState(filterValues);
   const { toDate, fromDate } = filters;
   const { services, loading, paginationData } = useSelector(
-    (state) => state.services.HarvestorServiceMgmtSlice
+    (state) => state.services.HarvestorServiceMgmtSlice,
   );
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
@@ -165,7 +165,7 @@ function HarvestorChangeAvailablity() {
                             <span>
                               <i className="fa-solid fa-star star-icon" />
                             </span>{" "}
-                            {service?.rating ?? "N/A"}
+                            {service?.provider?.averageRating ?? "N/A"}
                           </div>
                         </div>
                       </div>
