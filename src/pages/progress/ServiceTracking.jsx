@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,12 +10,13 @@ import TopbarModal from "../../components/common components/TopbarModal";
 import { Commonpagination } from "../../components/common components/Commonpagination";
 import { statusOptions } from "../../constants/progress/statusOptions";
 import { toast } from "react-toastify";
+import QuotationCard from "../../components/progress/QuotationCard";
 
 function ServiceTracking() {
   const dispatch = useDispatch();
 
   const { loading, services, paginationData, filters } = useSelector(
-    (state) => state.services.bookingListSlice
+    (state) => state.services.bookingListSlice,
   );
 
   const [page, setPage] = useState(1);
@@ -24,6 +25,7 @@ function ServiceTracking() {
   const [toDate, setToDate] = useState(filters?.toDate || "");
 
   const [isOpen, setIsOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("serviceTracking");
 
   const validateDateRange = (start, end) => {
     if (!start || !end) return true;
@@ -57,7 +59,7 @@ function ServiceTracking() {
         fromDate,
         toDate,
         page,
-      })
+      }),
     );
   }, [selectedStatus, fromDate, toDate, page]);
 
@@ -73,109 +75,189 @@ function ServiceTracking() {
     setPage(pageNumber);
   };
 
+  useEffect(() => {
+    setPage(1);
+  }, [activeTab]);
+
+  const quotations = [
+    {
+      id: 1,
+      name: "Shubham Sharma",
+      phone: "9878962234",
+      dateTime: "20-01-2026, 12:20 PM",
+      vehicleType: "Tractor",
+      goods: "Sugarcane",
+      location: "Noida",
+      charges: 400,
+    },
+    {
+      id: 2,
+      name: "Shubham Sharma",
+      phone: "9878962234",
+      dateTime: "20-01-2026, 12:20 PM",
+      vehicleType: "Tractor",
+      goods: "Sugarcane",
+      location: "Noida",
+      charges: 400,
+    },
+  ];
+
+  const handleAccept = (id) => {
+    console.log("Accepted quotation:", id);
+  };
+
+  const handleReject = (id) => {
+    console.log("Rejected quotation:", id);
+  };
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
         <TopbarModal titleBox={true} title="Service Tracking" navigate="/dashboard" />
 
-        <div className="dashboard service-tracking">
-          <div className="option-wrapper">
-            <h3 className="main-heading">Change Availability Date</h3>
-            <div className="filter-area">
-              <div className="row align-items-end">
-                <div className="col-md-4 mb-3">
-                  <label className="form-label">Select Start Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={fromDate}
-                    onChange={handleFromDateChange}
-                  />
-                </div>
-                <div className="col-md-4 mb-3">
-                  <label className="form-label">Select End Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={toDate}
-                    onChange={handleToDateChange}
-                  />
-                </div>
-                <div className="col-md-4 mb-3">
-                  <label className="form-label">Select Status</label>
-                  <div className="sort-box">
-                    <div
-                      className={`sort-toggle status-${selectedStatus.toLowerCase()}`}
-                      onClick={toggleSortMenu}
-                    >
-                      <span>
-                        <span className="sort-label">{selectedStatus}</span>
-                        <img src={sortArrowDown} alt="Sort" />
-                      </span>
-                    </div>
-                    {isOpen && (
-                      <div className="sort-menu">
-                        {statusOptions.map((status) => (
-                          <div
-                            key={status}
-                            className={`sort-option status-${status.toLowerCase()}`}
-                            onClick={() => selectStatusOption(status)}
-                          >
-                            {status}
-                          </div>
-                        ))}
+        <div className="row progress-tab">
+          <div className="CommonTabs mb-0">
+            <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${activeTab === "serviceTracking" ? "active" : ""}`}
+                  onClick={() => setActiveTab("serviceTracking")}
+                >
+                  Service Tracking
+                </button>
+              </li>
+
+              <li className="nav-item">
+                <button
+                  className={`nav-link ${activeTab === "jobOrder" ? "active" : ""}`}
+                  onClick={() => setActiveTab("jobOrder")}
+                >
+                  Job Order
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {activeTab === "serviceTracking" && (
+          <div className="dashboard service-tracking">
+            <div className="option-wrapper mb-0">
+              <h3 className="main-heading">Change Availability Date</h3>
+              <div className="filter-area">
+                <div className="row align-items-end">
+                  <div className="col-md-4 mb-3">
+                    <label className="form-label">Select Start Date</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={fromDate}
+                      onChange={handleFromDateChange}
+                    />
+                  </div>
+                  <div className="col-md-4 mb-3">
+                    <label className="form-label">Select End Date</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={toDate}
+                      onChange={handleToDateChange}
+                    />
+                  </div>
+                  <div className="col-md-4 mb-3">
+                    <label className="form-label">Select Status</label>
+                    <div className="sort-box">
+                      <div
+                        className={`sort-toggle status-${selectedStatus.toLowerCase()}`}
+                        onClick={toggleSortMenu}
+                      >
+                        <span>
+                          <span className="sort-label">{selectedStatus}</span>
+                          <img src={sortArrowDown} alt="Sort" />
+                        </span>
                       </div>
-                    )}
+                      {isOpen && (
+                        <div className="sort-menu">
+                          {statusOptions.map((status) => (
+                            <div
+                              key={status}
+                              className={`sort-option status-${status.toLowerCase()}`}
+                              onClick={() => selectStatusOption(status)}
+                            >
+                              {status}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="option-wrapper">
-            {loading && <p className="text-center">Loading...</p>}
-            {!loading && services.length === 0 && (
-              <p className="text-center">No bookings found for {selectedStatus} status</p>
-            )}
-            {!loading &&
-              services.map((item) => (
-                <Link
-                  key={item.id}
-                  to={`/service-tracking/${item.bookingFor}/${item.id}`}
-                  className="vendor-card-link"
-                >
-                  <div className="vendor-card">
-                    <div className="service-info">
-                      <img src={item.image || serviceImg} alt="Service" className="service-image" />
-                      <div className="service-text">
-                        <div className="title">{item.businessName || "No Discription"}</div>
-                        <div className="rating">
-                          <i className="fa-solid fa-star star-icon" />
-                          {item.rating ?? "N/A"}
+            <div className="option-wrapper mb-0">
+              {loading && <p className="text-center">Loading...</p>}
+              {!loading && services.length === 0 && (
+                <p className="text-center">No bookings found for {selectedStatus} status</p>
+              )}
+              {!loading &&
+                services.map((item) => (
+                  <Link
+                    key={item.id}
+                    to={`/service-tracking/${item.bookingFor}/${item.id}`}
+                    className="vendor-card-link"
+                  >
+                    <div className="vendor-card">
+                      <div className="service-info">
+                        <img
+                          src={item.image || serviceImg}
+                          alt="Service"
+                          className="service-image"
+                        />
+                        <div className="service-text">
+                          <div className="title">{item.businessName || "No Discription"}</div>
+                          <div className="rating">
+                            <i className="fa-solid fa-star star-icon" />
+                            {item.rating ?? "N/A"}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="price-info">
-                      <h6>₹ {item.amount}</h6>
-                      <small>Additional charges might apply</small>
+                      <div className="price-info">
+                        <h6>₹ {item.amount}</h6>
+                        <small>Additional charges might apply</small>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-          </div>
-          {!loading && services.length > 0 && (
-            <div className="d-flex justify-content-center mt-4">
-              <Commonpagination
-                ActivePage={paginationData?.page || 1}
-                ItemsCountPerPage={10}
-                TotalItemsCount={paginationData?.total || 0}
-                pageRangeDisplayed={3}
-                Onchange={handlePageChange}
-              />
+                  </Link>
+                ))}
             </div>
-          )}
-        </div>
+            {!loading && services.length > 0 && (
+              <div className="d-flex justify-content-center mt-4">
+                <Commonpagination
+                  ActivePage={paginationData?.page || 1}
+                  ItemsCountPerPage={10}
+                  TotalItemsCount={paginationData?.total || 0}
+                  pageRangeDisplayed={3}
+                  Onchange={handlePageChange}
+                />
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === "jobOrder" && (
+          <div className="dashboard service-tracking">
+            <div className="quotation-grid">
+              {quotations.map((item) => (
+                <QuotationCard
+                  key={item.id}
+                  data={item}
+                  onAccept={handleAccept}
+                  onReject={handleReject}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
