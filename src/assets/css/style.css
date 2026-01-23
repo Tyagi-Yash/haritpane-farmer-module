@@ -3255,50 +3255,59 @@ input[type="date" i] {
   width: 100%;
 }
 
-.quotation-grid {
+.joborder-grid {
   padding-top: 20px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 20px;
 }
 
-.quotation-card {
+.joborder-card {
   background: #fff;
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #eee;
 }
 
-.quotation-row {
+.joborder-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-.quotation-label {
+.joborder-label {
   color: #4d5a84;
   font-weight: 400;
   font-size: 14px;
 }
 
-.quotation-value {
+.joborder-value {
   font-weight: 500;
   font-size: 14px;
   color: #4d5a84;
 }
 
-.quotation-actions {
+.joborder-actions {
   display: flex;
   gap: 12px;
   margin-top: 15px;
 }
 
-.accept-btn {
+.view-btn {
   background: #faa625;
   color: #fff;
   border: none;
   padding: 8px 18px;
   border-radius: 8px;
+  width: 100%;
+}
+
+.accept-btn {
+  background: #fff;
+  color: #faa625;
+  border: 1px solid #faa625;
+  padding: 8px 18px;
+  border-radius: 10px;
   width: 50%;
 }
 
@@ -3309,4 +3318,98 @@ input[type="date" i] {
   padding: 8px 18px;
   border-radius: 10px;
   width: 50%;
+}
+.quotation-wrapper {
+  margin: 20px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 20px 0 12px;
+}
+
+.job-info {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  row-gap: 12px;
+  column-gap: 40px;
+  color: #4d5a84;
+}
+
+.quotation-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.quotation-label {
+  color: #4D5A84;
+}
+
+.quotation-value {
+  font-weight: 500;
+}
+
+.quotation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  color: #4d5a84;
+}
+
+.quotation-card {
+  border: 1px solid #dfdfdf;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.amount-row {
+  margin: 8px 0 16px;
+}
+
+.amount {
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.quotation-btn {
+  flex: 1;
+  padding: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.quotation-btn.accept {
+  border: 1px solid #f97316;
+  color: #f97316;
+}
+
+.quotation-btn.accept:hover {
+  background-color: #fff7ed;
+}
+
+.quotation-btn.reject {
+  border: 1px solid #ef4444;
+  color: #ef4444;
+}
+
+.quotation-btn.reject:hover {
+  background-color: #fef2f2;
 }

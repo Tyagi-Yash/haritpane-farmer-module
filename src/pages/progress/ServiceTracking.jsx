@@ -1,8 +1,9 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getMyBookings } from "../../reduxtoolkit/slices/progress/bookingList";
+import { setActiveTab } from "../../reduxtoolkit/slices/progress/bookingList";
 
 import serviceImg from "../../assets/images/service.png";
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
@@ -10,12 +11,12 @@ import TopbarModal from "../../components/common components/TopbarModal";
 import { Commonpagination } from "../../components/common components/Commonpagination";
 import { statusOptions } from "../../constants/progress/statusOptions";
 import { toast } from "react-toastify";
-import QuotationCard from "../../components/progress/QuotationCard";
+import JobOrderCard from "../../components/progress/JobOrderCard";
 
 function ServiceTracking() {
   const dispatch = useDispatch();
 
-  const { loading, services, paginationData, filters } = useSelector(
+  const { loading, services, paginationData, filters, activeTab } = useSelector(
     (state) => state.services.bookingListSlice,
   );
 
@@ -25,7 +26,6 @@ function ServiceTracking() {
   const [toDate, setToDate] = useState(filters?.toDate || "");
 
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("serviceTracking");
 
   const validateDateRange = (start, end) => {
     if (!start || !end) return true;
@@ -75,41 +75,6 @@ function ServiceTracking() {
     setPage(pageNumber);
   };
 
-  useEffect(() => {
-    setPage(1);
-  }, [activeTab]);
-
-  const quotations = [
-    {
-      id: 1,
-      name: "Shubham Sharma",
-      phone: "9878962234",
-      dateTime: "20-01-2026, 12:20 PM",
-      vehicleType: "Tractor",
-      goods: "Sugarcane",
-      location: "Noida",
-      charges: 400,
-    },
-    {
-      id: 2,
-      name: "Shubham Sharma",
-      phone: "9878962234",
-      dateTime: "20-01-2026, 12:20 PM",
-      vehicleType: "Tractor",
-      goods: "Sugarcane",
-      location: "Noida",
-      charges: 400,
-    },
-  ];
-
-  const handleAccept = (id) => {
-    console.log("Accepted quotation:", id);
-  };
-
-  const handleReject = (id) => {
-    console.log("Rejected quotation:", id);
-  };
-
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -121,7 +86,7 @@ function ServiceTracking() {
               <li className="nav-item">
                 <button
                   className={`nav-link ${activeTab === "serviceTracking" ? "active" : ""}`}
-                  onClick={() => setActiveTab("serviceTracking")}
+                  onClick={() => dispatch(setActiveTab("serviceTracking"))}
                 >
                   Service Tracking
                 </button>
@@ -130,7 +95,7 @@ function ServiceTracking() {
               <li className="nav-item">
                 <button
                   className={`nav-link ${activeTab === "jobOrder" ? "active" : ""}`}
-                  onClick={() => setActiveTab("jobOrder")}
+                  onClick={() => dispatch(setActiveTab("jobOrder"))}
                 >
                   Job Order
                 </button>
@@ -244,20 +209,7 @@ function ServiceTracking() {
           </div>
         )}
 
-        {activeTab === "jobOrder" && (
-          <div className="dashboard service-tracking">
-            <div className="quotation-grid">
-              {quotations.map((item) => (
-                <QuotationCard
-                  key={item.id}
-                  data={item}
-                  onAccept={handleAccept}
-                  onReject={handleReject}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        {activeTab === "jobOrder" && <JobOrderCard />}
       </div>
     </div>
   );

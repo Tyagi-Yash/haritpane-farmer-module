@@ -53,6 +53,7 @@ import LandManagementServicesSubServices from "./service category/land managemen
 import LandManagementVendorDetails from "./service category/land management services/LandManagementVendorDetails";
 import TransportationBookYourService from "./service category/transportation/TransportationBookYourService";
 import ServiceCategory from "./service category/ServiceCategory";
+import QuotationDetails from "./progress/QuotationDetails";
 
 export {
   OtpVerify,
@@ -77,6 +78,7 @@ export {
   Dashboard,
   ServiceTracking,
   ServiceTrackingVendorDetails,
+  QuotationDetails,
   AugerBookYourService,
   AugerChangeAvailablity,
   AugerVendorDetails,

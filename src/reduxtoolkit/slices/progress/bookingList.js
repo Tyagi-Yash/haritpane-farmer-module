@@ -20,7 +20,7 @@ export const getMyBookings = createAsyncThunk(
         data: error.response?.data || { message: "Failed to fetch bookings" },
       });
     }
-  }
+  },
 );
 
 const bookingListSlice = createSlice({
@@ -29,6 +29,7 @@ const bookingListSlice = createSlice({
     loading: false,
     services: [],
     filters: {},
+    activeTab: "serviceTracking",
     paginationData: {
       total: 0,
       page: 1,
@@ -41,6 +42,11 @@ const bookingListSlice = createSlice({
       state.services = [];
       state.filters = {};
       state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
+      state.activeTab = "serviceTracking";
+    },
+    setActiveTab: (state, action) => {
+      state.activeTab = action.payload;
+      state.paginationData.page = 1;
     },
   },
   extraReducers: (builder) => {
@@ -74,5 +80,5 @@ const bookingListSlice = createSlice({
   },
 });
 
-export const { clearBookingList } = bookingListSlice.actions;
+export const { clearBookingList, setActiveTab } = bookingListSlice.actions;
 export default bookingListSlice.reducer;
