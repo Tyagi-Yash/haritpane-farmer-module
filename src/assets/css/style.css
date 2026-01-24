@@ -799,11 +799,7 @@ ol {
 }
 
 .ClassifiedBox figure span {
-  background: linear-gradient(
-    309.25deg,
-    rgba(34, 197, 94, 0.5) 4.05%,
-    rgba(187, 247, 208, 0.5) 94.33%
-  );
+  background: linear-gradient(309.25deg, rgba(34, 197, 94, 0.5) 4.05%, rgba(187, 247, 208, 0.5) 94.33%);
 
   display: block;
   border-radius: 10px;
@@ -3258,7 +3254,7 @@ input[type="date" i] {
 .joborder-grid {
   padding-top: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(529px, 1fr));
   gap: 20px;
 }
 
@@ -3353,8 +3349,15 @@ input[type="date" i] {
   font-size: 14px;
 }
 
+.amount-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin: 8px 0 10px;
+}
+
 .quotation-label {
-  color: #4D5A84;
+  color: #4d5a84;
 }
 
 .quotation-value {
@@ -3372,10 +3375,6 @@ input[type="date" i] {
   border: 1px solid #dfdfdf;
   border-radius: 6px;
   padding: 16px;
-}
-
-.amount-row {
-  margin: 8px 0 16px;
 }
 
 .amount {
@@ -3412,4 +3411,49 @@ input[type="date" i] {
 
 .quotation-btn.reject:hover {
   background-color: #fef2f2;
+}
+
+.joborder-service {
+  color: #4d5a84;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.status-badge.accepted {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.joborder-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.joborder-cancelled {
+  margin-top: 20px;
+  color: #d9534f;
+  font-size: 14px;
+}
+.accepted-text {
+  background: #eefff4;
+  color: #166534;
+  padding: 8px;
+  border-radius: 8px;
 }

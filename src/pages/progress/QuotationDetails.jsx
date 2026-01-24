@@ -1,65 +1,61 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getQuotationsForJobOrder } from "../../reduxtoolkit/slices/progress/quotations";
+import QuotationCard from "../../components/progress/QuotationCard";
 import TopbarModal from "../../components/common components/TopbarModal";
 
 const QuotationDetails = () => {
-  const job = {
-    name: "Shubham Sharma",
-    phone: "98789682234",
-    dateTime: "20-01-2026, 12:20 PM",
-    vehicleType: "Tractor",
-    goods: "Sugarcane",
-    location: "Noida",
-    charges: 400,
-  };
+  const { orderId } = useParams();
+  const dispatch = useDispatch();
 
-  const quotations = [
-    { id: 1, providerName: "Yash", amount: 400 },
-    { id: 2, providerName: "John", amount: 1000 },
-    { id: 3, providerName: "Yash", amount: 400 },
-    { id: 4, providerName: "John", amount: 1000 },
-    { id: 5, providerName: "Yash", amount: 400 },
-    { id: 6, providerName: "John", amount: 1000 },
-    { id: 7, providerName: "Yash", amount: 400 },
-    { id: 8, providerName: "John", amount: 1000 },
-  ];
+  useEffect(() => {
+    dispatch(getQuotationsForJobOrder(orderId));
+  }, [orderId, dispatch]);
+
+  const { quotations, loading } = useSelector((state) => state.services.quotationSlice);
+
+  const { jobOrders } = useSelector((state) => state.services.jobOrderListSlice);
+
+  const job = jobOrders.find((j) => j._id === orderId);
+
+  if (!job) {
+    return <p>Job details not found.</p>;
+  }
 
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal titleBox={true} title="Job Order Details" navigate="/service-tracking" />
+        <TopbarModal titleBox title="Job Order Details" navigate="/service-tracking" />
+
         <div className="quotation-wrapper">
           <div className="job-info">
-            <Info label="Name" value={job.name} />
-            <Info label="Phone Number" value={job.phone} />
-            <Info label="Date & Time" value={job.dateTime} />
-            <Info label="Vehicle Type" value={job.vehicleType} />
-            <Info label="Goods to be Transported" value={job.goods} />
-            <Info label="End Travel Location" value={job.location} />
-            <Info label="Charges" value={`₹ ${job.charges}`} />
+            <Info label="Service Type" value={job.jobOrderFor} />
+            <Info label="Status" value={job.status} />
+            <Info label="From Location" value={job.currentLocation} />
+            <Info label="To Location" value={job.destinationLocation} />
+            <Info label="Schedule" value={`${job.fromDate} – ${job.tillDate}, ${job.startTime}`} />
+            <Info label="Vehicle Type" value={job.typeOfVehicle} />
+            <Info
+              label="Goods"
+              value={`${job.transportItem} (${job.vegetableWeight || job.cattleWeight || job.equipmentWeight || job.otherWeightKg} kg)`}
+            />
           </div>
 
-          <h3 className="section-title">Quotation</h3>
+          <h3 className="section-title">Quotations</h3>
 
-          <div className="quotation-grid">
-            {quotations.map((q) => (
-              <div className="quotation-card" key={q.id}>
-                <div className="quotation-row">
-                  <span className="quotation-label">Service Provider Name</span>
-                  <span className="quotation-value">{q.providerName}</span>
-                </div>
-
-                <div className="quotation-row amount-row">
-                  <span className="quotation-label">Amount</span>
-                  <span className="amount">₹ {q.amount}</span>
-                </div>
-
-                <div className="action-buttons">
-                  <button className="quotation-btn accept">Accept</button>
-
-                  <button className="quotation-btn reject">Reject</button>
-                </div>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <p>Loading quotations...</p>
+          ) : quotations.length === 0 ? (
+            <p>No quotations received yet.</p>
+          ) : (
+            <div className="quotation-grid">
+              {quotations.map((q) => (
+                <QuotationCard key={q.quotationId} data={q} jobOrderId={orderId} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
