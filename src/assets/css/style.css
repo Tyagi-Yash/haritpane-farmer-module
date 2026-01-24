@@ -3297,6 +3297,14 @@ input[type="date" i] {
   border-radius: 8px;
   width: 100%;
 }
+.call-btn {
+  background: #ffffff;
+  color: #4d5a84;
+  border: 1px solid #4d5a84;
+  padding: 8px 18px;
+  border-radius: 8px;
+  width: 100%;
+}
 
 .accept-btn {
   background: #fff;
@@ -3358,6 +3366,7 @@ input[type="date" i] {
 
 .quotation-label {
   color: #4d5a84;
+  margin-right: 20px;
 }
 
 .quotation-value {
@@ -3452,8 +3461,13 @@ input[type="date" i] {
   font-size: 14px;
 }
 .accepted-text {
-  background: #eefff4;
+  background: #d6fae3;
   color: #166534;
   padding: 8px;
   border-radius: 8px;
+}
+
+.quotation-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

@@ -50,6 +50,32 @@ export const acceptQuotation = createAsyncThunk(
   },
 );
 
+export const rejectQuotation = createAsyncThunk(
+  "quotation/rejectQuotation",
+  async ({ jobOrderId, quotationId }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await axios.put("/rejectQuotation", {
+        jobOrderId,
+        quotationId,
+      });
+
+      dispatch(getQuotationsForJobOrder(jobOrderId));
+
+      return {
+        status: response.status,
+        data: response.data,
+      };
+    } catch (error) {
+      return rejectWithValue({
+        status: error.response?.status || 500,
+        data: error.response?.data || {
+          message: "Failed to reject quotation",
+        },
+      });
+    }
+  },
+);
+
 const quotationSlice = createSlice({
   name: "quotation",
   initialState: {
@@ -94,6 +120,17 @@ const quotationSlice = createSlice({
         state.actionLoading = false;
       })
       .addCase(acceptQuotation.rejected, (state) => {
+        state.actionLoading = false;
+      })
+
+      // reject
+      .addCase(rejectQuotation.pending, (state) => {
+        state.actionLoading = true;
+      })
+      .addCase(rejectQuotation.fulfilled, (state) => {
+        state.actionLoading = false;
+      })
+      .addCase(rejectQuotation.rejected, (state) => {
         state.actionLoading = false;
       });
   },

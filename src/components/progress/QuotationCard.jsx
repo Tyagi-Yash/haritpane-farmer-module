@@ -1,23 +1,29 @@
-import { useDispatch } from "react-redux";
-import { acceptQuotation } from "../../reduxtoolkit/slices/progress/quotations";
+import { useDispatch, useSelector } from "react-redux";
+import { acceptQuotation, rejectQuotation } from "../../reduxtoolkit/slices/progress/quotations";
 import { toast } from "react-toastify";
 
 function QuotationCard({ data, jobOrderId }) {
   const dispatch = useDispatch();
 
-  const { provider, amount, message, status, quotationId, actionLoading } = data;
+  const { actionLoading } = useSelector((state) => state.services.quotationSlice);
+
+  const { provider, amount, message, status, quotationId } = data;
 
   const handleAccept = async () => {
     try {
-      await dispatch(
-        acceptQuotation({
-          jobOrderId,
-          quotationId,
-        }),
-      ).unwrap();
+      await dispatch(acceptQuotation({ jobOrderId, quotationId })).unwrap();
       toast.success("Quotation accepted successfully. Booking confirmed!");
     } catch (error) {
       toast.error("Failed to accept quotation");
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      await dispatch(rejectQuotation({ jobOrderId, quotationId })).unwrap();
+      toast.success("Quotation Rejected successfully.");
+    } catch (error) {
+      toast.error("Failed to reject quotation");
     }
   };
 
@@ -39,7 +45,8 @@ function QuotationCard({ data, jobOrderId }) {
         <>
           <div className="action-buttons">
             <p className="accepted-text">Accepted</p>
-            <button className="view-btn">Start Chat</button>
+            <button className="view-btn">Chat</button>
+            <button className="call-btn">Call</button>
           </div>
         </>
       ) : (
@@ -48,7 +55,9 @@ function QuotationCard({ data, jobOrderId }) {
             <button className="quotation-btn accept" onClick={handleAccept} disabled={actionLoading}>
               Accept
             </button>
-            <button className="quotation-btn reject">Reject</button>
+            <button className="quotation-btn reject" onClick={handleReject} disabled={actionLoading}>
+              Reject
+            </button>
           </div>
         </>
       )}

@@ -6,9 +6,7 @@ export const getMyBookings = createAsyncThunk(
   "bookingList/getMyBookings",
   async (filters, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/myBookings", {
-        params: filters,
-      });
+      const response = await axios.get("/myBookings", { params: filters });
       return {
         status: response.status,
         data: response.data,

@@ -54,6 +54,7 @@ import LandManagementVendorDetails from "./service category/land management serv
 import TransportationBookYourService from "./service category/transportation/TransportationBookYourService";
 import ServiceCategory from "./service category/ServiceCategory";
 import QuotationDetails from "./progress/QuotationDetails";
+import RescheduleTransportation from "./progress/RescheduleTransportation";
 
 export {
   OtpVerify,
@@ -78,6 +79,7 @@ export {
   Dashboard,
   ServiceTracking,
   ServiceTrackingVendorDetails,
+  RescheduleTransportation,
   QuotationDetails,
   AugerBookYourService,
   AugerChangeAvailablity,

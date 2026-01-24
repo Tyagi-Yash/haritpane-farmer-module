@@ -58,6 +58,7 @@ import {
   PrivacyPolicy,
   TermsOfService,
   QuotationDetails,
+  RescheduleTransportation,
 } from "./pages";
 
 import { ToastContainer } from "react-toastify";
@@ -99,6 +100,7 @@ function App() {
               <Route index element={<ServiceTracking />} />
               <Route path=":serviceType/:bookingId" element={<ServiceTrackingVendorDetails />} />
               <Route path="job-order-details/:orderId" element={<QuotationDetails />} />
+              <Route path="job-order-reschedule/:orderId" element={<RescheduleTransportation />} />
             </Route>
 
             <Route element={<RouteWatcher />}>

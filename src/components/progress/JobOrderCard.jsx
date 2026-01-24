@@ -1,19 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllJobOrders } from "../../reduxtoolkit/slices/progress/jobOrder";
-import { useEffect } from "react";
+import { cancelJobOrder, getAllJobOrders } from "../../reduxtoolkit/slices/progress/jobOrder";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { Commonpagination } from "../common components/Commonpagination";
 
 function JobOrderCard() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllJobOrders());
-  }, [dispatch]);
+  const [page, setPage] = useState(1);
 
-  const { jobOrders, loading } = useSelector((state) => state.services.jobOrderListSlice);
+  useEffect(() => {
+    dispatch(getAllJobOrders({ page }));
+  }, [dispatch, page]);
+
+  const { jobOrders, loading, actionLoading, paginationData } = useSelector(
+    (state) => state.services.jobOrderListSlice,
+  );
+
+  const handleCancelJob = async (jobId) => {
+    try {
+      await dispatch(cancelJobOrder(jobId)).unwrap();
+      toast.success("Job order cancelled successfully");
+    } catch (error) {
+      toast.error("Failed to cancel job order");
+    }
+  };
 
   const handleNavigate = (job) => navigate(`job-order-details/${job._id}`);
+
+  const handleReschedule = (job) => navigate(`job-order-reschedule/${job._id}`);
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   if (loading) return <p>Loading job orders...</p>;
 
@@ -65,7 +86,7 @@ function JobOrderCard() {
                 {job.vegetableWeight || job.cattleWeight || job.equipmentWeight || job.otherWeightKg} kg)
               </span>
             </div>
-            {job.status === "cancelled" || job.status === "rejected" ? (
+            {job.status === "cancelled" ? (
               <div className="joborder-cancelled">❌ {job.cancellationReason || "Job cancelled"}</div>
             ) : (
               <>
@@ -77,8 +98,17 @@ function JobOrderCard() {
 
                 {job.status === "pending" && (
                   <div className="joborder-actions">
-                    <button className="accept-btn">Reschedule</button>
-                    <button className="reject-btn">Cancel</button>
+                    <button className="accept-btn" onClick={() => handleReschedule(job)}>
+                      Reschedule
+                    </button>
+
+                    <button
+                      className="reject-btn"
+                      onClick={() => handleCancelJob(job._id)}
+                      disabled={actionLoading}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 )}
               </>
@@ -86,6 +116,18 @@ function JobOrderCard() {
           </div>
         ))}
       </div>
+
+      {!loading && jobOrders.length > 0 && (
+        <div className="d-flex justify-content-center mt-4">
+          <Commonpagination
+            ActivePage={paginationData?.page || 1}
+            ItemsCountPerPage={10}
+            TotalItemsCount={paginationData?.total || 0}
+            pageRangeDisplayed={3}
+            Onchange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 }
