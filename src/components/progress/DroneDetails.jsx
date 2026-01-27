@@ -76,27 +76,6 @@ function DroneDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                {/* <div className="option-wrapper bookingPriceTable">
-                  <h5 className="normal-heading">Total Booking Price</h5>
-                  <table className="table table-borderless">
-                    <tbody>
-                      <tr>
-                        <td>Service Cost (per acre)</td>
-                        <td>₹ {Number(service?.chargePerAcre ?? 0).toFixed(2)}</td>
-                      </tr>
-                      <tr>
-                        <td>Transportation Charges</td>
-                        <td>₹ {Number(service?.additionalCharges ?? 0).toFixed(2)}</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td>Total Payable Amount</td>
-                        <td>₹ {Number(data?.amount ?? 0).toFixed(2)}</td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div> */}
                 <PriceBreakdown
                   info={service.chargePerAcre}
                   additionalCharges={service.additionalCharges}

@@ -21,7 +21,6 @@ function MyFarmAddLocation() {
                 <div className="form-section">
                   <h5 className="book-heading">Book your service</h5>
                   <div className="row g-3">
-                    {/* Farm Location (Text) */}
                     <div className="col-md-6">
                       <label htmlFor="" className="form-label">
                         Tehsil <span>*</span>

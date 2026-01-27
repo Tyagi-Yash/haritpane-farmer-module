@@ -23,7 +23,7 @@ function ElectrostaticDetails({ data }) {
           bookingId: data._id,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -80,27 +80,6 @@ function ElectrostaticDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                {/* <div className="option-wrapper bookingPriceTable">
-                  <h5 className="normal-heading">Total Booking Price</h5>
-                  <table className="table table-borderless">
-                    <tbody>
-                      <tr>
-                        <td>Service Cost (per acre)</td>
-                        <td>₹{Number(service?.basicInfo?.chargePerAcre ?? 0).toFixed(2)}</td>
-                      </tr>
-                      <tr>
-                        <td>Transportation Charges</td>
-                        <td>₹ {Number(service?.basicInfo?.additionalCharges ?? 0).toFixed(2)}</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td>Total Payable Amount</td>
-                        <td>₹ {Number(data?.amount ?? 0).toFixed(2)}</td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div> */}
                 <PriceBreakdown
                   info={service.basicInfo}
                   additionalCharges={service.basicInfo.additionalCharges}

@@ -198,11 +198,9 @@ function ChatEnquirySection() {
       <div className="modal" id="myModal">
         <div className="modal-dialog">
           <div className="modal-content">
-            {/* Modal Header */}
             <div className="modal-header">
               <img src={closeIcon} data-bs-dismiss="modal" alt />
             </div>
-            {/* Modal body */}
             <div className="m-3">
               <div className="user-card-modal">
                 <img src={muthuvelRangan} alt="Profile" />
@@ -234,7 +232,6 @@ function ChatEnquirySection() {
                 <span id="charCount">0</span>/100
               </div>
             </div>
-            {/* Modal footer */}
             <div className="modal-footer yellow-btn">
               <a href="#" data-bs-dismiss="modal">
                 {" "}

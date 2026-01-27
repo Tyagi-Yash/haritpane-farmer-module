@@ -62,7 +62,6 @@ function LocalProductDetails() {
             </div>
           </figure>
           <div>
-            {/* Title & Rating */}
             <div className="mb-3">
               <h4 className="mb-0 me-2 main-heading">
                 {productDetails?.productName || "Name not available"}
@@ -78,7 +77,6 @@ function LocalProductDetails() {
                 {productDetails?.productDescription || "Description not available"}
               </p>
             </div>
-            {/* Specifications */}
             <div className="mb-4">
               <h6 className="normal-heading">Product Specifies</h6>
               <table className="table table-transparent align-middle spec-table">
@@ -93,35 +91,30 @@ function LocalProductDetails() {
                     <td>Service Type</td>
                     <td>
                       N/A
-                      {/* Tractor Rental for Plowing, Harrowing, and Seeding */}
                     </td>
                   </tr>
                   <tr>
                     <td>Tractor Type</td>
                     <td>
                       N/A
-                      {/* 45 HP 4WD – Mahindra Yuvo 575 DI */}
                     </td>
                   </tr>
                   <tr>
                     <td>Operator Included</td>
                     <td>
                       N/A
-                      {/* Yes */}
                     </td>
                   </tr>
                   <tr>
                     <td>Fuel Charges</td>
                     <td>
                       N/A
-                      {/* Included up to 4 hours */}
                     </td>
                   </tr>
                   <tr>
                     <td>Hourly Rate</td>
                     <td>
                       N/A
-                      {/* ₹450/hour */}
                     </td>
                   </tr>
                 </tbody>
@@ -171,7 +164,6 @@ function LocalProductDetails() {
                   </div>
                 </div>
               </div>
-              {/* Right Section: Average Rating */}
               <div className="col-md-2 text-center d-flex flex-column justify-content-center align-items-center">
                 <h2 className="fw-bold mb-0">{productDetails.rating}</h2>
                 <div>
@@ -184,7 +176,6 @@ function LocalProductDetails() {
                 <div className="review-count mt-1">120 Reviews</div>
               </div>
             </div>
-            {/* Individual Reviews */}
             <div>
               <div className="review-user d-flex align-items-start mb-2">
                 <img className="me-2" src={customerReviewLocalHops} alt="Ramesh Yadav" />

@@ -16,7 +16,6 @@ function MyFarmDetails() {
           />
           <div className="dashboard my-farms-details">
             <div>
-              {/* Header */}
               <div className="mb-3">
                 <h4 className="main-heading">RK Farm Field</h4>
                 <div className="metadata">
@@ -26,7 +25,6 @@ function MyFarmDetails() {
                   <span>Updated 6 min ago</span>
                 </div>
               </div>
-              {/* Cards Row */}
               <div className="row g-4">
                 <div className="col-md-4">
                   <div className="card-box">
@@ -43,7 +41,6 @@ function MyFarmDetails() {
                   </div>
                 </div>
               </div>
-              {/* Info Message */}
               <p className="info-text">
                 This Screen will be design at time of API implementation (Weather API)
               </p>
