@@ -81,6 +81,7 @@ const quotationSlice = createSlice({
   initialState: {
     loading: false,
     actionLoading: false,
+    farmerId: null,
     jobStatus: null,
     quotations: [],
   },
@@ -89,6 +90,7 @@ const quotationSlice = createSlice({
       state.loading = false;
       state.actionLoading = false;
       state.jobStatus = null;
+      state.farmerId = null;
       state.quotations = [];
     },
   },
@@ -104,6 +106,7 @@ const quotationSlice = createSlice({
         if (status === 200) {
           state.jobStatus = data?.data?.status;
           state.quotations = data?.data?.quotations || [];
+          state.farmerId = data?.data?.farmer_id || null;
         }
 
         state.loading = false;

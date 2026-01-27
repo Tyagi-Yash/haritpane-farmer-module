@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { cancelJobOrder, getAllJobOrders } from "../../reduxtoolkit/slices/progress/jobOrder";
+import { cancelJobOrder, getAllJobOrders } from "../../../reduxtoolkit/slices/progress/jobOrder";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Commonpagination } from "../common components/Commonpagination";
+import { Commonpagination } from "../../common components/Commonpagination";
 
 function JobOrderCard() {
   const navigate = useNavigate();
@@ -34,6 +34,19 @@ function JobOrderCard() {
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber);
+  };
+
+  const transportItemLabelMap = {
+    vegitable: "Vegetable",
+    cattle: "Cattle",
+    equipment: "Equipment",
+    other: "Other",
+  };
+
+  const getTransportWeight = (job) => {
+    return (
+      job.vegetableWeight || job.cattleWeight || job.equipmentWeight || job.otherWeightKg || "-"
+    );
   };
 
   if (loading) return <p>Loading job orders...</p>;
@@ -81,13 +94,15 @@ function JobOrderCard() {
             </div>
             <div className="joborder-row">
               <span className="joborder-label">Goods</span>
+
               <span className="joborder-value">
-                {job.transportItem} (
-                {job.vegetableWeight || job.cattleWeight || job.equipmentWeight || job.otherWeightKg} kg)
+                {transportItemLabelMap[job.transportItem] || "-"} ({getTransportWeight(job)} kg)
               </span>
             </div>
             {job.status === "cancelled" ? (
-              <div className="joborder-cancelled">❌ {job.cancellationReason || "Job cancelled"}</div>
+              <div className="joborder-cancelled">
+                ❌ {job.cancellationReason || "Job cancelled"}
+              </div>
             ) : (
               <>
                 <div className="joborder-actions">

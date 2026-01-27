@@ -3,7 +3,7 @@ import TopbarModal from "../../components/common components/TopbarModal";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import BookingDetailsRenderer from "../../components/progress/BookingDetailsRenderer";
+import BookingDetailsRenderer from "../../components/progress/service tracking details/BookingDetailsRenderer";
 import serviceImg from "../../assets/images/service.png";
 import ReviewTab from "../../components/common components/ReviewTab";
 

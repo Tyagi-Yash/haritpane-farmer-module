@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { setActiveTab } from "../../reduxtoolkit/slices/progress/bookingList";
 import JobOrderCard from "../../components/progress/JobOrderCard";
-import ServiceTrackingTab from "../../components/progress/ServiceTrackingTab";
+import ServiceTrackingTab from "../../components/progress/service tracking tab/ServiceTrackingTab";
 
 function ServiceTracking() {
   const dispatch = useDispatch();

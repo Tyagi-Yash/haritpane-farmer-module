@@ -195,6 +195,9 @@ export const validateQuantity = (quantity) => {
   if (!quantity || quantity === "") {
     return "*Quantity is required";
   }
+  const num = Number(quantity);
+  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+
   return "";
 };
 

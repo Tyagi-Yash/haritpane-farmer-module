@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-import { getMyBookings } from "../../reduxtoolkit/slices/progress/bookingList";
+import { getMyBookings } from "../../../reduxtoolkit/slices/progress/bookingList";
 import serviceImg from "../../assets/images/service.png";
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
-import { Commonpagination } from "../../components/common components/Commonpagination";
-import { statusOptions } from "../../constants/progress/statusOptions";
+import { Commonpagination } from "../../common components/Commonpagination";
+import { statusOptions } from "../../../constants/progress/statusOptions";
 
 function ServiceTrackingTab() {
   const dispatch = useDispatch();
@@ -88,7 +88,12 @@ function ServiceTrackingTab() {
             </div>
             <div className="col-md-4 mb-3">
               <label className="form-label">Select End Date</label>
-              <input type="date" className="form-control" value={toDate} onChange={handleToDateChange} />
+              <input
+                type="date"
+                className="form-control"
+                value={toDate}
+                onChange={handleToDateChange}
+              />
             </div>
             <div className="col-md-4 mb-3">
               <label className="form-label">Select Status</label>

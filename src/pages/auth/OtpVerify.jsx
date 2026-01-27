@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OtpInput from "../../components/otpverify/OTPInput";
 import { login } from "../../reduxtoolkit/slices/auth/auth";
 import OtpResend from "../../components/otpverify/OtpResend";
-import { requestNotificationPermission } from "../../utils/notification";
+// import { requestNotificationPermission } from "../../utils/notification";
 
 function OtpVerify() {
   const navigate = useNavigate();
@@ -66,12 +66,12 @@ function OtpVerify() {
 
     setDisable(true);
     try {
-      const deviceToken = await requestNotificationPermission();
+      // const deviceToken = await requestNotificationPermission();
 
       const res = await dispatch(
         login({
           phone: phoneNumber.trim(),
-          deviceToken,
+          // deviceToken,
           deviceType: "web",
         }),
       );

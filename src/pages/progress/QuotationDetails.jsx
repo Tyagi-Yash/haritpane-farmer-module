@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getQuotationsForJobOrder } from "../../reduxtoolkit/slices/progress/quotations";
-import QuotationCard from "../../components/progress/QuotationCard";
+import QuotationCard from "../../components/progress/job order/QuotationCard";
 import TopbarModal from "../../components/common components/TopbarModal";
 
 const QuotationDetails = () => {
@@ -24,6 +24,19 @@ const QuotationDetails = () => {
     return <p>Job details not found.</p>;
   }
 
+  const transportItemLabelMap = {
+    vegitable: "Vegetable",
+    cattle: "Cattle",
+    equipment: "Equipment",
+    other: "Other",
+  };
+
+  const getTransportWeight = (job) => {
+    return (
+      job.vegetableWeight || job.cattleWeight || job.equipmentWeight || job.otherWeightKg || "-"
+    );
+  };
+
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -39,7 +52,12 @@ const QuotationDetails = () => {
             <Info label="Vehicle Type" value={job.typeOfVehicle} />
             <Info
               label="Goods"
-              value={`${job.transportItem} (${job.vegetableWeight || job.cattleWeight || job.equipmentWeight || job.otherWeightKg} kg)`}
+              value={`${transportItemLabelMap[job.transportItem] || "-"} (${getTransportWeight(job)} kg)`}
+            />
+
+            <Info
+              label="Goods"
+              value={`${job.transportItem === "vegitable"} (${job.vegetableWeight || job.cattleWeight || job.equipmentWeight || job.otherWeightKg} kg)`}
             />
           </div>
 

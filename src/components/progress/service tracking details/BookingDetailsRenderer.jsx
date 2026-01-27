@@ -1,4 +1,4 @@
-import { bookingDetailRenderers } from "../../utils/bookingDetailRenderers";
+import { bookingDetailRenderers } from "../../../utils/bookingDetailRenderers";
 
 function BookingDetailsRenderer({ booking }) {
   const Renderer = bookingDetailRenderers[booking.bookingFor];

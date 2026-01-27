@@ -32,7 +32,7 @@ export default function ChatChatSection() {
     } else {
       const socket = getSocket();
 
-      socket.emit("joinRoom", {
+      socket?.emit("joinRoom", {
         roomId,
         farmerId,
         serviceProviderId,
