@@ -1,9 +1,9 @@
-import userIcon from "../../assets/images/user-icon.svg";
-import locationIcon from "../../assets/images/location-icon.png";
-import mobile from "../../assets/images/mobile.svg";
-import CancelBookingModal from "../common components/CancelBookingModal";
+import userIcon from "../../../assets/images/user-icon.svg";
+import locationIcon from "../../../assets/images/location-icon.png";
+import mobile from "../../../assets/images/mobile.svg";
+import CancelBookingModal from "../../common components/CancelBookingModal";
 import { useState } from "react";
-import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookingSlice";
+import { cancelBooking } from "../../../reduxtoolkit/slices/service category/bookingSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -22,7 +22,7 @@ function CattleDetails({ data }) {
           bookingId: data._id,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -89,7 +89,7 @@ function CattleDetails({ data }) {
                           ₹{" "}
                           {Number(
                             service?.basicInfo?.find((p) => p._id === data?.basicInfoId)
-                              ?.sellingPrice ?? 0
+                              ?.sellingPrice ?? 0,
                           ).toFixed(2)}
                         </td>
                       </tr>

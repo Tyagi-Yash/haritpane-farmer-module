@@ -1,13 +1,13 @@
-import LandManagementDetails from "../components/service tracking details/LandManagementDetails";
-import HarvesterDetails from "../components/service tracking details/HarvesterDetails ";
-import CattleDetails from "../components/service tracking details/CattleDetails ";
-import ExcavationDetails from "../components/service tracking details/ExcavationDetails";
-import AugerDetails from "../components/service tracking details/service tracking details/AugerDetails";
-import ElectrostaticDetails from "../components/service tracking details/ElectrostaticDetails";
-import LabourDetails from "../components/service tracking details/LabourDetails";
-import BorewellDetails from "../components/service tracking details/service tracking details/BorewellDetails";
-import DroneDetails from "../components/service tracking details/DroneDetails";
-import CompoundWallDetails from "../components/service tracking details/CompoundWallDetails";
+import LandManagementDetails from "../components/progress/service tracking details/LandManagementDetails";
+import HarvesterDetails from "../components/progress/service tracking details/HarvesterDetails ";
+import CattleDetails from "../components/progress/service tracking details/CattleDetails ";
+import ExcavationDetails from "../components/progress/service tracking details/ExcavationDetails";
+import AugerDetails from "../components/progress/service tracking details/AugerDetails";
+import ElectrostaticDetails from "../components/progress/service tracking details/ElectrostaticDetails";
+import LabourDetails from "../components/progress/service tracking details/LabourDetails";
+import BorewellDetails from "../components/progress/service tracking details/BorewellDetails";
+import DroneDetails from "../components/progress/service tracking details/DroneDetails";
+import CompoundWallDetails from "../components/progress/service tracking details/CompoundWallDetails";
 
 export const bookingDetailRenderers = {
   land_management: LandManagementDetails,

@@ -59,6 +59,7 @@ import {
   TermsOfService,
   QuotationDetails,
   RescheduleTransportation,
+  RescheduleCowDung,
 } from "./pages";
 
 import { ToastContainer } from "react-toastify";
@@ -100,7 +101,8 @@ function App() {
               <Route index element={<ServiceTracking />} />
               <Route path=":serviceType/:bookingId" element={<ServiceTrackingVendorDetails />} />
               <Route path="job-order-details/:orderId" element={<QuotationDetails />} />
-              <Route path="job-order-reschedule/:orderId" element={<RescheduleTransportation />} />
+              <Route path="transport-reschedule/:orderId" element={<RescheduleTransportation />} />
+              <Route path="cowdung-reschedule/:orderId" element={<RescheduleCowDung />} />
             </Route>
 
             <Route element={<RouteWatcher />}>

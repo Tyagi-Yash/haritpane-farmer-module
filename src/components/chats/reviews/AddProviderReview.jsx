@@ -21,8 +21,18 @@ function AddProviderReview({ show, onHide, onSuccess }) {
   }, [show, dispatch]);
 
   const handleSubmit = async () => {
-    if (!rating || !providerId || !feedback.trim()) return;
-
+    if (!rating) {
+      toast.error("Please select a rating");
+      return;
+    }
+    if (!providerId) {
+      toast.error("Please select a vendor");
+      return;
+    }
+    if (!feedback.trim()) {
+      toast.error("Please write a review");
+      return;
+    }
     try {
       const payload = { serviceId: providerId, rating, review: feedback.trim() };
       await dispatch(addProviderReview(payload)).unwrap();
@@ -91,10 +101,7 @@ function AddProviderReview({ show, onHide, onSuccess }) {
       </div>
 
       <div className="modal-footer yellow-btn">
-        <button
-          onClick={handleSubmit}
-          disabled={addLoading || !rating || !providerId || !feedback.trim()}
-        >
+        <button onClick={handleSubmit} disabled={addLoading}>
           {addLoading ? "Posting..." : "Post Rating & Review"}
         </button>
       </div>

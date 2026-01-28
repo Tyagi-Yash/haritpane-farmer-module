@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllJobOrders } from "../../reduxtoolkit/slices/progress/jobOrder";
+import { getAllJobOrders } from "../../../reduxtoolkit/slices/progress/jobOrder";
 import JobOrderCard from "./JobOrderCard";
-import { Commonpagination } from "../common components/Commonpagination";
+import { Commonpagination } from "../../common components/Commonpagination";
 
 function JobOrderList() {
   const dispatch = useDispatch();

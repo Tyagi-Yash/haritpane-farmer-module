@@ -1,13 +1,13 @@
-import userIcon from "../../assets/images/user-icon.svg";
-import locationIcon from "../../assets/images/location-icon.png";
-import mobile from "../../assets/images/mobile.svg";
+import userIcon from "../../../assets/images/user-icon.svg";
+import locationIcon from "../../../assets/images/location-icon.png";
+import mobile from "../../../assets/images/mobile.svg";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookingSlice";
+import { cancelBooking } from "../../../reduxtoolkit/slices/service category/bookingSlice";
 import { toast } from "react-toastify";
-import CancelBookingModal from "../common components/CancelBookingModal";
-import PriceBreakdown from "../service category/land management/PriceBreakdown";
+import CancelBookingModal from "../../common components/CancelBookingModal";
+import PriceBreakdown from "../../service category/land management/PriceBreakdown";
 
 function LandManagementDetails({ data }) {
   const service = data.serviceDetails;

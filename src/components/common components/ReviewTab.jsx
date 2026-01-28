@@ -29,7 +29,7 @@ const ReviewTab = ({ serviceId }) => {
                   <img src={review?.farmer?.profileImage || profilePic} alt="User" />
                   <strong>{review?.farmer?.name || "Anonymous"}</strong>
                 </div>
-                <div className="review-date">{new Date(review.createdAt).toLocaleDateString()}</div>
+                <div className="review-date">{new Date(review.updatedAt).toLocaleDateString()}</div>
               </div>
 
               <div className="stars">

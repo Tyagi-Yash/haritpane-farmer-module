@@ -8,7 +8,7 @@ import TransportationIcon from "../../assets/images/Transportation-icon.png";
 import { validateDates, validateSelectTime } from "../../utils/formValidators";
 import { rescheduleJobOrder } from "../../reduxtoolkit/slices/progress/jobOrder";
 
-function RescheduleTransportationJobOrder() {
+function RescheduleTransportation() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { orderId } = useParams();
@@ -262,4 +262,4 @@ function RescheduleTransportationJobOrder() {
   );
 }
 
-export default RescheduleTransportationJobOrder;
+export default RescheduleTransportation;

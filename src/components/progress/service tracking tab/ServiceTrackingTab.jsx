@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 import { getMyBookings } from "../../../reduxtoolkit/slices/progress/bookingList";
-import serviceImg from "../../assets/images/service.png";
-import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
+import serviceImg from "../../../assets/images/service.png";
+import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import { Commonpagination } from "../../common components/Commonpagination";
 import { statusOptions } from "../../../constants/progress/statusOptions";
 

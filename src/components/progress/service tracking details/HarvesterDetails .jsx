@@ -1,13 +1,13 @@
-import userIcon from "../../assets/images/user-icon.svg";
-import locationIcon from "../../assets/images/location-icon.png";
-import mobile from "../../assets/images/mobile.svg";
-import CancelBookingModal from "../common components/CancelBookingModal";
+import userIcon from "../../../assets/images/user-icon.svg";
+import locationIcon from "../../../assets/images/location-icon.png";
+import mobile from "../../../assets/images/mobile.svg";
+import CancelBookingModal from "../../common components/CancelBookingModal";
 import { useState } from "react";
-import { cancelBooking } from "../../reduxtoolkit/slices/service category/bookingSlice";
+import { cancelBooking } from "../../../reduxtoolkit/slices/service category/bookingSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import PriceBreakdown from "../service category/harvestor/PriceBreakdown";
+import PriceBreakdown from "../../service category/harvestor/PriceBreakdown";
 
 function HarvesterDetails({ data }) {
   const service = data.serviceDetails;
@@ -78,7 +78,7 @@ function HarvesterDetails({ data }) {
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
                   info={service.priceInfo.find(
-                    (p) => p.cropType.toLowerCase() === data.typeOfCrop.toLowerCase(),
+                    (p) => p.cropType.toLowerCase() === data?.typeOfCrop?.toLowerCase(),
                   )}
                   additionalCharges={service.Info.additionalCharges}
                   extraCharges={data.extraCharges}

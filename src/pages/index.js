@@ -55,6 +55,7 @@ import TransportationBookYourService from "./service category/transportation/Tra
 import ServiceCategory from "./service category/ServiceCategory";
 import QuotationDetails from "./progress/QuotationDetails";
 import RescheduleTransportation from "./progress/RescheduleTransportation";
+import RescheduleCowDung from "./progress/RescheduleCowDung";
 
 export {
   OtpVerify,
@@ -80,6 +81,7 @@ export {
   ServiceTracking,
   ServiceTrackingVendorDetails,
   RescheduleTransportation,
+  RescheduleCowDung,
   QuotationDetails,
   AugerBookYourService,
   AugerChangeAvailablity,

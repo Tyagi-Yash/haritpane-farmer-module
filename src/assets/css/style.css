@@ -799,7 +799,11 @@ ol {
 }
 
 .ClassifiedBox figure span {
-  background: linear-gradient(309.25deg, rgba(34, 197, 94, 0.5) 4.05%, rgba(187, 247, 208, 0.5) 94.33%);
+  background: linear-gradient(
+    309.25deg,
+    rgba(34, 197, 94, 0.5) 4.05%,
+    rgba(187, 247, 208, 0.5) 94.33%
+  );
 
   display: block;
   border-radius: 10px;
@@ -3263,6 +3267,9 @@ input[type="date" i] {
   border-radius: 10px;
   padding: 20px;
   border: 1px solid #eee;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .joborder-row {

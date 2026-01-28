@@ -1,6 +1,6 @@
-import userIcon from "../../assets/images/user-icon.svg";
-import locationIcon from "../../assets/images/location-icon.png";
-import mobile from "../../assets/images/mobile.svg";
+import userIcon from "../../../assets/images/user-icon.svg";
+import locationIcon from "../../../assets/images/location-icon.png";
+import mobile from "../../../assets/images/mobile.svg";
 import CancelBookingModal from "../../common components/CancelBookingModal";
 import { useState } from "react";
 import { cancelBooking } from "../../../reduxtoolkit/slices/service category/bookingSlice";

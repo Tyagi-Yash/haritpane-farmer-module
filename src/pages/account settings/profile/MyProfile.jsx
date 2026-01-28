@@ -9,7 +9,7 @@ import ProfileSkeleton from "../../../components/skeletons/ProfileSkeleton";
 import DeleteModal from "../../../components/account settings/profile/DeleteModal";
 import ProfileFieldGroup from "../../../components/account settings/profile/ProfileFieldGroup";
 import { getFarmerProfile } from "../../../reduxtoolkit/slices/account settings/profile";
-import { profileFields } from "../../../constants/profile/myprofile/profilefields";
+import { profileFields } from "../../../constants/profile/myprofile/profileFields";
 
 function MyProfile() {
   const [formState, setFormState] = useState({
