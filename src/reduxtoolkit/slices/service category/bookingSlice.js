@@ -10,7 +10,7 @@ export const createBooking = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || { message: "Booking failed" });
     }
-  }
+  },
 );
 
 export const getBookingStatus = createAsyncThunk(
@@ -25,8 +25,9 @@ export const getBookingStatus = createAsyncThunk(
       typeOfCrop,
       cattlebasicInfoId,
       materialInfoId,
+      labourType,
     },
-    { rejectWithValue }
+    { rejectWithValue },
   ) => {
     try {
       const res = await axios.get("/getBookingStatusOfFarmer", {
@@ -39,13 +40,14 @@ export const getBookingStatus = createAsyncThunk(
           typeOfCrop,
           cattlebasicInfoId,
           materialInfoId,
+          labourType,
         },
       });
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || { message: "Status fetch failed" });
     }
-  }
+  },
 );
 
 export const cancelBooking = createAsyncThunk(
@@ -57,7 +59,7 @@ export const cancelBooking = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || { message: "Cancel failed" });
     }
-  }
+  },
 );
 
 const bookingSlice = createSlice({

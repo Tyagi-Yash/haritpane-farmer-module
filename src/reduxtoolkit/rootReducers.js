@@ -12,7 +12,7 @@ import ElectrostaticSprayingServiceMgmtSlice from "./slices/service category/ele
 import LabourServiceMgmtSlice from "./slices/service category/labourServices";
 import TransportationServiceMgmtSlice from "./slices/service category/transportationService";
 import BorewellServiceMgmtSlice from "./slices/service category/borewellServices";
-import CowDunkServiceMgmtSlice from "./slices/service category/cowDunkServices";
+import CowDungServiceMgmtSlice from "./slices/service category/cowDunkServices";
 import CompoundWallServiceMgmtSlice from "./slices/service category/compoundWallServices";
 import DroneServiceMgmtSlice from "./slices/service category/droneServices";
 import AugerServiceMgmtSlice from "./slices/service category/augerServices";
@@ -37,7 +37,7 @@ const rootReducer = combineReducers({
   LabourServiceMgmtSlice,
   TransportationServiceMgmtSlice,
   BorewellServiceMgmtSlice,
-  CowDunkServiceMgmtSlice,
+  CowDungServiceMgmtSlice,
   CompoundWallServiceMgmtSlice,
   DroneServiceMgmtSlice,
   AugerServiceMgmtSlice,

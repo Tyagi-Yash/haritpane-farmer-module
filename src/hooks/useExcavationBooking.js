@@ -46,7 +46,7 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       durationOfExavation: filters.duration,
-      excavationType: filters.equipmentTypes,
+      excavationType: filters.sectectEquipmentType,
       extraCharges: vendor.extraCharges,
     };
     try {

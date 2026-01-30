@@ -5,7 +5,7 @@ import { clearAugerServicesFilters } from "../../reduxtoolkit/slices/service cat
 import { clearBorewellServicesFilters } from "../../reduxtoolkit/slices/service category/borewellServices";
 import { clearCattleServicesFilters } from "../../reduxtoolkit/slices/service category/cattlePurchaseServices";
 import { clearCompoundWallServicesFilters } from "../../reduxtoolkit/slices/service category/compoundWallServices";
-import { clearCowDunkServicesFilters } from "../../reduxtoolkit/slices/service category/cowDunkServices";
+import { clearCowDungServicesFilters } from "../../reduxtoolkit/slices/service category/cowDunkServices";
 import { clearDroneServicesFilters } from "../../reduxtoolkit/slices/service category/droneServices";
 import { clearElectroStaticSprayingServicesFilters } from "../../reduxtoolkit/slices/service category/electrostaticSprayingServices";
 import { clearExcavationServicesFilters } from "../../reduxtoolkit/slices/service category/excavationServices";
@@ -24,7 +24,7 @@ const serviceResetMap = {
   "labour-requirement": clearLabourServicesFilters,
   transportation: clearTransportServicesFilters,
   borewell: clearBorewellServicesFilters,
-  "cow-dung-supply": clearCowDunkServicesFilters,
+  "cow-dung-supply": clearCowDungServicesFilters,
   "compound-wall-builder": clearCompoundWallServicesFilters,
   "drone-service": clearDroneServicesFilters,
   "auger-service": clearAugerServicesFilters,
