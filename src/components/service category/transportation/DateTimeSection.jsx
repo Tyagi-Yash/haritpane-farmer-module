@@ -1,0 +1,44 @@
+export default function DateTimeSection({ formState, errors, onChange }) {
+  return (
+    <>
+      <div className="col-md-6">
+        <label className="form-label">
+          From date<span className="required">*</span>
+        </label>
+        <input
+          type="date"
+          className="form-control"
+          value={formState.fromDate}
+          onChange={(e) => onChange("fromDate", e.target.value)}
+        />
+        {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
+      </div>
+
+      <div className="col-md-6">
+        <label className="form-label">
+          Till date<span className="required">*</span>
+        </label>
+        <input
+          type="date"
+          className="form-control"
+          value={formState.tillDate}
+          onChange={(e) => onChange("tillDate", e.target.value)}
+        />
+        {errors.tillDate && <p className="error-text">{errors.tillDate}</p>}
+      </div>
+
+      <div className="col-md-6">
+        <label className="form-label">
+          Start time<span className="required">*</span>
+        </label>
+        <input
+          type="time"
+          className="form-control"
+          value={formState.startTime}
+          onChange={(e) => onChange("startTime", e.target.value)}
+        />
+        {errors.startTime && <p className="error-text">{errors.startTime}</p>}
+      </div>
+    </>
+  );
+}
