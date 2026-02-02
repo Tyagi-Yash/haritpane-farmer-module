@@ -15,11 +15,13 @@ export default function ChatWindow() {
   const chatBodyRef = useRef(null);
 
   const { activeChat, messages, messagesLoading } = useSelector((s) => s.services.chatSlice);
+  const [showNumber, setShowNumber] = useState(false);
 
   useEffect(() => {
     if (!activeChat) return;
 
     dispatch(fetchMessages(activeChat.roomId));
+    setShowNumber(false);
   }, [activeChat]);
 
   const socket = getSocket();
@@ -71,7 +73,9 @@ export default function ChatWindow() {
         </div>
         <div>{<h4>{activeChat?.providerDetails?.name}</h4>}</div>
         <div className="chat-tools">
-          <i className="fas fa-phone" />
+          <div onClick={() => setShowNumber((prev) => !prev)}>
+            {showNumber ? activeChat?.providerDetails?.phone : <i className="fas fa-phone" />}
+          </div>
         </div>
       </div>
 

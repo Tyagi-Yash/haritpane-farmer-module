@@ -151,7 +151,7 @@ function CowDungBookYourService() {
                 </option>
                 <option value="cowDungDelivery">Cow dung delivery to my farm</option>
                 <option value="dairy_farmers_cow_dunk">Cow dung pickup from vendor location</option>
-                <option value="poultry_waste">Poultry waste pickup from vendor location</option>
+                <option value="poultry">Poultry waste pickup from vendor location</option>
               </select>
             </div>
           </div>
@@ -245,7 +245,7 @@ function CowDungBookYourService() {
           )}
 
           {(selectedService === "dairy_farmers_cow_dunk" ||
-            selectedService === "poultry_waste") && (
+            selectedService === "poultry") && (
             <form onSubmit={handleSubmit}>
               <div className="option-wrapper pt-0">
                 <div className="form-section">

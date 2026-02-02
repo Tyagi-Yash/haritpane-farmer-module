@@ -19,13 +19,15 @@ function ElectrostaticChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { toDate = "", fromDate } = filters;
-  const { services, loading, paginationData } = useSelector(
+  const { services, loading, paginationData, sortByRating } = useSelector(
     (state) => state.services.ElectrostaticSprayingServiceMgmtSlice,
   );
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Top rating");
+  const [selectedSort, setSelectedSort] = useState(
+    sortByRating === true ? "Top Rated" : "Nearest First",
+  );
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -55,7 +57,11 @@ function ElectrostaticChangeAvailablity() {
   };
   const fetchServices = async () => {
     if (!validateForm()) return;
-    const params = { ...filters, page: currentPage };
+    const params = {
+      ...filters,
+      page: currentPage,
+      sortByRating: selectedSort === "Top Rated" ? true : false,
+    };
     try {
       await dispatch(getAllServicesOfElectrostatic(params)).unwrap();
     } catch {
@@ -64,10 +70,10 @@ function ElectrostaticChangeAvailablity() {
   };
   useEffect(() => {
     fetchServices();
-  }, [toDate, fromDate, currentPage]);
+  }, [toDate, fromDate, selectedSort, currentPage]);
   useEffect(() => {
     setCurrentPage(1);
-  }, [toDate, fromDate]);
+  }, [fromDate, toDate, selectedSort]);
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -120,14 +126,14 @@ function ElectrostaticChangeAvailablity() {
                     </div>
                     {isOpen && (
                       <div className="sort-menu">
-                        <div className="sort-option" onClick={() => selectSortOption("Top rating")}>
-                          Top rating
+                        <div className="sort-option" onClick={() => selectSortOption("Top Rated")}>
+                          Top Rated
                         </div>
                         <div
                           className="sort-option"
-                          onClick={() => selectSortOption("Out of Radius")}
+                          onClick={() => selectSortOption("Nearest First")}
                         >
-                          Out of Radius
+                          Nearest First
                         </div>
                       </div>
                     )}

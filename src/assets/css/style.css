@@ -1485,7 +1485,7 @@ ol {
 }
 
 .send-enquiry-btn {
-  background-color: transparent;
+  background-color: white;
   padding: 8px 10px;
   border-radius: 8px;
   border: none;
@@ -3477,4 +3477,14 @@ input[type="date" i] {
 .quotation-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.bottom-buttons {
+  position: sticky;
+  bottom: 0;
+  background-color: #f1f1f1;
+  padding: 10px;
+  justify-content: end;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }

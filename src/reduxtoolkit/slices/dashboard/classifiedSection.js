@@ -13,7 +13,7 @@ export const getAllProductsForFarmer = createAsyncThunk(
         data: err.response?.data || { message: "Network or server error" },
       });
     }
-  }
+  },
 );
 
 export const getProductById = createAsyncThunk(
@@ -28,14 +28,45 @@ export const getProductById = createAsyncThunk(
         data: err.response?.data || { message: "Network or server error" },
       });
     }
-  }
+  },
+);
+
+export const getAllProductReviews = createAsyncThunk(
+  "ClassifiedSection/getAllProductReviews",
+  async (filters, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/getAllProductReviews", { params: filters });
+      return { status: response.status, data: response.data };
+    } catch (err) {
+      return rejectWithValue({
+        status: err.response?.status || 500,
+        data: err.response?.data || { message: "Network or server error" },
+      });
+    }
+  },
+);
+
+export const addReview = createAsyncThunk(
+  "rateReview/addReview",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const res = await axios.post("/addReviewByFarmerForProduct", payload);
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Something went wrong");
+    }
+  },
 );
 
 const initialState = {
   loading: false,
   products: [],
+  reviews: [],
+  reviewStats: null,
+  reviewsLoading: false,
   paginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   error: null,
+  addLoading: false,
 };
 
 const ClassifiedSectionMgmtSlice = createSlice({
@@ -47,8 +78,10 @@ const ClassifiedSectionMgmtSlice = createSlice({
       state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
   },
+
   extraReducers: (builder) => {
     builder
+      // PRODUCTS
       .addCase(getAllProductsForFarmer.pending, (state) => {
         state.loading = true;
       })
@@ -63,6 +96,34 @@ const ClassifiedSectionMgmtSlice = createSlice({
       })
       .addCase(getAllProductsForFarmer.rejected, (state) => {
         state.loading = false;
+      })
+
+      // REVIEWS
+      .addCase(getAllProductReviews.pending, (state) => {
+        state.reviewsLoading = true;
+      })
+      .addCase(getAllProductReviews.fulfilled, (state, action) => {
+        const { status, data } = action.payload;
+        if (status === 200) {
+          state.reviews = data?.data?.data || [];
+          state.reviewStats = data?.data?.statistics || null;
+          state.paginationData = data?.data?.metadata?.[0] || {};
+        }
+        state.reviewsLoading = false;
+      })
+      .addCase(getAllProductReviews.rejected, (state) => {
+        state.reviewsLoading = false;
+      })
+
+      // ADD REVIEW
+      .addCase(addReview.pending, (state) => {
+        state.addLoading = true;
+      })
+      .addCase(addReview.fulfilled, (state) => {
+        state.addLoading = false;
+      })
+      .addCase(addReview.rejected, (state) => {
+        state.addLoading = false;
       });
   },
 });
