@@ -6,7 +6,6 @@ export const createCowDungJobOrder = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const response = await axios.post("/createCowDunkJobOrder", payload);
-      // const response = await axios.post("/createJobOrder", payload);
 
       if (response.status === 200) {
         return {
@@ -28,28 +27,61 @@ export const createCowDungJobOrder = createAsyncThunk(
   },
 );
 
-const CowDunkServiceMgmtSlice = createSlice({
-  name: "cowDunkService",
+export const getCowDungDirectListings = createAsyncThunk(
+  "cowDungService/getCowDungDirectListings",
+  async (filters, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/getCowDungDirectListings", { params: filters });
+      return { status: response.status, data: response.data, filters };
+    } catch (error) {
+      return rejectWithValue({
+        status: error.response?.status || 500,
+        data: error.response?.data || { message: "Network or server error" },
+      });
+    }
+  },
+);
+
+const CowDungServiceMgmtSlice = createSlice({
+  name: "cowDungService",
   initialState: {
+    loading: false,
     services: [],
     filters: {},
-    loading: false,
-    error: null,
+    paginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   },
   reducers: {
-    clearCowDunkServices: (state) => {
+    clearCowDungServices: (state) => {
       state.services = [];
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
-    clearCowDunkServicesFilters: (state) => {
+    clearCowDungServicesFilters: (state) => {
       state.filters = {};
+      state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
   },
   extraReducers: (builder) => {
-    builder;
+    builder
+      .addCase(getCowDungDirectListings.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getCowDungDirectListings.fulfilled, (state, action) => {
+        const { status, data, filters } = action.payload;
+        if (status === 200) {
+          const metadata = data?.data?.[0]?.metadata?.[0] || {};
+          state.services = data?.data?.[0]?.data || [];
+          state.filters = filters;
+          state.paginationData = metadata;
+        }
+        state.loading = false;
+      })
+      .addCase(getCowDungDirectListings.rejected, (state, action) => {
+        state.loading = false;
+      });
   },
 });
 
-export const { clearCowDunkServices, clearCowDunkServicesFilters } =
-  CowDunkServiceMgmtSlice.actions;
-export default CowDunkServiceMgmtSlice.reducer;
+export const { clearCowDungServices, clearCowDungServicesFilters } =
+  CowDungServiceMgmtSlice.actions;
+export default CowDungServiceMgmtSlice.reducer;

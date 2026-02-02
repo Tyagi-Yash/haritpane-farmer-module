@@ -95,6 +95,14 @@ export const validateFromDate = (fromDate) => {
   if (new Date(fromDate) < today) return "*From date cannot be in the past";
   return "";
 };
+export const validateDate = (fromDate) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (!fromDate) return "*Date is required";
+  if (new Date(fromDate) < today) return "*Date cannot be in the past";
+  return "";
+};
 
 export const validateEquipmentTypes = (equipmentTypes) => {
   if (!equipmentTypes) return "*Specific Service is required";

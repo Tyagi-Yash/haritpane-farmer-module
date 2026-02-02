@@ -38,6 +38,7 @@ function QuotationCard({ data, jobOrderId }) {
         farmerId,
         serviceProviderId: provider._id,
         providerDetails: provider,
+        chatType: "online_Provider",
       },
     });
   };

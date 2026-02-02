@@ -33,6 +33,7 @@ export default function ChatWindow() {
       farmerId: activeChat.farmerId,
       serviceProviderId: activeChat.serviceProviderId,
       userType: "farmer",
+      chatType: activeChat.chatType,
     });
 
     const messageHandler = (msg) => {

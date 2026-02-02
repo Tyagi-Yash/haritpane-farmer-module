@@ -33,6 +33,8 @@ import CompoundWallBookYourService from "./service category/compound wall builde
 import CompoundWallChangeAvailablity from "./service category/compound wall builder/CompoundWallChangeAvailablity";
 import CompoundWallVendorDetails from "./service category/compound wall builder/CompoundWallVendorDetails";
 import CowDungBookYourService from "./service category/cow dunk supply/CowDungBookYourService";
+import CowDungChangeAvailablity from "./service category/cow dunk supply/CowDungChangeAvailablity";
+import CowDungVendorDetails from "./service category/cow dunk supply/CowDungVendorDetails";
 import DroneBookYourService from "./service category/drone service/DroneBookYourService";
 import DroneChangeAvailablity from "./service category/drone service/DroneChangeAvailablity";
 import DroneVendorDetails from "./service category/drone service/DroneVendorDetails";
@@ -96,6 +98,8 @@ export {
   CompoundWallChangeAvailablity,
   CompoundWallVendorDetails,
   CowDungBookYourService,
+  CowDungChangeAvailablity,
+  CowDungVendorDetails,
   DroneBookYourService,
   DroneChangeAvailablity,
   DroneVendorDetails,

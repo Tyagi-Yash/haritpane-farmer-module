@@ -8,6 +8,7 @@ import LabourDetails from "../components/progress/service tracking details/Labou
 import BorewellDetails from "../components/progress/service tracking details/BorewellDetails";
 import DroneDetails from "../components/progress/service tracking details/DroneDetails";
 import CompoundWallDetails from "../components/progress/service tracking details/CompoundWallDetails";
+import CowDungDetails from "../components/progress/service tracking details/CowDungDetails";
 
 export const bookingDetailRenderers = {
   land_management: LandManagementDetails,
@@ -20,4 +21,5 @@ export const bookingDetailRenderers = {
   borewell: BorewellDetails,
   drone: DroneDetails,
   compoundWall: CompoundWallDetails,
+  cowdung: CowDungDetails,
 };

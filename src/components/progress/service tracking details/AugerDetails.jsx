@@ -40,6 +40,7 @@ function AugerDetails({ data }) {
         farmerId: data.farmerId,
         serviceProviderId: data.providerDetails._id,
         providerDetails: data.providerDetails,
+        chatType: "online_Provider",
       },
     });
   };
@@ -66,7 +67,11 @@ function AugerDetails({ data }) {
               {" "}
               <img src={mobile} alt="" />
             </span>
-            {provider?.phone ? `+91 ${provider.phone.slice(0, -6) + "X".repeat(6)}` : "N/A"}
+            {provider?.phone
+              ? data.status !== "pending" && data.status !== "rejected"
+                ? `+91 ${provider.phone}`
+                : `+91 ${provider.phone.slice(0, -6)}${"X".repeat(6)}`
+              : "N/A"}
           </h6>
         </div>
         <div>

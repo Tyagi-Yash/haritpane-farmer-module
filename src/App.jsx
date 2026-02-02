@@ -60,6 +60,8 @@ import {
   QuotationDetails,
   RescheduleTransportation,
   RescheduleCowDung,
+  CowDungChangeAvailablity,
+  CowDungVendorDetails,
 } from "./pages";
 
 import { ToastContainer } from "react-toastify";
@@ -167,8 +169,14 @@ function App() {
                   </Route>
                 </Route>
 
-                <Route path="cow-dung-supply" element={<CowDungBookYourService />} />
 
+                <Route path="cow-dung-supply">
+                  <Route index element={<CowDungBookYourService />} />
+                  <Route path="available-services">
+                    <Route index element={<CowDungChangeAvailablity />} />
+                    <Route path="vendor-details/:id" element={<CowDungVendorDetails />} />
+                  </Route>
+                </Route>
                 <Route path="compound-wall-builder">
                   <Route index element={<CompoundWallBookYourService />} />
                   <Route path="available-services">

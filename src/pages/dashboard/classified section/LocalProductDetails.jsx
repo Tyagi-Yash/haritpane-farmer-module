@@ -2,7 +2,7 @@ import forceTractor from "../../../assets/images/force-tractor.png";
 import shareIcon from "../../../assets/images/share-icon.svg";
 import customerReviewLocalHops from "../../../assets/images/customer-review-local-hops.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 
 function LocalProductDetails() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
   const backPath = location.state?.from || "/dashboard";
@@ -37,6 +38,21 @@ function LocalProductDetails() {
   useEffect(() => {
     loadProductDetails();
   }, []);
+
+  const handleStartChat = () => {
+    const productIdLast12 = productDetails._id.slice(-12);
+    const farmerIdLast12 = productDetails.farmerId.slice(-12);
+
+    navigate("/chats", {
+      state: {
+        roomId: productIdLast12 + farmerIdLast12,
+        farmerId: productDetails.farmerId,
+        serviceProviderId: productDetails.providerDetails._id,
+        providerDetails: productDetails.providerDetails,
+        chatType: productDetails.createdBy,
+      },
+    });
+  };
 
   return (
     <div className="WrapperArea">
@@ -89,33 +105,23 @@ function LocalProductDetails() {
                 <tbody>
                   <tr>
                     <td>Service Type</td>
-                    <td>
-                      N/A
-                    </td>
+                    <td>N/A</td>
                   </tr>
                   <tr>
                     <td>Tractor Type</td>
-                    <td>
-                      N/A
-                    </td>
+                    <td>N/A</td>
                   </tr>
                   <tr>
                     <td>Operator Included</td>
-                    <td>
-                      N/A
-                    </td>
+                    <td>N/A</td>
                   </tr>
                   <tr>
                     <td>Fuel Charges</td>
-                    <td>
-                      N/A
-                    </td>
+                    <td>N/A</td>
                   </tr>
                   <tr>
                     <td>Hourly Rate</td>
-                    <td>
-                      N/A
-                    </td>
+                    <td>N/A</td>
                   </tr>
                 </tbody>
               </table>
@@ -128,7 +134,7 @@ function LocalProductDetails() {
                     5 <span className="star">★</span>
                   </div>
                   <div className="bar-bg flex-grow-1 mx-2">
-                    <div className="rating-bar" style={{ width: "80%" }} />
+                    <div className="rating-bar" style={{ width: "100%" }} />
                   </div>
                 </div>
                 <div className="d-flex align-items-center mb-2">
@@ -167,11 +173,7 @@ function LocalProductDetails() {
               <div className="col-md-2 text-center d-flex flex-column justify-content-center align-items-center">
                 <h2 className="fw-bold mb-0">{productDetails.rating}</h2>
                 <div>
-                  <span className="star">★</span>
-                  <span className="star">★</span>
-                  <span className="star">★</span>
-                  <span className="star">★</span>
-                  <span className="star">★</span>
+                  <span className="star">★★★★★</span>
                 </div>
                 <div className="review-count mt-1">120 Reviews</div>
               </div>
@@ -229,8 +231,8 @@ function LocalProductDetails() {
             </div>
           </div>
           <div className="d-flex justify-content-end align-items-center mt-5">
-            <button type="button" className="send-enquiry-btn">
-              Send Enquiry
+            <button type="button" className="send-enquiry-btn" onClick={handleStartChat}>
+              Start Chat
             </button>
             <button href="#" type="submit" className="call-us-edit">
               Call Us

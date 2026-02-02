@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { connectSocket, getSocket } from "../../socket/socket";
+import { getSocket } from "../../socket/socket";
 import TopbarModal from "../../components/common components/TopbarModal";
 import ChatsNavbar from "../../components/chats/ChatsNavbar";
 import ChatList from "../../components/chats/chat message/ChatList";
@@ -22,7 +22,7 @@ export default function ChatChatSection() {
   useEffect(() => {
     if (!location.state) return;
 
-    const { roomId, farmerId, serviceProviderId } = location.state;
+    const { roomId, farmerId, serviceProviderId, chatType } = location.state;
 
     const existingChat = chatList.find((chat) => chat.roomId === roomId);
 
@@ -37,6 +37,7 @@ export default function ChatChatSection() {
         farmerId,
         serviceProviderId,
         userType: "farmer",
+        chatType,
       });
 
       const newChat = {
@@ -44,6 +45,7 @@ export default function ChatChatSection() {
         farmerId,
         serviceProviderId,
         providerDetails: location.state.providerDetails,
+        chatType,
       };
 
       dispatch(setActiveChat(newChat));
