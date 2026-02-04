@@ -123,7 +123,7 @@ function ServiceCategory() {
                         <div className="card-image-part">
                           <img src={cowDunkSupply} alt="Cow Dung Supply" />
                         </div>
-                        <div className="label">Cow Dung Supply</div>
+                        <div className="label">Cow Dung/Poultry Waste</div>
                       </Link>
                     </div>
                   </div>

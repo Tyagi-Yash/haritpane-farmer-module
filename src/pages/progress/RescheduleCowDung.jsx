@@ -99,12 +99,12 @@ function RescheduleCowDung() {
                   </div>
 
                   <div className="col-md-6">
-                    <label className="form-label">Cow Dunk Type</label>
+                    <label className="form-label">Cow Dung Type</label>
                     <input className="form-control" value={cowDunkType} disabled />
                   </div>
 
                   <div className="col-md-6">
-                    <label className="form-label">Cow Dunk Quantity</label>
+                    <label className="form-label">Cow Dung Quantity</label>
                     <input className="form-control" value={cowDunkQuantity} disabled />
                   </div>
                 </div>

@@ -1,6 +1,5 @@
 import forceTractor from "../../../assets/images/force-tractor.png";
 import shareIcon from "../../../assets/images/share-icon.svg";
-import customerReviewLocalHops from "../../../assets/images/customer-review-local-hops.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
@@ -9,7 +8,7 @@ import {
 } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ProductReviews from "../../../components/dashboard/ProductReviews";
 import AddReview from "../../../components/dashboard/AddReview";
 
@@ -24,8 +23,6 @@ function LocalProductDetails() {
   const [productDetails, setProductDetails] = useState({});
   const [showNumber, setShowNumber] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
-
-  const { reviewStats } = useSelector((state) => state.services.ClassifiedSectionMgmtSlice);
 
   const loadProductDetails = async () => {
     setLoading(true);
@@ -92,7 +89,9 @@ function LocalProductDetails() {
               {productDetails?.productName || "Name not available"}
             </h4>
             <div>
-              <span className="rating-badge">{reviewStats?.averageRating || "0"}</span>
+              <span className="rating-badge">
+                {productDetails?.providerDetails?.averageRating || "0"}
+              </span>
               <span className="text-warning">★★★★★</span>
             </div>
           </div>

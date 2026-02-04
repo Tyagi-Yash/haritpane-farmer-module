@@ -12,19 +12,22 @@ export const fetchServiceReviews = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
-  }
+  },
 );
 
 export const fetchMyReviews = createAsyncThunk(
   "rateReview/fetchMyReviews",
-  async (_, { rejectWithValue }) => {
+  async (sortBy, { rejectWithValue }) => {
     try {
-      const res = await axios.get("/getAllMyReviews");
+      const params = {};
+      if (sortBy) params.sortBy = sortBy;
+
+      const res = await axios.get("/getAllMyReviews", { params });
       return res.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
-  }
+  },
 );
 export const fetchProviders = createAsyncThunk(
   "rateReview/fetchProviders",
@@ -35,7 +38,7 @@ export const fetchProviders = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
-  }
+  },
 );
 
 export const addProviderReview = createAsyncThunk(
@@ -47,7 +50,7 @@ export const addProviderReview = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data || "Something went wrong");
     }
-  }
+  },
 );
 
 const reviewSlice = createSlice({

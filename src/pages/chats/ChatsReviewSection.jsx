@@ -1,5 +1,4 @@
-import profile from "../../assets/images/profile.png";
-import closeIcon from "../../assets/images/close-icon.svg";
+import profile from "../../assets/images/user-icon.svg";
 import ChatsNavbar from "../../components/chats/ChatsNavbar";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { useEffect, useState } from "react";
@@ -12,10 +11,11 @@ function ChatsReviewSection() {
   const { myReviewList } = useSelector((s) => s.services.reviewSlice);
 
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [sortBy, setSortBy] = useState("");
 
   useEffect(() => {
-    dispatch(fetchMyReviews());
-  }, [dispatch]);
+    dispatch(fetchMyReviews(sortBy));
+  }, [dispatch, sortBy]);
 
   return (
     <>
@@ -26,11 +26,18 @@ function ChatsReviewSection() {
             <div className="TitleBox top-bar mb-0 mt-0">
               <h4 className="main-heading">Chats</h4>
               <div className="d-flex align-items-center">
-                <select className="form-control w-100 me-3">
-                  <option>Sort by</option>
-                  <option>A-Z</option>
-                  <option>Z-A</option>
+                <select
+                  className="form-control w-100 me-3"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  <option value="" disabled>
+                    Sort by
+                  </option>
+                  <option value="asc">A–Z</option>
+                  <option value="desc">Z–A</option>
                 </select>
+
                 <div className="yellow-btn">
                   <button onClick={() => setShowReviewModal(true)}>
                     <i className="fa-solid fa-plus me-2" />
@@ -52,7 +59,7 @@ function ChatsReviewSection() {
                             <strong>{review?.provider?.name || "N/A"}</strong>
                           </div>
                           <div className="review-date">
-                            {new Date(review.createdAt).toLocaleDateString()}
+                            {new Date(review.updatedAt).toLocaleDateString()}
                           </div>
                         </div>
                         <div className="stars">

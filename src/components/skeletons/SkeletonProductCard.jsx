@@ -1,6 +1,5 @@
 function SkeletonProductCard() {
   return (
-    <div className="col-md-4 mb-3">
       <div className="product-card">
         <div className="skeleton skeleton-image-part"></div>
         <div className="card-text-part">
@@ -12,7 +11,6 @@ function SkeletonProductCard() {
           <button className="skeleton skeleton-btn"></button>
         </div>
       </div>
-    </div>
   );
 }
 

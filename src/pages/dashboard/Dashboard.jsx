@@ -135,7 +135,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={cowDunkSupply} alt="Cow Dung Supply" />
                                 </div>
-                                <div className="label">Cow Dung Supply</div>
+                                <div className="label">Cow Dung/Poultry Waste</div>
                               </Link>
                             </div>
                           </div>
@@ -193,7 +193,7 @@ function Dashboard() {
                               <img src={localShop} alt="" />
                             </span>
                           </figure>
-                          <p className="">View Local Shop</p>
+                          <p className="">Local Businesses</p>
                         </Link>
                       </div>
                       <div className="ClassifiedBox">
@@ -203,7 +203,7 @@ function Dashboard() {
                               <img src={localManufacturer} alt="" />
                             </span>
                           </figure>
-                          <p>View Local Manufacturer</p>
+                          <p>View Manufacturers</p>
                         </Link>
                       </div>
                     </div>

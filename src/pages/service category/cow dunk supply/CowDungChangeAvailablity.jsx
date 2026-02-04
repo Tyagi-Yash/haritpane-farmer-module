@@ -89,7 +89,7 @@ function CowDungChangeAvailablity() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Cow Dunk Supply"
+          title="Cow Dung/Poultry Waste"
           secImage={CowDunkSupplyIcon}
           navigate="/service-category/cow-dung-supply"
         />

@@ -132,7 +132,7 @@ function CowDungBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox
-          title="Cow Dung Supply"
+          title="Cow Dung/Poultry Waste"
           secImage={CowDunkSupplyIcon}
           navigate="/service-category"
         />

@@ -16,11 +16,11 @@ function LocalProductsListingModule() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { loading, products, paginationData } = useSelector(
-    (state) => state.services.ClassifiedSectionMgmtSlice
+  const { loading, products, listingPagePaginationData } = useSelector(
+    (state) => state.services.ClassifiedSectionMgmtSlice,
   );
 
-  const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
+  const [currentPage, setCurrentPage] = useState(listingPagePaginationData.page || 1);
 
   const loadProducts = useCallback(async () => {
     try {
@@ -55,7 +55,7 @@ function LocalProductsListingModule() {
         <TopbarModal
           titleBox={true}
           title={
-            pathname === "/dashboard/local-shops" ? "View Local Shop" : "View Local Manufacturer"
+            pathname === "/dashboard/local-shops" ? "Local Businesses" : "View Manufacturers"
           }
           navigate="/dashboard"
         />
@@ -81,33 +81,33 @@ function LocalProductsListingModule() {
             </div>
           </div>
 
-          <div className="row">
+          <div className="product-grid">
             {loading ? (
               <ClassifiedSectionSkeleton />
             ) : products.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>No products available.</p>
             ) : (
               products.map((product) => (
-                <div className="col-md-4 mb-3" key={product._id}>
-                  <div className="product-card" onClick={() => handleEnquiryClick(product._id)}>
-                    <div className="image-part">
-                      <img
-                        src={product.productImage?.[0] || productImage}
-                        alt={product.productName || "Product"}
-                      />
-                    </div>
-                    <div className="card-text-part">
-                      <h6 className="normal-heading">{product.productName}</h6>
-                      <p className="normal-para">
-                        Vendor: {product?.providerDetails?.name || "N/A"}
-                      </p>
-                      <p className="normal-para">
-                        {product?.providerDetails?.address || "Address not available"}
-                      </p>
-                    </div>
-                    <div className="available-service-btn">
-                      <button className="send-btn">View Business</button>
-                    </div>
+                <div
+                  className="product-card"
+                  onClick={() => handleEnquiryClick(product._id)}
+                  key={product._id}
+                >
+                  <div className="image-part">
+                    <img
+                      src={product.productImage?.[0] || productImage}
+                      alt={product.productName || "Product"}
+                    />
+                  </div>
+                  <div className="card-text-part">
+                    <h6 className="normal-heading">{product.productName}</h6>
+                    <p className="normal-para">Vendor: {product?.providerDetails?.name || "N/A"}</p>
+                    <p className="normal-para">
+                      {product?.providerDetails?.address || "Address not available"}
+                    </p>
+                  </div>
+                  <div className="available-service-btn" style={{ marginTop: "auto" }}>
+                    <button className="send-btn">View Business</button>
                   </div>
                 </div>
               ))
@@ -117,9 +117,9 @@ function LocalProductsListingModule() {
           {!loading && products.length > 0 && (
             <div className="d-flex justify-content-center mt-4">
               <Commonpagination
-                ActivePage={paginationData?.page || 1}
+                ActivePage={listingPagePaginationData?.page || 1}
                 ItemsCountPerPage={10}
-                TotalItemsCount={paginationData?.total || 0}
+                TotalItemsCount={listingPagePaginationData?.total || 0}
                 pageRangeDisplayed={3}
                 Onchange={handlePageChange}
               />

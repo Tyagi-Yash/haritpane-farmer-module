@@ -1,23 +1,37 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductReviews } from "../../reduxtoolkit/slices/dashboard/classifiedSection";
+import profilePic from "../../assets/images/user-icon.svg";
 
 function ProductReviews({ providerId }) {
   const dispatch = useDispatch();
 
-  const { reviews, reviewStats, reviewsLoading } = useSelector(
+  const { reviews, reviewStats, reviewsLoading, paginationData } = useSelector(
     (state) => state.services.ClassifiedSectionMgmtSlice,
   );
 
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
     if (providerId) {
-      dispatch(getAllProductReviews({ providerId }));
+      setPage(1);
+      dispatch(getAllProductReviews({ providerId, page: 1 }));
     }
   }, [providerId, dispatch]);
 
-  if (reviewsLoading) return <p className="grey-para">Loading reviews...</p>;
+  const handleLoadMore = () => {
+    if (!paginationData?.isNext || reviewsLoading) return;
 
-  if (!reviewStats || !reviews.length) {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    dispatch(getAllProductReviews({ providerId, page: nextPage }));
+  };
+
+  if (!reviewStats && reviewsLoading) {
+    return <p className="grey-para">Loading reviews...</p>;
+  }
+
+  if (!reviews?.length) {
     return <p className="grey-para">No reviews available</p>;
   }
 
@@ -61,7 +75,7 @@ function ProductReviews({ providerId }) {
           <div className="review-user d-flex align-items-start mb-2">
             <img
               className="me-2"
-              src={review?.farmerDetails?.profileImage}
+              src={review?.farmerDetails?.profileImage || profilePic}
               alt={review?.farmerDetails?.name}
               width={40}
               height={40}
@@ -81,6 +95,14 @@ function ProductReviews({ providerId }) {
           <div className="divider" />
         </div>
       ))}
+
+      {paginationData?.isNext && (
+        <div className="text-center my-3">
+          <button className="send-enquiry-btn" onClick={handleLoadMore} disabled={reviewsLoading}>
+            {reviewsLoading ? "Loading..." : "Load More"}
+          </button>
+        </div>
+      )}
     </>
   );
 }

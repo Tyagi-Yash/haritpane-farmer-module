@@ -18,12 +18,14 @@ function CattleChangeAvailablity() {
   const queryParams = new URLSearchParams(location.search);
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
-  const { services, loading, paginationData } = useSelector(
+  const { services, loading, paginationData, sortByRating } = useSelector(
     (state) => state.services.CattleServiceMgmtSlice,
   );
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Sort");
+  const [selectedSort, setSelectedSort] = useState(
+    sortByRating === true ? "Top Rated" : "Nearest First",
+  );
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -47,7 +49,11 @@ function CattleChangeAvailablity() {
     setIsFilterMenuOpen(false);
   };
   const fetchServices = async () => {
-    const params = { ...filters, page: currentPage };
+    const params = {
+      ...filters,
+      page: currentPage,
+      sortByRating: selectedSort === "Top Rated" ? true : false,
+    };
     try {
       await dispatch(getAllServicesOfCattle(params)).unwrap();
     } catch {
@@ -56,10 +62,10 @@ function CattleChangeAvailablity() {
   };
   useEffect(() => {
     fetchServices();
-  }, [filters, currentPage]);
+  }, [filters, currentPage, selectedSort]);
   useEffect(() => {
     setCurrentPage(1);
-  }, [filters]);
+  }, [filters, selectedSort]);
 
   return (
     <div className="WrapperArea">
@@ -142,15 +148,15 @@ function CattleChangeAvailablity() {
                             <div className="sort-menu">
                               <div
                                 className="sort-option"
-                                onClick={() => selectSortOption("Top rating")}
+                                onClick={() => selectSortOption("Top Rated")}
                               >
-                                Top rating
+                                Top Rated
                               </div>
                               <div
                                 className="sort-option"
-                                onClick={() => selectSortOption("Out of Radius")}
+                                onClick={() => selectSortOption("Nearest First")}
                               >
-                                Out of Radius
+                                Nearest First
                               </div>
                             </div>
                           )}

@@ -64,6 +64,7 @@ const initialState = {
   reviews: [],
   reviewStats: null,
   reviewsLoading: false,
+  listingPagePaginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   paginationData: { total: 0, page: 1, isNext: false, isPrev: false },
   error: null,
   addLoading: false,
@@ -75,6 +76,9 @@ const ClassifiedSectionMgmtSlice = createSlice({
   reducers: {
     clearClassifiedData: (state) => {
       state.products = [];
+      state.reviewStats = null;
+      state.reviews = [];
+      state.listingPagePaginationData = { total: 0, page: 1, isNext: false, isPrev: false };
       state.paginationData = { total: 0, page: 1, isNext: false, isPrev: false };
     },
   },
@@ -90,7 +94,7 @@ const ClassifiedSectionMgmtSlice = createSlice({
         if (status === 200) {
           const metadata = data?.data?.[0]?.metadata?.[0] || {};
           state.products = data?.data?.[0]?.data || [];
-          state.paginationData = metadata;
+          state.listingPagePaginationData = metadata;
         }
         state.loading = false;
       })
@@ -104,13 +108,25 @@ const ClassifiedSectionMgmtSlice = createSlice({
       })
       .addCase(getAllProductReviews.fulfilled, (state, action) => {
         const { status, data } = action.payload;
+
         if (status === 200) {
-          state.reviews = data?.data?.data || [];
-          state.reviewStats = data?.data?.statistics || null;
-          state.paginationData = data?.data?.metadata?.[0] || {};
+          const newReviews = data?.data?.data || [];
+          const metadata = data?.data?.metadata?.[0] || {};
+          const stats = data?.data?.statistics || null;
+
+          if (metadata.page > 1) {
+            state.reviews = [...state.reviews, ...newReviews];
+          } else {
+            state.reviews = newReviews;
+          }
+
+          state.reviewStats = stats;
+          state.paginationData = metadata;
         }
+
         state.reviewsLoading = false;
       })
+
       .addCase(getAllProductReviews.rejected, (state) => {
         state.reviewsLoading = false;
       })

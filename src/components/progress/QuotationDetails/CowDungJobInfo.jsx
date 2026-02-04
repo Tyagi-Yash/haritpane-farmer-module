@@ -8,8 +8,8 @@ function CowDungJobInfo({ job }) {
       <Info label="Delivery Location" value={job.currentLocation} />
       <Info label="From Date" value={job.fromDate} />
       <Info label="Start Time" value={job.startTime} />
-      <Info label="Cow Dunk Type" value={job.cowDunkType} />
-      <Info label="Cow Dunk Quantity" value={job.cowDunkQuantity + " tons"} />
+      <Info label="Cow Dung Type" value={job.cowDunkType} />
+      <Info label="Cow Dung Quantity" value={job.cowDunkQuantity + " tons"} />
     </div>
   );
 }
