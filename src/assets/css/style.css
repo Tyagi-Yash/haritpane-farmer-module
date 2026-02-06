@@ -3499,3 +3499,23 @@ input[type="date" i] {
   flex-direction: column;
   height: 100%;
 }
+
+.star-rating-wrapper {
+  position: relative;
+  display: inline-block;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.star-rating-back {
+  color: #ddd;
+}
+
+.star-rating-front {
+  color: #ffc107;
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}

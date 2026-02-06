@@ -19,7 +19,9 @@ function CompoundWallVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.CompoundWallServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.CompoundWallServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v.compoundMaterialsInfo?._id === id);
 
@@ -36,7 +38,7 @@ function CompoundWallVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/compound-wall-builder/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -78,7 +80,9 @@ function CompoundWallVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

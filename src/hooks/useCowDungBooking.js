@@ -16,6 +16,8 @@ export const useCowDungBooking = ({ vendor, filters }) => {
   const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return;
+
     const fetchBookingStatus = async () => {
       try {
         const res = await dispatch(
@@ -36,6 +38,8 @@ export const useCowDungBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return;
+
     const payload = {
       bookingFor: "cowdung",
       serviceId: vendor._id,

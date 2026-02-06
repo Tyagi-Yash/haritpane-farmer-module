@@ -18,9 +18,12 @@ function CattleChangeAvailablity() {
   const queryParams = new URLSearchParams(location.search);
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
-  const { services, loading, paginationData, sortByRating } = useSelector(
-    (state) => state.services.CattleServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+    sortByRating,
+  } = useSelector((state) => state.services.CattleServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState(
@@ -170,8 +173,8 @@ function CattleChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`vendor-details/${service.basicInfo._id}`}
-                    key={service.basicInfo._id}
+                    to={`vendor-details/${service?.basicInfo?._id || ""}`}
+                    key={service?.basicInfo?._id || service?._id}
                   >
                     <div className="vendor-card">
                       <div className="service-info">

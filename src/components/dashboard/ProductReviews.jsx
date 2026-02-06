@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductReviews } from "../../reduxtoolkit/slices/dashboard/classifiedSection";
 import profilePic from "../../assets/images/user-icon.svg";
+import StarRating from "./StarRating";
 
 function ProductReviews({ providerId }) {
   const dispatch = useDispatch();
@@ -59,13 +60,8 @@ function ProductReviews({ providerId }) {
         </div>
 
         <div className="col-md-2 text-center d-flex flex-column justify-content-center align-items-center">
-          <h2 className="fw-bold mb-0">
-            {averageRating}
-            <span className="text-warning" style={{ fontSize: "30px" }}>
-              {" "}
-              ★
-            </span>
-          </h2>
+          <h2 className="fw-bold mb-0">{averageRating}</h2>
+          <StarRating rating={averageRating} />
           <div className="review-count mt-1">{totalReviews} Reviews</div>
         </div>
       </div>

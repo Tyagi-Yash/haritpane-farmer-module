@@ -18,9 +18,12 @@ function AugerChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { date, toDate = "" } = filters;
-  const { services, loading, paginationData, sortByRating } = useSelector(
-    (state) => state.services.AugerServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+    sortByRating,
+  } = useSelector((state) => state.services.AugerServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -201,7 +204,7 @@ function AugerChangeAvailablity() {
                           <h6>₹ {Number(service?.ratePerHr ?? 0).toFixed(2)}/hour</h6>
                           <small>Additional charges might apply</small>
                         </div>
-                      ) : service.drillInfo[0].ratePerInch ? (
+                      ) : service?.drillInfo?.[0]?.ratePerInch ? (
                         <div className="price-info">
                           <h6>
                             ₹ {Number(service?.drillInfo?.[0]?.ratePerInch ?? 0).toFixed(2)}/Running

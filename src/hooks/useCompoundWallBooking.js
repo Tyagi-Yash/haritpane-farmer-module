@@ -16,6 +16,14 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
   const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
+    if (
+      !vendor?.providerId ||
+      !vendor?._id ||
+      !vendor?.categoryId ||
+      !vendor?.compoundMaterialsInfo?._id
+    )
+      return;
+
     const fetchBookingStatus = async () => {
       try {
         const res = await dispatch(
@@ -25,7 +33,7 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
             materialInfoId: vendor.compoundMaterialsInfo._id,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -37,6 +45,14 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
+    if (
+      !vendor?.providerId ||
+      !vendor?._id ||
+      !vendor?.categoryId ||
+      !vendor?.compoundMaterialsInfo?._id
+    )
+      return;
+
     const payload = {
       bookingFor: "compoundWall",
       serviceId: vendor._id,
@@ -72,7 +88,7 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

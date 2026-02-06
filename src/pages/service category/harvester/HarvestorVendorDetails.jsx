@@ -19,7 +19,9 @@ function HarvestorVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.HarvestorServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.HarvestorServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v._id === id);
 
@@ -65,10 +67,12 @@ function HarvestorVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.priceInfo.find(
-                            (p) => p.cropType.toLowerCase() === filters.typeOfCrop.toLowerCase(),
+                          info={vendor?.priceInfo?.find(
+                            (p) =>
+                              p?.cropType?.toLowerCase() ===
+                              (filters?.typeOfCrop || "").toLowerCase(),
                           )}
-                          additionalCharges={vendor.Info.additionalCharges}
+                          additionalCharges={vendor?.Info?.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           areaUnderCultivation={filters.areaUnderCultivation}
@@ -84,7 +88,9 @@ function HarvestorVendorDetails() {
                   </>
                 )}
 
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

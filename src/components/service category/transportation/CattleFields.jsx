@@ -1,4 +1,9 @@
-export default function CattleFields({ numberOfCattle, cattleWeight, errors, onChange }) {
+export default function CattleFields({
+  numberOfCattle = "",
+  cattleWeight = "",
+  errors = {},
+  onChange = () => {},
+}) {
   return (
     <>
       <div className="col-md-6">

@@ -1,6 +1,14 @@
 import LocationInput from "../../../components/common components/LocationInput";
 
-export default function LocationSection({ formState, setFormState, errors, setErrors }) {
+export default function LocationSection({
+  formState = {},
+  setFormState = () => {},
+  errors = {},
+  setErrors = () => {},
+}) {
+  const currentLocation = formState?.currentLocation || "";
+  const destinationLocation = formState?.destinationLocation || "";
+
   return (
     <>
       <div className="col-md-3">
@@ -8,7 +16,7 @@ export default function LocationSection({ formState, setFormState, errors, setEr
           Current location<span className="required">*</span>
         </label>
         <LocationInput
-          value={formState.currentLocation}
+          value={currentLocation}
           onSelectLocation={({ address, lat, lng }) => {
             setFormState((p) => ({
               ...p,
@@ -36,7 +44,7 @@ export default function LocationSection({ formState, setFormState, errors, setEr
           Travel location<span className="required">*</span>
         </label>
         <LocationInput
-          value={formState.destinationLocation}
+          value={destinationLocation}
           onSelectLocation={({ address, lat, lng }) => {
             setFormState((p) => ({
               ...p,

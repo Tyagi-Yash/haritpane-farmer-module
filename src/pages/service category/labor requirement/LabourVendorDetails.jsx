@@ -19,7 +19,9 @@ function LabourVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.LabourServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.LabourServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v._id === id);
 
@@ -27,7 +29,7 @@ function LabourVendorDetails() {
     {
       vendor,
       filters,
-    }
+    },
   );
 
   return (
@@ -38,7 +40,7 @@ function LabourVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/labour-requirement/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -67,7 +69,7 @@ function LabourVendorDetails() {
                       <div className="col">
                         <PriceBreakdown
                           info={vendor.labourInfo}
-                          additionalCharges={vendor.labourInfo.additionalCharges}
+                          additionalCharges={vendor?.labourInfo?.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           numberOfLabour={filters.numberOfLabour}
@@ -82,7 +84,9 @@ function LabourVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

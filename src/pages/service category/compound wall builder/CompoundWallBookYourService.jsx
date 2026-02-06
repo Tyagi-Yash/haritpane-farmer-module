@@ -42,7 +42,7 @@ function CompoundWallBookYourService() {
         const res = await dispatch(getCompoundWallServiceTypes());
         const { status, data } = res?.payload || {};
         if (status === 200) {
-          setserviceTypesOption(data?.data);
+          setserviceTypesOption(data?.data || []);
         } else {
           toast(data?.message || "Failed to service type");
         }
@@ -168,7 +168,9 @@ function CompoundWallBookYourService() {
                       value={heightOfWall}
                       onChange={handleInputChange}
                     />
-                    {errors.heightOfWall && <p className="error-text">{errors.heightOfWall}</p>}{" "}
+                    {errors.heightOfWall && (
+                      <p className="error-text">{errors.heightOfWall}</p>
+                    )}{" "}
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
@@ -182,7 +184,9 @@ function CompoundWallBookYourService() {
                       value={lengthOfWall}
                       onChange={handleInputChange}
                     />
-                    {errors.lengthOfWall && <p className="error-text">{errors.lengthOfWall}</p>}{" "}
+                    {errors.lengthOfWall && (
+                      <p className="error-text">{errors.lengthOfWall}</p>
+                    )}{" "}
                   </div>
                 </div>
                 <h5 className="book-heading">Book Services date &amp; time</h5>

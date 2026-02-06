@@ -16,6 +16,8 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
   const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !filters?.typeOfCrop) return;
+
     const fetchBookingStatus = async () => {
       try {
         const res = await dispatch(
@@ -37,6 +39,8 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !filters?.typeOfCrop) return;
+
     const payload = {
       bookingFor: "harvester",
       serviceId: vendor._id,

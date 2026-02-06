@@ -4,9 +4,10 @@ const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
   const ratePerHr = Number(info ?? 0);
+  const payable = Number(payableAmount ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
 
-  const billableHours = ratePerHr > 0 ? payableAmount / ratePerHr : 0;
+  const billableHours = ratePerHr > 0 ? payable / ratePerHr : 0;
 
   return (
     <div className="option-wrapper bookingPriceTable">
@@ -21,7 +22,7 @@ const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }
                 {formatPrice(ratePerHr)} (Per Hour) × {formatHoursMinutes(billableHours)}
               </div>
             </td>
-            <td>{formatPrice(payableAmount - transportCharge)}</td>
+            <td>{formatPrice(payable - transportCharge)}</td>
           </tr>
 
           <tr>
@@ -33,7 +34,7 @@ const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }
         <tfoot>
           <tr className="fw-bold border-top">
             <td>Total Amount to Pay</td>
-            <td>{formatPrice(payableAmount)}</td>
+            <td>{formatPrice(payable)}</td>
           </tr>
         </tfoot>
       </table>

@@ -18,9 +18,11 @@ function CowDungChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { fromDate, toDate = "" } = filters;
-  const { services, loading, paginationData } = useSelector(
-    (state) => state.services.CowDungServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+  } = useSelector((state) => state.services.CowDungServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
 

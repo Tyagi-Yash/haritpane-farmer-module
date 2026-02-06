@@ -17,7 +17,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
 
   useEffect(() => {
     const fetchBookingStatus = async () => {
-      if (!vendor?.providerId || !vendor?._id) return;
+      if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !vendor?.Info?._id) return;
       try {
         const res = await dispatch(
           getBookingStatus({
@@ -38,7 +38,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
-    if (!vendor || !filters) return;
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !vendor?.Info?._id) return;
     const payload = {
       bookingFor: "land_management",
       serviceId: vendor._id,

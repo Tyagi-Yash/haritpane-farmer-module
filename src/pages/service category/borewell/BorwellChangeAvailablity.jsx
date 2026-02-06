@@ -19,9 +19,12 @@ function BorwellChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { toDate, fromDate } = filters;
-  const { services, loading, paginationData, sortByRating } = useSelector(
-    (state) => state.services.BorewellServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+    sortByRating,
+  } = useSelector((state) => state.services.BorewellServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);

@@ -6,7 +6,7 @@ import ReviewTabSkeleton from "../skeletons/ReviewTabSkeleton";
 
 const ReviewTab = ({ serviceId }) => {
   const dispatch = useDispatch();
-  const { reviewList, loading } = useSelector((state) => state.services.reviewSlice);
+  const { reviewList = [], loading } = useSelector((state) => state.services.reviewSlice || {});
 
   useEffect(() => {
     if (serviceId) {
@@ -14,33 +14,40 @@ const ReviewTab = ({ serviceId }) => {
     }
   }, [dispatch, serviceId]);
 
-  if (loading) return <ReviewTabSkeleton/>;
+  if (loading) return <ReviewTabSkeleton />;
 
   return (
     <div className="tab-pane active">
       <div className="row">
         {reviewList.length === 0 && <p>No reviews found</p>}
 
-        {reviewList.map((review) => (
-          <div className="col-6" key={review._id}>
-            <div className="review-card">
-              <div className="review-header">
-                <div className="reviewer-info">
-                  <img src={review?.farmer?.profileImage || profilePic} alt="User" />
-                  <strong>{review?.farmer?.name || "Anonymous"}</strong>
+        {reviewList.map((review, index) => {
+          const rating = Math.max(0, Math.min(5, Number(review?.rating) || 0));
+          const reviewDate = review?.updatedAt
+            ? new Date(review.updatedAt).toLocaleDateString()
+            : "N/A";
+
+          return (
+            <div className="col-6" key={review?._id || index}>
+              <div className="review-card">
+                <div className="review-header">
+                  <div className="reviewer-info">
+                    <img src={review?.farmer?.profileImage || profilePic} alt="User" />
+                    <strong>{review?.farmer?.name || "Anonymous"}</strong>
+                  </div>
+                  <div className="review-date">{reviewDate}</div>
                 </div>
-                <div className="review-date">{new Date(review.updatedAt).toLocaleDateString()}</div>
-              </div>
 
-              <div className="stars">
-                {"★".repeat(review.rating)}
-                {"☆".repeat(5 - review.rating)}
-              </div>
+                <div className="stars">
+                  {"★".repeat(rating)}
+                  {"☆".repeat(5 - rating)}
+                </div>
 
-              <div className="review-text">{review.feedbacks}</div>
+                <div className="review-text">{review?.feedbacks || "No feedback provided"}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

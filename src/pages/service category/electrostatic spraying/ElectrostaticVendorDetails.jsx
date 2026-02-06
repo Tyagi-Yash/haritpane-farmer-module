@@ -19,8 +19,8 @@ function ExcavationVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector(
-    (state) => state.services.ElectrostaticSprayingServiceMgmtSlice
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.ElectrostaticSprayingServiceMgmtSlice,
   );
 
   const vendor = services.find((v) => v._id === id);
@@ -38,7 +38,7 @@ function ExcavationVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/electrostatic-spraying/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -66,8 +66,8 @@ function ExcavationVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.basicInfo}
-                          additionalCharges={vendor.basicInfo.additionalCharges}
+                          info={vendor?.basicInfo}
+                          additionalCharges={vendor?.basicInfo?.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           areaUnderCultivation={filters.areaUnderCultivation}
@@ -82,7 +82,9 @@ function ExcavationVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

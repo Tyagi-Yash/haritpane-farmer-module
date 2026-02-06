@@ -1,13 +1,16 @@
 import ReactPaginate from "react-paginate";
 
 export const Commonpagination = ({
-  ActivePage,
-  TotalItemsCount,
-  ItemsCountPerPage,
-  pageRangeDisplayed,
-  Onchange,
+  ActivePage = 1,
+  TotalItemsCount = 0,
+  ItemsCountPerPage = 10,
+  pageRangeDisplayed = 3,
+  Onchange = () => {},
 }) => {
-  const pageCount = Math.ceil(TotalItemsCount / ItemsCountPerPage);
+  const safeItemsCount = Number(ItemsCountPerPage) || 1;
+  const total = Number(TotalItemsCount) || 0;
+  const pageCount = Math.max(1, Math.ceil(total / safeItemsCount));
+  const safeActivePage = Math.min(Math.max(Number(ActivePage) || 1, 1), pageCount);
 
   return (
     <div className="pagination-wrapper">
@@ -16,7 +19,7 @@ export const Commonpagination = ({
         nextLabel="Next >"
         previousLabel="< Prev"
         pageCount={pageCount}
-        forcePage={ActivePage - 1}
+        forcePage={safeActivePage - 1}
         onPageChange={(selected) => Onchange(selected.selected + 1)}
         containerClassName="pagination"
         activeClassName="active"

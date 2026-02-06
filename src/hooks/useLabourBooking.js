@@ -16,6 +16,8 @@ export const useLabourBooking = ({ vendor, filters }) => {
   const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !filters?.labourType) return;
+
     const fetchBookingStatus = async () => {
       try {
         const res = await dispatch(
@@ -25,7 +27,7 @@ export const useLabourBooking = ({ vendor, filters }) => {
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
             labourType: filters.labourType,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -37,6 +39,8 @@ export const useLabourBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !filters?.labourType) return;
+
     const payload = {
       bookingFor: "labour",
       serviceId: vendor._id,
@@ -76,7 +80,7 @@ export const useLabourBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

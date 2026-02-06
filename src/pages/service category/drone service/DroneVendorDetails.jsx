@@ -19,7 +19,9 @@ function DroneVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.DroneServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.DroneServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v._id === id);
 
@@ -35,7 +37,7 @@ function DroneVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/drone-service/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -79,7 +81,9 @@ function DroneVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

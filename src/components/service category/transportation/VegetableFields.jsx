@@ -1,4 +1,9 @@
-export default function VegetableFields({ vegetableType, vegetableWeight, errors, onChange }) {
+export default function VegetableFields({
+  vegetableType = "",
+  vegetableWeight = "",
+  errors = {},
+  onChange = () => {},
+}) {
   return (
     <>
       <div className="col-md-6">

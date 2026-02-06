@@ -16,6 +16,8 @@ export const useAugerBooking = ({ vendor, filters }) => {
   const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return;
+
     const fetchBookingStatus = async () => {
       try {
         const res = await dispatch(
@@ -24,7 +26,7 @@ export const useAugerBooking = ({ vendor, filters }) => {
             providerId: vendor.providerId,
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -36,6 +38,8 @@ export const useAugerBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return;
+
     const payload = {
       bookingFor: "auger",
       serviceId: vendor._id,
@@ -46,7 +50,7 @@ export const useAugerBooking = ({ vendor, filters }) => {
       bookingTillDate: filters.toDate,
       estimatedTime: filters.estimatedTime,
       bookingStartTime: filters.time,
-      extraCharges:vendor.extraCharges
+      extraCharges: vendor.extraCharges,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();
@@ -69,7 +73,7 @@ export const useAugerBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

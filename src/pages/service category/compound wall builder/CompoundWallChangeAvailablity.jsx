@@ -18,9 +18,12 @@ function CompoundWallChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { date, toDate = "" } = filters;
-  const { services, loading, paginationData, sortByRating } = useSelector(
-    (state) => state.services.CompoundWallServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+    sortByRating,
+  } = useSelector((state) => state.services.CompoundWallServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -166,8 +169,8 @@ function CompoundWallChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`vendor-details/${service.compoundMaterialsInfo._id}`}
-                    key={service._id}
+                    to={`vendor-details/${service?.compoundMaterialsInfo?._id || ""}`}
+                    key={service?.compoundMaterialsInfo?._id || service?._id}
                   >
                     <div className="vendor-card">
                       <div className="service-info">

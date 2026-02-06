@@ -16,6 +16,8 @@ export const useDroneBooking = ({ vendor, filters }) => {
   const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return;
+
     const fetchBookingStatus = async () => {
       try {
         const res = await dispatch(
@@ -24,7 +26,7 @@ export const useDroneBooking = ({ vendor, filters }) => {
             providerId: vendor.providerId,
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -36,6 +38,8 @@ export const useDroneBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return;
+
     const payload = {
       bookingFor: "drone",
       serviceId: vendor._id,
@@ -70,7 +74,7 @@ export const useDroneBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

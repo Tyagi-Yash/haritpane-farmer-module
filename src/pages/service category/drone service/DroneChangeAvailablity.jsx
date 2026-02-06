@@ -18,9 +18,12 @@ function DroneChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { date, toDate = "" } = filters;
-  const { services, loading, paginationData, sortByRating } = useSelector(
-    (state) => state.services.DroneServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+    sortByRating,
+  } = useSelector((state) => state.services.DroneServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);

@@ -20,7 +20,9 @@ function CowDungVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.CowDungServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.CowDungServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v._id === id);
 
@@ -77,7 +79,9 @@ function CowDungVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

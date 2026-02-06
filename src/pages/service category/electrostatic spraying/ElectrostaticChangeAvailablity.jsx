@@ -19,9 +19,12 @@ function ElectrostaticChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { toDate = "", fromDate } = filters;
-  const { services, loading, paginationData, sortByRating } = useSelector(
-    (state) => state.services.ElectrostaticSprayingServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+    sortByRating,
+  } = useSelector((state) => state.services.ElectrostaticSprayingServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);

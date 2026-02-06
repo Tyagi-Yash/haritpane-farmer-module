@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import ProductReviews from "../../../components/dashboard/ProductReviews";
 import AddReview from "../../../components/dashboard/AddReview";
+import StarRating from "../../../components/dashboard/StarRating";
 
 function LocalProductDetails() {
   const dispatch = useDispatch();
@@ -92,7 +93,7 @@ function LocalProductDetails() {
               <span className="rating-badge">
                 {productDetails?.providerDetails?.averageRating || "0"}
               </span>
-              <span className="text-warning">★★★★★</span>
+              <StarRating rating={productDetails?.providerDetails?.averageRating || "0"} />
             </div>
           </div>
           <div className="mb-4">

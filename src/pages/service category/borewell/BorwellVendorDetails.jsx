@@ -19,7 +19,9 @@ function BorwellVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.BorewellServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.BorewellServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v._id === id);
 
@@ -36,7 +38,7 @@ function BorwellVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/borewell/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -47,7 +49,7 @@ function BorwellVendorDetails() {
             ) : (
               <>
                 <VendorHeader
-                  image={vendor?.borewellInfo.borewellImg?.[0]}
+                  image={vendor?.borewellInfo?.borewellImg?.[0]}
                   isBooking={isBooking}
                   bookingStatus={bookingStatus}
                 />
@@ -64,8 +66,8 @@ function BorwellVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.borewellInfo}
-                          additionalCharges={vendor.borewellInfo.chargesforOutsideRadius}
+                          info={vendor?.borewellInfo}
+                          additionalCharges={vendor?.borewellInfo?.chargesforOutsideRadius}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           depthOfBorewell={filters.depthOfBorewell}
@@ -80,7 +82,9 @@ function BorwellVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

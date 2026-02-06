@@ -19,9 +19,12 @@ function LandManagementChangeAvailablity() {
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
   const { toDate, fromDate } = filters;
-  const { services, loading, paginationData, sortByRating } = useSelector(
-    (state) => state.services.LandServiceMgmtSlice,
-  );
+  const {
+    services = [],
+    loading,
+    paginationData = {},
+    sortByRating,
+  } = useSelector((state) => state.services.LandServiceMgmtSlice);
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
@@ -154,8 +157,8 @@ function LandManagementChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`vendor-details/${service.Info._id}`}
-                    key={service.Info._id}
+                    to={`vendor-details/${service?.Info?._id || ""}`}
+                    key={service?.Info?._id || service?._id}
                   >
                     <div className="vendor-card">
                       <div className="service-info">

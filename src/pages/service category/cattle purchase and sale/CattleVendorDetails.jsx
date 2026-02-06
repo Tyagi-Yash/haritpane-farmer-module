@@ -19,7 +19,9 @@ function CattleVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.CattleServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.CattleServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v.basicInfo?._id === id);
 
@@ -27,7 +29,7 @@ function CattleVendorDetails() {
     {
       vendor,
       filters,
-    }
+    },
   );
 
   return (
@@ -38,7 +40,7 @@ function CattleVendorDetails() {
             titleBox={true}
             title="Vendor Details"
             navigate={`/service-category/cattle-purchase-sale/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
           <div className="dashboard">
@@ -49,7 +51,7 @@ function CattleVendorDetails() {
             ) : (
               <>
                 <VendorHeader
-                  image={vendor.basicInfo.images[0]}
+                  image={vendor?.basicInfo?.images?.[0]}
                   isBooking={isBooking}
                   bookingStatus={bookingStatus}
                 />
@@ -80,7 +82,9 @@ function CattleVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

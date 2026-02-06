@@ -2,7 +2,13 @@ import profile from "../../assets/images/profile.svg";
 import { Link } from "react-router-dom";
 
 function TopbarModal({ titleBox, navigate, secImage, title }) {
-  const { name, profileImage } = JSON.parse(localStorage.getItem("farmerProfile")) || {};
+  let profileData = {};
+  try {
+    profileData = JSON.parse(localStorage.getItem("farmerProfile") || "{}");
+  } catch {
+    profileData = {};
+  }
+  const { name, profileImage } = profileData || {};
   return (
     <div className="topbar">
       <div className="TitleBox">

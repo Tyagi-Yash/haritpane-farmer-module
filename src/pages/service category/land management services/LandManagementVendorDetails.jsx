@@ -19,7 +19,9 @@ function LandManagementVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.LandServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.LandServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v.Info?._id === id);
 
@@ -81,7 +83,9 @@ function LandManagementVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

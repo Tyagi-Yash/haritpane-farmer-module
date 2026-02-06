@@ -1,4 +1,4 @@
-export default function OtherFields({ otherWeightKg, errors, onChange }) {
+export default function OtherFields({ otherWeightKg = "", errors = {}, onChange = () => {} }) {
   return (
     <div className="col-md-6">
       <label className="form-label">

@@ -19,7 +19,9 @@ function ExcavationVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.ExcavationServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.ExcavationServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v._id === id);
 
@@ -79,7 +81,9 @@ function ExcavationVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

@@ -16,6 +16,9 @@ export const useCattleBooking = ({ vendor, filters }) => {
   const [bookingStatus, setBookingStatus] = useState("");
 
   useEffect(() => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !vendor?.basicInfo?._id)
+      return;
+
     const fetchBookingStatus = async () => {
       try {
         const res = await dispatch(
@@ -25,7 +28,7 @@ export const useCattleBooking = ({ vendor, filters }) => {
             serviceId: vendor._id,
             categoryId: vendor.categoryId,
             cattlebasicInfoId: vendor.basicInfo._id,
-          })
+          }),
         ).unwrap();
         setBookingId(res?.data?.bookingId || null);
         setBookingStatus(res?.data?.status || "");
@@ -37,6 +40,9 @@ export const useCattleBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !vendor?.basicInfo?._id)
+      return;
+
     const payload = {
       bookingFor: "cattle",
       serviceId: vendor._id,
@@ -68,7 +74,7 @@ export const useCattleBooking = ({ vendor, filters }) => {
           bookingId,
           status: "cancelled",
           reasonForRejection: reason,
-        })
+        }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);

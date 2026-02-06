@@ -19,7 +19,9 @@ function AugerVendorDetails() {
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
 
-  const { services, filters } = useSelector((state) => state.services.AugerServiceMgmtSlice);
+  const { services = [], filters = {} } = useSelector(
+    (state) => state.services.AugerServiceMgmtSlice,
+  );
 
   const vendor = services.find((v) => v._id === id);
 
@@ -36,7 +38,7 @@ function AugerVendorDetails() {
             titleBox
             title="Vendor Details"
             navigate={`/service-category/auger-service/available-services?${new URLSearchParams(
-              filters
+              filters,
             ).toString()}`}
           />
 
@@ -48,7 +50,7 @@ function AugerVendorDetails() {
             ) : (
               <>
                 <VendorHeader
-                  image={vendor.augerImg[0]}
+                  image={vendor?.augerImg?.[0]}
                   isBooking={isBooking}
                   bookingStatus={bookingStatus}
                 />
@@ -80,7 +82,9 @@ function AugerVendorDetails() {
                     />
                   </>
                 )}
-                {activeTab === "review" && <ReviewTab serviceId={vendor.provider._id} />}
+                {activeTab === "review" && vendor?.provider?._id && (
+                  <ReviewTab serviceId={vendor.provider._id} />
+                )}
               </>
             )}
           </div>

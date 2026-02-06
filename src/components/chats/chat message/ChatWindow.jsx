@@ -22,7 +22,7 @@ export default function ChatWindow() {
 
     dispatch(fetchMessages(activeChat.roomId));
     setShowNumber(false);
-  }, [activeChat]);
+  }, [activeChat, dispatch]);
 
   const socket = getSocket();
 
@@ -55,7 +55,7 @@ export default function ChatWindow() {
       socket.off("recieveMessage", messageHandler);
       socket.off("statusError", errorHandler);
     };
-  }, [activeChat, socket]);
+  }, [activeChat, socket, dispatch]);
 
   useEffect(() => {
     if (!chatBodyRef.current) return;

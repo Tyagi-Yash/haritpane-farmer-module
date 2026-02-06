@@ -1,4 +1,6 @@
-export default function DateTimeSection({ formState, errors, onChange }) {
+export default function DateTimeSection({ formState = {}, errors = {}, onChange = () => {} }) {
+  const { fromDate = "", tillDate = "", startTime = "" } = formState || {};
+
   return (
     <>
       <div className="col-md-6">
@@ -8,7 +10,7 @@ export default function DateTimeSection({ formState, errors, onChange }) {
         <input
           type="date"
           className="form-control"
-          value={formState.fromDate}
+          value={fromDate}
           onChange={(e) => onChange("fromDate", e.target.value)}
         />
         {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
@@ -21,7 +23,7 @@ export default function DateTimeSection({ formState, errors, onChange }) {
         <input
           type="date"
           className="form-control"
-          value={formState.tillDate}
+          value={tillDate}
           onChange={(e) => onChange("tillDate", e.target.value)}
         />
         {errors.tillDate && <p className="error-text">{errors.tillDate}</p>}
@@ -34,7 +36,7 @@ export default function DateTimeSection({ formState, errors, onChange }) {
         <input
           type="time"
           className="form-control"
-          value={formState.startTime}
+          value={startTime}
           onChange={(e) => onChange("startTime", e.target.value)}
         />
         {errors.startTime && <p className="error-text">{errors.startTime}</p>}

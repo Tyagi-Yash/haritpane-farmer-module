@@ -1,9 +1,16 @@
 export default function EquipmentFields({
-  equipmentDimensions,
-  equipmentWeight,
-  errors,
-  onChange,
+  equipmentDimensions = {},
+  equipmentWeight = "",
+  errors = {},
+  onChange = () => {},
 }) {
+  const dimensions = {
+    lengthCm: "",
+    widthCm: "",
+    heightCm: "",
+    ...equipmentDimensions,
+  };
+
   return (
     <>
       <div className="col-md-6">
@@ -16,7 +23,7 @@ export default function EquipmentFields({
               <input
                 className="form-control"
                 placeholder={field.replace("Cm", " (cm)")}
-                value={equipmentDimensions[field]}
+                value={dimensions[field]}
                 onChange={(e) => onChange(field, e.target.value)}
               />
               {errors[field] && <p className="error-text">{errors[field]}</p>}

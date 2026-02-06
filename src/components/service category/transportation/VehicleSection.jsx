@@ -1,6 +1,8 @@
 import { vehicle } from "../../../constants/service category/transportation service/transportationData";
 
-export default function VehicleSection({ value, error, onChange }) {
+export default function VehicleSection({ value = "", error = "", onChange = () => {} }) {
+  const options = Array.isArray(vehicle) ? vehicle : [];
+
   return (
     <div className="col-md-6">
       <label className="form-label">
@@ -10,7 +12,7 @@ export default function VehicleSection({ value, error, onChange }) {
         <option value="" disabled>
           Select vehicle
         </option>
-        {vehicle.map((v) => (
+        {options.map((v) => (
           <option key={v} value={v}>
             {v}
           </option>
