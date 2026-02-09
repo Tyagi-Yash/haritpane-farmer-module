@@ -3,12 +3,14 @@ import { useEffect, useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import locationBlack from "../../../assets/images/location-black.svg";
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import productImage from "../../../assets/images/product-image.png";
+
 import TopbarModal from "../../../components/common components/TopbarModal";
 import ClassifiedSectionSkeleton from "../../../components/skeletons/ClassifiedSectionSkeleton";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
+import LocationInput from "../../../components/common components/LocationInput";
+
 import { getAllProductsForFarmer } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
 
 function LocalProductsListingModule() {
@@ -20,7 +22,21 @@ function LocalProductsListingModule() {
     (state) => state.services.ClassifiedSectionMgmtSlice,
   );
 
-  const [currentPage, setCurrentPage] = useState(listingPagePaginationData.page || 1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("Top Rated");
+  const [showLocationFilter, setShowLocationFilter] = useState(false);
+
+  const [draftLocation, setDraftLocation] = useState({
+    address: "",
+    lat: null,
+    lng: null,
+  });
+
+  const [appliedLocation, setAppliedLocation] = useState({
+    lat: null,
+    lng: null,
+  });
 
   const loadProducts = useCallback(async () => {
     try {
@@ -28,19 +44,65 @@ function LocalProductsListingModule() {
         createdBy: pathname === "/dashboard/local-shops" ? "just_dial" : "india_mart",
         page: currentPage,
       };
+
+      if (selectedSort === "Top Rated") {
+        params.sortBy = "desc";
+      }
+
+      if (selectedSort === "Location" && appliedLocation.lat && appliedLocation.lng) {
+        params.lat = appliedLocation.lat;
+        params.lng = appliedLocation.lng;
+      }
+
       await dispatch(getAllProductsForFarmer(params)).unwrap();
-    } catch (err) {
-      toast.error("Something went wrong while fetching products");
+    } catch {
+      toast.error("Unable to load products");
     }
-  }, [dispatch, pathname, currentPage]);
+  }, [dispatch, pathname, currentPage, selectedSort, appliedLocation.lat, appliedLocation.lng]);
 
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
 
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber !== currentPage) {
-      setCurrentPage(pageNumber);
+  const toggleSortMenu = () => setIsSortOpen((prev) => !prev);
+
+  const selectTopRated = () => {
+    setSelectedSort("Top Rated");
+    setShowLocationFilter(false);
+    setDraftLocation({ address: "", lat: null, lng: null });
+    setAppliedLocation({ address: "", lat: null, lng: null });
+    setCurrentPage(1);
+    setIsSortOpen(false);
+  };
+
+  const selectLocation = () => {
+    setSelectedSort("Location");
+    setShowLocationFilter(true);
+    setCurrentPage(1);
+    setIsSortOpen(false);
+  };
+
+  const handleSelectLocation = ({ address, lat, lng }) => {
+    setDraftLocation({ address, lat, lng });
+  };
+
+  const handleApplyLocation = () => {
+    if (!draftLocation.lat || !draftLocation.lng) {
+      toast.error("Please select a valid location");
+      return;
+    }
+
+    setAppliedLocation({
+      lat: draftLocation.lat,
+      lng: draftLocation.lng,
+    });
+
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page) => {
+    if (page !== currentPage) {
+      setCurrentPage(page);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -53,30 +115,47 @@ function LocalProductsListingModule() {
     <div className="WrapperArea">
       <div className="WrapperBox">
         <TopbarModal
-          titleBox={true}
-          title={
-            pathname === "/dashboard/local-shops" ? "Local Businesses" : "View Manufacturers"
-          }
+          titleBox
+          title={pathname === "/dashboard/local-shops" ? "Local Businesses" : "View Manufacturers"}
           navigate="/dashboard"
         />
 
         <div className="dashboard local-shops">
           <div className="product-filter-area">
-            <div>
-              <h6 className="book-heading">Products</h6>
-            </div>
+            <h6 className="book-heading">Products</h6>
+
             <div className="search-sort">
-              <div className="location-wrapper">
-                <input type="text" className="form-control" placeholder="location" required />
-                <img src={locationBlack} alt="location" className="location-icon" />
-              </div>
-              <div className="sort-box" id="sortBox">
-                <div className="sort-toggle">
-                  <span>
-                    <span className="sort-label">Sort</span>
-                    <img src={sortArrowDown} alt="Sort Icon" />
-                  </span>
+              {showLocationFilter && (
+                <>
+                  <LocationInput
+                    value={draftLocation.address}
+                    onChange={(val) => setDraftLocation((prev) => ({ ...prev, address: val }))}
+                    onSelectLocation={handleSelectLocation}
+                    placeholder="Enter Location"
+                  />
+
+                  <button className="call-us-edit me-4" onClick={handleApplyLocation}>
+                    Apply Location
+                  </button>
+                </>
+              )}
+
+              <div className="sort-box">
+                <div className="sort-toggle" onClick={toggleSortMenu}>
+                  <span className="sort-label">{selectedSort}</span>
+                  <img src={sortArrowDown} alt="Sort" />
                 </div>
+
+                {isSortOpen && (
+                  <div className="sort-menu">
+                    <div className="sort-option" onClick={selectTopRated}>
+                      Top Rated
+                    </div>
+                    <div className="sort-option" onClick={selectLocation}>
+                      Location
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -106,7 +185,7 @@ function LocalProductsListingModule() {
                       {product?.providerDetails?.address || "Address not available"}
                     </p>
                   </div>
-                  <div className="available-service-btn" style={{ marginTop: "auto" }}>
+                  <div className="available-service-btn mt-auto">
                     <button className="send-btn">View Business</button>
                   </div>
                 </div>

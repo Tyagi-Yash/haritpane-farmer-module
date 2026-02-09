@@ -13,6 +13,7 @@ import {
   validateSelectTime,
 } from "../../../utils/formValidators";
 import { createCowDungJobOrder } from "../../../reduxtoolkit/slices/service category/cowDunkServices";
+import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
 function CowDungBookYourService() {
   const dispatch = useDispatch();
@@ -224,14 +225,14 @@ function CowDungBookYourService() {
                       <label className="form-label">
                         Start time<span className="required">*</span>
                       </label>
-                      <input
-                        type="time"
-                        className="form-control"
-                        name="startTime"
+                      <Time12HourPicker
                         value={startTime}
-                        onChange={handleInputChange}
+                        onChange={(val) => {
+                          setFormState((prev) => ({ ...prev, startTime: val }));
+                          setErrors((prev) => ({ ...prev, startTime: "" }));
+                        }}
+                        error={errors.startTime}
                       />
-                      {errors.startTime && <p className="error-text">{errors.startTime}</p>}
                     </div>
                   </div>
                 </div>
@@ -244,8 +245,7 @@ function CowDungBookYourService() {
             </form>
           )}
 
-          {(selectedService === "dairy_farmers_cow_dunk" ||
-            selectedService === "poultry") && (
+          {(selectedService === "dairy_farmers_cow_dunk" || selectedService === "poultry") && (
             <form onSubmit={handleSubmit}>
               <div className="option-wrapper pt-0">
                 <div className="form-section">

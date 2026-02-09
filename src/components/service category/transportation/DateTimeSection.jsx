@@ -1,3 +1,5 @@
+import Time12HourPicker from "../../common components/Time12HourPicker";
+
 export default function DateTimeSection({ formState = {}, errors = {}, onChange = () => {} }) {
   const { fromDate = "", tillDate = "", startTime = "" } = formState || {};
 
@@ -33,13 +35,11 @@ export default function DateTimeSection({ formState = {}, errors = {}, onChange 
         <label className="form-label">
           Start time<span className="required">*</span>
         </label>
-        <input
-          type="time"
-          className="form-control"
+        <Time12HourPicker
           value={startTime}
-          onChange={(e) => onChange("startTime", e.target.value)}
+          onChange={(val) => onChange("startTime", val)}
+          error={errors.startTime}
         />
-        {errors.startTime && <p className="error-text">{errors.startTime}</p>}
       </div>
     </>
   );

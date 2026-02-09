@@ -11,6 +11,7 @@ import {
   validateFromDate,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
 function AugerBookYourService() {
   const filters = useSelector((state) => state.services.AugerServiceMgmtSlice.filters);
@@ -154,14 +155,14 @@ function AugerBookYourService() {
                     <label className="form-label">
                       Select time<span className="required">*</span>
                     </label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="time"
+                    <Time12HourPicker
                       value={time}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, time: val }));
+                        setErrors((prev) => ({ ...prev, time: "" }));
+                      }}
+                      error={errors.time}
                     />
-                    {errors.time && <p className="error-text">{errors.time}</p>}{" "}
                   </div>
                 </div>
               </div>

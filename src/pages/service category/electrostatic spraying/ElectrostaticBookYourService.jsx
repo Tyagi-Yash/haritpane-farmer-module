@@ -7,10 +7,11 @@ import ElectrostaticSprayingIcon from "../../../assets/images/Electrostatic-Spra
 import TopbarModal from "../../../components/common components/TopbarModal";
 import LocationInput from "../../../components/common components/LocationInput";
 import { validateArea, validateFromDate, validateSelectTime } from "../../../utils/formValidators";
+import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
 function ElectrostaticBookYourService() {
   const filters = useSelector(
-    (state) => state.services.ElectrostaticSprayingServiceMgmtSlice.filters
+    (state) => state.services.ElectrostaticSprayingServiceMgmtSlice.filters,
   );
   const defaultForm = {
     address: "",
@@ -137,14 +138,14 @@ function ElectrostaticBookYourService() {
                     <label className="form-label">
                       Start time<span className="required">*</span>
                     </label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="fromTime"
+                    <Time12HourPicker
                       value={fromTime}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, fromTime: val }));
+                        setErrors((prev) => ({ ...prev, fromTime: "" }));
+                      }}
+                      error={errors.fromTime}
                     />
-                    {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
                   </div>
                 </div>
               </div>

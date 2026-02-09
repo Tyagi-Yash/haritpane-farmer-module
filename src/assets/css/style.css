@@ -3549,3 +3549,64 @@ input[type="date" i] {
 .skeleton-button.full-width {
   width: 100%;
 }
+
+.time-wrapper {
+  position: relative;
+}
+
+.time-pill {
+  height: 45px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: #fff;
+}
+
+.time-dropdown {
+  position: absolute;
+  bottom: 48px;
+  left: 0;
+  display: flex;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 10;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.time-dropdown .col {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.time-item {
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.time-item:hover {
+  background: #f1f1f1;
+}
+
+.time-item.active {
+  background: #0d6efd;
+  color: #fff;
+}
+
+.time-dropdown .col {
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.time-dropdown .col::-webkit-scrollbar {
+  display: none;
+}

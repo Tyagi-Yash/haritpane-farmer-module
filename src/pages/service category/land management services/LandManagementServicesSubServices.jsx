@@ -9,6 +9,7 @@ import landManagementTractorServices from "../../../assets/images/land-managemen
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { validateDates, validateSelectTime } from "../../../utils/formValidators";
 import LocationInput from "../../../components/common components/LocationInput";
+import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
 function LandManagementServicesSubServices() {
   const filters = useSelector((state) => state.services.LandServiceMgmtSlice.filters);
@@ -243,14 +244,14 @@ function LandManagementServicesSubServices() {
                     <label className="form-label">
                       Start time<span className="required">*</span>
                     </label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="fromTime"
+                    <Time12HourPicker
                       value={fromTime}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, fromTime: val }));
+                        setErrors((prev) => ({ ...prev, fromTime: "" }));
+                      }}
+                      error={errors.fromTime}
                     />
-                    {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
                   </div>
                 </div>
               </div>

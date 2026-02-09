@@ -13,6 +13,7 @@ import {
   validateFromTimeOnly,
   validateWaterMotor,
 } from "../../../utils/formValidators";
+import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
 function BorwellBookYourService() {
   const filters = useSelector((state) => state.services.BorewellServiceMgmtSlice.filters);
@@ -208,25 +209,25 @@ function BorwellBookYourService() {
                     <label className="form-label">
                       Start time<span className="required">*</span>
                     </label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="fromTime"
+                    <Time12HourPicker
                       value={fromTime}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, fromTime: val }));
+                        setErrors((prev) => ({ ...prev, fromTime: "" }));
+                      }}
+                      error={errors.fromTime}
                     />
-                    {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">End time</label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="toTime"
+                    <Time12HourPicker
                       value={toTime}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, toTime: val }));
+                        setErrors((prev) => ({ ...prev, toTime: "" }));
+                      }}
+                      error={errors.toTime}
                     />
-                    {errors.toTime && <p className="error-text">{errors.toTime}</p>}
                   </div>
                 </div>
               </div>

@@ -14,6 +14,7 @@ import {
   validateEquipmentTypes,
   validateSelectTime,
 } from "../../../utils/formValidators";
+import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
 function ExcavationBookYourService() {
   const filters = useSelector((state) => state.services.ExcavationServiceMgmtSlice.filters);
@@ -184,14 +185,14 @@ function ExcavationBookYourService() {
                     <label className="form-label">
                       Start time<span className="required">*</span>
                     </label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="fromTime"
+                    <Time12HourPicker
                       value={fromTime}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, fromTime: val }));
+                        setErrors((prev) => ({ ...prev, fromTime: "" }));
+                      }}
+                      error={errors.fromTime}
                     />
-                    {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
                   </div>
                 </div>
                 <h5 className="book-heading">Tentative Duration</h5>

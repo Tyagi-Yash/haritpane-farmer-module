@@ -7,6 +7,7 @@ import TopbarModal from "../../components/common components/TopbarModal";
 import TransportationIcon from "../../assets/images/Transportation-icon.png";
 import { validateDates, validateSelectTime } from "../../utils/formValidators";
 import { rescheduleJobOrder } from "../../reduxtoolkit/slices/progress/jobOrder";
+import Time12HourPicker from "../../components/common components/Time12HourPicker";
 
 function RescheduleTransportation() {
   const dispatch = useDispatch();
@@ -237,14 +238,14 @@ function RescheduleTransportation() {
 
                   <div className="col-md-6">
                     <label className="form-label">Start Time *</label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="startTime"
+                    <Time12HourPicker
                       value={startTime}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, startTime: val }));
+                        setErrors((prev) => ({ ...prev, startTime: "" }));
+                      }}
+                      error={errors.startTime}
                     />
-                    {errors.startTime && <p className="error-text">{errors.startTime}</p>}
                   </div>
                 </div>
               </div>

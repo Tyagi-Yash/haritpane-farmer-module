@@ -7,6 +7,7 @@ import TopbarModal from "../../components/common components/TopbarModal";
 import CowDunkSupplyIcon from "../../assets/images/CowDunkSupply-icon.png";
 import { validateFromDate, validateSelectTime } from "../../utils/formValidators";
 import { rescheduleJobOrder } from "../../reduxtoolkit/slices/progress/jobOrder";
+import Time12HourPicker from "../../components/common components/Time12HourPicker";
 
 function RescheduleCowDung() {
   const dispatch = useDispatch();
@@ -130,14 +131,14 @@ function RescheduleCowDung() {
                     <label className="form-label">
                       Start time<span className="required">*</span>
                     </label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="startTime"
+                    <Time12HourPicker
                       value={startTime}
-                      onChange={handleInputChange}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, startTime: val }));
+                        setErrors((prev) => ({ ...prev, startTime: "" }));
+                      }}
+                      error={errors.startTime}
                     />
-                    {errors.startTime && <p className="error-text">{errors.startTime}</p>}
                   </div>
                 </div>
               </div>

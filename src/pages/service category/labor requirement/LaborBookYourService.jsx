@@ -237,25 +237,25 @@ function LaborBookYourService() {
                     <label className="form-label">
                       Start time<span className="required">*</span>
                     </label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="fromTime"
+                    <Time12HourPicker
                       value={fromTime}
-                      onChange={handleInputChange}
-                    />{" "}
-                    {errors.fromTime && <p className="error-text">{errors.fromTime}</p>}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, fromTime: val }));
+                        setErrors((prev) => ({ ...prev, fromTime: "" }));
+                      }}
+                      error={errors.fromTime}
+                    />
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">End time</label>
-                    <input
-                      type="time"
-                      className="form-control"
-                      name="toTime"
+                    <Time12HourPicker
                       value={toTime}
-                      onChange={handleInputChange}
-                    />{" "}
-                    {errors.toTime && <p className="error-text">{errors.toTime}</p>}
+                      onChange={(val) => {
+                        setFormState((prev) => ({ ...prev, toTime: val }));
+                        setErrors((prev) => ({ ...prev, toTime: "" }));
+                      }}
+                      error={errors.toTime}
+                    />
                   </div>
                 </div>
               </div>
