@@ -217,9 +217,6 @@ function CompoundWallBookYourService() {
                     />
                     {errors.time && <p className="error-text">{errors.time}</p>}
                   </div>
-                  <div className="end-item">
-                    <a href="#">Measure wall length now?</a>
-                  </div>
                 </div>
               </div>
             </div>

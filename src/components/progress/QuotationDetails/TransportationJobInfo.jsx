@@ -1,3 +1,4 @@
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import Info from "./Info";
 
 const transportItemLabelMap = {
@@ -17,7 +18,11 @@ function TransportationJobInfo({ job }) {
       <Info label="Status" value={job.status} />
       <Info label="From Location" value={job.currentLocation} />
       <Info label="To Location" value={job.destinationLocation} />
-      <Info label="Schedule" value={`${job.fromDate} – ${job.tillDate}, ${job.startTime}`} />
+      <Info
+        label="Schedule"
+        value={`${job.fromDate} – ${job.tillDate}, ${convertTo12Hour(job.startTime)}`}
+      />
+
       <Info label="Vehicle Type" value={job.typeOfVehicle} />
       <Info
         label="Goods"

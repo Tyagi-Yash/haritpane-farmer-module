@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllJobOrders } from "../../../reduxtoolkit/slices/progress/jobOrder";
 import JobOrderCard from "./JobOrderCard";
 import { Commonpagination } from "../../common components/Commonpagination";
+import JobOrderSkeleton from "../../skeletons/JobOrderSkeleton";
 
 function JobOrderList() {
   const dispatch = useDispatch();
@@ -16,8 +17,9 @@ function JobOrderList() {
     dispatch(getAllJobOrders({ page }));
   }, [dispatch, page]);
 
-  if (loading) return <p>Loading job orders...</p>;
-  if (!jobOrders?.length) return <p>No job orders found.</p>;
+  if (loading) return <JobOrderSkeleton count={6} />;
+
+  if (!jobOrders?.length) return <p className="text-center pt-5">No job orders found.</p>;
 
   return (
     <div className="dashboard service-tracking">

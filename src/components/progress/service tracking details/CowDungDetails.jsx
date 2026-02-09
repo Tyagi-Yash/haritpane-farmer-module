@@ -73,7 +73,7 @@ function CowDungDetails({ data }) {
         <div>
           <div className="row align-items-center">
             <div className="col align-items-center">
-              <div className="option-wrapper booking-area">
+              <div className="option-wrapper booking-area mb-0">
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Cow Dung/Poultry Waste</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
@@ -81,12 +81,12 @@ function CowDungDetails({ data }) {
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                <PriceBreakdown info={service.perton} payableAmount={data.amount} />
+                <PriceBreakdown info={service.perton} />
               </div>
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end align-items-center mt-5">
+        <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
               Cancel Booking

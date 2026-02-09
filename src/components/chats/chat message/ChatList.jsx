@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveChat } from "../../../reduxtoolkit/slices/chats/chats";
+import { formatDateTo12Hour } from "../../../utils/formatTime12Hour";
 import profilePic from "../../../assets/images/user-icon.svg";
 
 export default function ChatList() {
@@ -26,12 +27,7 @@ export default function ChatList() {
                 <p className="last-message">{chat.lastMessage?.message}</p>
               </div>
               <span className="time">
-                {chat?.lastMessage?.createdAt
-                  ? new Date(chat.lastMessage.createdAt).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
-                  : ""}
+                {chat?.lastMessage?.createdAt ? formatDateTo12Hour(chat.lastMessage.createdAt) : ""}
               </span>
             </div>
           ))}

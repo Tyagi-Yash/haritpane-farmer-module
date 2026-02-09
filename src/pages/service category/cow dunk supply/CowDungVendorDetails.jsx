@@ -68,7 +68,7 @@ function CowDungVendorDetails() {
                         />
                       </div>
                       <div className="col">
-                        <PriceBreakdown info={vendor.perton} payableAmount={vendor.payableAmount} />
+                        <PriceBreakdown info={vendor.perton} />
                       </div>
                     </div>
                     <BookingActions

@@ -3519,3 +3519,33 @@ input[type="date" i] {
   white-space: nowrap;
   overflow: hidden;
 }
+
+.skeleton-service-name {
+  width: 60%;
+  height: 25px;
+}
+
+.skeleton-status-badge {
+  width: 80px;
+  height: 25px;
+  border-radius: 12px;
+}
+
+.skeleton-job-label {
+  width: 25%;
+  height: 20px;
+}
+.skeleton-value {
+  width: 45%;
+  height: 20px;
+}
+
+.skeleton-button {
+  width: 50%;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.skeleton-button.full-width {
+  width: 100%;
+}

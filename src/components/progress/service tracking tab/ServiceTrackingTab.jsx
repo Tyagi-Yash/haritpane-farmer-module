@@ -8,6 +8,7 @@ import serviceImg from "../../../assets/images/service.png";
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import { Commonpagination } from "../../common components/Commonpagination";
 import { statusOptions } from "../../../constants/progress/statusOptions";
+import ProgressVendorSkeleton from "../../skeletons/ProgressVendorSkeleton";
 
 function ServiceTrackingTab() {
   const dispatch = useDispatch();
@@ -127,7 +128,7 @@ function ServiceTrackingTab() {
       </div>
 
       <div className="option-wrapper mb-0">
-        {loading && <p className="text-center">Loading...</p>}
+        {loading && <ProgressVendorSkeleton count={5} />}
         {!loading && services.length === 0 && (
           <p className="text-center">No bookings found for {selectedStatus} status</p>
         )}
