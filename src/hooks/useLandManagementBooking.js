@@ -49,6 +49,7 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       hpOfTractor: filters.hpOfTractor,
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
+      bookingStartTime: filters.fromTime,
       extraCharges: vendor.extraCharges,
     };
     try {

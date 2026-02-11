@@ -48,6 +48,7 @@ export const useCowDungBooking = ({ vendor, filters }) => {
       amount: vendor.payableAmount?.toString(),
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
+      bookingStartTime: filters.startTime,
       categoryTypeOfCowDunk: filters.type,
     };
     try {

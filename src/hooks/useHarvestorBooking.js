@@ -49,6 +49,7 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
       typeOfCrop: filters.typeOfCrop,
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
+      bookingStartTime: filters.fromTime,
       amount: vendor.payableAmount?.toString(),
       extraCharges: vendor.extraCharges,
     };

@@ -49,6 +49,7 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       amount: vendor.payableAmount?.toString(),
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
+      bookingStartTime: filters.fromTime,
       durationOfExavation: filters.duration,
       excavationType: filters.sectectEquipmentType,
       extraCharges: vendor.extraCharges,

@@ -65,6 +65,7 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
       typeOfWall: filters.serviceType,
       date: filters.fromDate,
       bookingTillDate: filters.toDate,
+      bookingStartTime: filters.time,
       time: filters.fromTime,
     };
     try {
