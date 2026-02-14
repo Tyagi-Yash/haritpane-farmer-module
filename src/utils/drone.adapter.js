@@ -1,6 +1,6 @@
 export const droneAdapter = (item) => {
   const service = item.serviceDetails || {};
-  const priceValue = Number(item.amount || 0);
+  const priceValue = Number(service?.chargePerAcre || 0);
 
   return {
     id: item._id,

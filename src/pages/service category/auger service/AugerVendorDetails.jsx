@@ -71,6 +71,7 @@ function AugerVendorDetails() {
                           additionalCharges={vendor.additionCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
+                          distanceBeyondRadius={vendor.distanceBeyondRadius}
                         />
                       </div>
                     </div>

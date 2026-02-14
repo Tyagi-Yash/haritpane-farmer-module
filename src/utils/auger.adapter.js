@@ -1,19 +1,5 @@
 export const augerAdapter = (item) => {
   const service = item.serviceDetails || {};
-  const drill = service.drillInfo?.[0];
-
-  let priceValue = 0;
-  let priceUnit = "";
-  const bookingAmount = Number(item.amount || 0);
-  if (bookingAmount > 0) {
-    priceValue = bookingAmount;
-  } else if (service.ratePerHr) {
-    priceValue = Number(service.ratePerHr || 0);
-    priceUnit = "/hour";
-  } else if (drill?.ratePerInch) {
-    priceValue = Number(drill.ratePerInch || 0);
-    priceUnit = "/Running ft";
-  }
 
   return {
     id: item._id,
@@ -22,7 +8,7 @@ export const augerAdapter = (item) => {
     image: service.augerImg?.[0] || "",
     businessName: service.businessName || "No Discription",
     rating: item.providerDetails?.averageRating ?? "N/A",
-    amount: Number(priceValue || 0).toFixed(2) + priceUnit,
+    amount: Number(service?.ratePerHr || 0).toFixed(2),
 
     raw: item,
   };

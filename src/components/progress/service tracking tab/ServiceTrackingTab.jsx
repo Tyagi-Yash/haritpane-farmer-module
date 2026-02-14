@@ -10,6 +10,9 @@ import { Commonpagination } from "../../common components/Commonpagination";
 import { statusOptions } from "../../../constants/progress/statusOptions";
 import ProgressVendorSkeleton from "../../skeletons/ProgressVendorSkeleton";
 
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 function ServiceTrackingTab() {
   const dispatch = useDispatch();
 
@@ -29,8 +32,7 @@ function ServiceTrackingTab() {
     return new Date(start) <= new Date(end);
   };
 
-  const handleFromDateChange = (e) => {
-    const value = e.target.value;
+  const handleFromDateChange = (value) => {
     if (!validateDateRange(value, toDate)) {
       toast.error("End date cannot be before start date");
       return;
@@ -39,8 +41,7 @@ function ServiceTrackingTab() {
     setPage(1);
   };
 
-  const handleToDateChange = (e) => {
-    const value = e.target.value;
+  const handleToDateChange = (value) => {
     if (!validateDateRange(fromDate, value)) {
       toast.error("End date cannot be before start date");
       return;
@@ -80,20 +81,36 @@ function ServiceTrackingTab() {
           <div className="row align-items-end">
             <div className="col-md-4 mb-3">
               <label className="form-label">Select Start Date</label>
-              <input
-                type="date"
-                className="form-control"
-                value={fromDate}
-                onChange={handleFromDateChange}
+              <DatePicker
+                selected={fromDate ? new Date(fromDate) : null}
+                onChange={(selectedDate) => {
+                  const formatted = format(selectedDate, "yyyy-MM-dd");
+                  handleFromDateChange(formatted);
+                }}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="DD/MM/YYYY"
+                className="form-control custom-datepicker"
+                calendarClassName="custom-calendar"
+                showPopperArrow={false}
+                showOtherMonths
+                fixedHeight
               />
             </div>
             <div className="col-md-4 mb-3">
               <label className="form-label">Select End Date</label>
-              <input
-                type="date"
-                className="form-control"
-                value={toDate}
-                onChange={handleToDateChange}
+              <DatePicker
+                selected={toDate ? new Date(toDate) : null}
+                onChange={(selectedDate) => {
+                  const formatted = format(selectedDate, "yyyy-MM-dd");
+                  handleToDateChange(formatted);
+                }}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="DD/MM/YYYY"
+                className="form-control custom-datepicker"
+                calendarClassName="custom-calendar"
+                showPopperArrow={false}
+                showOtherMonths
+                fixedHeight
               />
             </div>
             <div className="col-md-4 mb-3">

@@ -90,6 +90,7 @@ function ElectrostaticDetails({ data }) {
                   additionalCharges={service.basicInfo.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
+                  distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
                 />
               </div>
             </div>

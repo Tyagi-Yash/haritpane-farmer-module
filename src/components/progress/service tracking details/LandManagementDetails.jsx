@@ -85,6 +85,7 @@ function LandManagementDetails({ data }) {
                   extraCharges={data.extraCharges}
                   additionalCharges={service.additionalCharges}
                   payableAmount={data.amount}
+                  distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
                 />
               </div>
             </div>

@@ -71,6 +71,7 @@ function LandManagementVendorDetails() {
                           info={vendor.Info}
                           extraCharges={vendor.extraCharges}
                           additionalCharges={vendor.additionalCharges}
+                          distanceBeyondRadius={vendor.distanceBeyondRadius}
                           payableAmount={vendor.payableAmount}
                         />
                       </div>

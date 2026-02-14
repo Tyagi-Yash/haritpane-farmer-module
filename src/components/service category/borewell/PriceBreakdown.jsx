@@ -1,11 +1,18 @@
-const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }) => {
+const PriceBreakdown = ({
+  info,
+  additionalCharges,
+  extraCharges,
+  payableAmount,
+  distanceBeyondRadius,
+}) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
   const boreRatePerFt = Number(info?.boreDigging ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
+  const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 
   const boreAmount = extraCharges
-    ? Number(payableAmount ?? 0) - transportCharge
+    ? Number(payableAmount ?? 0) - OveralltransportCharge
     : Number(payableAmount ?? 0);
 
   const depthOfBorewell = boreRatePerFt > 0 ? boreAmount / boreRatePerFt : 0;
@@ -27,8 +34,15 @@ const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }
           </tr>
 
           <tr>
-            <td>Transportation Charges</td>
-            <td>{formatPrice(transportCharge)}</td>
+            <td>
+              Transportation Charges
+              {!!transportCharge && (
+                <div className="text-muted small">
+                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                </div>
+              )}
+            </td>
+            <td>{formatPrice(OveralltransportCharge)}</td>
           </tr>
         </tbody>
 

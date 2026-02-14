@@ -13,6 +13,21 @@ export const validateDates = (fromDate, toDate) => {
   }
   return {};
 };
+export const validateFromTillDates = (fromDate, tillDate) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  if (!fromDate) return { fromDate: "*From date is required" };
+  if (new Date(fromDate) < today) return { fromDate: "*From date cannot be in the past" };
+
+  if (!tillDate) return { tillDate: "*To date is required" };
+  if (new Date(tillDate) < today) return { tillDate: "*To date cannot be in the past" };
+
+  if (new Date(fromDate) > new Date(tillDate)) {
+    return { tillDate: "*To date cannot be earlier than from date" };
+  }
+  return {};
+};
 
 export const validateFromDateRequired = (fromDate, toDate) => {
   const today = new Date();

@@ -11,6 +11,9 @@ import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton
 import { getAllServicesCompoundWall } from "../../../reduxtoolkit/slices/service category/compoundWallServices";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
 
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 function CompoundWallChangeAvailablity() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -105,13 +108,20 @@ function CompoundWallChangeAvailablity() {
                   <label className="form-label">Select Start Date</label>
                   {errors.date && <p className="error-text">{errors.date}</p>}
                   <div className="input-group">
-                    <input
-                      type="date"
-                      className="form-control"
-                      placeholder="Till date*"
-                      name="date"
-                      value={date}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={date ? new Date(date) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFilters((prev) => ({ ...prev, date: formatted }));
+                        setErrors((prev) => ({ ...prev, date: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                   </div>
                 </div>
@@ -119,13 +129,20 @@ function CompoundWallChangeAvailablity() {
                   <label className="form-label">Select End Date</label>
                   {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
-                    <input
-                      type="date"
-                      className="form-control"
-                      placeholder="Till date*"
-                      name="toDate"
-                      value={toDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={toDate ? new Date(toDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFilters((prev) => ({ ...prev, toDate: formatted }));
+                        setErrors((prev) => ({ ...prev, toDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                   </div>
                 </div>
@@ -190,7 +207,7 @@ function CompoundWallChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.compoundMaterialsInfo?.rate ?? 0).toFixed(2)}</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

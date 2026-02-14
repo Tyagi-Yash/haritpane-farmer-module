@@ -51,6 +51,7 @@ export const useAugerBooking = ({ vendor, filters }) => {
       estimatedTime: filters.estimatedTime,
       bookingStartTime: filters.time,
       extraCharges: vendor.extraCharges,
+      distanceBeyondRadius: vendor.distanceBeyondRadius,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

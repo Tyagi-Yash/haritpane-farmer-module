@@ -73,6 +73,7 @@ function LabourVendorDetails() {
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           numberOfLabour={filters.numberOfLabour}
+                          distanceBeyondRadius={vendor.distanceBeyondRadius}
                         />
                       </div>
                     </div>

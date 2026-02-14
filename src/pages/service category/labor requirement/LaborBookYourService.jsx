@@ -19,6 +19,8 @@ import {
   LabourTypes,
 } from "../../../constants/service category/labor requirement/labour type data";
 import Time12HourPicker from "../../../components/common components/Time12HourPicker";
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 
 function LaborBookYourService() {
   const navigate = useNavigate();
@@ -212,12 +214,20 @@ function LaborBookYourService() {
                     <label className="form-label">
                       From date<span className="required">*</span>
                     </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      name="fromDate"
-                      value={fromDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={fromDate ? new Date(fromDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFormState((prev) => ({ ...prev, fromDate: formatted }));
+                        setErrors((prev) => ({ ...prev, fromDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                     {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
@@ -225,12 +235,20 @@ function LaborBookYourService() {
                     <label className="form-label">
                       Till date<span className="required">*</span>
                     </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      name="toDate"
-                      value={toDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={toDate ? new Date(toDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFormState((prev) => ({ ...prev, toDate: formatted }));
+                        setErrors((prev) => ({ ...prev, toDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                     {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   </div>

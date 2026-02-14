@@ -90,6 +90,7 @@ function AugerDetails({ data }) {
                   additionalCharges={service.additionCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
+                  distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
                 />
               </div>
             </div>

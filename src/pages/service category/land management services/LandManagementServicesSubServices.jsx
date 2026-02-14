@@ -11,6 +11,9 @@ import { validateDates, validateSelectTime } from "../../../utils/formValidators
 import LocationInput from "../../../components/common components/LocationInput";
 import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 function LandManagementServicesSubServices() {
   const filters = useSelector((state) => state.services.LandServiceMgmtSlice.filters);
   const defaultForm = {
@@ -218,12 +221,20 @@ function LandManagementServicesSubServices() {
                     <label className="form-label">
                       From date<span className="required">*</span>
                     </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      name="fromDate"
-                      value={fromDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={fromDate ? new Date(fromDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFormState((prev) => ({ ...prev, fromDate: formatted }));
+                        setErrors((prev) => ({ ...prev, fromDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                     {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
@@ -231,12 +242,20 @@ function LandManagementServicesSubServices() {
                     <label className="form-label">
                       Till date<span className="required">*</span>
                     </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      name="toDate"
-                      value={toDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={toDate ? new Date(toDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFormState((prev) => ({ ...prev, toDate: formatted }));
+                        setErrors((prev) => ({ ...prev, toDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                     {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   </div>

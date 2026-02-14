@@ -1,11 +1,18 @@
-const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }) => {
+const PriceBreakdown = ({
+  info,
+  additionalCharges,
+  extraCharges,
+  payableAmount,
+  distanceBeyondRadius,
+}) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
   const dailyWage = Number(info?.dailyWage ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
+  const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 
   const serviceAmount = extraCharges
-    ? Number(payableAmount ?? 0) - transportCharge
+    ? Number(payableAmount ?? 0) - OveralltransportCharge
     : Number(payableAmount ?? 0);
 
   const numberOfLabour = dailyWage > 0 ? serviceAmount / dailyWage : 0;
@@ -28,8 +35,15 @@ const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }
           </tr>
 
           <tr>
-            <td>Transportation Charges</td>
-            <td>{formatPrice(transportCharge)}</td>
+            <td>
+              Transportation Charges
+              {!!transportCharge && (
+                <div className="text-muted small">
+                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                </div>
+              )}
+            </td>
+            <td>{formatPrice(OveralltransportCharge)}</td>
           </tr>
         </tbody>
 

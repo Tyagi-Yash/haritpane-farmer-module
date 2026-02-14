@@ -53,6 +53,7 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       durationOfExavation: filters.duration,
       excavationType: filters.sectectEquipmentType,
       extraCharges: vendor.extraCharges,
+      distanceBeyondRadius: vendor.distanceBeyondRadius,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

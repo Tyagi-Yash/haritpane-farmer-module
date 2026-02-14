@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   validateDates,
+  validateFromTillDates,
   validateHeight,
   validateItemType,
   validateLength,
@@ -96,7 +97,7 @@ export function useTransportationForm() {
       const vehicleErr = validateVehicleType(f.typeOfVehicle.trim());
       if (vehicleErr) e.typeOfVehicle = vehicleErr;
 
-      Object.assign(e, validateDates(f.fromDate, f.tillDate));
+      Object.assign(e, validateFromTillDates(f.fromDate, f.tillDate));
 
       const timeErr = validateSelectTime(f.fromDate, f.startTime);
       if (timeErr) e.startTime = timeErr;

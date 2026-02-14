@@ -52,6 +52,7 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
       bookingStartTime: filters.fromTime,
       amount: vendor.payableAmount?.toString(),
       extraCharges: vendor.extraCharges,
+      distanceBeyondRadius: vendor.distanceBeyondRadius,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

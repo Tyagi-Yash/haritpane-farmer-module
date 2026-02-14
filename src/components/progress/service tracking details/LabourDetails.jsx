@@ -86,6 +86,7 @@ function LabourDetails({ data }) {
                   additionalCharges={service.labourInfo.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
+                  distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
                 />
               </div>
             </div>

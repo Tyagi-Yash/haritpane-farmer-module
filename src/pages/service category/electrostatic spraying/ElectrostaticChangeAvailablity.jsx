@@ -12,6 +12,9 @@ import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton
 import { validateFromDateRequired } from "../../../utils/formValidators";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
 
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 function ElectrostaticChangeAvailablity() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -43,11 +46,6 @@ function ElectrostaticChangeAvailablity() {
       setCurrentPage(pageNumber);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
   const validateForm = () => {
     let newErrors = {};
@@ -95,13 +93,20 @@ function ElectrostaticChangeAvailablity() {
                   <label className="form-label">Select Start Date</label>
                   {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   <div className="input-group">
-                    <input
-                      type="date"
-                      className="form-control"
-                      placeholder="Till date*"
-                      name="fromDate"
-                      value={fromDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={fromDate ? new Date(fromDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFilters((prev) => ({ ...prev, fromDate: formatted }));
+                        setErrors((prev) => ({ ...prev, fromDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                   </div>
                 </div>
@@ -109,13 +114,20 @@ function ElectrostaticChangeAvailablity() {
                   <label className="form-label">Select End Date</label>
                   {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
-                    <input
-                      type="date"
-                      className="form-control"
-                      placeholder="Till date*"
-                      name="toDate"
-                      value={toDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={toDate ? new Date(toDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFilters((prev) => ({ ...prev, toDate: formatted }));
+                        setErrors((prev) => ({ ...prev, toDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                   </div>
                 </div>
@@ -180,7 +192,7 @@ function ElectrostaticChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.basicInfo?.chargePerAcre ?? 0).toFixed(2)}</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

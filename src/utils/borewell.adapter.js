@@ -1,6 +1,6 @@
 export const borewellAdapter = (item) => {
   const service = item.serviceDetails || {};
-  const priceValue = Number(item.amount || 0);
+  const priceValue = Number(service?.borewellInfo?.boreDigging || 0);
 
   return {
     id: item._id,

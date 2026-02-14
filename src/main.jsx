@@ -1,4 +1,5 @@
 import "./assets/css/style.css";
+import "react-datepicker/dist/react-datepicker.css";
 import App from "./App.jsx";
 import store, { persistor } from "./reduxtoolkit/store.js";
 
@@ -14,5 +15,5 @@ createRoot(document.getElementById("root")).render(
         <App />
       </PersistGate>
     </Provider>
-  </BrowserRouter>
+  </BrowserRouter>,
 );

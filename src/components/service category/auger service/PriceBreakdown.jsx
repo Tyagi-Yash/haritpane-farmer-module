@@ -1,13 +1,20 @@
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 
-const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }) => {
+const PriceBreakdown = ({
+  info,
+  additionalCharges,
+  extraCharges,
+  payableAmount,
+  distanceBeyondRadius,
+}) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
   const ratePerHr = Number(info ?? 0);
   const payable = Number(payableAmount ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
+  const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 
-  const billableHours = ratePerHr > 0 ? payable / ratePerHr : 0;
+  const billableHours = ratePerHr > 0 ? (payable - OveralltransportCharge) / ratePerHr : 0;
 
   return (
     <div className="option-wrapper bookingPriceTable">
@@ -22,12 +29,19 @@ const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }
                 {formatPrice(ratePerHr)} (Per Hour) × {formatHoursMinutes(billableHours)}
               </div>
             </td>
-            <td>{formatPrice(payable - transportCharge)}</td>
+            <td>{formatPrice(payable - OveralltransportCharge)}</td>
           </tr>
 
           <tr>
-            <td>Transportation Charges</td>
-            <td>{formatPrice(transportCharge)}</td>
+            <td>
+              Transportation Charges
+              {!!transportCharge && (
+                <div className="text-muted small">
+                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                </div>
+              )}
+            </td>
+            <td>{formatPrice(OveralltransportCharge)}</td>
           </tr>
         </tbody>
 

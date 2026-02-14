@@ -54,6 +54,7 @@ export const useBorewellBooking = ({ vendor, filters }) => {
       bookingStartTime: filters.fromTime,
       bookingEndTime: filters.toTime,
       extraCharges: vendor.extraCharges,
+      distanceBeyondRadius: vendor.distanceBeyondRadius,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

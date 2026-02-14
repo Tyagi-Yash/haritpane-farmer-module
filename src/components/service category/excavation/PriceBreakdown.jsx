@@ -1,11 +1,18 @@
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 
-const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }) => {
+const PriceBreakdown = ({
+  info,
+  additionalCharges,
+  extraCharges,
+  payableAmount,
+  distanceBeyondRadius,
+}) => {
   const price = Number(info?.price ?? 0);
   const priceType = info?.priceType;
   const payable = Number(payableAmount ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
-  const serviceAmount = extraCharges ? payable - transportCharge : payable;
+  const OveralltransportCharge = transportCharge * distanceBeyondRadius;
+  const serviceAmount = extraCharges ? payable - OveralltransportCharge : payable;
   const units = price > 0 ? serviceAmount / price : 0;
 
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
@@ -37,8 +44,15 @@ const PriceBreakdown = ({ info, additionalCharges, extraCharges, payableAmount }
           </tr>
 
           <tr>
-            <td>Transportation Charges</td>
-            <td>{formatPrice(transportCharge)}</td>
+            <td>
+              Transportation Charges
+              {!!transportCharge && (
+                <div className="text-muted small">
+                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                </div>
+              )}
+            </td>
+            <td>{formatPrice(OveralltransportCharge)}</td>
           </tr>
         </tbody>
 

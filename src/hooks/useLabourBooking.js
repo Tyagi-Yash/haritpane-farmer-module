@@ -58,6 +58,7 @@ export const useLabourBooking = ({ vendor, filters }) => {
         areaUnderCultivation: filters.areaUnderCultivation,
         cropUnderCultivation: filters.typeOfCrop,
       }),
+      distanceBeyondRadius: vendor.distanceBeyondRadius,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

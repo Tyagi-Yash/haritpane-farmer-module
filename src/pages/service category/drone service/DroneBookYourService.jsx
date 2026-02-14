@@ -14,6 +14,9 @@ import {
 } from "../../../utils/formValidators";
 import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 function DroneBookYourService() {
   const filters = useSelector((state) => state.services.DroneServiceMgmtSlice.filters);
   const defaultForm = {
@@ -147,12 +150,20 @@ function DroneBookYourService() {
                     <label className="form-label">
                       From date<span className="required">*</span>
                     </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      name="date"
-                      value={date}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={date ? new Date(date) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFormState((prev) => ({ ...prev, date: formatted }));
+                        setErrors((prev) => ({ ...prev, date: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                     {errors.date && <p className="error-text">{errors.date}</p>}{" "}
                   </div>

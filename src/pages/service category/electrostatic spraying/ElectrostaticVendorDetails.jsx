@@ -71,6 +71,7 @@ function ExcavationVendorDetails() {
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           areaUnderCultivation={filters.areaUnderCultivation}
+                          distanceBeyondRadius={vendor.distanceBeyondRadius}
                         />
                       </div>
                     </div>

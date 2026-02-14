@@ -71,6 +71,7 @@ function BorwellVendorDetails() {
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           depthOfBorewell={filters.depthOfBorewell}
+                          distanceBeyondRadius={vendor.distanceBeyondRadius}
                         />
                       </div>
                     </div>

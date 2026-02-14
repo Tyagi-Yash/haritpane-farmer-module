@@ -1,6 +1,13 @@
-const PriceBreakdown = ({ info, extraCharges, additionalCharges, payableAmount }) => {
+const PriceBreakdown = ({
+  info,
+  extraCharges,
+  additionalCharges,
+  payableAmount,
+  distanceBeyondRadius,
+}) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
   const transportCharge = extraCharges ? additionalCharges : 0;
+  const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 
   return (
     <div className="option-wrapper bookingPriceTable">
@@ -14,8 +21,15 @@ const PriceBreakdown = ({ info, extraCharges, additionalCharges, payableAmount }
           </tr>
 
           <tr>
-            <td>Transportation Charges</td>
-            <td>{formatPrice(transportCharge)}</td>
+            <td>
+              Transportation Charges
+              {!!transportCharge && (
+                <div className="text-muted small">
+                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                </div>
+              )}
+            </td>
+            <td>{formatPrice(OveralltransportCharge)}</td>
           </tr>
         </tbody>
 

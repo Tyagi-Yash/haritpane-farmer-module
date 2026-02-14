@@ -11,6 +11,9 @@ import { getAllServicesOfAuger } from "../../../reduxtoolkit/slices/service cate
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
 
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 function AugerChangeAvailablity() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -42,11 +45,6 @@ function AugerChangeAvailablity() {
       setCurrentPage(pageNumber);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
   const validateForm = () => {
     let newErrors = {};
@@ -109,13 +107,20 @@ function AugerChangeAvailablity() {
                   <label className="form-label">Select Start Date</label>
                   {errors.date && <p className="error-text">{errors.date}</p>}
                   <div className="input-group">
-                    <input
-                      type="date"
-                      className="form-control"
-                      placeholder="From date*"
-                      name="date"
-                      value={date}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={date ? new Date(date) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFilters((prev) => ({ ...prev, date: formatted }));
+                        setErrors((prev) => ({ ...prev, date: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                   </div>
                 </div>
@@ -123,13 +128,20 @@ function AugerChangeAvailablity() {
                   <label className="form-label">Select End Date</label>
                   {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
-                    <input
-                      type="date"
-                      className="form-control"
-                      placeholder="Till date*"
-                      name="toDate"
-                      value={toDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={toDate ? new Date(toDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFilters((prev) => ({ ...prev, toDate: formatted }));
+                        setErrors((prev) => ({ ...prev, toDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                   </div>
                 </div>
@@ -194,25 +206,10 @@ function AugerChangeAvailablity() {
                         </div>
                       </div>
 
-                      {service.payableAmount ? (
-                        <div className="price-info">
-                          <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
-                          <small>Additional charges might apply</small>
-                        </div>
-                      ) : service.ratePerHr ? (
-                        <div className="price-info">
-                          <h6>₹ {Number(service?.ratePerHr ?? 0).toFixed(2)}/hour</h6>
-                          <small>Additional charges might apply</small>
-                        </div>
-                      ) : service?.drillInfo?.[0]?.ratePerInch ? (
-                        <div className="price-info">
-                          <h6>
-                            ₹ {Number(service?.drillInfo?.[0]?.ratePerInch ?? 0).toFixed(2)}/Running
-                            ft
-                          </h6>
-                          <small>Additional charges might apply</small>
-                        </div>
-                      ) : null}
+                      <div className="price-info">
+                        <h6>₹ {Number(service?.ratePerHr ?? 0).toFixed(2)}</h6>
+                        <small>Additional charges might apply</small>
+                      </div>
                     </div>
                   </Link>
                 ))}

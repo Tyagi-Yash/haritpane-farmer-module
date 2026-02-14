@@ -98,10 +98,6 @@ function CattleDetails({ data }) {
                           ).toFixed(2)}
                         </td>
                       </tr>
-                      <tr>
-                        <td>Transportation Charges</td>
-                        <td>₹ {Number(service?.transportationCharges ?? 0).toFixed(2)}</td>
-                      </tr>
                     </tbody>
                     <tfoot>
                       <tr>

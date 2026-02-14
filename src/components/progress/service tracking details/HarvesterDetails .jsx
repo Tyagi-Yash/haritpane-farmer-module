@@ -88,6 +88,7 @@ function HarvesterDetails({ data }) {
                   additionalCharges={service.Info.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
+                  distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
                 />
               </div>
             </div>

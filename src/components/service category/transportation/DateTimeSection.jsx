@@ -1,4 +1,6 @@
 import Time12HourPicker from "../../common components/Time12HourPicker";
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
 
 export default function DateTimeSection({ formState = {}, errors = {}, onChange = () => {} }) {
   const { fromDate = "", tillDate = "", startTime = "" } = formState || {};
@@ -9,11 +11,19 @@ export default function DateTimeSection({ formState = {}, errors = {}, onChange 
         <label className="form-label">
           From date<span className="required">*</span>
         </label>
-        <input
-          type="date"
-          className="form-control"
-          value={fromDate}
-          onChange={(e) => onChange("fromDate", e.target.value)}
+        <DatePicker
+          selected={fromDate ? new Date(fromDate) : null}
+          onChange={(selectedDate) => {
+            const formatted = format(selectedDate, "yyyy-MM-dd");
+            onChange("fromDate", formatted);
+          }}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="DD/MM/YYYY"
+          className="form-control custom-datepicker"
+          calendarClassName="custom-calendar"
+          showPopperArrow={false}
+          showOtherMonths
+          fixedHeight
         />
         {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
       </div>
@@ -22,11 +32,19 @@ export default function DateTimeSection({ formState = {}, errors = {}, onChange 
         <label className="form-label">
           Till date<span className="required">*</span>
         </label>
-        <input
-          type="date"
-          className="form-control"
-          value={tillDate}
-          onChange={(e) => onChange("tillDate", e.target.value)}
+        <DatePicker
+          selected={tillDate ? new Date(tillDate) : null}
+          onChange={(selectedDate) => {
+            const formatted = format(selectedDate, "yyyy-MM-dd");
+            onChange("tillDate", formatted);
+          }}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="DD/MM/YYYY"
+          className="form-control custom-datepicker"
+          calendarClassName="custom-calendar"
+          showPopperArrow={false}
+          showOtherMonths
+          fixedHeight
         />
         {errors.tillDate && <p className="error-text">{errors.tillDate}</p>}
       </div>

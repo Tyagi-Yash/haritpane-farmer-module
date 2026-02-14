@@ -9,6 +9,9 @@ import { validateFromDate, validateSelectTime } from "../../utils/formValidators
 import { rescheduleJobOrder } from "../../reduxtoolkit/slices/progress/jobOrder";
 import Time12HourPicker from "../../components/common components/Time12HourPicker";
 
+import DatePicker from "react-datepicker";
+import { format } from "date-fns";
+
 function RescheduleCowDung() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,12 +49,6 @@ function RescheduleCowDung() {
   if (!job) {
     return <p className="text-center">Job order not found.</p>;
   }
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormState((prev) => ({ ...prev, [name]: value }));
-    setErrors((prev) => ({ ...prev, [name]: "" }));
-  };
 
   const validateForm = () => {
     let newErrors = {};
@@ -117,12 +114,20 @@ function RescheduleCowDung() {
                     <label className="form-label">
                       From date<span className="required">*</span>
                     </label>
-                    <input
-                      type="date"
-                      className="form-control"
-                      name="fromDate"
-                      value={fromDate}
-                      onChange={handleInputChange}
+                    <DatePicker
+                      selected={fromDate ? new Date(fromDate) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFormState((prev) => ({ ...prev, fromDate: formatted }));
+                        setErrors((prev) => ({ ...prev, fromDate: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
                     />
                     {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   </div>
