@@ -82,7 +82,7 @@ function BorewellDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={service.borewellInfo}
+                  boreDigging={data.boreDigging}
                   additionalCharges={service.borewellInfo.chargesforOutsideRadius}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}

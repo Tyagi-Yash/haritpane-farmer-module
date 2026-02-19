@@ -1,5 +1,5 @@
 const PriceBreakdown = ({
-  info,
+  boreDigging,
   additionalCharges,
   extraCharges,
   payableAmount,
@@ -7,7 +7,7 @@ const PriceBreakdown = ({
 }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
-  const boreRatePerFt = Number(info?.boreDigging ?? 0);
+  const boreRatePerFt = Number(boreDigging ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 

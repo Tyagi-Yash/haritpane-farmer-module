@@ -1,5 +1,5 @@
 const PriceBreakdown = ({
-  info,
+  chargePerAcre,
   additionalCharges,
   extraCharges,
   payableAmount,
@@ -7,7 +7,7 @@ const PriceBreakdown = ({
 }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
-  const ratePerAcre = Number(info?.chargePerAcre ?? 0);
+  const ratePerAcre = Number(chargePerAcre ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 

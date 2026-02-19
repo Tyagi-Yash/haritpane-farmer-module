@@ -66,7 +66,7 @@ function ExcavationVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor?.basicInfo}
+                          chargePerAcre={vendor?.basicInfo?.chargePerAcre}
                           additionalCharges={vendor?.basicInfo?.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}

@@ -1,7 +1,7 @@
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 
 const PriceBreakdown = ({
-  info,
+  ratePerHr,
   additionalCharges,
   extraCharges,
   payableAmount,
@@ -9,7 +9,7 @@ const PriceBreakdown = ({
 }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
-  const ratePerHr = Number(info ?? 0);
+  ratePerHr = Number(ratePerHr ?? 0);
   const payable = Number(payableAmount ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;

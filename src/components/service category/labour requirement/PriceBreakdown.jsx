@@ -1,5 +1,5 @@
 const PriceBreakdown = ({
-  info,
+  dailyWage,
   additionalCharges,
   extraCharges,
   payableAmount,
@@ -7,7 +7,7 @@ const PriceBreakdown = ({
 }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
-  const dailyWage = Number(info?.dailyWage ?? 0);
+  dailyWage = Number(dailyWage ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 

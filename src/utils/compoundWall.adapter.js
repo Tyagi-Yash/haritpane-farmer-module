@@ -1,6 +1,6 @@
 export const compoundWallAdapter = (item) => {
   const service = item.serviceDetails || {};
-  const priceValue = Number(item.amount || 0);
+  const priceValue = Number(item?.rate || 0);
 
   return {
     id: item._id,

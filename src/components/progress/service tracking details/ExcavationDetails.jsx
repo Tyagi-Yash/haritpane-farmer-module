@@ -81,7 +81,8 @@ function ExcavationDetails({ data }) {
             </div>
             <div className="col">
               <PriceBreakdown
-                info={service.priceInfo}
+                priceType={data.priceType}
+                price={data.price}
                 additionalCharges={service.additionalCharges}
                 extraCharges={data.extraCharges}
                 payableAmount={data.amount}

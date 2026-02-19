@@ -53,6 +53,8 @@ export const useDroneBooking = ({ vendor, filters }) => {
       bookingStartTime: filters.time,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      chargePerAcre: vendor.chargePerAcre,
+      numberOfDrones: vendor.numberOfDrones,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

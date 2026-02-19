@@ -1,14 +1,14 @@
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 
 const PriceBreakdown = ({
-  info,
+  price,
+  priceType,
   additionalCharges,
   extraCharges,
   payableAmount,
   distanceBeyondRadius,
 }) => {
-  const price = Number(info?.price ?? 0);
-  const priceType = info?.priceType;
+  price = Number(price ?? 0);
   const payable = Number(payableAmount ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;

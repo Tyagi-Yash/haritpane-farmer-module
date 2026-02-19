@@ -197,7 +197,7 @@ function HarvestorChangeAvailablity() {
                               (p) =>
                                 p?.cropType?.toLowerCase() ===
                                 (filters?.typeOfCrop || "").toLowerCase(),
-                            ).price ?? 0,
+                            )?.price ?? 0,
                           ).toFixed(2)}
                         </h6>
                         <small>Additional charges might apply</small>

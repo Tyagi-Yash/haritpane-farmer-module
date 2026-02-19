@@ -65,7 +65,7 @@ function DroneVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.chargePerAcre}
+                          chargePerAcre={vendor.chargePerAcre}
                           additionalCharges={vendor.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}

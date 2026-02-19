@@ -82,8 +82,8 @@ function LabourDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={service.labourInfo}
-                  additionalCharges={service.labourInfo.additionalCharges}
+                  dailyWage={data?.dailyWage}
+                  additionalCharges={data?.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
                   distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}

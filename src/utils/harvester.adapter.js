@@ -8,7 +8,7 @@ export const harvesterAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: item.serviceDetails?.images?.[0] || "",
     businessName: item.serviceDetails?.businessName || "No Discription",
-    amount: Number(info?.price || 0).toFixed(2),
+    amount: Number(item?.price || 0).toFixed(2),
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

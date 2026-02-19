@@ -66,7 +66,8 @@ function ExcavationVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.priceInfo}
+                          price={vendor?.priceInfo?.price}
+                          priceType={vendor?.priceInfo?.priceType}
                           additionalCharges={vendor.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           distanceBeyondRadius={vendor.distanceBeyondRadius}

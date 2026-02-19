@@ -82,9 +82,7 @@ function CompoundWallDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={service?.compoundMaterialsInfo.find(
-                    (item) => item._id === data.materialInfoId,
-                  )}
+                  rate={data?.rate}
                   additionalCharges={service.additionCharges}
                   payableAmount={data.amount}
                 />

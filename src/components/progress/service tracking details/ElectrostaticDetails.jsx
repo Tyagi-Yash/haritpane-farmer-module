@@ -86,7 +86,7 @@ function ElectrostaticDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={service.basicInfo}
+                  chargePerAcre={data.chargePerAcre}
                   additionalCharges={service.basicInfo.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}

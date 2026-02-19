@@ -1,6 +1,6 @@
 export const labourAdapter = (item) => {
   const service = item.serviceDetails || {};
-  const priceValue = Number(service?.labourInfo?.dailyWage || 0);
+  const priceValue = Number(item?.dailyWage || 0);
 
   return {
     id: item._id,

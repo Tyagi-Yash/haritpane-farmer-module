@@ -67,7 +67,7 @@ function AugerVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.ratePerHr}
+                          ratePerHr={vendor.ratePerHr}
                           additionalCharges={vendor.additionCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}

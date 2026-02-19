@@ -8,7 +8,7 @@ export const augerAdapter = (item) => {
     image: service.augerImg?.[0] || "",
     businessName: service.businessName || "No Discription",
     rating: item.providerDetails?.averageRating ?? "N/A",
-    amount: Number(service?.ratePerHr || 0).toFixed(2),
+    amount: Number(item?.ratePerHr || 0).toFixed(2),
 
     raw: item,
   };

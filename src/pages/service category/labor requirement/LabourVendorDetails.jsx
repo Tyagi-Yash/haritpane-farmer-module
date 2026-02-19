@@ -68,7 +68,7 @@ function LabourVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.labourInfo}
+                          dailyWage={vendor.labourInfo.dailyWage}
                           additionalCharges={vendor?.labourInfo?.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}

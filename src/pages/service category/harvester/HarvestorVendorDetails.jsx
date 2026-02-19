@@ -67,11 +67,13 @@ function HarvestorVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor?.priceInfo?.find(
-                            (p) =>
-                              p?.cropType?.toLowerCase() ===
-                              (filters?.typeOfCrop || "").toLowerCase(),
-                          )}
+                          price={
+                            vendor?.priceInfo?.find(
+                              (p) =>
+                                p?.cropType?.toLowerCase() ===
+                                (filters?.typeOfCrop || "").toLowerCase(),
+                            )?.price
+                          }
                           additionalCharges={vendor?.Info?.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}

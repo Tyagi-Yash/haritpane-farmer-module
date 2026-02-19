@@ -90,13 +90,7 @@ function CattleDetails({ data }) {
                     <tbody>
                       <tr>
                         <td>Service Cost</td>
-                        <td>
-                          ₹{" "}
-                          {Number(
-                            service?.basicInfo?.find((p) => p._id === data?.basicInfoId)
-                              ?.sellingPrice ?? 0,
-                          ).toFixed(2)}
-                        </td>
+                        <td>₹ {Number(data?.sellingPrice ?? 0).toFixed(2)}</td>
                       </tr>
                     </tbody>
                     <tfoot>

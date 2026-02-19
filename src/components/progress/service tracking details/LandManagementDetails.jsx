@@ -81,7 +81,8 @@ function LandManagementDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={tractorDetail}
+                  price={data.price}
+                  priceType={tractorDetail?.priceType}
                   extraCharges={data.extraCharges}
                   additionalCharges={service.additionalCharges}
                   payableAmount={data.amount}

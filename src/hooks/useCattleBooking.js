@@ -52,6 +52,8 @@ export const useCattleBooking = ({ vendor, filters }) => {
       cattleName: filters.sectectCattle,
       cattleBreed: filters.selectBreed,
       amount: vendor.payableAmount?.toString(),
+      weight: vendor.basicInfo.weight,
+      sellingPrice: vendor.basicInfo.sellingPrice,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

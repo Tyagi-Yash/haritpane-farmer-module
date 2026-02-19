@@ -54,6 +54,8 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       excavationType: filters.sectectEquipmentType,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      priceType: vendor.priceInfo.priceType,
+      price: vendor.priceInfo.price,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

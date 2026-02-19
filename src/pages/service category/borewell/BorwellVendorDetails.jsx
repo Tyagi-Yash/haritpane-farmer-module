@@ -66,7 +66,7 @@ function BorwellVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor?.borewellInfo}
+                          boreDigging={vendor?.borewellInfo?.boreDigging}
                           additionalCharges={vendor?.borewellInfo?.chargesforOutsideRadius}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}

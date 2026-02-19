@@ -82,7 +82,7 @@ function DroneDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={service.chargePerAcre}
+                  chargePerAcre={data.chargePerAcre}
                   additionalCharges={service.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}

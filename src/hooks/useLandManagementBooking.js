@@ -52,6 +52,8 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       bookingStartTime: filters.fromTime,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      modelOfTractor: vendor.Info.modelOfTractor,
+      price: vendor.Info.price,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

@@ -67,6 +67,8 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.time,
       time: filters.fromTime,
+      materialName: vendor.compoundMaterialsInfo.materialName,
+      rate: vendor.compoundMaterialsInfo.rate,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

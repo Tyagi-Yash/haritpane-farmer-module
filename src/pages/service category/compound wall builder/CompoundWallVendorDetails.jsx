@@ -66,7 +66,7 @@ function CompoundWallVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.compoundMaterialsInfo}
+                          rate={vendor?.compoundMaterialsInfo?.rate}
                           additionalCharges={vendor?.additionCharges}
                           payableAmount={vendor.payableAmount}
                         />

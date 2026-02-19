@@ -82,9 +82,7 @@ function HarvesterDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={service.priceInfo.find(
-                    (p) => p.cropType.toLowerCase() === data?.typeOfCrop?.toLowerCase(),
-                  )}
+                  price={data.price}
                   additionalCharges={service.Info.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}

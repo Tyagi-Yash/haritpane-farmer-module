@@ -86,7 +86,7 @@ function AugerDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  info={service.ratePerHr}
+                  ratePerHr={service.ratePerHr}
                   additionalCharges={service.additionCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}

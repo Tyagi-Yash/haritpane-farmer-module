@@ -1,5 +1,6 @@
 const PriceBreakdown = ({
-  info,
+  price,
+  priceType,
   extraCharges,
   additionalCharges,
   payableAmount,
@@ -16,8 +17,8 @@ const PriceBreakdown = ({
       <table className="table table-borderless">
         <tbody>
           <tr>
-            <td>Service Charges ({info?.priceType})</td>
-            <td>{formatPrice(info?.price)}</td>
+            <td>Service Charges ({priceType})</td>
+            <td>{formatPrice(price)}</td>
           </tr>
 
           <tr>
