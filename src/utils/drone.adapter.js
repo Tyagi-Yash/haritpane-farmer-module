@@ -8,7 +8,7 @@ export const droneAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: service.droneImgs?.[0] || "",
     businessName: service.businessName || "No Discription",
-    amount: priceValue.toFixed(2),
+    amount: `${priceValue.toFixed(2)} /acre`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

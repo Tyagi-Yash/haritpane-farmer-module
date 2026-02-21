@@ -85,6 +85,7 @@ function LandManagementServicesSubServices() {
     if (!validateForm()) return;
     setDisable(true);
     const formdata = {
+      address,
       selectSubCategory,
       lat: lat.trim(),
       lng: lng.trim(),

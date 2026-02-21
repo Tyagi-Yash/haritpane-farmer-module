@@ -1,5 +1,5 @@
 export const landManagementAdapter = (item) => {
-  const info = item.serviceDetails.Info.find((i) => i._id === item.tractorInfoId);
+  const info = item?.serviceDetails?.Info?.find((i) => i._id === item.tractorInfoId);
 
   return {
     id: item._id,
@@ -7,7 +7,7 @@ export const landManagementAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: info?.images?.[0] || "",
     businessName: item.serviceDetails?.businessName || "No Discription",
-    amount: Number(item?.price || 0).toFixed(2),
+    amount: `${Number(item?.price || 0).toFixed(2)} /acre`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

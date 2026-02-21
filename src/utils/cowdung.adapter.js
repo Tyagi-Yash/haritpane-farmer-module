@@ -9,7 +9,9 @@ export const cowdungAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: DungforFarming,
     businessName: item.serviceDetails.businessName || "",
-    amount: priceValue.toFixed(2),
+    amount: `${priceValue.toFixed(2)} /ton${
+      item?.serviceDetails?.dungType ? ` (${item.serviceDetails.dungType})` : ""
+    }`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

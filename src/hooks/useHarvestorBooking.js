@@ -55,6 +55,11 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       price: vendor.priceInfo[0].price,
       cropType: vendor.priceInfo[0].cropType,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

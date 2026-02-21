@@ -203,7 +203,10 @@ function CowDungChangeAvailablity() {
                       </div>
 
                       <div className="price-info">
-                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
+                        <h6>
+                          ₹ {Number(service?.payableAmount ?? 0).toFixed(2)} /ton{" "}
+                          {service?.dungType && `(${service?.dungType})`}
+                        </h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

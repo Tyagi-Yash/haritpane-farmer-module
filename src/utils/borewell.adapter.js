@@ -8,7 +8,7 @@ export const borewellAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: service.borewellInfo.borewellImg?.[0] || "",
     businessName: service.businessName || "No Discription",
-    amount: priceValue.toFixed(2),
+    amount: `${priceValue.toFixed(2)} /ft`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

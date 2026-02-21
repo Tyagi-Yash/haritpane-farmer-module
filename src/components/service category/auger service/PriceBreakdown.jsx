@@ -6,6 +6,7 @@ const PriceBreakdown = ({
   extraCharges,
   payableAmount,
   distanceBeyondRadius,
+  drillInfo = [],
 }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
@@ -18,7 +19,27 @@ const PriceBreakdown = ({
 
   return (
     <div className="option-wrapper bookingPriceTable">
-      <h5 className="normal-heading">Total Booking Price</h5>
+      {drillInfo.length > 0 && (
+        <div className="mt-3">
+          <table className="table table-sm">
+            <thead>
+              <tr>
+                <th>Diameter (Inch)</th>
+                <th>Rate Per Ft</th>
+              </tr>
+            </thead>
+            <tbody>
+              {drillInfo.map((drill) => (
+                <tr key={drill._id}>
+                  <td className="no-border">{drill.drillDiameter}</td>
+                  <td className="no-border">₹ {Number(drill.ratePerInch).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <h5 className="normal-heading">Tentative cost</h5>
 
       <table className="table table-borderless">
         <tbody>

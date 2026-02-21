@@ -66,12 +66,20 @@ function AugerVendorDetails() {
                         />
                       </div>
                       <div className="col">
+                        {/* <PriceBreakdown
+                          ratePerHr={vendor.ratePerHr}
+                          additionalCharges={vendor.additionCharges}
+                          extraCharges={vendor.extraCharges}
+                          payableAmount={vendor.payableAmount}
+                          distanceBeyondRadius={vendor.distanceBeyondRadius}
+                        /> */}
                         <PriceBreakdown
                           ratePerHr={vendor.ratePerHr}
                           additionalCharges={vendor.additionCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           distanceBeyondRadius={vendor.distanceBeyondRadius}
+                          drillInfo={vendor.drillInfo}
                         />
                       </div>
                     </div>

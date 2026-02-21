@@ -54,6 +54,11 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       modelOfTractor: vendor.Info.modelOfTractor,
       price: vendor.Info.price,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

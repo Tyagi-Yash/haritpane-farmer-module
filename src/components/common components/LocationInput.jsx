@@ -90,24 +90,30 @@ export default function LocationInput({
         return;
       }
 
-      svcRef.current.getPlacePredictions({ input: internalInput }, (predictions, status) => {
-        // ignore if a new query has been created since this one was scheduled
-        if (queryIdRef.current !== localId) return;
+      svcRef.current.getPlacePredictions(
+        {
+          input: internalInput,
+          componentRestrictions: { country: "in" }, // 🇮🇳 India only
+        },
+        (predictions, status) => {
+          // ignore if a new query has been created since this one was scheduled
+          if (queryIdRef.current !== localId) return;
 
-        // also ignore if we set the ignore flag (selection happened)
-        if (ignorePredictionsRef.current) {
+          // also ignore if we set the ignore flag (selection happened)
+          if (ignorePredictionsRef.current) {
+            setSuggestLoading(false);
+            return;
+          }
+
           setSuggestLoading(false);
-          return;
-        }
-
-        setSuggestLoading(false);
-        if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
-          setSuggestions(predictions);
-          setActiveIndex(-1);
-        } else {
-          setSuggestions([]);
-        }
-      });
+          if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
+            setSuggestions(predictions);
+            setActiveIndex(-1);
+          } else {
+            setSuggestions([]);
+          }
+        },
+      );
     }, 250);
 
     return () => clearTimeout(timerRef.current);

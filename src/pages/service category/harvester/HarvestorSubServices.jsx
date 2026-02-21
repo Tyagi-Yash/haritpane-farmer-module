@@ -57,10 +57,10 @@ function HarvestorSubServices() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormState((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === "selectSubCategory") {
+      setFormState((prev) => ({ ...prev, areaUnderCultivation: "" }));
+    }
+    setFormState((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -98,6 +98,7 @@ function HarvestorSubServices() {
       fromDate,
       toDate,
       fromTime,
+      address,
     };
     try {
       const query = new URLSearchParams(formdata).toString();
@@ -184,8 +185,12 @@ function HarvestorSubServices() {
                   </div>
                   <div className="col-md-4">
                     <input
-                      type="text"
-                      placeholder="Area Under Cultivation(in acre)*"
+                      type="number"
+                      placeholder={
+                        selectSubCategory === "combine_harvester"
+                          ? "Area Under Cultivation(in acre)*"
+                          : "weight (in quintal)*"
+                      }
                       className="form-control"
                       name="areaUnderCultivation"
                       value={areaUnderCultivation}

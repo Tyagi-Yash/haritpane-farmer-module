@@ -207,7 +207,7 @@ function CompoundWallChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.compoundMaterialsInfo?.rate ?? 0).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.perMeter ?? 0).toFixed(2)} /m²</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

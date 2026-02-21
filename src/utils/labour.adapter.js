@@ -8,7 +8,7 @@ export const labourAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: "",
     businessName: service.businessName || "No Discription",
-    amount: priceValue.toFixed(2),
+    amount: `${priceValue.toFixed(2)} /day wage`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

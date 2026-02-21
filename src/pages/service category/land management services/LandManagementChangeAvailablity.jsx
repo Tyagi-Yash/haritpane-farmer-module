@@ -190,7 +190,7 @@ function LandManagementChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.Info?.price ?? 0).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.Info?.price ?? 0).toFixed(2)} /acre</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

@@ -190,7 +190,7 @@ function LabourChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.labourInfo?.dailyWage ?? 0).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.labourInfo?.dailyWage ?? 0).toFixed(2)} /day wage</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

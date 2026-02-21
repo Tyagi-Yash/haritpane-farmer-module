@@ -207,7 +207,7 @@ function AugerChangeAvailablity() {
                       </div>
 
                       <div className="price-info">
-                        <h6>₹ {Number(service?.ratePerHr ?? 0).toFixed(2)}</h6>
+                        <h6>₹ {Number(service?.ratePerHr ?? 0).toFixed(2)} /hour</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

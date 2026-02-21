@@ -4,6 +4,7 @@ const PriceBreakdown = ({
   extraCharges,
   payableAmount,
   distanceBeyondRadius,
+  subCategory,
 }) => {
   const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
 
@@ -27,7 +28,9 @@ const PriceBreakdown = ({
             <td>
               Service Charges
               <div className="text-muted small">
-                {formatPrice(ratePerAcre)} (Per Acre) × {area.toFixed(2)} acres
+                {formatPrice(ratePerAcre)} (Per{" "}
+                {subCategory === "combine_harvester" ? "Acre" : "Quintal"}) × {area.toFixed(2)}{" "}
+                {subCategory === "combine_harvester" ? "acre" : "quintal"}
               </div>
             </td>
             <td>{formatPrice(serviceAmount)}</td>

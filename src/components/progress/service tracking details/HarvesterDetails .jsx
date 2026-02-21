@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/harvestor/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 
 function HarvesterDetails({ data }) {
   const service = data.serviceDetails;
@@ -77,12 +79,19 @@ function HarvesterDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Harvester</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Crop Type: {data?.typeOfCrop || "N/A"}</p>
               </div>
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
                   price={data.price}
+                  subCategory={service.subCategory}
                   additionalCharges={service.Info.additionalCharges}
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}

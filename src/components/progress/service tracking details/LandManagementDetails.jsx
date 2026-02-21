@@ -8,6 +8,8 @@ import { cancelBooking } from "../../../reduxtoolkit/slices/service category/boo
 import { toast } from "react-toastify";
 import CancelBookingModal from "../../common components/CancelBookingModal";
 import PriceBreakdown from "../../service category/land management/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 
 function LandManagementDetails({ data }) {
   const service = data.serviceDetails;
@@ -27,7 +29,6 @@ function LandManagementDetails({ data }) {
       toast.error(err?.message || "Failed to cancel booking");
     }
   };
-  const tractorDetail = service?.Info?.find((p) => p._id === data.tractorInfoId);
 
   const handleStartChat = () => {
     navigate("/chats", {
@@ -76,13 +77,17 @@ function LandManagementDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Land Management</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
               </div>
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
                   price={data.price}
-                  priceType={tractorDetail?.priceType}
                   extraCharges={data.extraCharges}
                   additionalCharges={service.additionalCharges}
                   payableAmount={data.amount}

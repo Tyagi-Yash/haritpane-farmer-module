@@ -198,7 +198,8 @@ function HarvestorChangeAvailablity() {
                                 p?.cropType?.toLowerCase() ===
                                 (filters?.typeOfCrop || "").toLowerCase(),
                             )?.price ?? 0,
-                          ).toFixed(2)}
+                          ).toFixed(2)}{" "}
+                          {service?.subCategory === "combine_harvester" ? "/acre" : "/quintal"}
                         </h6>
                         <small>Additional charges might apply</small>
                       </div>

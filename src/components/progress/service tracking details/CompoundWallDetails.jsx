@@ -82,8 +82,9 @@ function CompoundWallDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  rate={data?.rate}
-                  additionalCharges={service.additionCharges}
+                  perMeter={data?.perMeter}
+                  length={data?.length}
+                  height={data?.height}
                   payableAmount={data.amount}
                 />
               </div>

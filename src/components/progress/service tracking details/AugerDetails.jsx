@@ -91,6 +91,7 @@ function AugerDetails({ data }) {
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
                   distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
+                  drillInfo={service.drillInfo}
                 />
               </div>
             </div>

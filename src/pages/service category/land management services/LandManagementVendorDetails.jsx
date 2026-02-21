@@ -13,6 +13,8 @@ import VendorHeader from "../../../components/common components/VendorHeader";
 import BookingSummary from "../../../components/common components/BookingSummary";
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
+// import BookingActions from "../../../components/service category/land management/BookingActions";
+// import VendorHeader from "../../../components/service category/land management/VendorHeader";
 
 function LandManagementVendorDetails() {
   const { id } = useParams();
@@ -69,7 +71,6 @@ function LandManagementVendorDetails() {
                       <div className="col">
                         <PriceBreakdown
                           price={vendor.Info.price}
-                          priceType={vendor.Info.priceType}
                           extraCharges={vendor.extraCharges}
                           additionalCharges={vendor.additionalCharges}
                           distanceBeyondRadius={vendor.distanceBeyondRadius}

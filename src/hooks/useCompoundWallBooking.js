@@ -60,8 +60,8 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
       categoryId: vendor.categoryId,
       materialInfoId: vendor.compoundMaterialsInfo._id,
       amount: vendor.payableAmount?.toString(),
-      lengthOfWall: filters.lengthOfWall,
-      heightOfWall: filters.heightOfWall,
+      length: filters.length,
+      height: filters.height,
       typeOfWall: filters.serviceType,
       date: filters.fromDate,
       bookingTillDate: filters.toDate,
@@ -69,6 +69,7 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
       time: filters.fromTime,
       materialName: vendor.compoundMaterialsInfo.materialName,
       rate: vendor.compoundMaterialsInfo.rate,
+      perMeter: vendor.perMeter,
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

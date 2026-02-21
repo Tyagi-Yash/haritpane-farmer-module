@@ -19,7 +19,7 @@ const PriceBreakdown = ({
 
   return (
     <div className="option-wrapper bookingPriceTable">
-      <h5 className="normal-heading">Total Booking Price</h5>
+      <h5 className="normal-heading">Tentative cost</h5>
 
       <table className="table table-borderless">
         <tbody>

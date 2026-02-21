@@ -190,7 +190,10 @@ function ExcavationChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.priceInfo?.price ?? 0).toFixed(2)}</h6>
+                        <h6>
+                          ₹ {Number(service?.priceInfo?.price ?? 0).toFixed(2)}{" "}
+                          {service?.priceInfo?.priceType === "Hourly" ? "/hour" : "/day"}
+                        </h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

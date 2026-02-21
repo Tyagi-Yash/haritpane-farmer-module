@@ -74,6 +74,7 @@ function HarvestorVendorDetails() {
                                 (filters?.typeOfCrop || "").toLowerCase(),
                             )?.price
                           }
+                          subCategory={vendor.subCategory}
                           additionalCharges={vendor?.Info?.additionalCharges}
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
