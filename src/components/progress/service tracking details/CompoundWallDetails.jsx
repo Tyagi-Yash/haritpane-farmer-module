@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/compund wall builder/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 
 function CompoundWallDetails({ data }) {
   const service = data.serviceDetails;
@@ -77,6 +79,14 @@ function CompoundWallDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Compound Wall Builder</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Field Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Wall Type: {data?.typeOfWall || "N/A"}</p>
+                <p>Length of Wall(meter): {data?.length || "N/A"}</p>
+                <p>Height of Wall(ft): {data?.height || "N/A"}</p>
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
               </div>
             </div>
             <div className="col">

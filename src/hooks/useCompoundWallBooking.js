@@ -63,13 +63,17 @@ export const usecompoundWallBooking = ({ vendor, filters }) => {
       length: filters.length,
       height: filters.height,
       typeOfWall: filters.serviceType,
-      date: filters.fromDate,
+      bookingFromDate: filters.date,
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.time,
-      time: filters.fromTime,
       materialName: vendor.compoundMaterialsInfo.materialName,
       rate: vendor.compoundMaterialsInfo.rate,
       perMeter: vendor.perMeter,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

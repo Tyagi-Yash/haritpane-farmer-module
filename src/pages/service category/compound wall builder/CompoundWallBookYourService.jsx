@@ -98,6 +98,7 @@ function CompoundWallBookYourService() {
 
     setDisable(true);
     const query = new URLSearchParams({
+      address,
       lat: lat.trim(),
       lng: lng.trim(),
       serviceType,

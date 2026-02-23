@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/auger service/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
+import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 
 function AugerDetails({ data }) {
   const service = data.serviceDetails;
@@ -81,6 +84,12 @@ function AugerDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Auger Service</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Job Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Estimated Time: {formatHoursMinutes(data?.estimatedTime) || "N/A"}</p>
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
               </div>
             </div>
             <div className="col">
@@ -91,7 +100,7 @@ function AugerDetails({ data }) {
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
                   distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
-                  drillInfo={service.drillInfo}
+                  drillInfo={data.drillInfo}
                 />
               </div>
             </div>

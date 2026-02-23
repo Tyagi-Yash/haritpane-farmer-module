@@ -78,10 +78,10 @@ function LandManagementDetails({ data }) {
                 <p>Service Name: Land Management</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
                 <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
-                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
               </div>
             </div>
             <div className="col">

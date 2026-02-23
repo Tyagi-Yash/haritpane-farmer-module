@@ -71,6 +71,7 @@ function AugerBookYourService() {
     setDisable(true);
     const totalDuration = (Number(hours) || 0) + (Number(minutes) || 0) / 60;
     const formdata = {
+      address,
       lat: lat.trim(),
       lng: lng.trim(),
       date,
@@ -145,21 +146,21 @@ function AugerBookYourService() {
                     <label className="form-label">
                       From date<span className="required">*</span>
                     </label>
-                      <DatePicker
-                        selected={date ? new Date(date) : null}
-                        onChange={(selectedDate) => {
-                          const formatted = format(selectedDate, "yyyy-MM-dd");
-                          setFormState((prev) => ({ ...prev, date: formatted }));
-                          setErrors((prev) => ({ ...prev, date: "" }));
-                        }}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="DD/MM/YYYY"
-                        className="form-control custom-datepicker"
-                        calendarClassName="custom-calendar"
-                        showPopperArrow={false}
-                        showOtherMonths
-                        fixedHeight
-                      />
+                    <DatePicker
+                      selected={date ? new Date(date) : null}
+                      onChange={(selectedDate) => {
+                        const formatted = format(selectedDate, "yyyy-MM-dd");
+                        setFormState((prev) => ({ ...prev, date: formatted }));
+                        setErrors((prev) => ({ ...prev, date: "" }));
+                      }}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="DD/MM/YYYY"
+                      className="form-control custom-datepicker"
+                      calendarClassName="custom-calendar"
+                      showPopperArrow={false}
+                      showOtherMonths
+                      fixedHeight
+                    />
                     {errors.date && <p className="error-text">{errors.date}</p>}
                   </div>
                   <div className="col-md-6">

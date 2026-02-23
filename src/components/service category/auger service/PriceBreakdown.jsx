@@ -24,13 +24,13 @@ const PriceBreakdown = ({
           <table className="table table-sm">
             <thead>
               <tr>
-                <th>Diameter (Inch)</th>
+                <th>Drill Diameter (Inch)</th>
                 <th>Rate Per Ft</th>
               </tr>
             </thead>
             <tbody>
               {drillInfo.map((drill) => (
-                <tr key={drill._id}>
+                <tr key={drill?._id || drill.drillInfoId}>
                   <td className="no-border">{drill.drillDiameter}</td>
                   <td className="no-border">₹ {Number(drill.ratePerInch).toFixed(2)}</td>
                 </tr>

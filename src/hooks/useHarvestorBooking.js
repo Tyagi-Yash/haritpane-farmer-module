@@ -55,6 +55,8 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       price: vendor.priceInfo[0].price,
       cropType: vendor.priceInfo[0].cropType,
+      priceInfoId: vendor.priceInfo[0]._id,
+      areaUnderCultivation: filters.areaUnderCultivation,
       addressOfFarm: filters?.address,
       location: {
         type: "Point",

@@ -53,8 +53,18 @@ export const useAugerBooking = ({ vendor, filters }) => {
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       ratePerHr: vendor.ratePerHr,
-      drillDiameter: vendor?.drillInfo?.[0]?.drillDiameter,
-      ratePerInch: vendor?.drillInfo?.[0]?.ratePerInch,
+      drillInfo: Array.isArray(vendor?.drillInfo)
+        ? vendor.drillInfo.map(({ drillDiameter, ratePerInch, _id }) => ({
+            drillDiameter,
+            ratePerInch,
+            drillInfoId: _id,
+          }))
+        : [],
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

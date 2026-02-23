@@ -80,11 +80,15 @@ function HarvesterDetails({ data }) {
                 <p>Service Name: Harvester</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
                 <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Crop Type: {data?.typeOfCrop || "N/A"}</p>
+                <p>
+                  Farm Area:{" "}
+                  {data?.areaUnderCultivation ? `${data.areaUnderCultivation} Acre` : "N/A"}
+                </p>
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
-                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
-                <p>Crop Type: {data?.typeOfCrop || "N/A"}</p>
               </div>
             </div>
             <div className="col">
