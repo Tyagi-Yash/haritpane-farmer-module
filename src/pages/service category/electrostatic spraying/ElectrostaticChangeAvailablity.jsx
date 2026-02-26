@@ -14,6 +14,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function ElectrostaticChangeAvailablity() {
   const dispatch = useDispatch();
@@ -192,9 +193,7 @@ function ElectrostaticChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>
-                          ₹ {Number(service?.basicInfo?.chargePerAcre ?? 0).toFixed(2)} /acre
-                        </h6>
+                        <h6>₹ {formatPrice(service?.basicInfo?.chargePerAcre ?? 0)} /acre</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

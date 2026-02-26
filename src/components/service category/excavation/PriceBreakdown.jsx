@@ -15,7 +15,13 @@ const PriceBreakdown = ({
   const serviceAmount = extraCharges ? payable - OveralltransportCharge : payable;
   const units = price > 0 ? serviceAmount / price : 0;
 
-  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
   return (
     <div className="option-wrapper bookingPriceTable">
       <h5 className="normal-heading">Total Booking Price</h5>

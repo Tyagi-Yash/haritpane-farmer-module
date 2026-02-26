@@ -28,12 +28,21 @@ export default function LocationInput({
   const [marker, setMarker] = useState(null); // { lat: number, lng: number }
   const [selectedAddress, setSelectedAddress] = useState(null); // { address, lat, lng }
 
+  const [mapCenter, setMapCenter] = useState({ lat: 20.5937, lng: 78.9629 });
+
   // refs
   const inputRef = useRef(null);
   const svcRef = useRef(null);
   const geocoderRef = useRef(null);
   const timerRef = useRef(null);
   const containerRef = useRef(null);
+  const userTypingRef = useRef(false);
+  const mapRef = useRef(null);
+
+  function handleMapLoad(map) {
+    mapRef.current = map;
+    map.setMapTypeId(window.google.maps.MapTypeId.HYBRID);
+  }
 
   // flag to ignore the immediate prediction fetch triggered by programmatic input set
   const ignorePredictionsRef = useRef(false);
@@ -62,6 +71,9 @@ export default function LocationInput({
   // debounced predictions with query id to ignore stale callbacks
   useEffect(() => {
     if (!isLoaded) return;
+
+    // ❌ DO NOT run if input was set programmatically
+    if (!userTypingRef.current) return;
 
     // if we just set the input programmatically after selecting a prediction,
     // ignore the immediate re-run that would otherwise re-open suggestions
@@ -96,6 +108,8 @@ export default function LocationInput({
           componentRestrictions: { country: "in" }, // 🇮🇳 India only
         },
         (predictions, status) => {
+          userTypingRef.current = false;
+
           // ignore if a new query has been created since this one was scheduled
           if (queryIdRef.current !== localId) return;
 
@@ -128,6 +142,12 @@ export default function LocationInput({
     return () => document.removeEventListener("click", onDocClick);
   }, []);
 
+  useEffect(() => {
+    if (marker) {
+      setMapCenter({ lat: marker.lat, lng: marker.lng });
+    }
+  }, [marker]);
+
   // helpers: geocode placeId or lat/lng -> { address, lat, lng } strings
   function geocodeByPlaceId(placeId) {
     return new Promise((resolve) => {
@@ -156,6 +176,8 @@ export default function LocationInput({
   // input handlers
   function handleInputChange(e) {
     const val = e.target.value;
+    userTypingRef.current = true;
+
     // any user edit should re-enable predictions and clear selection flag
     ignorePredictionsRef.current = false;
     lastSetBySelectionRef.current = false;
@@ -426,14 +448,11 @@ export default function LocationInput({
             {isLoaded ? (
               <GoogleMap
                 mapContainerStyle={{ width: "100%", height: "100%" }}
-                center={
-                  marker ||
-                  (selectedAddress
-                    ? { lat: Number(selectedAddress.lat), lng: Number(selectedAddress.lng) }
-                    : { lat: 20.5937, lng: 78.9629 })
-                }
-                zoom={marker || selectedAddress ? 14 : 5}
+                defaultCenter={{ lat: 20.5937, lng: 78.9629 }}
+                center={mapCenter}
+                zoom={marker ? 14 : 5}
                 onClick={handleMapClick}
+                onLoad={handleMapLoad}
               >
                 {marker && (
                   <Marker

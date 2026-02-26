@@ -1,5 +1,11 @@
 const PriceBreakdown = ({ info }) => {
-  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   const ratePerTon = Number(info ?? 0);
 

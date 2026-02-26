@@ -1,6 +1,13 @@
 export const compoundWallAdapter = (item) => {
   const service = item.serviceDetails || {};
   const priceValue = Number(item?.perMeter || 0);
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   return {
     id: item._id,
@@ -8,7 +15,7 @@ export const compoundWallAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: service.toolsImges?.[0] || "",
     businessName: service.businessName || "No Discription",
-    amount: `${priceValue.toFixed(2)} /m²`,
+    amount: `${formatPrice(priceValue)} /m²`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

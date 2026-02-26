@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/cow dung/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
 
 function CowDungDetails({ data }) {
   const service = data.serviceDetails;
@@ -77,6 +78,10 @@ function CowDungDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Cow Dung/Poultry Waste</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
               </div>
             </div>
             <div className="col">

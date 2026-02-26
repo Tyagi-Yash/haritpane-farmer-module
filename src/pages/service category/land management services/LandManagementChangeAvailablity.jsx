@@ -14,6 +14,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function LandManagementChangeAvailablity() {
   const dispatch = useDispatch();
@@ -190,7 +191,10 @@ function LandManagementChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.Info?.price ?? 0).toFixed(2)} /acre</h6>
+                        <h6>
+                          ₹ {formatPrice(service?.Info?.price ?? 0)} /
+                          {service?.Info?.equipmentInformation === "Trolly" ? "km" : "acre"}
+                        </h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

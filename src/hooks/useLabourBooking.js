@@ -61,6 +61,11 @@ export const useLabourBooking = ({ vendor, filters }) => {
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       dailyWage: vendor.labourInfo.dailyWage,
       additionalCharges: vendor.labourInfo.additionalCharges,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

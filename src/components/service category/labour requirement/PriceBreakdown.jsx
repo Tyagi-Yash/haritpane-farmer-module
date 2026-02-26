@@ -5,7 +5,13 @@ const PriceBreakdown = ({
   payableAmount,
   distanceBeyondRadius,
 }) => {
-  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   dailyWage = Number(dailyWage ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
@@ -28,7 +34,7 @@ const PriceBreakdown = ({
               Service Charges
               <div className="text-muted small">
                 {formatPrice(dailyWage)} (Per Person Daily Wages) × {numberOfLabour.toFixed(0)}{" "}
-                labour
+                Person
               </div>
             </td>
             <td>{formatPrice(serviceAmount)}</td>

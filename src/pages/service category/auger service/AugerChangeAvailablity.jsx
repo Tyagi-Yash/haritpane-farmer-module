@@ -13,6 +13,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function AugerChangeAvailablity() {
   const dispatch = useDispatch();
@@ -191,7 +192,7 @@ function AugerChangeAvailablity() {
                     <div className="vendor-card">
                       <div className="service-info">
                         <img
-                          src={service?.augerImg || AugerDrillingService}
+                          src={service?.augerImg?.[0] || AugerDrillingService}
                           alt="Service"
                           className="service-image"
                         />
@@ -207,7 +208,7 @@ function AugerChangeAvailablity() {
                       </div>
 
                       <div className="price-info">
-                        <h6>₹ {Number(service?.ratePerHr ?? 0).toFixed(2)} /hour</h6>
+                        <h6>₹ {formatPrice(service?.ratePerHr ?? 0)} /hour</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

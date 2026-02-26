@@ -78,6 +78,7 @@ function ExcavationBookYourService() {
     setDisable(true);
     const totalDuration = (Number(hours) || 0) + (Number(minutes) || 0) / 60;
     const formdata = {
+      address,
       lat: lat.trim(),
       lng: lng.trim(),
       sectectEquipmentType: sectectEquipmentType,

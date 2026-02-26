@@ -69,6 +69,7 @@ function ElectrostaticBookYourService() {
     if (!validateForm()) return;
     setDisable(true);
     const formdata = {
+      address,
       lat: lat.trim(),
       lng: lng.trim(),
       areaUnderCultivation: areaUnderCultivation.trim(),

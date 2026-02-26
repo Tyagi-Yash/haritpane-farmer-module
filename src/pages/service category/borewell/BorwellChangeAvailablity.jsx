@@ -14,6 +14,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function BorwellChangeAvailablity() {
   const dispatch = useDispatch();
@@ -196,7 +197,7 @@ function BorwellChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.borewellInfo?.boreDigging ?? 0).toFixed(2)} /ft</h6>
+                        <h6>₹ {formatPrice(service?.borewellInfo?.boreDigging ?? 0)} /ft</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

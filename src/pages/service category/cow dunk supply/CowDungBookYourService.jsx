@@ -115,6 +115,7 @@ function CowDungBookYourService() {
         }
       } else {
         const formdata = {
+          currentLocation,
           lat: lat.trim(),
           lng: lng.trim(),
           type: selectedService,

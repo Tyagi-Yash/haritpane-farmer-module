@@ -46,7 +46,6 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       providerId: vendor.providerId,
       categoryId: vendor.categoryId,
       amount: vendor.payableAmount?.toString(),
-      amount: vendor.payableAmount?.toString(),
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.fromTime,
@@ -56,6 +55,11 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       priceType: vendor.priceInfo.priceType,
       price: vendor.priceInfo.price,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

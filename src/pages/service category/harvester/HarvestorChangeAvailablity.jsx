@@ -14,6 +14,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function HarvestorChangeAvailablity() {
   const dispatch = useDispatch();
@@ -192,13 +193,13 @@ function HarvestorChangeAvailablity() {
                       <div className="price-info">
                         <h6>
                           ₹{" "}
-                          {Number(
+                          {formatPrice(
                             service?.priceInfo?.find(
                               (p) =>
                                 p?.cropType?.toLowerCase() ===
                                 (filters?.typeOfCrop || "").toLowerCase(),
                             )?.price ?? 0,
-                          ).toFixed(2)}{" "}
+                          )}{" "}
                           {service?.subCategory === "combine_harvester" ? "/acre" : "/quintal"}
                         </h6>
                         <small>Additional charges might apply</small>

@@ -71,6 +71,7 @@ function LandManagementVendorDetails() {
                       <div className="col">
                         <PriceBreakdown
                           price={vendor.Info.price}
+                          equipment={vendor?.Info?.equipmentInformation}
                           extraCharges={vendor.extraCharges}
                           additionalCharges={vendor.additionalCharges}
                           distanceBeyondRadius={vendor.distanceBeyondRadius}

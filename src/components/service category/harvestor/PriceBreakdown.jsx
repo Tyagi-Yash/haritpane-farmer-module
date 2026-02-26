@@ -6,7 +6,13 @@ const PriceBreakdown = ({
   distanceBeyondRadius,
   subCategory,
 }) => {
-  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   const ratePerAcre = Number(price ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;

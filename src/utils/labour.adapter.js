@@ -1,6 +1,13 @@
 export const labourAdapter = (item) => {
   const service = item.serviceDetails || {};
   const priceValue = Number(item?.dailyWage || 0);
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   return {
     id: item._id,
@@ -8,7 +15,7 @@ export const labourAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: "",
     businessName: service.businessName || "No Discription",
-    amount: `${priceValue.toFixed(2)} /day wage`,
+    amount: `${formatPrice(priceValue)} /day wage`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

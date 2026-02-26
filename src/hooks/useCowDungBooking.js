@@ -48,8 +48,12 @@ export const useCowDungBooking = ({ vendor, filters }) => {
       amount: vendor.payableAmount?.toString(),
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
-      bookingStartTime: filters.startTime,
       categoryTypeOfCowDunk: filters.type,
+      addressOfFarm: filters?.currentLocation,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

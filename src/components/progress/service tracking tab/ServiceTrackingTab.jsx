@@ -84,6 +84,11 @@ function ServiceTrackingTab() {
               <DatePicker
                 selected={fromDate ? new Date(fromDate) : null}
                 onChange={(selectedDate) => {
+                  if (!selectedDate) {
+                    setFromDate("");
+                    setPage(1);
+                    return;
+                  }
                   const formatted = format(selectedDate, "yyyy-MM-dd");
                   handleFromDateChange(formatted);
                 }}
@@ -94,6 +99,7 @@ function ServiceTrackingTab() {
                 showPopperArrow={false}
                 showOtherMonths
                 fixedHeight
+                isClearable
               />
             </div>
             <div className="col-md-4 mb-3">
@@ -101,6 +107,11 @@ function ServiceTrackingTab() {
               <DatePicker
                 selected={toDate ? new Date(toDate) : null}
                 onChange={(selectedDate) => {
+                  if (!selectedDate) {
+                    setToDate("");
+                    setPage(1);
+                    return;
+                  }
                   const formatted = format(selectedDate, "yyyy-MM-dd");
                   handleToDateChange(formatted);
                 }}
@@ -111,6 +122,7 @@ function ServiceTrackingTab() {
                 showPopperArrow={false}
                 showOtherMonths
                 fixedHeight
+                isClearable
               />
             </div>
             <div className="col-md-4 mb-3">

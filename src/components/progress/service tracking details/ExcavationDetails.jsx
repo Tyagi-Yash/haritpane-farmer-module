@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/excavation/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
+import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
+import { equipmentTypesOption } from "../../../constants/service category/excavation service/equipmentOption";
 
 function ExcavationDetails({ data }) {
   const service = data.serviceDetails;
@@ -77,6 +81,17 @@ function ExcavationDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Earth Movers</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>
+                  Equipment Name:{" "}
+                  {equipmentTypesOption.find((type) => type?.value === data?.excavationType)
+                    ?.name || "N/A"}
+                </p>
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
+                <p>Tentative Duration: {formatHoursMinutes(data?.durationOfExavation) || "N/A"}</p>
               </div>
             </div>
             <div className="col">

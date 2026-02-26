@@ -1,3 +1,4 @@
+import { formatPrice } from "../../../utils/formatPrice";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import Info from "./Info";
 
@@ -26,7 +27,7 @@ function TransportationJobInfo({ job }) {
       <Info label="Vehicle Type" value={job.typeOfVehicle} />
       <Info
         label="Goods"
-        value={`${transportItemLabelMap[job.transportItem]} (${getTransportWeight(job)} kg)`}
+        value={`${transportItemLabelMap[job.transportItem]} (${formatPrice(getTransportWeight(job))} kg)`}
       />
     </div>
   );

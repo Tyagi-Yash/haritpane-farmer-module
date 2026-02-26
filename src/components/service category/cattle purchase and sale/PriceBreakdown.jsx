@@ -1,4 +1,11 @@
-const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
+const PriceBreakdown = ({ sellingPrice, payableAmount }) => {
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
   return (
     <div className="option-wrapper bookingPriceTable">
       <h5 className="normal-heading">Total Booking Price</h5>
@@ -7,21 +14,14 @@ const PriceBreakdown = ({ info, additionalCharges, payableAmount }) => {
         <tbody>
           <tr>
             <td>Service Cost</td>
-            <td>₹ {Number(info?.sellingPrice ?? 0).toFixed(2)}</td>
+            <td>{formatPrice(sellingPrice ?? 0)}</td>
           </tr>
-
-          {additionalCharges && (
-            <tr>
-              <td>Transportation Charges</td>
-              <td>₹ {Number(additionalCharges).toFixed(2)}</td>
-            </tr>
-          )}
         </tbody>
 
         <tfoot>
           <tr>
             <td>Total Payable Amount</td>
-            <td>₹ {Number(payableAmount ?? 0).toFixed(2)}</td>
+            <td>{formatPrice(payableAmount ?? 0)}</td>
           </tr>
         </tfoot>
       </table>

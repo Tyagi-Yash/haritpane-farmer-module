@@ -1,11 +1,18 @@
 const PriceBreakdown = ({
   price,
+  equipment,
   extraCharges,
   additionalCharges,
   payableAmount,
   distanceBeyondRadius,
 }) => {
-  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
   const transportCharge = extraCharges ? additionalCharges : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 
@@ -16,7 +23,7 @@ const PriceBreakdown = ({
       <table className="table table-borderless">
         <tbody>
           <tr>
-            <td>Service Charges (Per Acre)</td>
+            <td>Service Charges (Per {equipment === "Trolly" ? "Km" : "Acre"})</td>
             <td>{formatPrice(price)}</td>
           </tr>
 

@@ -1,6 +1,13 @@
 export const borewellAdapter = (item) => {
   const service = item.serviceDetails || {};
   const priceValue = Number(item?.boreDigging || 0);
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   return {
     id: item._id,
@@ -8,7 +15,7 @@ export const borewellAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: service.borewellInfo.borewellImg?.[0] || "",
     businessName: service.businessName || "No Discription",
-    amount: `${priceValue.toFixed(2)} /ft`,
+    amount: `${formatPrice(priceValue)} /ft`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

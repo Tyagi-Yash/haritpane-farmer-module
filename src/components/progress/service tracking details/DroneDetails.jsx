@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/drone service/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 
 function DroneDetails({ data }) {
   const service = data.serviceDetails;
@@ -77,6 +79,13 @@ function DroneDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Drone Service</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Farm Area: {data?.areaUnderCultivation} Acre</p>
+                <p>Crop Name: {data?.cropUnderCultivation || "N/A"}</p>
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
               </div>
             </div>
             <div className="col">

@@ -55,6 +55,11 @@ export const useDroneBooking = ({ vendor, filters }) => {
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       chargePerAcre: vendor.chargePerAcre,
       numberOfDrones: vendor.numberOfDrones,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

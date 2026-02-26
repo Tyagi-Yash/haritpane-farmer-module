@@ -13,6 +13,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function DroneChangeAvailablity() {
   const dispatch = useDispatch();
@@ -128,7 +129,7 @@ function DroneChangeAvailablity() {
                       selected={toDate ? new Date(toDate) : null}
                       onChange={(selectedDate) => {
                         const formatted = format(selectedDate, "yyyy-MM-dd");
-                        setFormState((prev) => ({ ...prev, toDate: formatted }));
+                        setFilters((prev) => ({ ...prev, toDate: formatted }));
                         setErrors((prev) => ({ ...prev, toDate: "" }));
                       }}
                       dateFormat="dd/MM/yyyy"
@@ -202,7 +203,7 @@ function DroneChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.chargePerAcre ?? 0).toFixed(2)} /acre</h6>
+                        <h6>₹ {formatPrice(service?.chargePerAcre ?? 0)} /acre</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

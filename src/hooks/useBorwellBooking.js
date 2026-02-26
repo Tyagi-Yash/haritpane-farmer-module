@@ -59,6 +59,11 @@ export const useBorewellBooking = ({ vendor, filters }) => {
       motorCost: vendor?.motorInfo?.[0]?.motorCost,
       boreDigging: vendor.borewellInfo.boreDigging,
       pipeCharges: vendor.borewellInfo.pipeCharges,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

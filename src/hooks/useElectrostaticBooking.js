@@ -53,6 +53,11 @@ export const useElectrostaticBooking = ({ vendor, filters }) => {
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
       chargePerAcre: vendor.basicInfo.chargePerAcre,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

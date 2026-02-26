@@ -7,6 +7,7 @@ import { cancelBooking } from "../../../reduxtoolkit/slices/service category/boo
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import PriceBreakdown from "../../service category/cattle purchase and sale/PriceBreakdown";
 
 function CattleDetails({ data }) {
   const service = data.serviceDetails;
@@ -80,11 +81,16 @@ function CattleDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Cattle Purchase & Sale</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Cattle Breed: {data?.cattleBreed}</p>
+                <p>Cattle Name: {data?.cattleName}</p>
               </div>
             </div>
             <div className="col">
               <div className="bookingPriceTableParent">
-                <div className="option-wrapper bookingPriceTable">
+                <PriceBreakdown sellingPrice={data?.sellingPrice} payableAmount={data?.amount} />
+                {/* <div className="option-wrapper bookingPriceTable">
                   <h5 className="normal-heading">Total Booking Price</h5>
                   <table className="table table-borderless">
                     <tbody>
@@ -100,7 +106,7 @@ function CattleDetails({ data }) {
                       </tr>
                     </tfoot>
                   </table>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

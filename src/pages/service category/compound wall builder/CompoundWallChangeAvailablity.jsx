@@ -13,6 +13,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function CompoundWallChangeAvailablity() {
   const dispatch = useDispatch();
@@ -207,7 +208,7 @@ function CompoundWallChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.perMeter ?? 0).toFixed(2)} /m²</h6>
+                        <h6>₹ {formatPrice(service?.perMeter ?? 0)} /m²</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

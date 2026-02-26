@@ -3,6 +3,7 @@ import { acceptQuotation, rejectQuotation } from "../../../reduxtoolkit/slices/p
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function QuotationCard({ data, jobOrderId }) {
   const dispatch = useDispatch();
@@ -51,7 +52,7 @@ function QuotationCard({ data, jobOrderId }) {
       </div>
       <div className="amount-row">
         <span className="quotation-label">Amount</span>
-        <span className="amount">₹ {amount}</span>
+        <span className="amount">₹ {formatPrice(amount)}</span>
       </div>
       <div className="amount-row">
         <span className="quotation-label">Message</span>

@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/labour requirement/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
+import { LabourTypes } from "../../../constants/service category/labor requirement/labour type data";
 
 function LabourDetails({ data }) {
   const service = data.serviceDetails;
@@ -77,6 +80,25 @@ function LabourDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Labour Requirement</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>
+                  labour For:{" "}
+                  {LabourTypes.find((type) => type?.value === data?.labourType)?.name || "N/A"}
+                </p>
+                <p>Number Of Labour: {data?.numberOfLabour || "N/A"}</p>
+                {data?.areaUnderCultivation ? (
+                  <p>Farm Area: {data.areaUnderCultivation} Acre</p>
+                ) : null}
+                {data?.cropUnderCultivation ? <p>Crop Name: {data.cropUnderCultivation}</p> : null}
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                {data?.bookingStartTime ? (
+                  <p>Start Time: {convertTo12Hour(data?.bookingStartTime)}</p>
+                ) : null}
+                {data?.bookingEndTime ? (
+                  <p>End Time: {convertTo12Hour(data?.bookingEndTime)}</p>
+                ) : null}
               </div>
             </div>
             <div className="col">

@@ -68,8 +68,7 @@ function CattleVendorDetails() {
                       </div>
                       <div className="col">
                         <PriceBreakdown
-                          info={vendor.basicInfo}
-                          additionalCharges={vendor.transportationCharges}
+                          sellingPrice={vendor.basicInfo.sellingPrice}
                           payableAmount={vendor.payableAmount}
                         />
                       </div>

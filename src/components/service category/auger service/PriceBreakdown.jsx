@@ -8,7 +8,13 @@ const PriceBreakdown = ({
   distanceBeyondRadius,
   drillInfo = [],
 }) => {
-  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   ratePerHr = Number(ratePerHr ?? 0);
   const payable = Number(payableAmount ?? 0);

@@ -3710,3 +3710,30 @@ input[type="date" i] {
 .no-border {
   border: none;
 }
+
+.react-datepicker__close-icon {
+  right: 10px !important;
+  padding: 0 !important;
+}
+
+.react-datepicker__close-icon::after {
+  content: "×" !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 20px !important;
+  height: 20px !important;
+  font-size: 19px !important;
+  font-weight: 500 !important;
+  color: #6b7280 !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  border: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.react-datepicker__close-icon:hover::after {
+  background: rgba(239, 68, 68, 0.1) !important;
+  color: #ef4444 !important;
+  transform: scale(1.05) !important;
+}

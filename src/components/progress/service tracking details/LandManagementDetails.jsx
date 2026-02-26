@@ -42,6 +42,8 @@ function LandManagementDetails({ data }) {
     });
   };
 
+  const info = service?.Info?.find((i) => i._id === data.tractorInfoId);
+
   return (
     <>
       <div className="tab-pane active">
@@ -88,6 +90,7 @@ function LandManagementDetails({ data }) {
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
                   price={data.price}
+                  equipment={info?.equipmentInformation}
                   extraCharges={data.extraCharges}
                   additionalCharges={service.additionalCharges}
                   payableAmount={data.amount}

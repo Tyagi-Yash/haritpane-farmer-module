@@ -1,5 +1,12 @@
 export const landManagementAdapter = (item) => {
   const info = item?.serviceDetails?.Info?.find((i) => i._id === item.tractorInfoId);
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   return {
     id: item._id,
@@ -7,7 +14,7 @@ export const landManagementAdapter = (item) => {
     bookingFor: item.bookingFor,
     image: info?.images?.[0] || "",
     businessName: item.serviceDetails?.businessName || "No Discription",
-    amount: `${Number(item?.price || 0).toFixed(2)} /acre`,
+    amount: `${formatPrice(item?.price || 0)} /${info?.equipmentInformation === "Trolly" ? "km" : "acre"}`,
     rating: item.providerDetails?.averageRating ?? "N/A",
 
     raw: item,

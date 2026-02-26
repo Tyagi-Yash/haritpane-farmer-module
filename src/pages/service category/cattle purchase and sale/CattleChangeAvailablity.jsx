@@ -11,6 +11,7 @@ import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllServicesOfCattle } from "../../../reduxtoolkit/slices/service category/cattlePurchaseServices";
 import VendorCardSkeleton from "../../../components/skeletons/VendorCardSkeleton";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function CattleChangeAvailablity() {
   const dispatch = useDispatch();
@@ -195,7 +196,7 @@ function CattleChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.payableAmount ?? 0).toFixed(2)}</h6>
+                        <h6>₹ {formatPrice(service?.payableAmount ?? 0)}</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

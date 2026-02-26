@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/borewell/PriceBreakdown";
+import { formatDate } from "../../../utils/dateFormatter";
+import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 
 function BorewellDetails({ data }) {
   const service = data.serviceDetails;
@@ -77,6 +79,19 @@ function BorewellDetails({ data }) {
                 <h5 className="normal-heading">Booking Details</h5>
                 <p>Service Name: Borewell</p>
                 <p>Business Name: {service?.businessName || "N/A"}</p>
+                <br />
+                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Depth of Borewell: {data?.depthOfBorewell || "N/A"} ft</p>
+                <p>Casing Pipe: {data?.casingPipe || "N/A"}</p>
+                <p>Submersible water motor: {data?.waterMotor || "N/A"}</p>
+                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
+                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
+                {data?.bookingStartTime ? (
+                  <p>Start Time: {convertTo12Hour(data?.bookingStartTime)}</p>
+                ) : null}
+                {data?.bookingEndTime ? (
+                  <p>End Time: {convertTo12Hour(data?.bookingEndTime)}</p>
+                ) : null}
               </div>
             </div>
             <div className="col">

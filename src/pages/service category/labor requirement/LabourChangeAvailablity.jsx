@@ -14,6 +14,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function LabourChangeAvailablity() {
   const dispatch = useDispatch();
@@ -190,7 +191,7 @@ function LabourChangeAvailablity() {
                         </div>
                       </div>
                       <div className="price-info">
-                        <h6>₹ {Number(service?.labourInfo?.dailyWage ?? 0).toFixed(2)} /day wage</h6>
+                        <h6>₹ {formatPrice(service?.labourInfo?.dailyWage ?? 0)} /day wage</h6>
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

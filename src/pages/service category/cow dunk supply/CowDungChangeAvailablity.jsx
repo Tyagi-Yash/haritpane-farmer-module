@@ -13,6 +13,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function CowDungChangeAvailablity() {
   const dispatch = useDispatch();
@@ -204,7 +205,7 @@ function CowDungChangeAvailablity() {
 
                       <div className="price-info">
                         <h6>
-                          ₹ {Number(service?.payableAmount ?? 0).toFixed(2)} /ton{" "}
+                          ₹ {formatPrice(service?.payableAmount ?? 0)} /ton{" "}
                           {service?.dungType && `(${service?.dungType})`}
                         </h6>
                         <small>Additional charges might apply</small>

@@ -54,6 +54,11 @@ export const useCattleBooking = ({ vendor, filters }) => {
       amount: vendor.payableAmount?.toString(),
       weight: vendor.basicInfo.weight,
       sellingPrice: vendor.basicInfo.sellingPrice,
+      addressOfFarm: filters?.address,
+      location: {
+        type: "Point",
+        coordinates: [Number(filters?.lng), Number(filters?.lat)],
+      },
     };
     try {
       const res = await dispatch(createBooking(payload)).unwrap();

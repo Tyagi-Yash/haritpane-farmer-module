@@ -1,11 +1,18 @@
 const PriceBreakdown = ({ perMeter, payableAmount, height, length }) => {
-  const formatPrice = (amount) => `₹ ${Number(amount ?? 0).toFixed(2)}`;
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `₹ ${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   const ratePerMeter = Number(perMeter ?? 0);
   const heightInFeet = Number(height ?? 0);
   const lengthInMeter = Number(length ?? 0);
 
-  const heightInMeter = heightInFeet * 0.3048;
+  const heightInMeter = (heightInFeet * 0.3048).toFixed(2);
+  console.log(heightInMeter);
   const totalArea = heightInMeter * lengthInMeter;
   const serviceAmount = ratePerMeter > 0 ? totalArea * ratePerMeter : 0;
 
@@ -19,7 +26,7 @@ const PriceBreakdown = ({ perMeter, payableAmount, height, length }) => {
             <td>
               Dimensions
               <div className="text-muted small">
-                Height: {heightInMeter.toFixed(2)} m ({heightInFeet.toFixed(2)} ft) × Length:{" "}
+                Height: {heightInMeter} m ({heightInFeet.toFixed(2)} ft) × Length:{" "}
                 {lengthInMeter.toFixed(2)} m
               </div>
             </td>

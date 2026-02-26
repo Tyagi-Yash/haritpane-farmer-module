@@ -1,5 +1,12 @@
 export const augerAdapter = (item) => {
   const service = item.serviceDetails || {};
+  const formatPrice = (amount) => {
+    const num = Number(amount ?? 0);
+    return `${num.toLocaleString("en-IN", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  };
 
   return {
     id: item._id,
@@ -8,7 +15,7 @@ export const augerAdapter = (item) => {
     image: service.augerImg?.[0] || "",
     businessName: service.businessName || "No Discription",
     rating: item.providerDetails?.averageRating ?? "N/A",
-    amount: `${Number(item?.ratePerHr || 0).toFixed(2)} /hour`,
+    amount: `${formatPrice(item?.ratePerHr || 0)} /hour`,
 
     raw: item,
   };

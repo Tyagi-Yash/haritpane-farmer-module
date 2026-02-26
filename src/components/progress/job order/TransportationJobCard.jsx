@@ -1,3 +1,4 @@
+import { formatPrice } from "../../../utils/formatPrice";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import JobOrderActions from "./JobOrderActions";
 import Row from "./Row";
@@ -27,7 +28,7 @@ function TransportationJobCard({ job }) {
       <Row label="Vehicle" value={job.typeOfVehicle} />
       <Row
         label="Goods"
-        value={`${transportItemLabelMap[job.transportItem]} (${getTransportWeight(job)} kg)`}
+        value={`${transportItemLabelMap[job.transportItem]} (${formatPrice(getTransportWeight(job))} kg)`}
       />
 
       <JobOrderActions job={job} />

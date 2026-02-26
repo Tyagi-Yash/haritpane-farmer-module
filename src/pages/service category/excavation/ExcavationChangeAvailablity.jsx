@@ -14,6 +14,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function ExcavationChangeAvailablity() {
   const dispatch = useDispatch();
@@ -191,7 +192,7 @@ function ExcavationChangeAvailablity() {
                       </div>
                       <div className="price-info">
                         <h6>
-                          ₹ {Number(service?.priceInfo?.price ?? 0).toFixed(2)}{" "}
+                          ₹ {formatPrice(service?.priceInfo?.price ?? 0)}{" "}
                           {service?.priceInfo?.priceType === "Hourly" ? "/hour" : "/day"}
                         </h6>
                         <small>Additional charges might apply</small>
