@@ -38,7 +38,7 @@ export const useBorewellBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
-    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return;
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId) return false;
 
     const payload = {
       bookingFor: "borewell",
@@ -69,9 +69,11 @@ export const useBorewellBooking = ({ vendor, filters }) => {
       const res = await dispatch(createBooking(payload)).unwrap();
       setBookingId(res?.data?._id || null);
       setBookingStatus(res?.data?.status || "");
-      toast.success(res?.message || "Booking request sent");
+      // toast.success(res?.message || "Booking request sent");
+      return true;
     } catch (err) {
       toast.error(err?.message || "Failed to create booking");
+      return false;
     }
   };
 

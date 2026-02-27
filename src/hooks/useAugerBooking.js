@@ -70,7 +70,7 @@ export const useAugerBooking = ({ vendor, filters }) => {
       const res = await dispatch(createBooking(payload)).unwrap();
       setBookingId(res?.data?._id || null);
       setBookingStatus(res?.data?.status || "");
-      toast.success(res?.message || "Booking request sent");
+      // toast.success(res?.message || "Booking request sent");
       return true;
     } catch (err) {
       toast.error(err?.message || "Failed to create booking");

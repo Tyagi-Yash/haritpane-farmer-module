@@ -31,7 +31,7 @@ function MyProfileSaveContinue() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const fetchFarmerProfile = async () => {
     try {
       const res = await dispatch(getFarmerProfile());
@@ -142,6 +142,11 @@ function MyProfileSaveContinue() {
         name: userData?.name ?? "",
         profileImage: userData?.profileImage ?? "",
         languageSelector: userData?.languageSelector ?? "",
+        phone: userData?.phone ?? "",
+        email: userData?.email ?? "",
+        address: userData?.address ?? "",
+        pushNotification: userData?.pushNotification ?? "",
+        chatNotification: userData?.chatNotification ?? "",
       };
       if (status === 200) {
         localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));

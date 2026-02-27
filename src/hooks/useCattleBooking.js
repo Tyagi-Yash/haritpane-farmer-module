@@ -41,7 +41,7 @@ export const useCattleBooking = ({ vendor, filters }) => {
 
   const bookService = async () => {
     if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !vendor?.basicInfo?._id)
-      return;
+      return false;
 
     const payload = {
       bookingFor: "cattle",
@@ -64,9 +64,11 @@ export const useCattleBooking = ({ vendor, filters }) => {
       const res = await dispatch(createBooking(payload)).unwrap();
       setBookingId(res?.data?._id || null);
       setBookingStatus(res?.data?.status || "");
-      toast.success(res?.message || "Booking request sent");
+      // toast.success(res?.message || "Booking request sent");
+      return true;
     } catch (err) {
       toast.error(err?.message || "Failed to create booking");
+      return false;
     }
   };
 

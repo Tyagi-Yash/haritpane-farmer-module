@@ -5,6 +5,10 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { disconnectSocket } from "../../../socket/socket";
+import { resetReviewList } from "../../../reduxtoolkit/slices/rate and reviews/rateReview";
+import { clearBookingList } from "../../../reduxtoolkit/slices/progress/bookingList";
+import { resetChatState } from "../../../reduxtoolkit/slices/chats/chats";
 
 function DeleteModal({ show, onClose }) {
   const dispatch = useDispatch();
@@ -21,6 +25,10 @@ function DeleteModal({ show, onClose }) {
       if (status === 200) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
+        dispatch(resetChatState());
+        dispatch(clearBookingList());
+        dispatch(resetReviewList());
+        disconnectSocket();
         navigate("/signup");
         toast.success(message || "Account deleted successfully");
       } else {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { useCowDungBooking } from "../../../hooks/useCowDungBooking";
@@ -14,11 +14,14 @@ import VendorHeader from "../../../components/common components/VendorHeader";
 import BookingSummary from "../../../components/common components/BookingSummary";
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
+import SuccessModal from "../../../components/common components/SuccessModal";
 
 function CowDungVendorDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const { services = [], filters = {} } = useSelector(
     (state) => state.services.CowDungServiceMgmtSlice,
@@ -74,7 +77,10 @@ function CowDungVendorDetails() {
                     <BookingActions
                       isBooking={isBooking}
                       loading={loading}
-                      onBook={bookService}
+                      onBook={async () => {
+                        const success = await bookService();
+                        if (success) setShowSuccess(true);
+                      }}
                       onCancelClick={() => setShowCancelModal(true)}
                     />
                   </>
@@ -95,6 +101,7 @@ function CowDungVendorDetails() {
           setShowCancelModal(false);
         }}
       />
+      {showSuccess && <SuccessModal onClose={() => navigate("/dashboard")} />}
     </>
   );
 }

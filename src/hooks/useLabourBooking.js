@@ -39,7 +39,8 @@ export const useLabourBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
-    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !filters?.labourType) return;
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !filters?.labourType)
+      return false;
 
     const payload = {
       bookingFor: "labour",
@@ -71,9 +72,11 @@ export const useLabourBooking = ({ vendor, filters }) => {
       const res = await dispatch(createBooking(payload)).unwrap();
       setBookingId(res?.data?._id || null);
       setBookingStatus(res?.data?.status || "");
-      toast.success(res?.message || "Booking request sent");
+      // toast.success(res?.message || "Booking request sent");
+      return true;
     } catch (err) {
       toast.error(err?.message || "Failed to create booking");
+      return false;
     }
   };
 

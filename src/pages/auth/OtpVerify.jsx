@@ -80,9 +80,14 @@ function OtpVerify() {
 
       const jwtToken = userData?.jwtToken || "";
       const farmerProfile = {
-        name: userData?.name ?? "",
         profileImage: userData?.profileImage ?? "",
+        name: userData?.name ?? "",
+        phone: userData?.phone ?? "",
+        email: userData?.email ?? "",
+        address: userData?.address ?? "",
         languageSelector: userData?.languageSelector ?? "",
+        pushNotification: userData?.pushNotification ?? "",
+        chatNotification: userData?.chatNotification ?? "",
       };
 
       if (status === 200) {

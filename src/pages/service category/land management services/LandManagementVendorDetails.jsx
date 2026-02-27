@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { useLandManagementBooking } from "../../../hooks/useLandManagementBooking";
@@ -13,13 +13,14 @@ import VendorHeader from "../../../components/common components/VendorHeader";
 import BookingSummary from "../../../components/common components/BookingSummary";
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
-// import BookingActions from "../../../components/service category/land management/BookingActions";
-// import VendorHeader from "../../../components/service category/land management/VendorHeader";
+import SuccessModal from "../../../components/common components/SuccessModal";
 
 function LandManagementVendorDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const { services = [], filters = {} } = useSelector(
     (state) => state.services.LandServiceMgmtSlice,
@@ -82,7 +83,10 @@ function LandManagementVendorDetails() {
                     <BookingActions
                       isBooking={isBooking}
                       loading={loading}
-                      onBook={bookService}
+                      onBook={async () => {
+                        const success = await bookService();
+                        if (success) setShowSuccess(true);
+                      }}
                       onCancelClick={() => setShowCancelModal(true)}
                     />
                   </>
@@ -103,6 +107,7 @@ function LandManagementVendorDetails() {
           setShowCancelModal(false);
         }}
       />
+      {showSuccess && <SuccessModal onClose={() => navigate("/dashboard")} />}
     </>
   );
 }

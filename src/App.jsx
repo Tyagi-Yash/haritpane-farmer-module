@@ -69,6 +69,7 @@ import ProtectedRoute from "./components/common components/UserAuthProtect";
 import PublicRoute from "./components/common components/PublicRoute";
 import SyncLogout from "./components/common components/SyncLogout";
 import RouteWatcher from "./components/common components/RouteWatcher";
+import ProfileGuard from "./components/common components/ProfileGuard";
 
 function App() {
   return (
@@ -110,96 +111,96 @@ function App() {
             <Route element={<RouteWatcher />}>
               <Route path="service-category">
                 <Route index element={<ServiceCategory />} />
-
-                <Route path="land-management">
-                  <Route index element={<LandManagementServicesSubServices />} />
-                  <Route path="available-services">
-                    <Route index element={<LandManagementChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<LandManagementVendorDetails />} />
+                {/* <Route element={<ProfileGuard />}> */}
+                  <Route path="land-management">
+                    <Route index element={<LandManagementServicesSubServices />} />
+                    <Route path="available-services">
+                      <Route index element={<LandManagementChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<LandManagementVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
 
-                <Route path="harvestor">
-                  <Route index element={<HarvestorSubServices />} />
-                  <Route path="available-services">
-                    <Route index element={<HarvestorChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<HarvestorVendorDetails />} />
+                  <Route path="harvestor">
+                    <Route index element={<HarvestorSubServices />} />
+                    <Route path="available-services">
+                      <Route index element={<HarvestorChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<HarvestorVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
 
-                <Route path="cattle-purchase-sale">
-                  <Route index element={<CattleBookYourServices />} />
-                  <Route path="available-services">
-                    <Route index element={<CattleChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<CattleVendorDetails />} />
+                  <Route path="cattle-purchase-sale">
+                    <Route index element={<CattleBookYourServices />} />
+                    <Route path="available-services">
+                      <Route index element={<CattleChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<CattleVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
 
-                <Route path="earth-movers">
-                  <Route index element={<ExcavationBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<ExcavationChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<ExcavationVendorDetails />} />
+                  <Route path="earth-movers">
+                    <Route index element={<ExcavationBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<ExcavationChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<ExcavationVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
 
-                <Route path="electrostatic-spraying">
-                  <Route index element={<ElectrostaticBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<ElectrostaticChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<ElectrostaticVendorDetails />} />
+                  <Route path="electrostatic-spraying">
+                    <Route index element={<ElectrostaticBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<ElectrostaticChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<ElectrostaticVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
 
-                <Route path="labour-requirement">
-                  <Route index element={<LaborBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<LabourChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<LabourVendorDetails />} />
+                  <Route path="labour-requirement">
+                    <Route index element={<LaborBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<LabourChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<LabourVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
 
-                <Route path="transportation" element={<TransportationBookYourService />} />
+                  <Route path="transportation" element={<TransportationBookYourService />} />
 
-                <Route path="borewell">
-                  <Route index element={<BorwellBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<BorwellChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<BorwellVendorDetails />} />
+                  <Route path="borewell">
+                    <Route index element={<BorwellBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<BorwellChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<BorwellVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
 
+                  <Route path="cow-dung-supply">
+                    <Route index element={<CowDungBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<CowDungChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<CowDungVendorDetails />} />
+                    </Route>
+                  </Route>
+                  <Route path="compound-wall-builder">
+                    <Route index element={<CompoundWallBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<CompoundWallChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<CompoundWallVendorDetails />} />
+                    </Route>
+                  </Route>
 
-                <Route path="cow-dung-supply">
-                  <Route index element={<CowDungBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<CowDungChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<CowDungVendorDetails />} />
+                  <Route path="drone-service">
+                    <Route index element={<DroneBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<DroneChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<DroneVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
-                <Route path="compound-wall-builder">
-                  <Route index element={<CompoundWallBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<CompoundWallChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<CompoundWallVendorDetails />} />
-                  </Route>
-                </Route>
 
-                <Route path="drone-service">
-                  <Route index element={<DroneBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<DroneChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<DroneVendorDetails />} />
+                  <Route path="auger-service">
+                    <Route index element={<AugerBookYourService />} />
+                    <Route path="available-services">
+                      <Route index element={<AugerChangeAvailablity />} />
+                      <Route path="vendor-details/:id" element={<AugerVendorDetails />} />
+                    </Route>
                   </Route>
-                </Route>
-
-                <Route path="auger-service">
-                  <Route index element={<AugerBookYourService />} />
-                  <Route path="available-services">
-                    <Route index element={<AugerChangeAvailablity />} />
-                    <Route path="vendor-details/:id" element={<AugerVendorDetails />} />
-                  </Route>
-                </Route>
+                {/* </Route> */}
               </Route>
             </Route>
 

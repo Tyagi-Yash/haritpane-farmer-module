@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { usecompoundWallBooking } from "../../../hooks/useCompoundWallBooking";
@@ -13,11 +13,14 @@ import BookingSummary from "../../../components/common components/BookingSummary
 import PriceBreakdown from "../../../components/service category/compund wall builder/PriceBreakdown";
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
+import SuccessModal from "../../../components/common components/SuccessModal";
 
 function CompoundWallVendorDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const { services = [], filters = {} } = useSelector(
     (state) => state.services.CompoundWallServiceMgmtSlice,
@@ -76,7 +79,10 @@ function CompoundWallVendorDetails() {
                     <BookingActions
                       isBooking={isBooking}
                       loading={loading}
-                      onBook={bookService}
+                      onBook={async () => {
+                        const success = await bookService();
+                        if (success) setShowSuccess(true);
+                      }}
                       onCancelClick={() => setShowCancelModal(true)}
                     />
                   </>
@@ -97,6 +103,7 @@ function CompoundWallVendorDetails() {
           setShowCancelModal(false);
         }}
       />
+      {showSuccess && <SuccessModal onClose={() => navigate("/dashboard")} />}
     </>
   );
 }

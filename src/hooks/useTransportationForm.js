@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  validateDates,
   validateFromTillDates,
   validateHeight,
   validateItemType,
@@ -39,18 +38,6 @@ export function useTransportationForm() {
 
   const [formState, setFormState] = useState(defaultForm);
   const [errors, setErrors] = useState({});
-
-  // const handleChange = (name, value) => {
-  //   if (["lengthCm", "widthCm", "heightCm"].includes(name)) {
-  //     setFormState((p) => ({
-  //       ...p,
-  //       equipmentDimensions: { ...p.equipmentDimensions, [name]: value },
-  //     }));
-  //   } else {
-  //     setFormState((p) => ({ ...p, [name]: value }));
-  //   }
-  //   setErrors((p) => ({ ...p, [name]: "" }));
-  // };
 
   const handleChange = (name, value) => {
     if (name === "transportItem") {

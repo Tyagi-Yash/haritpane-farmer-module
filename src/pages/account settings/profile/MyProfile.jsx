@@ -31,6 +31,11 @@ function MyProfile() {
         name: data?.data?.name ?? "",
         profileImage: data?.data?.profileImage ?? "",
         languageSelector: data?.data?.languageSelector ?? "",
+        phone: data?.data?.phone ?? "",
+        email: data?.data?.email ?? "",
+        address: data?.data?.address ?? "",
+        pushNotification: data?.data?.pushNotification ?? "",
+        chatNotification: data?.data?.chatNotification ?? "",
       };
       if (status === 200) {
         localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));

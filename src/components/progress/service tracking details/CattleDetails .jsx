@@ -99,7 +99,7 @@ function CattleDetails({ data }) {
                 <p>Cattle Name: {data?.cattleName}</p>
 
                 <p>Gender: {cattleInfo.cattleGender}</p>
-                {basicInfoArray.age && <p>Age: {basicInfoArray.age} years</p>}
+                {basicInfoArray.age && <p>Age: {basicInfoArray.age}</p>}
                 {basicInfoArray.weight && <p>Weight: {basicInfoArray.weight} Kg</p>}
                 {basicInfoArray.calf && <p>Calf Available: Yes</p>}
                 {basicInfoArray.numberOfCalf && (

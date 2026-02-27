@@ -38,7 +38,9 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
   }, [vendor, dispatch]);
 
   const bookService = async () => {
-    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !vendor?.Info?._id) return;
+    if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !vendor?.Info?._id)
+      return false;
+
     const payload = {
       bookingFor: "land_management",
       serviceId: vendor._id,
@@ -64,9 +66,11 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       const res = await dispatch(createBooking(payload)).unwrap();
       setBookingId(res?.data?._id || null);
       setBookingStatus(res?.data?.status || "");
-      toast.success(res?.message || "Booking request sent");
+      // toast.success(res?.message || "Booking request sent");
+      return true;
     } catch (err) {
       toast.error(err?.message || "Failed to create booking");
+      return false;
     }
   };
 
@@ -76,12 +80,8 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       return;
     }
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId,
-          status: "cancelled",
-          reasonForRejection: reason,
-        }),
+      await dispatch(
+        cancelBooking({ bookingId, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setBookingId(null);
