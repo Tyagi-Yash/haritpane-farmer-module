@@ -45,6 +45,18 @@ function CattleDetails({ data }) {
     });
   };
 
+  const { cattleInfo = {}, basicInfo = [] } = service;
+
+  const renderField = (label, value) => {
+    if (!value && value !== 0 && value !== false) return null;
+    return (
+      <p>
+        <strong>{label}:</strong> {value}
+      </p>
+    );
+  };
+  const basicInfoArray = basicInfo?.[0];
+
   return (
     <>
       <div className="tab-pane active">
@@ -85,6 +97,21 @@ function CattleDetails({ data }) {
                 <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
                 <p>Cattle Breed: {data?.cattleBreed}</p>
                 <p>Cattle Name: {data?.cattleName}</p>
+
+                <p>Gender: {cattleInfo.cattleGender}</p>
+                {basicInfoArray.age && <p>Age: {basicInfoArray.age} years</p>}
+                {basicInfoArray.weight && <p>Weight: {basicInfoArray.weight} Kg</p>}
+                {basicInfoArray.calf && <p>Calf Available: Yes</p>}
+                {basicInfoArray.numberOfCalf && (
+                  <p>Number of Calf: {basicInfoArray.numberOfCalf}</p>
+                )}
+                {basicInfoArray.milkPerDay && (
+                  <p>Milk Per Day: {basicInfoArray.milkPerDay} Liters</p>
+                )}
+                {basicInfoArray.lactation && <p>Lactation: {basicInfoArray.lactation}</p>}
+                {basicInfoArray.animalDescription && (
+                  <p>Description: {basicInfoArray.animalDescription}</p>
+                )}
               </div>
             </div>
             <div className="col">

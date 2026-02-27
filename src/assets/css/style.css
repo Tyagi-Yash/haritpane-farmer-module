@@ -3737,3 +3737,30 @@ input[type="date" i] {
   color: #ef4444 !important;
   transform: scale(1.05) !important;
 }
+
+.no-chat {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+}
+
+.no-chat h4 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.no-chat p {
+  font-size: 14px;
+}
+
+.empty-chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.empty-chat-content {
+  text-align: center;
+  color: #888;
+}

@@ -72,6 +72,8 @@ function BorwellVendorDetails() {
                           payableAmount={vendor.payableAmount}
                           depthOfBorewell={filters.depthOfBorewell}
                           distanceBeyondRadius={vendor.distanceBeyondRadius}
+                          motorInfo={vendor?.motorInfo}
+                          pipeCharges={vendor?.borewellInfo?.pipeCharges}
                         />
                       </div>
                     </div>

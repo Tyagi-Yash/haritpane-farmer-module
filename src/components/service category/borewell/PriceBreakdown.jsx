@@ -4,6 +4,8 @@ const PriceBreakdown = ({
   extraCharges,
   payableAmount,
   distanceBeyondRadius,
+  motorInfo = [],
+  pipeCharges,
 }) => {
   const formatPrice = (amount) => {
     const num = Number(amount ?? 0);
@@ -15,17 +17,42 @@ const PriceBreakdown = ({
 
   const boreRatePerFt = Number(boreDigging ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
-  const OveralltransportCharge = transportCharge * distanceBeyondRadius;
+  const overallTransportCharge = transportCharge * Number(distanceBeyondRadius ?? 0);
 
   const boreAmount = extraCharges
-    ? Number(payableAmount ?? 0) - OveralltransportCharge
+    ? Number(payableAmount ?? 0) - overallTransportCharge
     : Number(payableAmount ?? 0);
 
   const depthOfBorewell = boreRatePerFt > 0 ? boreAmount / boreRatePerFt : 0;
 
   return (
     <div className="option-wrapper bookingPriceTable">
-      <h5 className="normal-heading">Tentative cost</h5>
+      {(motorInfo.length > 0 || pipeCharges) && (
+        <>
+          <h5 className="normal-heading">Motor & Pipe Details</h5>
+          <table className="table table-sm mb-4">
+            <tbody>
+              {motorInfo.length > 0 &&
+                motorInfo.map((motor) => (
+                  <tr key={motor?._id}>
+                    <td>Motor {motor.motorPower || "-"} HP</td>
+                    <td>{motor.motorCost ? formatPrice(motor.motorCost) : "-"}</td>
+                  </tr>
+                ))}
+
+              {pipeCharges && (
+                <tr>
+                  <td>Casing Pipe Charges</td>
+                  <td>{formatPrice(pipeCharges)} /ft</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </>
+      )}
+      <br />
+
+      <h5 className="normal-heading" >Tentative Cost</h5>
 
       <table className="table table-borderless">
         <tbody>
@@ -39,17 +66,18 @@ const PriceBreakdown = ({
             <td>{formatPrice(boreAmount)}</td>
           </tr>
 
-          <tr>
-            <td>
-              Transportation Charges
-              {!!transportCharge && (
+          {transportCharge > 0 && (
+            <tr>
+              <td>
+                Transportation Charges
                 <div className="text-muted small">
-                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                  {formatPrice(transportCharge)} (Per Km) ×{" "}
+                  {Number(distanceBeyondRadius ?? 0).toFixed(2)} Km
                 </div>
-              )}
-            </td>
-            <td>{formatPrice(OveralltransportCharge)}</td>
-          </tr>
+              </td>
+              <td>{formatPrice(overallTransportCharge)}</td>
+            </tr>
+          )}
         </tbody>
 
         <tfoot>

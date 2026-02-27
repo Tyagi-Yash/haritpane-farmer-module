@@ -63,7 +63,16 @@ export default function ChatWindow() {
     chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
   }, [messages]);
 
-  if (!activeChat) return <div className="p-3">Select a chat</div>;
+  if (!activeChat) {
+    return (
+      <div className="chat-panel empty-chat">
+        <div className="empty-chat-content">
+          <h4>Select a conversation</h4>
+          <p>Choose a chat from the sidebar to start messaging.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="chat-panel">

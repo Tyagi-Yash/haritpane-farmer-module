@@ -15,22 +15,31 @@ export default function ChatList() {
     <div className="col-sm-5">
       <div className="chat-sidebar">
         <div className="chat-list">
-          {chatList.map((chat) => (
-            <div
-              key={chat._id}
-              className={`chat-item ${activeChat?._id === chat._id ? "active" : ""}`}
-              onClick={() => openChat(chat)}
-            >
-              <img src={chat?.providerDetails?.profileImage || profilePic} />
-              <div className="chat-item-content">
-                <h4>{chat?.providerDetails?.name}</h4>
-                <p className="last-message">{chat.lastMessage?.message}</p>
-              </div>
-              <span className="time">
-                {chat?.lastMessage?.createdAt ? formatDateTo12Hour(chat.lastMessage.createdAt) : ""}
-              </span>
+          {chatList.length === 0 ? (
+            <div className="no-chat">
+              <h4>No Conversations Yet</h4>
+              <p>You don't have any active chats.</p>
             </div>
-          ))}
+          ) : (
+            chatList.map((chat) => (
+              <div
+                key={chat._id}
+                className={`chat-item ${activeChat?._id === chat._id ? "active" : ""}`}
+                onClick={() => openChat(chat)}
+              >
+                <img src={chat?.providerDetails?.profileImage || profilePic} alt="User" />
+                <div className="chat-item-content">
+                  <h4>{chat?.providerDetails?.name}</h4>
+                  <p className="last-message">{chat?.lastMessage?.message || "No messages yet"}</p>
+                </div>
+                <span className="time">
+                  {chat?.lastMessage?.createdAt
+                    ? formatDateTo12Hour(chat.lastMessage.createdAt)
+                    : ""}
+                </span>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

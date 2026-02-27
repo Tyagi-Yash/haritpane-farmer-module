@@ -41,7 +41,7 @@ export default function LocationInput({
 
   function handleMapLoad(map) {
     mapRef.current = map;
-    map.setMapTypeId(window.google.maps.MapTypeId.HYBRID);
+    // map.setMapTypeId(window.google.maps.MapTypeId.HYBRID);
   }
 
   // flag to ignore the immediate prediction fetch triggered by programmatic input set

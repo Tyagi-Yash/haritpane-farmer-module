@@ -102,6 +102,8 @@ function BorewellDetails({ data }) {
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
                   distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
+                  motorInfo={service?.motorInfo}
+                  pipeCharges={service?.borewellInfo?.pipeCharges}
                 />
               </div>
             </div>

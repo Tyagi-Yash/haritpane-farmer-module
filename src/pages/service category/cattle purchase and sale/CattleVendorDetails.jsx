@@ -32,6 +32,17 @@ function CattleVendorDetails() {
     },
   );
 
+  const { cattleInfo = {}, basicInfo = {} } = vendor;
+
+  const renderField = (label, value) => {
+    if (!value && value !== 0 && value !== false) return null;
+    return (
+      <p>
+        <strong>{label}:</strong> {value}
+      </p>
+    );
+  };
+
   return (
     <>
       <div className="WrapperArea">
@@ -65,6 +76,22 @@ function CattleVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Cattle Purchase & Sale"}
                         />
+                        <div className="option-wrapper booking-area mb-0">
+                          <h6 className="normal-heading">Cattle Details</h6>
+                          {renderField("Cattle Name", cattleInfo.cattleName)}
+                          {renderField("Breed", cattleInfo.cattleBreed)}
+                          {renderField("Gender", cattleInfo.cattleGender)}
+                          {renderField("Age", basicInfo.age && `${basicInfo.age} year`)}
+                          {renderField("Weight", basicInfo.weight && `${basicInfo.weight} Kg`)}
+                          {basicInfo.calf && renderField("Calf Available", "Yes")}
+                          {renderField("Number of Calf", basicInfo.numberOfCalf)}
+                          {renderField(
+                            "Milk Per Day",
+                            basicInfo.milkPerDay && `${basicInfo.milkPerDay} Liters`,
+                          )}
+                          {renderField("Lactation", basicInfo.lactation)}
+                          {renderField("Description", basicInfo.animalDescription)}
+                        </div>
                       </div>
                       <div className="col">
                         <PriceBreakdown
