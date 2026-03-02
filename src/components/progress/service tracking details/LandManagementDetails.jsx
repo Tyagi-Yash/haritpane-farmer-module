@@ -81,6 +81,13 @@ function LandManagementDetails({ data }) {
                 <p>Business Name: {service?.businessName || "N/A"}</p>
                 <br />
                 <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
+                <p>Equipment: {info?.equipmentInformation || "N/A"}</p>
+                <p>
+                  {info?.equipmentInformation === "Trolly" ? "Distance" : "Farm Area"}:{" "}
+                  {data?.farmArea
+                    ? `${data.farmArea} ${info?.equipmentInformation === "Trolly" ? "Km" : "Acre"}`
+                    : "N/A"}
+                </p>
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>

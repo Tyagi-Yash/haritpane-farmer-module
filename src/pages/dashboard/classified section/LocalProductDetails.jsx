@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import ProductReviews from "../../../components/dashboard/ProductReviews";
 import AddReview from "../../../components/dashboard/AddReview";
 import StarRating from "../../../components/dashboard/StarRating";
+import { isProfileComplete } from "../../../utils/profileValidator";
 
 function LocalProductDetails() {
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ function LocalProductDetails() {
   }, [id]);
 
   const handleStartChat = () => {
+    if (!checkProfileBeforeAction()) return;
+
     const productIdLast12 = productDetails._id.slice(-12);
     const farmerIdLast12 = productDetails.farmerId.slice(-12);
 
@@ -61,6 +64,13 @@ function LocalProductDetails() {
     });
   };
 
+  const checkProfileBeforeAction = () => {
+    if (!isProfileComplete()) {
+      toast.error("Profile incomplete. Please update your profile to proceed.");
+      return false;
+    }
+    return true;
+  };
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -111,9 +121,12 @@ function LocalProductDetails() {
                 Start Chat
               </button>
               <button
-                type="submit"
+                type="button"
                 className="call-us-edit"
-                onClick={() => setShowReviewModal(true)}
+                onClick={() => {
+                  if (!checkProfileBeforeAction()) return;
+                  setShowReviewModal(true);
+                }}
               >
                 Add Review
               </button>

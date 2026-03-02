@@ -1,7 +1,6 @@
 export const isProfileComplete = () => {
   try {
-    const storedUser = JSON.parse(localStorage.getItem("userProfile"));
-    console(storedUser);
+    const storedUser = JSON.parse(localStorage.getItem("farmerProfile"));
 
     if (!storedUser) return false;
 

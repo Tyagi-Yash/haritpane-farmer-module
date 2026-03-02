@@ -82,7 +82,6 @@ function HarvestorVendorDetails() {
                           extraCharges={vendor.extraCharges}
                           payableAmount={vendor.payableAmount}
                           distanceBeyondRadius={vendor.distanceBeyondRadius}
-                          areaUnderCultivation={filters.areaUnderCultivation}
                         />
                       </div>
                     </div>

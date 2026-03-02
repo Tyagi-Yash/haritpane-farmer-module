@@ -111,7 +111,7 @@ function App() {
             <Route element={<RouteWatcher />}>
               <Route path="service-category">
                 <Route index element={<ServiceCategory />} />
-                {/* <Route element={<ProfileGuard />}> */}
+                <Route element={<ProfileGuard />}>
                   <Route path="land-management">
                     <Route index element={<LandManagementServicesSubServices />} />
                     <Route path="available-services">
@@ -200,7 +200,7 @@ function App() {
                       <Route path="vendor-details/:id" element={<AugerVendorDetails />} />
                     </Route>
                   </Route>
-                {/* </Route> */}
+                </Route>
               </Route>
             </Route>
 

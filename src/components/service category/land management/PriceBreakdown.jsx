@@ -13,8 +13,15 @@ const PriceBreakdown = ({
       maximumFractionDigits: 2,
     })}`;
   };
+  const ratePerAcre = Number(price ?? 0);
   const transportCharge = extraCharges ? additionalCharges : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;
+
+  const serviceAmount = extraCharges
+    ? Number(payableAmount ?? 0) - OveralltransportCharge
+    : Number(payableAmount ?? 0);
+
+  const area = ratePerAcre > 0 ? serviceAmount / ratePerAcre : 0;
 
   return (
     <div className="option-wrapper bookingPriceTable">
@@ -23,8 +30,14 @@ const PriceBreakdown = ({
       <table className="table table-borderless">
         <tbody>
           <tr>
-            <td>Service Charges (Per {equipment === "Trolly" ? "Km" : "Acre"})</td>
-            <td>{formatPrice(price)}</td>
+            <td>
+              Service Charges
+              <div className="text-muted small">
+                {formatPrice(ratePerAcre)} (Per {equipment === "Trolly" ? "Km" : "Acre"}) ×{" "}
+                {area.toFixed(2)} {equipment === "Trolly" ? "Km" : "Acre"}
+              </div>
+            </td>
+            <td>{formatPrice(serviceAmount)}</td>
           </tr>
 
           <tr>

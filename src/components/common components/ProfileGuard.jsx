@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import { isProfileComplete } from "../../utils/profileValidator";
 
-function ProfileGuard({ children }) {
+function ProfileGuard() {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,7 +20,7 @@ function ProfileGuard({ children }) {
 
   if (!isProfileComplete()) return null;
 
-  return children;
+  return <Outlet />;
 }
 
 export default ProfileGuard;

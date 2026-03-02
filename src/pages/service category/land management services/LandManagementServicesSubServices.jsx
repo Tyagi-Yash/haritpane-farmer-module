@@ -7,7 +7,12 @@ import onlyAttachment from "../../../assets/images/only-attachment.png";
 import TractorandAttachment from "../../../assets/images/TractorandAttachment.png";
 import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
-import { validateDates, validateSelectTime } from "../../../utils/formValidators";
+import {
+  validateArea,
+  validateDates,
+  validateDistance,
+  validateSelectTime,
+} from "../../../utils/formValidators";
 import LocationInput from "../../../components/common components/LocationInput";
 import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 
@@ -26,6 +31,7 @@ function LandManagementServicesSubServices() {
     fromDate: "",
     toDate: "",
     fromTime: "",
+    farmArea: "",
   };
   const [formState, setFormState] = useState({ ...defaultForm, ...filters });
   const [disable, setDisable] = useState(false);
@@ -41,6 +47,7 @@ function LandManagementServicesSubServices() {
     fromDate,
     toDate,
     fromTime,
+    farmArea,
   } = formState;
 
   const handleSelectLocation = ({ address, lat, lng }) => {
@@ -70,6 +77,16 @@ function LandManagementServicesSubServices() {
       newErrors.hpOfTractor = "*Please select tractor category";
     }
 
+    let areaError;
+    if (selectAttachment === "Trolly") {
+      areaError = validateDistance(farmArea.trim());
+    } else {
+      areaError = validateArea(farmArea.trim());
+    }
+    if (areaError) {
+      newErrors.farmArea = areaError;
+    }
+
     const dateErrors = validateDates(fromDate, toDate);
     newErrors = { ...newErrors, ...dateErrors };
 
@@ -93,6 +110,7 @@ function LandManagementServicesSubServices() {
       fromDate,
       toDate,
       fromTime,
+      farmArea: farmArea.trim(),
       ...(selectSubCategory === "tracktor_attachments" && { hpOfTractor }),
     };
     try {
@@ -159,7 +177,7 @@ function LandManagementServicesSubServices() {
               <div className="form-section">
                 <h5 className="book-heading">Book your service</h5>
                 <div className="row g-3">
-                  <div className="col-md-4">
+                  <div className="col-md-6">
                     <LocationInput
                       value={address}
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
@@ -169,7 +187,7 @@ function LandManagementServicesSubServices() {
                     />
                   </div>
                   {selectSubCategory === "tracktor_attachments" && (
-                    <div className="col-md-4">
+                    <div className="col-md-6">
                       <select
                         className="form-control"
                         name="hpOfTractor"
@@ -189,7 +207,9 @@ function LandManagementServicesSubServices() {
                       {errors.hpOfTractor && <p className="error-text">{errors.hpOfTractor}</p>}
                     </div>
                   )}
-                  <div className="col-md-4">
+                </div>
+                <div className="row g-3">
+                  <div className="col-md-6">
                     <select
                       className="form-control"
                       name="selectAttachment"
@@ -215,7 +235,23 @@ function LandManagementServicesSubServices() {
                       <p className="error-text">{errors.selectAttachment}</p>
                     )}
                   </div>
+                  <div className="col-md-6">
+                    <input
+                      type="number"
+                      placeholder={
+                        selectAttachment === "Trolly"
+                          ? "Distance from Your Field to Destination(in Km)*"
+                          : "Area Under Cultivation(in acre)*"
+                      }
+                      className="form-control"
+                      name="farmArea"
+                      value={farmArea}
+                      onChange={handleInputChange}
+                    />
+                    {errors.farmArea && <p className="error-text">{errors.farmArea}</p>}
+                  </div>
                 </div>
+
                 <h5 className="book-heading">Book Services date &amp; time</h5>
                 <div className="row g-3">
                   <div className="col-md-4">

@@ -193,6 +193,14 @@ export const validateArea = (areaUnderCultivation) => {
 
   return "";
 };
+export const validateDistance = (distance) => {
+  if (distance === "") return "Distance is required";
+
+  const num = Number(distance);
+  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
+
+  return "";
+};
 
 export const validateCrop = (typeOfCrop) => {
   if (typeOfCrop === "") return "Crop Under Cultivation is required";
