@@ -1,3 +1,5 @@
+import DecimalInput from "../../common components/DecimalInput";
+
 export default function VegetableFields({
   vegetableType = "",
   vegetableWeight = "",
@@ -41,11 +43,12 @@ export default function VegetableFields({
         <label className="form-label">
           Weight of Vegetable<span className="required">*</span>
         </label>
-        <input
+        <DecimalInput
           className="form-control"
-          placeholder="Weight of Vegetable"
+          placeholder="Weight of Vegetable(in Kg)"
           value={vegetableWeight}
-          onChange={(e) => onChange("vegetableWeight", e.target.value)}
+          maxDecimals={2}
+          onChange={(val) => onChange("vegetableWeight", val)}
         />
         {errors.vegetableWeight && <p className="error-text">{errors.vegetableWeight}</p>}
       </div>

@@ -11,6 +11,7 @@ import Time12HourPicker from "../../../components/common components/Time12HourPi
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function ElectrostaticBookYourService() {
   const filters = useSelector(
@@ -110,13 +111,15 @@ function ElectrostaticBookYourService() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <input
-                      type="text"
-                      placeholder="Area Under Cultivation(in acre)*"
-                      className="form-control"
+                    <DecimalInput
                       name="areaUnderCultivation"
                       value={areaUnderCultivation}
-                      onChange={handleInputChange}
+                      maxDecimals={2}
+                      className="form-control"
+                      placeholder="Area Under Cultivation(in acre)*"
+                      onChange={(val) =>
+                        setFormState((prev) => ({ ...prev, areaUnderCultivation: val }))
+                      }
                     />
                     {errors.areaUnderCultivation && (
                       <p className="error-text">{errors.areaUnderCultivation}</p>

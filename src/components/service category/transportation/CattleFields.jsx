@@ -1,3 +1,6 @@
+import DecimalInput from "../../common components/DecimalInput";
+import IntegerInput from "../../common components/IntegerInput";
+
 export default function CattleFields({
   numberOfCattle = "",
   cattleWeight = "",
@@ -10,11 +13,11 @@ export default function CattleFields({
         <label className="form-label">
           Number of cattle<span className="required">*</span>
         </label>
-        <input
+        <IntegerInput
           className="form-control"
           placeholder="Number of cattle"
           value={numberOfCattle}
-          onChange={(e) => onChange("numberOfCattle", e.target.value)}
+          onChange={(val) => onChange("numberOfCattle", val)}
         />
         {errors.numberOfCattle && <p className="error-text">{errors.numberOfCattle}</p>}
       </div>
@@ -23,11 +26,12 @@ export default function CattleFields({
         <label className="form-label">
           Weight of cattle<span className="required">*</span>
         </label>
-        <input
+        <DecimalInput
           className="form-control"
-          placeholder="Weight of cattle"
+          placeholder="Weight of cattle(in Kg)"
           value={cattleWeight}
-          onChange={(e) => onChange("cattleWeight", e.target.value)}
+          maxDecimals={2}
+          onChange={(val) => onChange("cattleWeight", val)}
         />
         {errors.cattleWeight && <p className="error-text">{errors.cattleWeight}</p>}
       </div>

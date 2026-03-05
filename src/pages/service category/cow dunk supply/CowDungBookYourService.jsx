@@ -16,6 +16,7 @@ import { createCowDungJobOrder } from "../../../reduxtoolkit/slices/service cate
 import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function CowDungBookYourService() {
   const dispatch = useDispatch();
@@ -194,15 +195,16 @@ function CowDungBookYourService() {
                     </div>
 
                     <div className="col-md-6">
-                      <input
-                        type="number"
+                      <DecimalInput
                         className="form-control"
                         name="cowDunkQuantity"
                         value={cowDunkQuantity}
-                        onChange={handleInputChange}
+                        maxDecimals={2}
                         placeholder="Quantity (in tons)*"
+                        onChange={(val) =>
+                          setFormState((prev) => ({ ...prev, cowDunkQuantity: val }))
+                        }
                       />
-
                       {errors.cowDunkQuantity && (
                         <p className="error-text">{errors.cowDunkQuantity}</p>
                       )}

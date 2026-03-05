@@ -1,3 +1,5 @@
+import DecimalInput from "../../common components/DecimalInput";
+
 export default function EquipmentFields({
   equipmentDimensions = {},
   equipmentWeight = "",
@@ -20,11 +22,12 @@ export default function EquipmentFields({
         <div className="row">
           {["lengthCm", "widthCm", "heightCm"].map((field) => (
             <div className="col-md-4" key={field}>
-              <input
+              <DecimalInput
                 className="form-control"
                 placeholder={field.replace("Cm", " (cm)")}
                 value={dimensions[field]}
-                onChange={(e) => onChange(field, e.target.value)}
+                maxDecimals={2}
+                onChange={(val) => onChange(field, val)}
               />
               {errors[field] && <p className="error-text">{errors[field]}</p>}
             </div>
@@ -36,11 +39,12 @@ export default function EquipmentFields({
         <label className="form-label">
           Equipment Weight<span className="required">*</span>
         </label>
-        <input
+        <DecimalInput
           className="form-control"
           placeholder="Equipment Weight(in Kg)"
           value={equipmentWeight}
-          onChange={(e) => onChange("equipmentWeight", e.target.value)}
+          maxDecimals={2}
+          onChange={(val) => onChange("equipmentWeight", val)}
         />
         {errors.equipmentWeight && <p className="error-text">{errors.equipmentWeight}</p>}
       </div>

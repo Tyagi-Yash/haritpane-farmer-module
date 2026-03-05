@@ -21,6 +21,7 @@ import {
 import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function LaborBookYourService() {
   const navigate = useNavigate();
@@ -194,13 +195,15 @@ function LaborBookYourService() {
                         {errors.typeOfCrop && <p className="error-text">{errors.typeOfCrop}</p>}
                       </div>
                       <div className="col-md-6">
-                        <input
-                          type="text"
+                        <DecimalInput
+                          name="areaUnderCultivation"
+                          value={areaUnderCultivation}
+                          maxDecimals={2}
                           className="form-control"
                           placeholder="Area Under Cultivation(in acre)*"
-                          value={areaUnderCultivation}
-                          name="areaUnderCultivation"
-                          onChange={handleInputChange}
+                          onChange={(val) =>
+                            setFormState((prev) => ({ ...prev, areaUnderCultivation: val }))
+                          }
                         />
                         {errors.areaUnderCultivation && (
                           <p className="error-text">{errors.areaUnderCultivation}</p>

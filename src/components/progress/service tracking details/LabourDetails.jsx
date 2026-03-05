@@ -87,9 +87,9 @@ function LabourDetails({ data }) {
                   {LabourTypes.find((type) => type?.value === data?.labourType)?.name || "N/A"}
                 </p>
                 <p>Number Of Labour: {data?.numberOfLabour || "N/A"}</p>
-                {data?.areaUnderCultivation ? (
+                {/* {data?.areaUnderCultivation ? (
                   <p>Farm Area: {data.areaUnderCultivation} Acre</p>
-                ) : null}
+                ) : null} */}
                 {data?.cropUnderCultivation ? <p>Crop Name: {data.cropUnderCultivation}</p> : null}
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>

@@ -16,6 +16,7 @@ import Time12HourPicker from "../../../components/common components/Time12HourPi
 
 import DatePicker from "react-datepicker";
 import { add, format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function DroneBookYourService() {
   const filters = useSelector((state) => state.services.DroneServiceMgmtSlice.filters);
@@ -119,13 +120,14 @@ function DroneBookYourService() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <input
-                      type="text"
-                      placeholder="Area Under Cultivation(in acre)*"
+                    <DecimalInput
                       className="form-control"
-                      name="areaUnderCultivation"
+                      placeholder="Area Under Cultivation(in acre)*"
                       value={areaUnderCultivation}
-                      onChange={handleInputChange}
+                      maxDecimals={2}
+                      onChange={(val) =>
+                        setFormState((prev) => ({ ...prev, areaUnderCultivation: val }))
+                      }
                     />
                     {errors.areaUnderCultivation && (
                       <p className="error-text">{errors.areaUnderCultivation}</p>

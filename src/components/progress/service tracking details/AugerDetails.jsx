@@ -86,7 +86,7 @@ function AugerDetails({ data }) {
                 <p>Business Name: {service?.businessName || "N/A"}</p>
                 <br />
                 <p>Job Location: {data?.addressOfFarm || "N/A"}</p>
-                <p>Estimated Job Duration: {formatHoursMinutes(data?.estimatedTime) || "N/A"}</p>
+                {/* <p>Estimated Job Duration: {formatHoursMinutes(data?.estimatedTime) || "N/A"}</p> */}
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>

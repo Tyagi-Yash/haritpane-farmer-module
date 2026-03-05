@@ -81,7 +81,7 @@ function BorewellDetails({ data }) {
                 <p>Business Name: {service?.businessName || "N/A"}</p>
                 <br />
                 <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
-                <p>Depth of Borewell: {data?.depthOfBorewell || "N/A"} ft</p>
+                {/* <p>Depth of Borewell: {data?.depthOfBorewell || "N/A"} ft</p> */}
                 <p>Casing Pipe: {data?.casingPipe || "N/A"}</p>
                 <p>Submersible water motor: {data?.waterMotor || "N/A"}</p>
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>

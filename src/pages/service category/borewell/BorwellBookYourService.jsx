@@ -16,6 +16,7 @@ import {
 import Time12HourPicker from "../../../components/common components/Time12HourPicker";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function BorwellBookYourService() {
   const filters = useSelector((state) => state.services.BorewellServiceMgmtSlice.filters);
@@ -134,13 +135,14 @@ function BorwellBookYourService() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <input
-                      type="text"
+                    <DecimalInput
                       className="form-control"
                       placeholder="Approximate depth of borewell(in ft)*"
-                      name="depthOfBorewell"
                       value={depthOfBorewell}
-                      onChange={handleInputChange}
+                      maxDecimals={2}
+                      onChange={(val) =>
+                        setFormState((prev) => ({ ...prev, depthOfBorewell: val }))
+                      }
                     />
                     {errors.depthOfBorewell && (
                       <p className="error-text">{errors.depthOfBorewell}</p>

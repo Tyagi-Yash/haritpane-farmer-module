@@ -82,10 +82,10 @@ function HarvesterDetails({ data }) {
                 <br />
                 <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
                 <p>Crop Type: {data?.typeOfCrop || "N/A"}</p>
-                <p>
+                {/* <p>
                   Farm Area:{" "}
                   {data?.areaUnderCultivation ? `${data.areaUnderCultivation} Acre` : "N/A"}
-                </p>
+                </p> */}
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>

@@ -82,12 +82,12 @@ function LandManagementDetails({ data }) {
                 <br />
                 <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
                 <p>Equipment: {info?.equipmentInformation || "N/A"}</p>
-                <p>
+                {/* <p>
                   {info?.equipmentInformation === "Trolly" ? "Distance" : "Farm Area"}:{" "}
                   {data?.farmArea
                     ? `${data.farmArea} ${info?.equipmentInformation === "Trolly" ? "Km" : "Acre"}`
                     : "N/A"}
-                </p>
+                </p> */}
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
@@ -96,11 +96,11 @@ function LandManagementDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
-                  price={data.price}
+                  price={data?.price}
                   equipment={info?.equipmentInformation}
-                  extraCharges={data.extraCharges}
-                  additionalCharges={service.additionalCharges}
-                  payableAmount={data.amount}
+                  extraCharges={data?.extraCharges}
+                  additionalCharges={service?.additionalCharges}
+                  payableAmount={data?.amount}
                   distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
                 />
               </div>

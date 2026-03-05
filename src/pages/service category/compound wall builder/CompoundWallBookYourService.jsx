@@ -18,6 +18,7 @@ import Time12HourPicker from "../../../components/common components/Time12HourPi
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function CompoundWallBookYourService() {
   const filters = useSelector((state) => state.services.CompoundWallServiceMgmtSlice.filters);
@@ -162,13 +163,12 @@ function CompoundWallBookYourService() {
                     <label className="form-label">
                       Wall Height<span className="required">*</span>
                     </label>
-                    <input
-                      type="number"
+                    <DecimalInput
                       className="form-control"
                       placeholder="Enter wall height (in ft)"
-                      name="height"
                       value={height}
-                      onChange={handleInputChange}
+                      maxDecimals={2}
+                      onChange={(val) => setFormState((prev) => ({ ...prev, height: val }))}
                     />
                     {errors.height && <p className="error-text">{errors.height}</p>}{" "}
                   </div>
@@ -176,13 +176,12 @@ function CompoundWallBookYourService() {
                     <label className="form-label">
                       Wall Length<span className="required">*</span>
                     </label>
-                    <input
-                      type="number"
+                    <DecimalInput
                       className="form-control"
                       placeholder="Enter wall length (in meter)"
-                      name="length"
                       value={length}
-                      onChange={handleInputChange}
+                      maxDecimals={2}
+                      onChange={(val) => setFormState((prev) => ({ ...prev, length: val }))}
                     />
                     {errors.length && <p className="error-text">{errors.length}</p>}{" "}
                   </div>

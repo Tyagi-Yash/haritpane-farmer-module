@@ -82,8 +82,8 @@ function CompoundWallDetails({ data }) {
                 <br />
                 <p>Field Location: {data?.addressOfFarm || "N/A"}</p>
                 <p>Wall Type: {data?.typeOfWall || "N/A"}</p>
-                <p>Length of Wall(meter): {data?.length || "N/A"}</p>
-                <p>Height of Wall(ft): {data?.height || "N/A"}</p>
+                {/* <p>Length of Wall(meter): {data?.length || "N/A"}</p>
+                <p>Height of Wall(ft): {data?.height || "N/A"}</p> */}
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>

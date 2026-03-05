@@ -91,7 +91,7 @@ function ExcavationDetails({ data }) {
                 <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
                 <p>End Date: {formatDate(data?.bookingTillDate)}</p>
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
-                <p>Tentative Duration: {formatHoursMinutes(data?.durationOfExavation) || "N/A"}</p>
+                {/* <p>Tentative Duration: {formatHoursMinutes(data?.durationOfExavation) || "N/A"}</p> */}
               </div>
             </div>
             <div className="col">

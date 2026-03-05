@@ -18,6 +18,7 @@ import Time12HourPicker from "../../../components/common components/Time12HourPi
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function LandManagementServicesSubServices() {
   const filters = useSelector((state) => state.services.LandServiceMgmtSlice.filters);
@@ -236,17 +237,17 @@ function LandManagementServicesSubServices() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <input
-                      type="number"
+                    <DecimalInput
+                      name="farmArea"
+                      value={farmArea}
+                      maxDecimals={2}
+                      className="form-control"
                       placeholder={
                         selectAttachment === "Trolly"
                           ? "Distance from Your Field to Destination(in Km)*"
                           : "Area Under Cultivation(in acre)*"
                       }
-                      className="form-control"
-                      name="farmArea"
-                      value={farmArea}
-                      onChange={handleInputChange}
+                      onChange={(val) => setFormState((prev) => ({ ...prev, farmArea: val }))}
                     />
                     {errors.farmArea && <p className="error-text">{errors.farmArea}</p>}
                   </div>

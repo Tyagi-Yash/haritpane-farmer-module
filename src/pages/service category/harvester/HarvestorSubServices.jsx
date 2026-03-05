@@ -18,6 +18,7 @@ import Time12HourPicker from "../../../components/common components/Time12HourPi
 
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
+import DecimalInput from "../../../components/common components/DecimalInput";
 
 function HarvestorSubServices() {
   const filters = useSelector((state) => state.services.HarvestorServiceMgmtSlice.filters);
@@ -184,17 +185,19 @@ function HarvestorSubServices() {
                     {errors.typeOfCrop && <p className="error-text">{errors.typeOfCrop}</p>}
                   </div>
                   <div className="col-md-4">
-                    <input
-                      type="number"
+                    <DecimalInput
+                      name="areaUnderCultivation"
+                      value={areaUnderCultivation}
+                      maxDecimals={2}
+                      className="form-control"
                       placeholder={
                         selectSubCategory === "combine_harvester"
                           ? "Area Under Cultivation(in acre)*"
-                          : "weight (in quintal)*"
+                          : "Weight (in quintal)*"
                       }
-                      className="form-control"
-                      name="areaUnderCultivation"
-                      value={areaUnderCultivation}
-                      onChange={handleInputChange}
+                      onChange={(val) =>
+                        setFormState((prev) => ({ ...prev, areaUnderCultivation: val }))
+                      }
                     />
                     {errors.areaUnderCultivation && (
                       <p className="error-text">{errors.areaUnderCultivation}</p>
