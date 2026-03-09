@@ -1,18 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { setActiveTab } from "../../reduxtoolkit/slices/progress/bookingList";
+import { useTranslation } from "react-i18next";
 // import JobOrderCard from "../../components/progress/job order/JobOrderCard";
 import ServiceTrackingTab from "../../components/progress/service tracking tab/ServiceTrackingTab";
 import JobOrderList from "../../components/progress/job order/JobOrderList";
 
 function ServiceTracking() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { activeTab } = useSelector((state) => state.services.bookingListSlice);
 
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal titleBox title="Service Tracking" navigate="/dashboard" />
+        <TopbarModal titleBox title={t("progress.serviceTracking")} navigate="/dashboard" />
 
         <div className="row progress-tab">
           <div className="CommonTabs mb-0">
@@ -22,7 +24,7 @@ function ServiceTracking() {
                   className={`nav-link ${activeTab === "serviceTracking" ? "active" : ""}`}
                   onClick={() => dispatch(setActiveTab("serviceTracking"))}
                 >
-                  Service Tracking
+                  {t("progress.serviceTracking")}
                 </button>
               </li>
 
@@ -31,7 +33,7 @@ function ServiceTracking() {
                   className={`nav-link ${activeTab === "jobOrder" ? "active" : ""}`}
                   onClick={() => dispatch(setActiveTab("jobOrder"))}
                 >
-                  Job Order
+                  {t("progress.jobOrder")}
                 </button>
               </li>
             </ul>

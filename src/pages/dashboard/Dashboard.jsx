@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import localShop from "../../assets/images/Local-shop.svg";
 import localManufacturer from "../../assets/images/local-manufacturer.svg";
@@ -21,6 +22,7 @@ import TopbarModal from "../../components/common components/TopbarModal";
 import { useState } from "react";
 
 function Dashboard() {
+  const { t } = useTranslation();
   const [showAll, setShowAll] = useState(false);
   const toggleShow = () => {
     setShowAll((prev) => !prev);
@@ -39,11 +41,11 @@ function Dashboard() {
                       <div className="col-sm-12">
                         <div className="headline-sort">
                           <div>
-                            <h4 className="heading">Service Category</h4>
+                            <h4 className="heading">{t("dashboard.serviceCategory")}</h4>
                           </div>
                           <div>
                             <div className="seemore" onClick={toggleShow}>
-                              {showAll ? "See Less" : "See More"}
+                              {showAll ? t("dashboard.seeLess") : t("dashboard.seeMore")}
                             </div>
                           </div>
                         </div>
@@ -54,14 +56,14 @@ function Dashboard() {
                               <div className="card-image-part">
                                 <img src={landManagementTractorServices} alt="Tractor" />
                               </div>
-                              <div className="label">Land Management / Tractor Services</div>
+                              <div className="label">{t("dashboard.landManagement")}</div>
                             </Link>
                             <div className="service-card">
                               <Link to="/service-category/harvestor">
                                 <div className="card-image-part">
                                   <img src={harvester} alt="Harvester" />
                                 </div>
-                                <div className="label">Harvester</div>
+                                <div className="label">{t("dashboard.harvester")}</div>
                               </Link>
                             </div>
                             <div className="service-card">
@@ -69,7 +71,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={cattlePurchageSale} alt="Cattle" />
                                 </div>
-                                <div className="label">Cattle Purchase &amp; Sale</div>
+                                <div className="label">{t("dashboard.cattlePurchaseSale")}</div>
                               </Link>
                             </div>
                           </div>
@@ -86,7 +88,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={excavation} alt="Earth Movers" />
                                 </div>
-                                <div className="label">Earth Movers</div>
+                                <div className="label">{t("dashboard.earthMovers")}</div>
                               </Link>
                             </div>
                             <div className="service-card">
@@ -94,7 +96,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={electrostatic} alt="Electrostatic Spraying" />
                                 </div>
-                                <div className="label">Electrostatic Spraying</div>
+                                <div className="label">{t("dashboard.electrostaticSpraying")}</div>
                               </Link>
                             </div>
                             <div className="service-card">
@@ -102,7 +104,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={laborRequirement} alt="Cattle" />
                                 </div>
-                                <div className="label">Labour Requirement</div>
+                                <div className="label">{t("dashboard.labourRequirement")}</div>
                               </Link>
                             </div>
                           </div>
@@ -119,7 +121,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={transportation} alt="Transportation" />
                                 </div>
-                                <div className="label">Transportation</div>
+                                <div className="label">{t("dashboard.transportation")}</div>
                               </Link>
                             </div>
                             <div className="service-card">
@@ -127,7 +129,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={borewellConstruction} alt="Borewell Construction" />
                                 </div>
-                                <div className="label">Borewell Construction</div>
+                                <div className="label">{t("dashboard.borewellConstruction")}</div>
                               </Link>
                             </div>
                             <div className="service-card">
@@ -135,7 +137,7 @@ function Dashboard() {
                                 <div className="card-image-part">
                                   <img src={cowDunkSupply} alt="Cow Dung Supply" />
                                 </div>
-                                <div className="label">Cow Dung/Poultry Waste</div>
+                                <div className="label">{t("dashboard.cowDungPoultryWaste")}</div>
                               </Link>
                             </div>
                           </div>
@@ -153,7 +155,7 @@ function Dashboard() {
                                   <div className="card-image-part">
                                     <img src={compundBuilder} alt="Compound Wall Builder" />
                                   </div>
-                                  <div className="label">Compound Wall Builder</div>
+                                  <div className="label">{t("dashboard.compoundWallBuilder")}</div>
                                 </Link>
                               </div>
                               <div className="service-card">
@@ -161,7 +163,7 @@ function Dashboard() {
                                   <div className="card-image-part">
                                     <img src={DroneServices} alt="Drone Services" />
                                   </div>
-                                  <div className="label">Drone Services</div>
+                                  <div className="label">{t("dashboard.droneServices")}</div>
                                 </Link>
                               </div>
                               <div className="service-card">
@@ -169,7 +171,7 @@ function Dashboard() {
                                   <div className="card-image-part">
                                     <img src={augerServices} alt="Auger Services" />
                                   </div>
-                                  <div className="label">Auger Services</div>
+                                  <div className="label">{t("dashboard.augerServices")}</div>
                                 </Link>
                               </div>
                             </div>
@@ -183,7 +185,7 @@ function Dashboard() {
 
                   <section className="mb-3">
                     <div className="d-flex justify-content-between align-items-center mb-3">
-                      <h4 className="heading">Classified Section</h4>
+                      <h4 className="heading">{t("dashboard.classifiedSection")}</h4>
                     </div>
                     <div className="Classified-Tiles">
                       <div className="ClassifiedBox">
@@ -193,7 +195,7 @@ function Dashboard() {
                               <img src={localShop} alt="" />
                             </span>
                           </figure>
-                          <p className="">Local Businesses</p>
+                          <p className="">{t("dashboard.localBusinesses")}</p>
                         </Link>
                       </div>
                       <div className="ClassifiedBox">
@@ -203,7 +205,7 @@ function Dashboard() {
                               <img src={localManufacturer} alt="" />
                             </span>
                           </figure>
-                          <p>View Manufacturers</p>
+                          <p>{t("dashboard.viewManufacturers")}</p>
                         </Link>
                       </div>
                     </div>
@@ -219,9 +221,9 @@ function Dashboard() {
                             <img src={cowImageRecent} alt="" />
                           </div>
                           <div className="card-text-part">
-                            <h6 className="normal-heading mb-1">Natural field fertilization</h6>
-                            <p className="normal-text m-0">Gramin Cattle Hub</p>
-                            <p className="grey-para m-0">Meerut, Uttar Pradesh</p>
+                            <h6 className="normal-heading mb-1">{t("dashboard.recentActivity.naturalFertilization")}</h6>
+                            <p className="normal-text m-0">{t("dashboard.recentActivity.graminHub")}</p>
+                            <p className="grey-para m-0">{t("dashboard.recentActivity.meerut")}</p>
                           </div>
                         </div>
                         <div className="product-card">
@@ -229,9 +231,9 @@ function Dashboard() {
                             <img src={cowImageRecent} alt="" />
                           </div>
                           <div className="card-text-part">
-                            <h6 className="normal-heading mb-1">Natural field fertilization</h6>
-                            <p className="normal-text m-0">Gramin Cattle Hub</p>
-                            <p className="grey-para m-0">Meerut, Uttar Pradesh</p>
+                            <h6 className="normal-heading mb-1">{t("dashboard.recentActivity.naturalFertilization")}</h6>
+                            <p className="normal-text m-0">{t("dashboard.recentActivity.graminHub")}</p>
+                            <p className="grey-para m-0">{t("dashboard.recentActivity.meerut")}</p>
                           </div>
                         </div>
                         <div className="product-card">
@@ -239,9 +241,9 @@ function Dashboard() {
                             <img src={cowImageRecent} alt="" />
                           </div>
                           <div className="card-text-part">
-                            <h6 className="normal-heading mb-1">Natural field fertilization</h6>
-                            <p className="normal-text m-0">Gramin Cattle Hub</p>
-                            <p className="grey-para m-0">Meerut, Uttar Pradesh</p>
+                            <h6 className="normal-heading mb-1">{t("dashboard.recentActivity.naturalFertilization")}</h6>
+                            <p className="normal-text m-0">{t("dashboard.recentActivity.graminHub")}</p>
+                            <p className="grey-para m-0">{t("dashboard.recentActivity.meerut")}</p>
                           </div>
                         </div>
                       </div>

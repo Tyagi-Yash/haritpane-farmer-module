@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { useTranslation } from "react-i18next";
 import TopbarModal from "../../components/common components/TopbarModal";
 import CowDunkSupplyIcon from "../../assets/images/CowDunkSupply-icon.png";
 import { validateFromDate, validateSelectTime } from "../../utils/formValidators";
@@ -16,6 +16,7 @@ function RescheduleCowDung() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { orderId } = useParams();
+  const { t } = useTranslation();
 
   const { jobOrders, actionLoading } = useSelector((state) => state.services.jobOrderListSlice);
 
@@ -47,7 +48,7 @@ function RescheduleCowDung() {
   }, [job]);
 
   if (!job) {
-    return <p className="text-center">Job order not found.</p>;
+    return <p className="text-center">{t("progress.jobNotFound")}</p>;
   }
 
   const validateForm = () => {
@@ -67,10 +68,10 @@ function RescheduleCowDung() {
 
     try {
       await dispatch(rescheduleJobOrder({ orderId, fromDate, startTime })).unwrap();
-      toast.success("Job order rescheduled successfully");
+      toast.success(t("progress.jobRescheduled"));
       navigate("/service-tracking");
     } catch {
-      toast.error("Failed to reschedule job order");
+      toast.error(t("progress.jobRescheduleFail"));
     }
   };
 
@@ -79,7 +80,7 @@ function RescheduleCowDung() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox
-          title="Reschedule Cow Dung Supply"
+          title={t("progress.rescheduleCowDung")}
           secImage={CowDunkSupplyIcon}
           navigate="/service-tracking"
         />
@@ -88,31 +89,31 @@ function RescheduleCowDung() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Service Details</h5>
+                <h5 className="book-heading">{t("progress.serviceDetails2")}</h5>
 
                 <div className="row g-3">
                   <div className="col-md-12">
-                    <label className="form-label">Farm Location</label>
+                    <label className="form-label">{t("progress.farmLocation")}</label>
                     <input className="form-control" value={currentLocation} disabled />
                   </div>
 
                   <div className="col-md-6">
-                    <label className="form-label">Cow Dung Type</label>
+                    <label className="form-label">{t("progress.cowDungType")}</label>
                     <input className="form-control" value={cowDunkType} disabled />
                   </div>
 
                   <div className="col-md-6">
-                    <label className="form-label">Cow Dung Quantity</label>
+                    <label className="form-label">{t("progress.cowDungQuantity")}</label>
                     <input className="form-control" value={cowDunkQuantity} disabled />
                   </div>
                 </div>
 
-                <h5 className="book-heading mt-4">Reschedule Date & Time</h5>
+                <h5 className="book-heading mt-4">{t("progress.rescheduleDateAndTime")}</h5>
 
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("progress.fromDate")}<span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
@@ -134,7 +135,7 @@ function RescheduleCowDung() {
 
                   <div className="col-md-6">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("progress.startTime")}<span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={startTime}
@@ -150,7 +151,7 @@ function RescheduleCowDung() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={actionLoading}>
-                {actionLoading ? "Rescheduling..." : "Reschedule Job"}
+                {actionLoading ? t("progress.rescheduling") : t("progress.rescheduleJob")}
               </button>
             </div>
           </form>

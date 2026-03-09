@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import ProductReviews from "../../../components/dashboard/ProductReviews";
 import AddReview from "../../../components/dashboard/AddReview";
 import StarRating from "../../../components/dashboard/StarRating";
@@ -18,6 +19,7 @@ function LocalProductDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
+  const { t } = useTranslation();
   const location = useLocation();
   const backPath = location.state?.from || "/dashboard";
 
@@ -34,10 +36,10 @@ function LocalProductDetails() {
       if (status === 200) {
         setProductDetails(data?.data || {});
       } else {
-        toast(data?.message || "Failed to load product details");
+        toast(data?.message || t("classified.failedToLoad"));
       }
     } catch (error) {
-      toast("Something went wrong");
+      toast(t("classified.somethingWentWrong"));
     } finally {
       setLoading(false);
     }
@@ -66,7 +68,7 @@ function LocalProductDetails() {
 
   const checkProfileBeforeAction = () => {
     if (!isProfileComplete()) {
-      toast.error("Profile incomplete. Please update your profile to proceed.");
+      toast.error(t("classified.profileIncomplete"));
       return false;
     }
     return true;
@@ -107,9 +109,9 @@ function LocalProductDetails() {
             </div>
           </div>
           <div className="mb-4">
-            <h6 className="normal-heading">Product Description</h6>
+            <h6 className="normal-heading">{t("classified.productDescription")}</h6>
             <p className="grey-para">
-              {productDetails?.productDescription || "Description not available"}
+              {productDetails?.productDescription || t("classified.descriptionNotAvailable")}
             </p>
           </div>
 
@@ -118,7 +120,7 @@ function LocalProductDetails() {
           <div className="bottom-buttons d-flex">
             <div className="button-group">
               <button type="button" className="send-enquiry-btn" onClick={handleStartChat}>
-                Start Chat
+                {t("classified.startChat")}
               </button>
               <button
                 type="button"
@@ -128,14 +130,14 @@ function LocalProductDetails() {
                   setShowReviewModal(true);
                 }}
               >
-                Add Review
+                {t("classified.addReview")}
               </button>
               <button
                 type="submit"
                 className="call-us-edit"
                 onClick={() => setShowNumber((prev) => !prev)}
               >
-                {showNumber ? productDetails?.providerDetails?.phone || "N/A" : "Call"}
+                {showNumber ? productDetails?.providerDetails?.phone || "N/A" : t("classified.call")}
               </button>
             </div>
           </div>

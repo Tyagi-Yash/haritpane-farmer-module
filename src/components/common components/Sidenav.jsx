@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 
 import logo from "../../assets/images/Logo.png";
 import profile from "../../assets/images/profile.svg";
@@ -19,6 +21,7 @@ import { accountMenu, helpMenu, mainMenu } from "../../constants/sidenav/sidenav
 import { resetReviewList } from "../../reduxtoolkit/slices/rate and reviews/rateReview";
 
 function SideNav() {
+  const { t } = useTranslation();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const navigate = useNavigate();
@@ -34,18 +37,21 @@ function SideNav() {
       if (status === 200) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
-        toast.success(message || "Logged out sucessfully!");
+        localStorage.removeItem("i18nextLng");
+        toast.success(message || t("nav.logoutSuccess"));
         setShowLogoutModal(false);
         dispatch(resetChatState());
         dispatch(clearBookingList());
         dispatch(resetReviewList());
         disconnectSocket();
+        
+        i18n.changeLanguage("en");
         navigate("/signup");
       } else {
-        toast.error(message || "Failed to logout");
+        toast.error(message || t("nav.logoutFail"));
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("nav.logoutError"));
     }
   };
 
@@ -64,12 +70,12 @@ function SideNav() {
               <NavItem key={item.to} {...item} />
             ))}
 
-            <DropdownMenu icon={profile} label="Account Settings" items={accountMenu} />
-            <DropdownMenu icon={help} label="Help Center" items={helpMenu} />
+            <DropdownMenu icon={profile} label="Account Settings" translateKey="nav.accountSettings" items={accountMenu} />
+            <DropdownMenu icon={help} label="Help Center" translateKey="nav.helpCenter" items={helpMenu} />
 
             <li className="logout-sidenav">
               <Link className="d-block" onClick={() => setShowLogoutModal(true)}>
-                <span className="Text red">Logout</span>
+                <span className="Text red">{t("nav.logout")}</span>
               </Link>
             </li>
           </ul>

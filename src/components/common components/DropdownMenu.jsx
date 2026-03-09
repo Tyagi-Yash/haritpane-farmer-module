@@ -1,7 +1,9 @@
 import { Dropdown } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-function DropdownMenu({ icon, label, items }) {
+function DropdownMenu({ icon, label, translateKey, items }) {
+  const { t } = useTranslation();
   return (
     <li>
       <Dropdown>
@@ -9,7 +11,7 @@ function DropdownMenu({ icon, label, items }) {
           <span className="Icon">
             <img src={icon} alt="" />
           </span>
-          <span className="Text">{label}</span>
+          <span className="Text">{translateKey ? t(translateKey) : label}</span>
         </Dropdown.Toggle>
 
         <Dropdown.Menu as="ol">
@@ -20,14 +22,14 @@ function DropdownMenu({ icon, label, items }) {
                   <span className="Icon">
                     <img src={item.icon} alt="" />
                   </span>
-                  <span className="DText">{item.label}</span>
+                  <span className="DText">{item.translateKey ? t(item.translateKey) : item.label}</span>
                 </NavLink>
               ) : (
                 <Link>
                   <span className="Icon">
                     <img src={item.icon} alt="" />
                   </span>
-                  <span className="DText">{item.label}</span>
+                  <span className="DText">{item.translateKey ? t(item.translateKey) : item.label}</span>
                 </Link>
               )}
             </li>

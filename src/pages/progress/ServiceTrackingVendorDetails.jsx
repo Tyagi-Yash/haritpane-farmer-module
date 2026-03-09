@@ -3,19 +3,21 @@ import TopbarModal from "../../components/common components/TopbarModal";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import BookingDetailsRenderer from "../../components/progress/service tracking details/BookingDetailsRenderer";
 import serviceImg from "../../assets/images/service.png";
 import ReviewTab from "../../components/common components/ReviewTab";
 
 function ServiceTrackingVendorDetails() {
   const { bookingId } = useParams();
+  const { t } = useTranslation();
   const { services } = useSelector((state) => state.services.bookingListSlice);
   const booking = services.find((b) => b.id === bookingId);
 
   const [activeTab, setActiveTab] = useState("service");
 
   if (!booking) {
-    return <p className="text-center">Loading vendor details...</p>;
+    return <p className="text-center">{t("progress.loadingVendor")}</p>;
   }
 
   return (
@@ -23,7 +25,7 @@ function ServiceTrackingVendorDetails() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Vendor Details"
+          title={t("progress.vendorDetails")}
           navigate="/service-tracking"
           profile={profile}
         />
@@ -39,7 +41,7 @@ function ServiceTrackingVendorDetails() {
                   className={`nav-link ${activeTab === "service" ? "active" : ""}`}
                   onClick={() => setActiveTab("service")}
                 >
-                  Service Details
+                  {t("progress.serviceDetails")}
                 </button>
               </li>
               <li className="nav-item">
@@ -47,7 +49,7 @@ function ServiceTrackingVendorDetails() {
                   className={`nav-link ${activeTab === "review" ? "active" : ""}`}
                   onClick={() => setActiveTab("review")}
                 >
-                  Review &amp; Rating
+                  {t("progress.reviewRating")}
                 </button>
               </li>
             </ul>

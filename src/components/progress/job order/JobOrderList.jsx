@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllJobOrders } from "../../../reduxtoolkit/slices/progress/jobOrder";
+import { useTranslation } from "react-i18next";
 import JobOrderCard from "./JobOrderCard";
 import { Commonpagination } from "../../common components/Commonpagination";
 import JobOrderSkeleton from "../../skeletons/JobOrderSkeleton";
 
 function JobOrderList() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
 
   const { jobOrders, loading, paginationData } = useSelector(
@@ -19,7 +21,7 @@ function JobOrderList() {
 
   if (loading) return <JobOrderSkeleton count={6} />;
 
-  if (!jobOrders?.length) return <p className="text-center pt-5">No job orders found.</p>;
+  if (!jobOrders?.length) return <p className="text-center pt-5">{t("progress.noJobOrders")}</p>;
 
   return (
     <div className="dashboard service-tracking">
