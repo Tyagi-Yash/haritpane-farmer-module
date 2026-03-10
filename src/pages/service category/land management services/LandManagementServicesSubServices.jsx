@@ -244,7 +244,7 @@ function LandManagementServicesSubServices() {
                       className="form-control"
                       placeholder={
                         selectAttachment === "Trolly"
-                          ? "Distance from Your Field to Destination(in Km)*"
+                          ? "Trip Distance(in Km)*"
                           : "Area Under Cultivation(in acre)*"
                       }
                       onChange={(val) => setFormState((prev) => ({ ...prev, farmArea: val }))}

@@ -1,3 +1,4 @@
+import { formatDate } from "../../../utils/dateFormatter";
 import { formatPrice } from "../../../utils/formatPrice";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import Info from "./Info";
@@ -21,7 +22,7 @@ function TransportationJobInfo({ job }) {
       <Info label="To Location" value={job.destinationLocation} />
       <Info
         label="Schedule"
-        value={`${job.fromDate} – ${job.tillDate}, ${convertTo12Hour(job.startTime)}`}
+        value={`${formatDate(job.fromDate)} – ${formatDate(job.tillDate)}, ${convertTo12Hour(job.startTime)}`}
       />
 
       <Info label="Vehicle Type" value={job.typeOfVehicle} />

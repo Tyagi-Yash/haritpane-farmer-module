@@ -209,6 +209,12 @@ function AugerChangeAvailablity() {
 
                       <div className="price-info">
                         <h6>₹ {formatPrice(service?.ratePerHr ?? 0)} /hour</h6>
+                        {Array.isArray(service?.drillInfo) && service.drillInfo.length > 0 && (
+                          <h6>
+                            {service.drillInfo?.[0]?.drillDiameter ?? "-"}" ₹{" "}
+                            {formatPrice(service.drillInfo?.[0]?.ratePerInch ?? 0)} /feet
+                          </h6>
+                        )}
                         <small>Additional charges might apply</small>
                       </div>
                     </div>

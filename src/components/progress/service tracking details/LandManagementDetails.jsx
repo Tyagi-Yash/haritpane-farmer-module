@@ -83,7 +83,7 @@ function LandManagementDetails({ data }) {
                 <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
                 <p>Equipment: {info?.equipmentInformation || "N/A"}</p>
                 {/* <p>
-                  {info?.equipmentInformation === "Trolly" ? "Distance" : "Farm Area"}:{" "}
+                  {info?.equipmentInformation === "Trolly" ? "Trip Distance" : "Farm Area"}:{" "}
                   {data?.farmArea
                     ? `${data.farmArea} ${info?.equipmentInformation === "Trolly" ? "Km" : "Acre"}`
                     : "N/A"}

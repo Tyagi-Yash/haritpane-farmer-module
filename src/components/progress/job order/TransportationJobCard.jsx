@@ -1,3 +1,4 @@
+import { formatDate } from "../../../utils/dateFormatter";
 import { formatPrice } from "../../../utils/formatPrice";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import JobOrderActions from "./JobOrderActions";
@@ -22,8 +23,8 @@ function TransportationJobCard({ job }) {
 
       <Row label="Start Location" value={job.currentLocation} />
       <Row label="End Location" value={job.destinationLocation} />
-      <Row label="From Date" value={job.fromDate} />
-      <Row label="Till Date" value={job.tillDate} />
+      <Row label="From Date" value={formatDate(job.fromDate)} />
+      <Row label="Till Date" value={formatDate(job.tillDate)} />
       <Row label="Start Time" value={convertTo12Hour(job.startTime)} />
       <Row label="Vehicle" value={job.typeOfVehicle} />
       <Row

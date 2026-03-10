@@ -33,9 +33,13 @@ function TransportationBookYourService() {
     setLoading(true);
     try {
       const res = await dispatch(createTransportationJobOrder(buildPayload(formState)));
-      if (res?.payload?.status === 200) {
-        toast.success("Booking created");
+      const { status, data } = res?.payload || {};
+
+      if (status === 200) {
+        toast.success(data?.message || "Booking Request Created successfully");
         setShowSuccess(true);
+      } else {
+        toast.error(data?.message || "Failed to Send Booking Request");
       }
     } finally {
       setLoading(false);
@@ -85,7 +89,7 @@ function TransportationBookYourService() {
               </div>
             </div>
             <div className="available-service-btn">
-              <button disabled={loading}>{loading ? "Sending..." : "Send Booking Request"}</button>
+              <button disabled={loading}>{loading ? "Generating..." : "Generate Request"}</button>
             </div>
           </form>
         </div>
