@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useMemo } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getSocket } from "../../socket/socket";
@@ -13,6 +13,13 @@ import { setActiveChat, fetchChatList, fetchMessages } from "../../reduxtoolkit/
 export default function ChatChatSection() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const deepLinkedRoomId = useMemo(() => {
+    const roomIdFromState = location.state?.roomId;
+    const roomIdFromQuery = searchParams.get("roomId");
+    return roomIdFromState || roomIdFromQuery || null;
+  }, [location.state, searchParams]);
 
   useEffect(() => {
     dispatch(fetchChatList());
@@ -20,9 +27,9 @@ export default function ChatChatSection() {
 
   const { chatList } = useSelector((s) => s.services.chatSlice);
   useEffect(() => {
-    if (!location.state) return;
+    if (!deepLinkedRoomId) return;
 
-    const { roomId, farmerId, serviceProviderId, chatType } = location.state;
+    const roomId = deepLinkedRoomId;
 
     const existingChat = chatList.find((chat) => chat.roomId === roomId);
 
@@ -30,6 +37,9 @@ export default function ChatChatSection() {
       dispatch(setActiveChat(existingChat));
       dispatch(fetchMessages(existingChat.roomId));
     } else {
+      if (!location.state) return;
+
+      const { farmerId, serviceProviderId, chatType } = location.state;
       const socket = getSocket();
 
       socket?.emit("joinRoom", {
@@ -50,7 +60,7 @@ export default function ChatChatSection() {
 
       dispatch(setActiveChat(newChat));
     }
-  }, [location.state, chatList]);
+  }, [deepLinkedRoomId, location.state, chatList]);
 
   return (
     <>

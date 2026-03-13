@@ -49,7 +49,18 @@ export const login = createAsyncThunk("auth/login", async (payload, { rejectWith
 
 export const logout = createAsyncThunk("auth/logout", async (payload, { rejectWithValue }) => {
   try {
-    const response = await axios.put("/logout", payload);
+    const fcmToken =
+      typeof window !== "undefined" ? window.localStorage?.getItem("fcmToken") : null;
+
+    const basePayload =
+      payload && typeof payload === "object" && !Array.isArray(payload) ? payload : {};
+
+    const requestBody = {
+      ...basePayload,
+      ...(fcmToken ? { fcmToken } : {}),
+    };
+
+    const response = await axios.put("/logout", requestBody);
 
     if (response.status === 200) {
       return {

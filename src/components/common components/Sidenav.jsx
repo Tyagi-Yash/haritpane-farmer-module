@@ -26,6 +26,7 @@ function SideNav() {
 
   const handleLogout = async () => {
     try {
+      
       const res = await dispatch(logout());
 
       const status = res?.payload?.status;
@@ -34,6 +35,7 @@ function SideNav() {
       if (status === 200) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
+        localStorage.removeItem("fcmToken");
         toast.success(message || "Logged out sucessfully!");
         setShowLogoutModal(false);
         dispatch(resetChatState());

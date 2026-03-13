@@ -25,6 +25,7 @@ function DeleteModal({ show, onClose }) {
       if (status === 200) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
+        localStorage.removeItem("fcmToken");
         dispatch(resetChatState());
         dispatch(clearBookingList());
         dispatch(resetReviewList());
