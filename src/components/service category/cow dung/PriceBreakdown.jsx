@@ -10,7 +10,7 @@ const PriceBreakdown = ({ info }) => {
   const ratePerTon = Number(info ?? 0);
 
   return (
-    <div className="option-wrapper bookingPriceTable">
+    <div className="option-wrapper bookingPriceTable mb-0">
       <h5 className="normal-heading">Service Charges</h5>
 
       <table className="table table-borderless">

@@ -93,7 +93,7 @@ function LandManagementDetails({ data }) {
                 <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
               </div>
             </div>
-            <div className="col">
+            <div className="col mb-0">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
                   price={data?.price}

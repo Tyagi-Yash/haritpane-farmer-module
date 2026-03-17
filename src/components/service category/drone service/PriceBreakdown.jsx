@@ -26,7 +26,7 @@ const PriceBreakdown = ({
   const serviceCost = ratePerAcre * areaUnderCultivation;
 
   return (
-    <div className="option-wrapper bookingPriceTable">
+    <div className="option-wrapper bookingPriceTable mb-0">
       <h5 className="normal-heading">Total Booking Price</h5>
 
       <table className="table table-borderless">

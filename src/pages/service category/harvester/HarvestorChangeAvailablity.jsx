@@ -196,7 +196,7 @@ function HarvestorChangeAvailablity() {
                           {formatPrice(
                             service?.priceInfo?.find(
                               (p) =>
-                                p?.cropType?.toLowerCase() ===
+                                p?.cropType?.trim().toLowerCase() ===
                                 (filters?.typeOfCrop || "").toLowerCase(),
                             )?.price ?? 0,
                           )}{" "}

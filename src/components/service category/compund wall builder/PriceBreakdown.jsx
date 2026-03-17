@@ -16,7 +16,7 @@ const PriceBreakdown = ({ perMeter, payableAmount, height, length }) => {
   const serviceAmount = ratePerMeter > 0 ? totalArea * ratePerMeter : 0;
 
   return (
-    <div className="option-wrapper bookingPriceTable">
+    <div className="option-wrapper bookingPriceTable mb-0">
       <h5 className="normal-heading">Tentative cost</h5>
 
       <table className="table table-borderless">

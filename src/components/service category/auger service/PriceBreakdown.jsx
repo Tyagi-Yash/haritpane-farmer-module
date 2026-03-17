@@ -24,21 +24,21 @@ const PriceBreakdown = ({
   const billableHours = ratePerHr > 0 ? (payable - OveralltransportCharge) / ratePerHr : 0;
 
   return (
-    <div className="option-wrapper bookingPriceTable">
+    <div className="option-wrapper bookingPriceTable mb-0">
       {drillInfo.length > 0 && (
         <div className="mt-3">
           <table className="table table-sm">
             <thead>
               <tr>
-                <th>Drill Diameter (Inch)</th>
-                <th>Rate Per Ft</th>
+                <th>Drill Information</th>
               </tr>
             </thead>
             <tbody>
               {drillInfo.map((drill) => (
                 <tr key={drill?._id || drill.drillInfoId}>
-                  <td className="no-border">{drill.drillDiameter}</td>
-                  <td className="no-border">₹ {Number(drill.ratePerInch).toFixed(2)}</td>
+                  <td className="no-border">
+                    {drill.drillDiameter}" ₹ {Number(drill.ratePerInch).toFixed(2)}/feet
+                  </td>
                 </tr>
               ))}
             </tbody>
