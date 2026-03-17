@@ -14,6 +14,7 @@ import PriceBreakdown from "../../../components/service category/compund wall bu
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
+import CompoundWallProductInformation from "../../../components/service category/compund wall builder/CompoundWallProductInformation";
 
 function CompoundWallVendorDetails() {
   const navigate = useNavigate();
@@ -66,8 +67,9 @@ function CompoundWallVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Compound Wall Builder"}
                         />
+                        <CompoundWallProductInformation vendor={vendor} />
                       </div>
-                      <div className="col">
+                      <div className="col" style={{ marginTop: "auto" }}>
                         <PriceBreakdown
                           perMeter={vendor?.perMeter}
                           length={filters.length}

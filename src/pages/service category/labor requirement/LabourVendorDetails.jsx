@@ -14,6 +14,7 @@ import BookingSummary from "../../../components/common components/BookingSummary
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
+import LabourProductInformation from "../../../components/service category/labour requirement/LabourProductInformation";
 
 function LabourVendorDetails() {
   const navigate = useNavigate();
@@ -68,8 +69,9 @@ function LabourVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Labour Requirement"}
                         />
+                        <LabourProductInformation vendor={vendor} />
                       </div>
-                      <div className="col">
+                      <div className="col" style={{ marginTop: "auto" }}>
                         <PriceBreakdown
                           dailyWage={vendor.labourInfo.dailyWage}
                           additionalCharges={vendor?.labourInfo?.additionalCharges}

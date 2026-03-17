@@ -14,6 +14,7 @@ import PriceBreakdown from "../../../components/service category/excavation/Pric
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
+import ExcavationProductInformation from "../../../components/service category/excavation/ExcavationProductInformation";
 
 function ExcavationVendorDetails() {
   const navigate = useNavigate();
@@ -66,8 +67,9 @@ function ExcavationVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Earth Movers"}
                         />
+                        <ExcavationProductInformation vendor={vendor} />
                       </div>
-                      <div className="col">
+                      <div className="col" style={{ marginTop: "auto" }}>
                         <PriceBreakdown
                           price={vendor?.priceInfo?.price}
                           priceType={vendor?.priceInfo?.priceType}
