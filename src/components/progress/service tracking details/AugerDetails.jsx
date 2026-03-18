@@ -11,6 +11,10 @@ import PriceBreakdown from "../../service category/auger service/PriceBreakdown"
 import { formatDate } from "../../../utils/dateFormatter";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function AugerDetails({ data }) {
   const service = data.serviceDetails;
@@ -18,15 +22,14 @@ function AugerDetails({ data }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const serviceName = data?.bookingFor || "auger";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
 
   const handleCancelBooking = async (reason) => {
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId: data._id,
-          status: "cancelled",
-          reasonForRejection: reason,
-        }),
+      await dispatch(
+        cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
       toast.success("Booking cancelled successfully");
       setShowCancelModal(false);
@@ -124,6 +127,8 @@ function AugerDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

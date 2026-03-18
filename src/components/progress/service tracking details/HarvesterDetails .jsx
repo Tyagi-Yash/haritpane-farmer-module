@@ -10,6 +10,10 @@ import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/harvestor/PriceBreakdown";
 import { formatDate } from "../../../utils/dateFormatter";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function HarvesterDetails({ data }) {
   const service = data.serviceDetails;
@@ -17,7 +21,9 @@ function HarvesterDetails({ data }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const serviceName = data?.bookingFor || "harvester";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
   const handleCancelBooking = async (reason) => {
     try {
       await dispatch(
@@ -123,6 +129,8 @@ function HarvesterDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

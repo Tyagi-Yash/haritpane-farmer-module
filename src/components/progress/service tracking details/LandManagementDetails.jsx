@@ -10,6 +10,10 @@ import CancelBookingModal from "../../common components/CancelBookingModal";
 import PriceBreakdown from "../../service category/land management/PriceBreakdown";
 import { formatDate } from "../../../utils/dateFormatter";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function LandManagementDetails({ data }) {
   const service = data.serviceDetails;
@@ -17,6 +21,9 @@ function LandManagementDetails({ data }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const serviceName = data?.bookingFor || "land_management";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
   const handleCancelBooking = async (reason) => {
     try {
       await dispatch(
@@ -125,6 +132,8 @@ function LandManagementDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

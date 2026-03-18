@@ -9,6 +9,10 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/cow dung/PriceBreakdown";
 import { formatDate } from "../../../utils/dateFormatter";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function CowDungDetails({ data }) {
   const service = data.serviceDetails;
@@ -16,7 +20,9 @@ function CowDungDetails({ data }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const serviceName = data?.categoryTypeOfCowDunk === "poultry" ? "poultryWaste" : "cowdung";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
   const handleCancelBooking = async (reason) => {
     try {
       await dispatch(
@@ -109,6 +115,8 @@ function CowDungDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

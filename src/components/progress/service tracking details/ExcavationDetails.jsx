@@ -12,6 +12,10 @@ import { formatDate } from "../../../utils/dateFormatter";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 import { equipmentTypesOption } from "../../../constants/service category/excavation service/equipmentOption";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function ExcavationDetails({ data }) {
   const service = data.serviceDetails;
@@ -19,6 +23,9 @@ function ExcavationDetails({ data }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const serviceName = data?.bookingFor || "excavation";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
 
   const handleCancelBooking = async (reason) => {
     try {
@@ -124,6 +131,8 @@ function ExcavationDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );
