@@ -101,7 +101,7 @@ function DroneDetails({ data }) {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end align-items-center mt-5">
+        <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
               Cancel Booking
