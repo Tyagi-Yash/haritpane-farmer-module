@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import productImage from "../../../assets/images/product-image.png";
@@ -17,6 +18,7 @@ function LocalProductsListingModule() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { t } = useTranslation();
 
   const { loading, products, listingPagePaginationData } = useSelector(
     (state) => state.services.ClassifiedSectionMgmtSlice,
@@ -56,7 +58,7 @@ function LocalProductsListingModule() {
 
       await dispatch(getAllProductsForFarmer(params)).unwrap();
     } catch {
-      toast.error("Unable to load products");
+      toast.error(t("classified.unableToLoad"));
     }
   }, [dispatch, pathname, currentPage, selectedSort, appliedLocation.lat, appliedLocation.lng]);
 
@@ -88,7 +90,7 @@ function LocalProductsListingModule() {
 
   const handleApplyLocation = () => {
     if (!draftLocation.lat || !draftLocation.lng) {
-      toast.error("Please select a valid location");
+      toast.error(t("classified.selectValidLocation"));
       return;
     }
 
@@ -116,13 +118,13 @@ function LocalProductsListingModule() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox
-          title={pathname === "/dashboard/local-shops" ? "Local Businesses" : "View Manufacturers"}
+          title={pathname === "/dashboard/local-shops" ? t("classified.localBusinesses") : t("classified.viewManufacturers")}
           navigate="/dashboard"
         />
 
         <div className="dashboard local-shops">
           <div className="product-filter-area">
-            <h6 className="book-heading">Products</h6>
+            <h6 className="book-heading">{t("classified.products")}</h6>
 
             <div className="search-sort">
               {showLocationFilter && (
@@ -131,11 +133,11 @@ function LocalProductsListingModule() {
                     value={draftLocation.address}
                     onChange={(val) => setDraftLocation((prev) => ({ ...prev, address: val }))}
                     onSelectLocation={handleSelectLocation}
-                    placeholder="Enter Location"
+                    placeholder={t("classified.enterLocation")}
                   />
 
                   <button className="call-us-edit me-4" onClick={handleApplyLocation}>
-                    Apply Location
+                    {t("classified.applyLocation")}
                   </button>
                 </>
               )}
@@ -149,10 +151,10 @@ function LocalProductsListingModule() {
                 {isSortOpen && (
                   <div className="sort-menu">
                     <div className="sort-option" onClick={selectTopRated}>
-                      Top Rated
+                      {t("classified.topRated")}
                     </div>
                     <div className="sort-option" onClick={selectLocation}>
-                      Location
+                      {t("classified.location")}
                     </div>
                   </div>
                 )}
@@ -164,7 +166,7 @@ function LocalProductsListingModule() {
             {loading ? (
               <ClassifiedSectionSkeleton />
             ) : products.length === 0 ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>No products available.</p>
+              <p style={{ color: "gray", marginTop: "10px" }}>{t("classified.noProducts")}</p>
             ) : (
               products.map((product) => (
                 <div
@@ -180,13 +182,13 @@ function LocalProductsListingModule() {
                   </div>
                   <div className="card-text-part">
                     <h6 className="normal-heading">{product.productName}</h6>
-                    <p className="normal-para">Vendor: {product?.providerDetails?.name || "N/A"}</p>
+                    <p className="normal-para">{t("classified.vendor")}: {product?.providerDetails?.name || "N/A"}</p>
                     <p className="normal-para">
-                      {product?.providerDetails?.address || "Address not available"}
+                      {product?.providerDetails?.address || t("classified.addressNotAvailable")}
                     </p>
                   </div>
                   <div className="available-service-btn mt-auto">
-                    <button className="send-btn">View Business</button>
+                    <button className="send-btn">{t("classified.viewBusiness")}</button>
                   </div>
                 </div>
               ))

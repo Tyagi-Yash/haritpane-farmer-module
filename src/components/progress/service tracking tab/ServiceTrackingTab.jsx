@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 import { getMyBookings } from "../../../reduxtoolkit/slices/progress/bookingList";
 import serviceImg from "../../../assets/images/service.png";
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
@@ -15,6 +15,7 @@ import { format } from "date-fns";
 
 function ServiceTrackingTab() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { loading, services, paginationData, filters } = useSelector(
     (state) => state.services.bookingListSlice,
@@ -34,7 +35,7 @@ function ServiceTrackingTab() {
 
   const handleFromDateChange = (value) => {
     if (!validateDateRange(value, toDate)) {
-      toast.error("End date cannot be before start date");
+      toast.error(t("progress.dateRangeError"));
       return;
     }
     setFromDate(value);
@@ -43,7 +44,7 @@ function ServiceTrackingTab() {
 
   const handleToDateChange = (value) => {
     if (!validateDateRange(fromDate, value)) {
-      toast.error("End date cannot be before start date");
+      toast.error(t("progress.dateRangeError"));
       return;
     }
     setToDate(value);
@@ -76,11 +77,11 @@ function ServiceTrackingTab() {
   return (
     <div className="dashboard service-tracking">
       <div className="option-wrapper mb-0">
-        <h3 className="main-heading">Change Availability Date</h3>
+        <h3 className="main-heading">{t("progress.changeAvailabilityDate")}</h3>
         <div className="filter-area">
           <div className="row align-items-end">
             <div className="col-md-4 mb-3">
-              <label className="form-label">Select Start Date</label>
+              <label className="form-label">{t("progress.selectStartDate")}</label>
               <DatePicker
                 selected={fromDate ? new Date(fromDate) : null}
                 onChange={(selectedDate) => {
@@ -103,7 +104,7 @@ function ServiceTrackingTab() {
               />
             </div>
             <div className="col-md-4 mb-3">
-              <label className="form-label">Select End Date</label>
+              <label className="form-label">{t("progress.selectEndDate")}</label>
               <DatePicker
                 selected={toDate ? new Date(toDate) : null}
                 onChange={(selectedDate) => {
@@ -126,7 +127,7 @@ function ServiceTrackingTab() {
               />
             </div>
             <div className="col-md-4 mb-3">
-              <label className="form-label">Select Status</label>
+              <label className="form-label">{t("progress.selectStatus")}</label>
               <div className="sort-box">
                 <div
                   className={`sort-toggle status-${selectedStatus.toLowerCase()}`}
@@ -159,7 +160,7 @@ function ServiceTrackingTab() {
       <div className="option-wrapper mb-0">
         {loading && <ProgressVendorSkeleton count={5} />}
         {!loading && services.length === 0 && (
-          <p className="text-center">No bookings found for {selectedStatus} status</p>
+          <p className="text-center">{t("progress.noBookingsFound", { status: selectedStatus })}</p>
         )}
         {!loading &&
           services.map((item) => (
@@ -172,7 +173,7 @@ function ServiceTrackingTab() {
                 <div className="service-info">
                   <img src={item.image || serviceImg} alt="Service" className="service-image" />
                   <div className="service-text">
-                    <div className="title">{item.businessName || "No Discription"}</div>
+                    <div className="title">{item.businessName || t("progress.noDescription")}</div>
                     <div className="rating">
                       <i className="fa-solid fa-star star-icon" />
                       {item.rating ?? "N/A"}
@@ -182,7 +183,7 @@ function ServiceTrackingTab() {
 
                 <div className="price-info">
                   <h6>₹ {item.amount}</h6>
-                  <small>Additional charges might apply</small>
+                  <small>{t("progress.additionalCharges")}</small>
                 </div>
               </div>
             </Link>

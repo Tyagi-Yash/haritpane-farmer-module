@@ -2,6 +2,7 @@ import "./assets/css/style.css";
 import "react-datepicker/dist/react-datepicker.css";
 import App from "./App.jsx";
 import store, { persistor } from "./reduxtoolkit/store.js";
+import "./i18n";
 
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";

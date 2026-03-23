@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import OtpInput from "../../components/otpverify/OTPInput";
 import { login } from "../../reduxtoolkit/slices/auth/auth";
 import OtpResend from "../../components/otpverify/OtpResend";
+import i18n from "../../i18n";
 // import { requestNotificationPermission } from "../../utils/notification";
 
 function OtpVerify() {
@@ -101,6 +102,10 @@ function OtpVerify() {
 
         //remove this after 3rd party otp api implemented
         localStorage.removeItem("otp");
+
+        const langMap = { Hindi: "hi", English: "en", Marathi: "mr" };
+        const userLang = langMap[farmerProfile.languageSelector] || "en";
+        i18n.changeLanguage(userLang);
 
         farmerProfile.languageSelector ? navigate("/dashboard") : navigate("/language");
         toast.success(message || "OTP verified sucessfully");

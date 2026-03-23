@@ -9,6 +9,7 @@ import { disconnectSocket } from "../../../socket/socket";
 import { resetReviewList } from "../../../reduxtoolkit/slices/rate and reviews/rateReview";
 import { clearBookingList } from "../../../reduxtoolkit/slices/progress/bookingList";
 import { resetChatState } from "../../../reduxtoolkit/slices/chats/chats";
+import i18n from "../../../i18n";
 
 function DeleteModal({ show, onClose }) {
   const dispatch = useDispatch();
@@ -25,11 +26,14 @@ function DeleteModal({ show, onClose }) {
       if (status === 200) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
+        localStorage.removeItem("i18nextLng");
         localStorage.removeItem("fcmToken");
         dispatch(resetChatState());
         dispatch(clearBookingList());
         dispatch(resetReviewList());
         disconnectSocket();
+        
+        i18n.changeLanguage("en");
         navigate("/signup");
         toast.success(message || "Account deleted successfully");
       } else {

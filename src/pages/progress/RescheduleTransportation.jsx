@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../components/common components/TopbarModal";
 import TransportationIcon from "../../assets/images/Transportation-icon.png";
@@ -16,6 +17,7 @@ function RescheduleTransportation() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { orderId } = useParams();
+  const { t } = useTranslation();
 
   const { jobOrders, actionLoading } = useSelector((state) => state.services.jobOrderListSlice);
 
@@ -86,7 +88,7 @@ function RescheduleTransportation() {
   }, [job]);
 
   if (!job) {
-    return <p className="text-center">Job order not found.</p>;
+    return <p className="text-center">{t("progress.jobNotFound")}</p>;
   }
 
   const handleSubmit = async (e) => {
@@ -104,10 +106,10 @@ function RescheduleTransportation() {
 
     try {
       await dispatch(rescheduleJobOrder({ orderId, fromDate, tillDate, startTime })).unwrap();
-      toast.success("Job order rescheduled successfully");
+      toast.success(t("progress.jobRescheduled"));
       navigate("/service-tracking");
     } catch {
-      toast.error("Failed to reschedule job order");
+      toast.error(t("progress.jobRescheduleFail"));
     }
   };
 
@@ -116,7 +118,7 @@ function RescheduleTransportation() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox
-          title="Reschedule Transportation"
+          title={t("progress.rescheduleTransportation")}
           secImage={TransportationIcon}
           navigate="/service-tracking"
         />
@@ -125,23 +127,23 @@ function RescheduleTransportation() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Service Details</h5>
+                <h5 className="book-heading">{t("progress.serviceDetails2")}</h5>
 
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">Transport Item</label>
+                    <label className="form-label">{t("progress.transportItem")}</label>
                     <input className="form-control" value={transportItem} disabled />
                   </div>
 
                   {transportItem === "vegitable" && (
                     <>
                       <div className="col-md-6">
-                        <label className="form-label">Vegetable Type</label>
+                        <label className="form-label">{t("progress.vegetableType")}</label>
                         <input className="form-control" value={vegetableType} disabled />
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label">Vegetable Weight (kg)</label>
+                        <label className="form-label">{t("progress.vegetableWeight")}</label>
                         <input className="form-control" value={vegetableWeight} disabled />
                       </div>
                     </>
@@ -150,12 +152,12 @@ function RescheduleTransportation() {
                   {transportItem === "cattle" && (
                     <>
                       <div className="col-md-6">
-                        <label className="form-label">Number of Cattle</label>
+                        <label className="form-label">{t("progress.numberOfCattle")}</label>
                         <input className="form-control" value={numberOfCattle} disabled />
                       </div>
 
                       <div className="col-md-6">
-                        <label className="form-label">Cattle Weight (kg)</label>
+                        <label className="form-label">{t("progress.cattleWeight")}</label>
                         <input className="form-control" value={cattleWeight} disabled />
                       </div>
                     </>
@@ -164,7 +166,7 @@ function RescheduleTransportation() {
                   {transportItem === "equipment" && (
                     <>
                       <div className="col-md-6">
-                        <label className="form-label">Equipment Dimensions</label>
+                        <label className="form-label">{t("progress.equipmentDimensions")}</label>
                         <div className="row">
                           <div className="col-md-4">
                             <input className="form-control" value={lengthCm} disabled />
@@ -177,9 +179,9 @@ function RescheduleTransportation() {
                           </div>
                         </div>
                       </div>
-
+ 
                       <div className="col-md-6">
-                        <label className="form-label">Equipment Weight</label>
+                        <label className="form-label">{t("progress.equipmentWeight")}</label>
                         <input className="form-control" value={equipmentWeight} disabled />
                       </div>
                     </>
@@ -187,30 +189,30 @@ function RescheduleTransportation() {
 
                   {transportItem === "other" && (
                     <div className="col-md-6">
-                      <label className="form-label">Other Weight (kg)</label>
+                      <label className="form-label">{t("progress.otherWeight")}</label>
                       <input className="form-control" value={otherWeightKg} disabled />
                     </div>
                   )}
 
                   <div className="col-md-6">
-                    <label className="form-label">Current Location</label>
+                    <label className="form-label">{t("progress.currentLocation")}</label>
                     <input className="form-control" value={currentLocation} disabled />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Destination Location</label>
+                    <label className="form-label">{t("progress.destinationLocation")}</label>
                     <input className="form-control" value={destinationLocation} disabled />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">Vehicle Type</label>
+                    <label className="form-label">{t("progress.vehicleType")}</label>
                     <input className="form-control" value={typeOfVehicle} disabled />
                   </div>
                 </div>
 
-                <h5 className="book-heading mt-4">Reschedule Date & Time</h5>
+                <h5 className="book-heading mt-4">{t("progress.rescheduleDateAndTime")}</h5>
 
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label">From Date *</label>
+                    <label className="form-label">{t("progress.fromDate")} *</label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
                       onChange={(selectedDate) => {
@@ -230,7 +232,7 @@ function RescheduleTransportation() {
                   </div>
 
                   <div className="col-md-6">
-                    <label className="form-label">Till Date *</label>
+                    <label className="form-label">{t("progress.tillDate")} *</label>
                     <DatePicker
                       selected={tillDate ? new Date(tillDate) : null}
                       onChange={(selectedDate) => {
@@ -250,7 +252,7 @@ function RescheduleTransportation() {
                   </div>
 
                   <div className="col-md-6">
-                    <label className="form-label">Start Time *</label>
+                    <label className="form-label">{t("progress.startTime")} *</label>
                     <Time12HourPicker
                       value={startTime}
                       onChange={(val) => {
@@ -266,7 +268,7 @@ function RescheduleTransportation() {
 
             <div className="available-service-btn">
               <button type="submit" disabled={actionLoading}>
-                {actionLoading ? "Rescheduling..." : "Reschedule Job"}
+                {actionLoading ? t("progress.rescheduling") : t("progress.rescheduleJob")}
               </button>
             </div>
           </form>

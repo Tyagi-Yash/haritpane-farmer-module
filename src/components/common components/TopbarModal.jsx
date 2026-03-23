@@ -1,7 +1,9 @@
 import profile from "../../assets/images/profile.svg";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function TopbarModal({ titleBox, navigate, secImage, title }) {
+  const { t } = useTranslation();
   let profileData = {};
   try {
     profileData = JSON.parse(localStorage.getItem("farmerProfile") || "{}");
@@ -32,7 +34,7 @@ function TopbarModal({ titleBox, navigate, secImage, title }) {
       </div>
       <div className="right-section">
         <div className="search-box">
-          <input type="text" placeholder="Search Services..." />
+          <input type="text" placeholder={t("nav.searchPlaceholder")} />
           <i className="fas fa-search search-icon" />
         </div>
         <Link to="/notification" style={{ textDecoration: "none" }}>
@@ -44,7 +46,7 @@ function TopbarModal({ titleBox, navigate, secImage, title }) {
         <Link to="/profile" style={{ textDecoration: "none" }}>
           <div className="profile">
             <img src={profileImage ? profileImage : profile} alt="profile" />
-            <span className="username">{name ? name : "Farmer"}</span>
+            <span className="username">{name ? name : t("nav.defaultUser")}</span>
           </div>
         </Link>
       </div>

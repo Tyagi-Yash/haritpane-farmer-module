@@ -3,6 +3,7 @@ import locationIcon from "../../../assets/images/location-icon.png";
 import mobile from "../../../assets/images/mobile.svg";
 import CancelBookingModal from "../../common components/CancelBookingModal";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { cancelBooking } from "../../../reduxtoolkit/slices/service category/bookingSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -19,6 +20,7 @@ function CattleDetails({ data }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const serviceName = data?.bookingFor || "cattle";
   const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
   const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
@@ -28,11 +30,11 @@ function CattleDetails({ data }) {
       await dispatch(
         cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
-      toast.success("Booking cancelled successfully");
+      toast.success(t("progress.bookingCancelled"));
       setShowCancelModal(false);
       navigate("/service-tracking");
     } catch (err) {
-      toast.error(err?.message || "Failed to cancel booking");
+      toast.error(err?.message || t("progress.bookingCancelFail"));
     }
   };
 
@@ -56,7 +58,7 @@ function CattleDetails({ data }) {
     <>
       <div className="tab-pane active">
         <div className="option-wrapper">
-          <h5 className="normal-heading">Vendor Information</h5>
+          <h5 className="normal-heading">{t("progress.vendorInformation")}</h5>
           <h6>
             <span>
               <img src={userIcon} alt="" />
@@ -85,27 +87,26 @@ function CattleDetails({ data }) {
           <div className="row align-items-center">
             <div className="col align-items-center">
               <div className="option-wrapper booking-area">
-                <h5 className="normal-heading">Booking Details</h5>
-                <p>Service Name: Cattle Purchase & Sale</p>
-                <p>Business Name: {service?.businessName || "N/A"}</p>
+                <h5 className="normal-heading">{t("progress.bookingDetails")}</h5>
+                <p>{t("progress.serviceName")}: {t("progress.cattlePurchaseSale")}</p>
+                <p>{t("progress.businessName")}: {service?.businessName || "N/A"}</p>
                 <br />
-                <p>Farm Location: {data?.addressOfFarm || "N/A"}</p>
-                <p>Cattle Breed: {data?.cattleBreed}</p>
-                <p>Cattle Name: {data?.cattleName}</p>
-
-                <p>Gender: {cattleInfo.cattleGender}</p>
-                {basicInfoArray.age && <p>Age: {basicInfoArray.age} year</p>}
-                {basicInfoArray.weight && <p>Weight: {basicInfoArray.weight} Kg</p>}
-                {basicInfoArray.calf && <p>Calf Available: Yes</p>}
+                <p>{t("progress.farmLocation")}: {data?.addressOfFarm || "N/A"}</p>
+                <p>{t("progress.cattleBreed")}: {data?.cattleBreed}</p>
+                <p>{t("progress.cattleName")}: {data?.cattleName}</p>
+                <p>{t("progress.gender")}: {cattleInfo.cattleGender}</p>
+                {basicInfoArray.age && <p>{t("progress.age")}: {basicInfoArray.age} {t("progress.year")}</p>}
+                {basicInfoArray.weight && <p>{t("progress.weight")}: {basicInfoArray.weight} {t("progress.kg")}</p>}
+                {basicInfoArray.calf && <p>{t("progress.calfAvailable")}: {t("progress.yes")}</p>}
                 {basicInfoArray.numberOfCalf && (
-                  <p>Number of Calf: {basicInfoArray.numberOfCalf}</p>
+                  <p>{t("progress.numberOfCalf")}: {basicInfoArray.numberOfCalf}</p>
                 )}
                 {basicInfoArray.milkPerDay && (
-                  <p>Milk Per Day: {basicInfoArray.milkPerDay} Liters</p>
+                  <p>{t("progress.milkPerDay")}: {basicInfoArray.milkPerDay} {t("progress.liters")}</p>
                 )}
-                {basicInfoArray.lactation && <p>Lactation: {basicInfoArray.lactation}</p>}
+                {basicInfoArray.lactation && <p>{t("progress.lactation")}: {basicInfoArray.lactation}</p>}
                 {basicInfoArray.animalDescription && (
-                  <p>Description: {basicInfoArray.animalDescription}</p>
+                  <p>{t("progress.description")}: {basicInfoArray.animalDescription}</p>
                 )}
               </div>
             </div>
@@ -119,15 +120,15 @@ function CattleDetails({ data }) {
         <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
-              Cancel Booking
+              {t("progress.cancelBooking")}
             </button>
           )}
           {data.status === "accepted" && (
             <button type="button" className="btn-edit" onClick={handleStartChat}>
-              Start Chat
+              {t("progress.startChat")}
             </button>
           )}
-          <button className="btn-edit">Raise Enquiry</button>
+          <button className="btn-edit">{t("progress.raiseEnquiry")}</button>
         </div>
       </div>
       <CancelBookingModal

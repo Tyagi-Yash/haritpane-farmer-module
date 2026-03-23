@@ -11,22 +11,22 @@ import call from "../../assets/images/call.svg";
 import gmail from "../../assets/images/gmail.svg";
 
 export const mainMenu = [
-  { to: "/dashboard", icon: dashboard, label: "Dashboard" },
-  { to: "/service-tracking", icon: notepad, label: "Progress" },
-  { to: "/service-category", icon: userRectangle, label: "Service Category" },
-  { to: "/chats", icon: chat, label: "Chats" },
+  { to: "/dashboard", icon: dashboard, label: "Dashboard", translateKey: "nav.dashboard" },
+  { to: "/service-tracking", icon: notepad, label: "Progress", translateKey: "nav.progress" },
+  { to: "/service-category", icon: userRectangle, label: "Service Category", translateKey: "nav.serviceCategory" },
+  { to: "/chats", icon: chat, label: "Chats", translateKey: "nav.chats" },
 ];
 
 export const accountMenu = [
-  { to: "/notification", icon: notification, label: "Notification" },
-  { to: "/language", icon: language, label: "Language" },
-  { to: "/profile", icon: profile, label: "Profile" },
-  { to: "/farm-home", icon: myFarm, label: "My Farm" },
+  { to: "/notification", icon: notification, label: "Notification", translateKey: "nav.notification" },
+  { to: "/language", icon: language, label: "Language", translateKey: "nav.language" },
+  { to: "/profile", icon: profile, label: "Profile", translateKey: "nav.profile" },
+  { to: "/farm-home", icon: myFarm, label: "My Farm", translateKey: "nav.myFarm" },
 ];
 
 export const helpMenu = [
-  { icon: complaint, label: "Raise a Complaint" },
-  { icon: gmail, label: "Email Us" },
-  { icon: call, label: "Call Us" },
-  { icon: chat, label: "Chat with Us" },
+  { icon: complaint, label: "Raise a Complaint", translateKey: "nav.raiseComplaint" },
+  { icon: gmail, label: "Email Us", translateKey: "nav.emailUs" },
+  { icon: call, label: "Call Us", translateKey: "nav.callUs" },
+  { icon: chat, label: "Chat with Us", translateKey: "nav.chatWithUs" },
 ];

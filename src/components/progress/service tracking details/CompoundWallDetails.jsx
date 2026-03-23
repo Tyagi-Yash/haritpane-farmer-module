@@ -3,6 +3,7 @@ import locationIcon from "../../../assets/images/location-icon.png";
 import mobile from "../../../assets/images/mobile.svg";
 import CancelBookingModal from "../../common components/CancelBookingModal";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { cancelBooking } from "../../../reduxtoolkit/slices/service category/bookingSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -21,6 +22,8 @@ function CompoundWallDetails({ data }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const serviceName = data?.bookingFor || "compoundWall";
   const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
   const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
@@ -29,11 +32,11 @@ function CompoundWallDetails({ data }) {
       await dispatch(
         cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
-      toast.success("Booking cancelled successfully");
+      toast.success(t("progress.bookingCancelled"));
       setShowCancelModal(false);
       navigate("/service-tracking");
     } catch (err) {
-      toast.error(err?.message || "Failed to cancel booking");
+      toast.error(err?.message || t("progress.bookingCancelFail"));
     }
   };
 
@@ -53,7 +56,7 @@ function CompoundWallDetails({ data }) {
     <>
       <div className="tab-pane active">
         <div className="option-wrapper">
-          <h5 className="normal-heading">Vendor Information</h5>
+          <h5 className="normal-heading">{t("progress.vendorInformation")}</h5>
           <h6>
             <span>
               <img src={userIcon} alt="" />
@@ -82,17 +85,17 @@ function CompoundWallDetails({ data }) {
           <div className="row align-items-center">
             <div className="col align-items-center">
               <div className="option-wrapper booking-area">
-                <h5 className="normal-heading">Booking Details</h5>
-                <p>Service Name: Compound Wall Builder</p>
-                <p>Business Name: {service?.businessName || "N/A"}</p>
+                <h5 className="normal-heading">{t("progress.bookingDetails")}</h5>
+                <p>{t("progress.serviceName")}: {t("progress.compoundWallBuilder")}</p>
+                <p>{t("progress.businessName")}: {service?.businessName || "N/A"}</p>
                 <br />
-                <p>Field Location: {data?.addressOfFarm || "N/A"}</p>
-                <p>Wall Type: {data?.typeOfWall || "N/A"}</p>
+                <p>{t("progress.farmLocation")}: {data?.addressOfFarm || "N/A"}</p>
+                <p>{t("progress.wallType")}: {data?.typeOfWall || "N/A"}</p>
                 {/* <p>Length of Wall(meter): {data?.length || "N/A"}</p>
                 <p>Height of Wall(ft): {data?.height || "N/A"}</p> */}
-                <p>Start Date: {formatDate(data?.bookingFromDate)}</p>
-                <p>End Date: {formatDate(data?.bookingTillDate)}</p>
-                <p>Start Time: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
+                <p>{t("progress.startDate")}: {formatDate(data?.bookingFromDate)}</p>
+                <p>{t("progress.endDate")}: {formatDate(data?.bookingTillDate)}</p>
+                <p>{t("progress.startTime")}: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
               </div>
             </div>
             <div className="col">
@@ -110,15 +113,15 @@ function CompoundWallDetails({ data }) {
         <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
-              Cancel Booking
+              {t("progress.cancelBooking")}
             </button>
           )}
           {data.status === "accepted" && (
             <button type="button" className="btn-edit" onClick={handleStartChat}>
-              Start Chat
+              {t("progress.startChat")}
             </button>
           )}
-          <button className="btn-edit">Raise Enquiry</button>
+          <button className="btn-edit">{t("progress.raiseEnquiry")}</button>
         </div>
       </div>
       <CancelBookingModal

@@ -3,11 +3,13 @@ import { acceptQuotation, rejectQuotation } from "../../../reduxtoolkit/slices/p
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { formatPrice } from "../../../utils/formatPrice";
 
 function QuotationCard({ data, jobOrderId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { actionLoading, farmerId } = useSelector((state) => state.services.quotationSlice);
   const [showNumber, setShowNumber] = useState(false);
@@ -17,18 +19,18 @@ function QuotationCard({ data, jobOrderId }) {
   const handleAccept = async () => {
     try {
       await dispatch(acceptQuotation({ jobOrderId, quotationId })).unwrap();
-      toast.success("Quotation accepted successfully. Booking confirmed!");
+      toast.success(t("progress.quotationAccepted"));
     } catch (error) {
-      toast.error("Failed to accept quotation");
+      toast.error(t("progress.quotationAcceptFail"));
     }
   };
 
   const handleReject = async () => {
     try {
       await dispatch(rejectQuotation({ jobOrderId, quotationId })).unwrap();
-      toast.success("Quotation Rejected successfully.");
+      toast.success(t("progress.quotationRejected"));
     } catch (error) {
-      toast.error("Failed to reject quotation");
+      toast.error(t("progress.quotationRejectFail"));
     }
   };
 
@@ -47,26 +49,26 @@ function QuotationCard({ data, jobOrderId }) {
   return (
     <div className="quotation-card">
       <div className="amount-row">
-        <span className="quotation-label">Service Provider</span>
+        <span className="quotation-label">{t("progress.serviceProvider")}</span>
         <span className="quotation-value">{provider?.name || "N/A"}</span>
       </div>
       <div className="amount-row">
-        <span className="quotation-label">Amount</span>
+        <span className="quotation-label">{t("progress.amount")}</span>
         <span className="amount">₹ {formatPrice(amount)}</span>
       </div>
       <div className="amount-row">
-        <span className="quotation-label">Message</span>
+        <span className="quotation-label">{t("progress.message")}</span>
         <span className="quotation-value">{message}</span>
       </div>
       {status === "accepted" ? (
         <>
           <div className="action-buttons">
-            <p className="accepted-text">Accepted</p>
+            <p className="accepted-text">{t("progress.accepted")}</p>
             <button className="view-btn" onClick={handleStartChat}>
-              Chat
+              {t("progress.chat")}
             </button>
             <button className="call-btn" onClick={() => setShowNumber((prev) => !prev)}>
-              {showNumber ? provider?.phone || "N/A" : "Call"}
+              {showNumber ? provider?.phone || "N/A" : t("progress.call")}
             </button>
           </div>
         </>
@@ -78,14 +80,14 @@ function QuotationCard({ data, jobOrderId }) {
               onClick={handleAccept}
               disabled={actionLoading}
             >
-              Accept
+              {t("progress.accept")}
             </button>
             <button
               className="quotation-btn reject"
               onClick={handleReject}
               disabled={actionLoading}
             >
-              Reject
+              {t("progress.reject")}
             </button>
           </div>
         </>
