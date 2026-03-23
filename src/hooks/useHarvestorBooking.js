@@ -48,6 +48,7 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
       providerId: vendor.providerId,
       categoryId: vendor.categoryId,
       typeOfCrop: filters.typeOfCrop,
+      categoryType: filters.selectSubCategory,
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.fromTime,

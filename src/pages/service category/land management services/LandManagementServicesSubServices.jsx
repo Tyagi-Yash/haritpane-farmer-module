@@ -19,6 +19,10 @@ import Time12HourPicker from "../../../components/common components/Time12HourPi
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
+import {
+  TRACTOR_ATTACHMENTS,
+  TRACTOR_HP_OPTIONS,
+} from "../../../constants/service category/land management/tractorOptions";
 
 function LandManagementServicesSubServices() {
   const filters = useSelector((state) => state.services.LandServiceMgmtSlice.filters);
@@ -198,12 +202,11 @@ function LandManagementServicesSubServices() {
                         <option value="" disabled>
                           Select Tractor Category*
                         </option>
-                        <option value="Under_20">Under 20 hp</option>
-                        <option value="21-30">21-30 hp</option>
-                        <option value="31-40">31-40 hp</option>
-                        <option value="41-45">41-45 hp</option>
-                        <option value="46-50">46-50 hp</option>
-                        <option value="Above_50">Above 50 hp</option>
+                        {TRACTOR_HP_OPTIONS.map((tractor) => (
+                          <option key={tractor.value} value={tractor.value}>
+                            {tractor.label}
+                          </option>
+                        ))}
                       </select>
                       {errors.hpOfTractor && <p className="error-text">{errors.hpOfTractor}</p>}
                     </div>
@@ -220,17 +223,11 @@ function LandManagementServicesSubServices() {
                       <option value="" disabled>
                         Select attachment*
                       </option>
-                      <option value="Plough">Plough</option>
-                      <option value="Cultivator">Cultivator</option>
-                      <option value="Sprayer">Sprayer</option>
-                      <option value="Power_Tiller">Power Tiller</option>
-                      <option value="Rotavator">Rotavator</option>
-                      <option value="Baler">Baler</option>
-                      <option value="Harrow">Harrow</option>
-                      <option value="Super_Seeder">Super Seeder</option>
-                      <option value="Seed_Drill">Seed Drill</option>
-                      <option value="Trolly">Trolly</option>
-                      <option value="Thresher">Thresher</option>
+                      {TRACTOR_ATTACHMENTS.map((attachment) => (
+                        <option key={attachment.value} value={attachment.value}>
+                          {attachment.label}
+                        </option>
+                      ))}
                     </select>
                     {errors.selectAttachment && (
                       <p className="error-text">{errors.selectAttachment}</p>
@@ -244,8 +241,8 @@ function LandManagementServicesSubServices() {
                       className="form-control"
                       placeholder={
                         selectAttachment === "Trolly"
-                          ? "Distance from Your Field to Destination(in Km)*"
-                          : "Area Under Cultivation(in acre)*"
+                          ? "Enter Trip Distance(in Km)*"
+                          : "Enter Farm Area(in acre)*"
                       }
                       onChange={(val) => setFormState((prev) => ({ ...prev, farmArea: val }))}
                     />

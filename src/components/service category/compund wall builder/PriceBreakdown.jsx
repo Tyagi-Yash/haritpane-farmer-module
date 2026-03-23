@@ -11,13 +11,12 @@ const PriceBreakdown = ({ perMeter, payableAmount, height, length }) => {
   const heightInFeet = Number(height ?? 0);
   const lengthInMeter = Number(length ?? 0);
 
-  const heightInMeter = (heightInFeet * 0.3048).toFixed(2);
-  console.log(heightInMeter);
+  const heightInMeter = heightInFeet * 0.3048;
   const totalArea = heightInMeter * lengthInMeter;
   const serviceAmount = ratePerMeter > 0 ? totalArea * ratePerMeter : 0;
 
   return (
-    <div className="option-wrapper bookingPriceTable">
+    <div className="option-wrapper bookingPriceTable mb-0">
       <h5 className="normal-heading">Tentative cost</h5>
 
       <table className="table table-borderless">

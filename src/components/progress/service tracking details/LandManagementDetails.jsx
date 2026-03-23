@@ -11,6 +11,10 @@ import CancelBookingModal from "../../common components/CancelBookingModal";
 import PriceBreakdown from "../../service category/land management/PriceBreakdown";
 import { formatDate } from "../../../utils/dateFormatter";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function LandManagementDetails({ data }) {
   const service = data.serviceDetails;
@@ -19,6 +23,9 @@ function LandManagementDetails({ data }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const serviceName = data?.bookingFor || "land_management";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
   const handleCancelBooking = async (reason) => {
     try {
       await dispatch(
@@ -85,7 +92,7 @@ function LandManagementDetails({ data }) {
                 <p>{t("progress.farmLocation")}: {data?.addressOfFarm || "N/A"}</p>
                 <p>{t("progress.equipment")}: {info?.equipmentInformation || "N/A"}</p>
                 {/* <p>
-                  {info?.equipmentInformation === "Trolly" ? "Distance" : "Farm Area"}:{" "}
+                  {info?.equipmentInformation === "Trolly" ? "Trip Distance" : "Farm Area"}:{" "}
                   {data?.farmArea
                     ? `${data.farmArea} ${info?.equipmentInformation === "Trolly" ? "Km" : "Acre"}`
                     : "N/A"}
@@ -95,7 +102,7 @@ function LandManagementDetails({ data }) {
                 <p>{t("progress.startTime")}: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
               </div>
             </div>
-            <div className="col">
+            <div className="col mb-0">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown
                   price={data?.price}
@@ -109,7 +116,7 @@ function LandManagementDetails({ data }) {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end align-items-center mt-5">
+        <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
               {t("progress.cancelBooking")}
@@ -127,6 +134,8 @@ function LandManagementDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

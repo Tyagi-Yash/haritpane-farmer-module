@@ -29,6 +29,7 @@ function SideNav() {
 
   const handleLogout = async () => {
     try {
+      
       const res = await dispatch(logout());
 
       const status = res?.payload?.status;
@@ -38,6 +39,7 @@ function SideNav() {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
         localStorage.removeItem("i18nextLng");
+        localStorage.removeItem("fcmToken");
         toast.success(message || t("nav.logoutSuccess"));
         setShowLogoutModal(false);
         dispatch(resetChatState());

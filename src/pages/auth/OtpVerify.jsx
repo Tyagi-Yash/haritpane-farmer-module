@@ -68,6 +68,9 @@ function OtpVerify() {
     setDisable(true);
     try {
       // const deviceToken = await requestNotificationPermission();
+      // if (deviceToken) {
+      //   localStorage.setItem("fcmToken", deviceToken);
+      // }
 
       const res = await dispatch(
         login({

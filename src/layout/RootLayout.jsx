@@ -20,11 +20,9 @@ function RootLayout() {
 
   // useEffect(() => {
   //   const unsubscribe = onMessage(messaging, (payload) => {
-  //     console.log("Foreground message:", payload);
-
-  //     toast.success(payload?.notification?.title || "New Notification");
+  //     const data = payload?.data || {};
+  //     toast.success(data?.title || payload?.notification?.title || "New Notification");
   //   });
-
   //   return unsubscribe;
   // }, []);
 

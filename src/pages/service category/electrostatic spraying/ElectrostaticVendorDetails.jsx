@@ -14,6 +14,7 @@ import PriceBreakdown from "../../../components/service category/electrostatic s
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
+import ElectrostaticProductInformation from "../../../components/service category/electrostatic spraying/ElectrostaticProductInformation";
 
 function ExcavationVendorDetails() {
   const navigate = useNavigate();
@@ -66,8 +67,9 @@ function ExcavationVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Electrostatic Spraying"}
                         />
+                        <ElectrostaticProductInformation vendor={vendor} />
                       </div>
-                      <div className="col">
+                      <div className="col" style={{ marginTop: "auto" }}>
                         <PriceBreakdown
                           chargePerAcre={vendor?.basicInfo?.chargePerAcre}
                           additionalCharges={vendor?.basicInfo?.additionalCharges}

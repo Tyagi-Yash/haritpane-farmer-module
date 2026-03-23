@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { formatDate } from "../../../utils/dateFormatter";
 import { formatPrice } from "../../../utils/formatPrice";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import JobOrderActions from "./JobOrderActions";
@@ -17,7 +18,7 @@ function CowDungJobCard({ job }) {
       </div>
 
       <Row label={t("progress.deliveryLocation")} value={job.currentLocation} />
-      <Row label={t("progress.fromDate")} value={job.fromDate} />
+      <Row label={t("progress.fromDate")} value={formatDate(job.fromDate)} />
       <Row label={t("progress.startTime")} value={convertTo12Hour(job.startTime)} />
       <Row label={t("progress.cowDungType")} value={job.cowDunkType} />
       <Row

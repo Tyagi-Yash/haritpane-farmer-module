@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { formatDate } from "../../../utils/dateFormatter";
 import { formatPrice } from "../../../utils/formatPrice";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import JobOrderActions from "./JobOrderActions";
@@ -28,8 +29,8 @@ function TransportationJobCard({ job }) {
 
       <Row label={t("progress.startLocation")} value={job.currentLocation} />
       <Row label={t("progress.endLocation")} value={job.destinationLocation} />
-      <Row label={t("progress.fromDate")} value={job.fromDate} />
-      <Row label={t("progress.tillDate")} value={job.tillDate} />
+      <Row label={t("progress.fromDate")} value={formatDate(job.fromDate)} />
+      <Row label={t("progress.tillDate")} value={formatDate(job.tillDate)} />
       <Row label={t("progress.startTime")} value={convertTo12Hour(job.startTime)} />
       <Row label={t("progress.vehicle")} value={job.typeOfVehicle} />
       <Row

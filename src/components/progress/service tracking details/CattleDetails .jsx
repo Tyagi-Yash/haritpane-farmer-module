@@ -9,6 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/cattle purchase and sale/PriceBreakdown";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function CattleDetails({ data }) {
   const service = data.serviceDetails;
@@ -17,15 +21,14 @@ function CattleDetails({ data }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const serviceName = data?.bookingFor || "cattle";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
 
   const handleCancelBooking = async (reason) => {
     try {
-      const res = await dispatch(
-        cancelBooking({
-          bookingId: data._id,
-          status: "cancelled",
-          reasonForRejection: reason,
-        }),
+      await dispatch(
+        cancelBooking({ bookingId: data._id, status: "cancelled", reasonForRejection: reason }),
       ).unwrap();
       toast.success(t("progress.bookingCancelled"));
       setShowCancelModal(false);
@@ -49,14 +52,6 @@ function CattleDetails({ data }) {
 
   const { cattleInfo = {}, basicInfo = [] } = service;
 
-  const renderField = (label, value) => {
-    if (!value && value !== 0 && value !== false) return null;
-    return (
-      <p>
-        <strong>{label}:</strong> {value}
-      </p>
-    );
-  };
   const basicInfoArray = basicInfo?.[0];
 
   return (
@@ -118,28 +113,11 @@ function CattleDetails({ data }) {
             <div className="col">
               <div className="bookingPriceTableParent">
                 <PriceBreakdown sellingPrice={data?.sellingPrice} payableAmount={data?.amount} />
-                {/* <div className="option-wrapper bookingPriceTable">
-                  <h5 className="normal-heading">Total Booking Price</h5>
-                  <table className="table table-borderless">
-                    <tbody>
-                      <tr>
-                        <td>Service Cost</td>
-                        <td>₹ {Number(data?.sellingPrice ?? 0).toFixed(2)}</td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <td>Total Payable Amount</td>
-                        <td>₹ {Number(data?.amount ?? 0).toFixed(2)}</td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div> */}
               </div>
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end align-items-center mt-5">
+        <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
               {t("progress.cancelBooking")}
@@ -157,6 +135,8 @@ function CattleDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

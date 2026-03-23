@@ -26,7 +26,7 @@ const PriceBreakdown = ({
   const depthOfBorewell = boreRatePerFt > 0 ? boreAmount / boreRatePerFt : 0;
 
   return (
-    <div className="option-wrapper bookingPriceTable">
+    <div className="option-wrapper bookingPriceTable mb-0">
       {(motorInfo.length > 0 || pipeCharges) && (
         <>
           <h5 className="normal-heading">Motor & Pipe Details</h5>
@@ -52,7 +52,7 @@ const PriceBreakdown = ({
       )}
       <br />
 
-      <h5 className="normal-heading" >Tentative Cost</h5>
+      <h5 className="normal-heading">Tentative Cost</h5>
 
       <table className="table table-borderless">
         <tbody>

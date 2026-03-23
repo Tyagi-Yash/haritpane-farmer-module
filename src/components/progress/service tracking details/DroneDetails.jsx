@@ -11,6 +11,10 @@ import { useDispatch } from "react-redux";
 import PriceBreakdown from "../../service category/drone service/PriceBreakdown";
 import { formatDate } from "../../../utils/dateFormatter";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function DroneDetails({ data }) {
   const service = data.serviceDetails;
@@ -20,6 +24,9 @@ function DroneDetails({ data }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const serviceName = data?.bookingFor || "drone";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
   const handleCancelBooking = async (reason) => {
     try {
       await dispatch(
@@ -103,7 +110,7 @@ function DroneDetails({ data }) {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end align-items-center mt-5">
+        <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
               {t("progress.cancelBooking")}
@@ -121,6 +128,8 @@ function DroneDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

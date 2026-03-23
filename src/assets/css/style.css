@@ -3764,3 +3764,24 @@ input[type="date" i] {
   text-align: center;
   color: #888;
 }
+
+.cancilation-input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  padding: 10px 12px;
+  font-size: 14px;
+  resize: none;
+  outline: none;
+}
+
+.dropdown-icon {
+  font-size: 12px;
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+  color: #555;
+}
+
+.dropdown-icon.rotate {
+  transform: rotate(180deg);
+}

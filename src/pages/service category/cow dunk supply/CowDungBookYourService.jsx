@@ -252,7 +252,7 @@ function CowDungBookYourService() {
               </div>
               <div className="available-service-btn">
                 <button type="submit" disabled={!selectedService || disable}>
-                  {disable ? "Sending Request..." : "Send Booking Request"}
+                  {disable ? "Generating..." : "Generate Request"}
                 </button>
               </div>
             </form>

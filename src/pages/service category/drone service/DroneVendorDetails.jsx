@@ -14,6 +14,7 @@ import PriceBreakdown from "../../../components/service category/drone service/P
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
+import DroneProductInformation from "../../../components/service category/drone service/DroneProductInformation";
 
 function DroneVendorDetails() {
   const navigate = useNavigate();
@@ -65,8 +66,9 @@ function DroneVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Drone Service"}
                         />
+                        <DroneProductInformation vendor={vendor} />
                       </div>
-                      <div className="col">
+                      <div className="col" style={{ marginTop: "auto" }}>
                         <PriceBreakdown
                           chargePerAcre={vendor.chargePerAcre}
                           additionalCharges={vendor.additionalCharges}

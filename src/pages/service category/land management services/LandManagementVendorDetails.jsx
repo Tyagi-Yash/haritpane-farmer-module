@@ -14,6 +14,7 @@ import BookingSummary from "../../../components/common components/BookingSummary
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
+import EquipmentDetails from "../../../components/service category/land management/EquipmentDetails";
 
 function LandManagementVendorDetails() {
   const navigate = useNavigate();
@@ -68,8 +69,9 @@ function LandManagementVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Land Management"}
                         />
+                        <EquipmentDetails vendor={vendor} />
                       </div>
-                      <div className="col">
+                      <div className="col" style={{ marginTop: "auto" }}>
                         <PriceBreakdown
                           price={vendor.Info.price}
                           equipment={vendor?.Info?.equipmentInformation}

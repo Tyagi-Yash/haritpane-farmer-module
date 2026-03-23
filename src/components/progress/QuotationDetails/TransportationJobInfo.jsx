@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { formatDate } from "../../../utils/dateFormatter";
 import { formatPrice } from "../../../utils/formatPrice";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import Info from "./Info";
@@ -24,7 +25,7 @@ function TransportationJobInfo({ job }) {
       <Info label={t("progress.toLocation")} value={job.destinationLocation} />
       <Info
         label={t("progress.schedule")}
-        value={`${job.fromDate} – ${job.tillDate}, ${convertTo12Hour(job.startTime)}`}
+        value={`${formatDate(job.fromDate)} – ${formatDate(job.tillDate)}, ${convertTo12Hour(job.startTime)}`}
       />
 
       <Info label={t("progress.vehicleType")} value={job.typeOfVehicle} />

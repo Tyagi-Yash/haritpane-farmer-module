@@ -12,6 +12,10 @@ import PriceBreakdown from "../../service category/labour requirement/PriceBreak
 import { formatDate } from "../../../utils/dateFormatter";
 import { convertTo12Hour } from "../../../utils/formatTime12Hour";
 import { LabourTypes } from "../../../constants/service category/labor requirement/labour type data";
+import {
+  CANCEL_REASONS_BY_SERVICE,
+  SERVICE_REASON_KEY_MAP,
+} from "../../../constants/progress/cancelReasons";
 
 function LabourDetails({ data }) {
   const service = data.serviceDetails;
@@ -21,6 +25,9 @@ function LabourDetails({ data }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const serviceName = data?.bookingFor || "labour";
+  const serviceKey = SERVICE_REASON_KEY_MAP[serviceName];
+  const reasons = CANCEL_REASONS_BY_SERVICE[serviceKey] || [];
   const handleCancelBooking = async (reason) => {
     try {
       await dispatch(
@@ -116,7 +123,7 @@ function LabourDetails({ data }) {
             </div>
           </div>
         </div>
-        <div className="d-flex justify-content-end align-items-center mt-5">
+        <div className="d-flex justify-content-end align-items-center">
           {["pending", "accepted", "started"].includes(data.status) && (
             <button type="button" className="btn-delete" onClick={() => setShowCancelModal(true)}>
               {t("progress.cancelBooking")}
@@ -134,6 +141,8 @@ function LabourDetails({ data }) {
         show={showCancelModal}
         onClose={() => setShowCancelModal(false)}
         onCancel={handleCancelBooking}
+        status={data.status}
+        reasons={reasons}
       />
     </>
   );

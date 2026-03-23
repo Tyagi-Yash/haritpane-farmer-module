@@ -14,6 +14,7 @@ import BookingSummary from "../../../components/common components/BookingSummary
 import BookingActions from "../../../components/common components/BookingActions";
 import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
+import HarvesterProductInfo from "../../../components/service category/harvestor/HarvesterProductInfo";
 
 function HarvestorVendorDetails() {
   const navigate = useNavigate();
@@ -67,8 +68,10 @@ function HarvestorVendorDetails() {
                           businessName={vendor.businessName}
                           serviceName={"Harvester"}
                         />
+                        <HarvesterProductInfo vendor={vendor} />
                       </div>
-                      <div className="col">
+
+                      <div className="col" style={{ marginTop: "auto" }}>
                         <PriceBreakdown
                           price={
                             vendor?.priceInfo?.find(
