@@ -134,7 +134,7 @@ function ServiceTrackingTab() {
                   onClick={toggleSortMenu}
                 >
                   <span>
-                    <span className="sort-label">{selectedStatus}</span>
+                    <span className="sort-label">{t(`progress.${selectedStatus.toLowerCase()}`)}</span>
                     <img src={sortArrowDown} alt="Sort" />
                   </span>
                 </div>
@@ -146,7 +146,7 @@ function ServiceTrackingTab() {
                         className={`sort-option status-${status.toLowerCase()}`}
                         onClick={() => selectStatusOption(status)}
                       >
-                        {status}
+                        {t(`progress.${status.toLowerCase()}`)}
                       </div>
                     ))}
                   </div>
@@ -160,7 +160,7 @@ function ServiceTrackingTab() {
       <div className="option-wrapper mb-0">
         {loading && <ProgressVendorSkeleton count={5} />}
         {!loading && services.length === 0 && (
-          <p className="text-center">{t("progress.noBookingsFound", { status: selectedStatus })}</p>
+          <p className="text-center">{t("progress.noBookingsFound", { status: selectedStatus === "All" ? t("progress.all") : t(`progress.${selectedStatus.toLowerCase()}`) })}</p>
         )}
         {!loading &&
           services.map((item) => (

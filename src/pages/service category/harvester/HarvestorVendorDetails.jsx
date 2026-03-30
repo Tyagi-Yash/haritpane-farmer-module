@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useHarvestorBooking } from "../../../hooks/useHarvestorBooking";
 
@@ -17,6 +18,7 @@ import SuccessModal from "../../../components/common components/SuccessModal";
 import HarvesterProductInfo from "../../../components/service category/harvestor/HarvesterProductInfo";
 
 function HarvestorVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -41,7 +43,7 @@ function HarvestorVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("harvester.vendorDetails")}
             navigate={`/service-category/harvestor/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
@@ -49,7 +51,7 @@ function HarvestorVendorDetails() {
           <div className="dashboard">
             {!vendor ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
+                {t("common.noVendorData")}
               </p>
             ) : (
               <>
@@ -66,7 +68,7 @@ function HarvestorVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Harvester"}
+                          serviceName={t("dashboard.harvester")}
                         />
                         <HarvesterProductInfo vendor={vendor} />
                       </div>

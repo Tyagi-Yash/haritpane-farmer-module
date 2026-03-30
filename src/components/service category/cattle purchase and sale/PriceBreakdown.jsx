@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const PriceBreakdown = ({ sellingPrice, payableAmount }) => {
+  const { t } = useTranslation();
   const formatPrice = (amount) => {
     const num = Number(amount ?? 0);
     return `₹ ${num.toLocaleString("en-IN", {
@@ -8,19 +11,19 @@ const PriceBreakdown = ({ sellingPrice, payableAmount }) => {
   };
   return (
     <div className="option-wrapper bookingPriceTable mb-0">
-      <h5 className="normal-heading">Total Booking Price</h5>
+      <h5 className="normal-heading">{t("common.totalBookingPrice")}</h5>
 
       <table className="table table-borderless">
         <tbody>
           <tr>
-            <td>Service Cost</td>
+            <td>{t("cattle.sellingPrice")}</td>
             <td>{formatPrice(sellingPrice ?? 0)}</td>
           </tr>
         </tbody>
 
         <tfoot>
           <tr>
-            <td>Total Payable Amount</td>
+            <td>{t("common.totalPayableAmount")}</td>
             <td>{formatPrice(payableAmount ?? 0)}</td>
           </tr>
         </tfoot>

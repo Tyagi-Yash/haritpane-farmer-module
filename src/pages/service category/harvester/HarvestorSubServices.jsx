@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import TractorHarvester from "../../../assets/images/TractorHarvester.png";
 import StandardHarvesterCombined from "../../../assets/images/StandardHarvesterCombined.png";
@@ -21,6 +22,7 @@ import { format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
 
 function HarvestorSubServices() {
+  const { t } = useTranslation();
   const filters = useSelector((state) => state.services.HarvestorServiceMgmtSlice.filters);
   const defaultForm = {
     selectSubCategory: "combine_harvester",
@@ -68,7 +70,7 @@ function HarvestorSubServices() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("harvester.selectValidLocation");
 
     const cropError = validateCrop(typeOfCrop.trim());
     if (cropError) newErrors.typeOfCrop = cropError;
@@ -105,7 +107,7 @@ function HarvestorSubServices() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("dashboard.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -115,14 +117,14 @@ function HarvestorSubServices() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Harvester"
+          title={t("dashboard.harvester")}
           secImage={harvestorIcon}
           navigate="/service-category"
         />
         <div className="dashboard">
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
-              <h3 className="main-heading">Sub Services</h3>
+              <h3 className="main-heading">{t("harvester.subServices")}</h3>
               <div className="sub-service-wrapper">
                 <div className="row">
                   <div className="col">
@@ -136,8 +138,8 @@ function HarvestorSubServices() {
                         checked={selectSubCategory === "combine_harvester"}
                       />
                       <div className="radio-card">
-                        <img src={StandardHarvesterCombined} alt="Tractor & Attachment" />
-                        <span className="radio-label">Standard Harvester Combined</span>
+                        <img src={StandardHarvesterCombined} alt={t("harvester.standardHarvester")} />
+                        <span className="radio-label">{t("harvester.standardHarvester")}</span>
                       </div>
                     </label>
                   </div>
@@ -152,8 +154,8 @@ function HarvestorSubServices() {
                         checked={selectSubCategory === "tractor_harvester"}
                       />
                       <div className="radio-card">
-                        <img src={TractorHarvester} alt="Only Attachment" />
-                        <span className="radio-label">Tractor Harvester</span>
+                        <img src={TractorHarvester} alt={t("harvester.tractorHarvester")} />
+                        <span className="radio-label">{t("harvester.tractorHarvester")}</span>
                       </div>
                     </label>
                   </div>
@@ -162,7 +164,7 @@ function HarvestorSubServices() {
             </div>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="mb-4 book-heading">Book your service</h5>
+                <h5 className="mb-4 book-heading">{t("harvester.bookYourService")}</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
                     <LocationInput
@@ -170,13 +172,13 @@ function HarvestorSubServices() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
-                      placeholder="Farm Location*"
+                      placeholder={t("harvester.farmLocation")}
                     />
                   </div>
                   <div className="col-md-4">
                     <input
                       type="text"
-                      placeholder="Name of Crop under Cultivation*"
+                      placeholder={t("harvester.nameOfCrop")}
                       className="form-control"
                       name="typeOfCrop"
                       value={typeOfCrop}
@@ -192,8 +194,8 @@ function HarvestorSubServices() {
                       className="form-control"
                       placeholder={
                         selectSubCategory === "combine_harvester"
-                          ? "Area Under Cultivation(in acre)*"
-                          : "Weight (in quintal)*"
+                          ? t("harvester.areaUnderCultivation")
+                          : t("harvester.weightInQuintal")
                       }
                       onChange={(val) =>
                         setFormState((prev) => ({ ...prev, areaUnderCultivation: val }))
@@ -204,11 +206,11 @@ function HarvestorSubServices() {
                     )}
                   </div>
                 </div>
-                <h5 className="mt-5 mb-4 book-heading">Book Services date &amp; time</h5>
+                <h5 className="mt-5 mb-4 book-heading">{t("harvester.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("harvester.fromDate")}<span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
@@ -229,7 +231,7 @@ function HarvestorSubServices() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">
-                      Till date<span className="required">*</span>
+                      {t("harvester.tillDate")}<span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={toDate ? new Date(toDate) : null}
@@ -250,7 +252,7 @@ function HarvestorSubServices() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("harvester.startTime")}<span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={fromTime}
@@ -266,7 +268,7 @@ function HarvestorSubServices() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                See Available Service
+                {t("harvester.seeAvailableService")}
               </button>
             </div>
           </form>

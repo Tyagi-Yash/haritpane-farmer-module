@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import ElectrostaticSprayingIcon from "../../../assets/images/Electrostatic-Spraying-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
@@ -14,6 +15,7 @@ import { format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
 
 function ElectrostaticBookYourService() {
+  const { t } = useTranslation();
   const filters = useSelector(
     (state) => state.services.ElectrostaticSprayingServiceMgmtSlice.filters,
   );
@@ -50,15 +52,15 @@ function ElectrostaticBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("common.selectValidLocation");
 
-    const areaError = validateArea(areaUnderCultivation.trim());
+    const areaError = validateArea(areaUnderCultivation.trim(), t);
     if (areaError) newErrors.areaUnderCultivation = areaError;
 
-    const dateErrors = validateFromDate(fromDate);
+    const dateErrors = validateFromDate(fromDate, t);
     if (dateErrors) newErrors.fromDate = dateErrors;
 
-    const timeError = validateSelectTime(fromDate, fromTime);
+    const timeError = validateSelectTime(fromDate, fromTime, t);
     if (timeError) newErrors.fromTime = timeError;
 
     setErrors(newErrors);
@@ -81,7 +83,7 @@ function ElectrostaticBookYourService() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -91,7 +93,7 @@ function ElectrostaticBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Electrostatic Spraying"
+          title={t("electrostatic.electrostaticSpraying")}
           secImage={ElectrostaticSprayingIcon}
           navigate="/service-category"
         />
@@ -99,7 +101,7 @@ function ElectrostaticBookYourService() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Book your service</h5>
+                <h5 className="book-heading">{t("common.bookYourService")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <LocationInput
@@ -107,7 +109,7 @@ function ElectrostaticBookYourService() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
-                      placeholder="Farm Location*"
+                      placeholder={t("common.farmLocation")}
                     />
                   </div>
                   <div className="col-md-6">
@@ -116,7 +118,7 @@ function ElectrostaticBookYourService() {
                       value={areaUnderCultivation}
                       maxDecimals={2}
                       className="form-control"
-                      placeholder="Area Under Cultivation(in acre)*"
+                      placeholder={`${t("harvester.areaUnderCultivation")}*`}
                       onChange={(val) =>
                         setFormState((prev) => ({ ...prev, areaUnderCultivation: val }))
                       }
@@ -126,11 +128,12 @@ function ElectrostaticBookYourService() {
                     )}
                   </div>
                 </div>
-                <h5 className="book-heading">Book Services date &amp; time</h5>
+                <h5 className="book-heading">{t("common.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("common.fromDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
@@ -151,7 +154,8 @@ function ElectrostaticBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("common.startTime")}
+                      <span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={fromTime}
@@ -167,7 +171,7 @@ function ElectrostaticBookYourService() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                See Available Service
+                {t("common.seeAvailableService")}
               </button>
             </div>
           </form>

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import DecimalInput from "../../common components/DecimalInput";
 
 export default function EquipmentFields({
@@ -6,6 +7,7 @@ export default function EquipmentFields({
   errors = {},
   onChange = () => {},
 }) {
+  const { t } = useTranslation();
   const dimensions = {
     lengthCm: "",
     widthCm: "",
@@ -17,14 +19,14 @@ export default function EquipmentFields({
     <>
       <div className="col-md-6">
         <label className="form-label">
-          Equipment Dimension<span className="required">*</span>
+          {t("transportation.equipmentDimension")}<span className="required">*</span>
         </label>
         <div className="row">
           {["lengthCm", "widthCm", "heightCm"].map((field) => (
             <div className="col-md-4" key={field}>
               <DecimalInput
                 className="form-control"
-                placeholder={field.replace("Cm", " (cm)")}
+                placeholder={t(`common.${field.replace("Cm", "")}`)}
                 value={dimensions[field]}
                 maxDecimals={2}
                 onChange={(val) => onChange(field, val)}
@@ -37,11 +39,11 @@ export default function EquipmentFields({
 
       <div className="col-md-6">
         <label className="form-label">
-          Equipment Weight<span className="required">*</span>
+          {t("transportation.equipmentWeight")}<span className="required">*</span>
         </label>
         <DecimalInput
           className="form-control"
-          placeholder="Equipment Weight(in Kg)"
+          placeholder={t("transportation.equipmentWeightKg")}
           value={equipmentWeight}
           maxDecimals={2}
           onChange={(val) => onChange("equipmentWeight", val)}

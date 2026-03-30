@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import LocationInput from "../../../components/common components/LocationInput";
 
 export default function LocationSection({
@@ -6,6 +7,7 @@ export default function LocationSection({
   errors = {},
   setErrors = () => {},
 }) {
+  const { t } = useTranslation();
   const currentLocation = formState?.currentLocation || "";
   const destinationLocation = formState?.destinationLocation || "";
 
@@ -13,7 +15,7 @@ export default function LocationSection({
     <>
       <div className="col-md-3">
         <label className="form-label">
-          Current location<span className="required">*</span>
+          {t("common.currentLocation")}<span className="required">*</span>
         </label>
         <LocationInput
           value={currentLocation}
@@ -35,13 +37,13 @@ export default function LocationSection({
             }))
           }
           error={errors.currentLocation}
-          placeholder="Enter Current Location"
+          placeholder={t("common.enterCurrentLocation")}
         />
       </div>
 
       <div className="col-md-3">
         <label className="form-label">
-          Travel location<span className="required">*</span>
+          {t("common.travelLocation")}<span className="required">*</span>
         </label>
         <LocationInput
           value={destinationLocation}
@@ -63,7 +65,7 @@ export default function LocationSection({
             }))
           }
           error={errors.destinationLocation}
-          placeholder="Enter Travel Location"
+          placeholder={t("common.enterTravelLocation")}
         />
       </div>
     </>

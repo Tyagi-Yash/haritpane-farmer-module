@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import onlyAttachment from "../../../assets/images/only-attachment.png";
 import TractorandAttachment from "../../../assets/images/TractorandAttachment.png";
@@ -25,6 +26,7 @@ import {
 } from "../../../constants/service category/land management/tractorOptions";
 
 function LandManagementServicesSubServices() {
+  const { t } = useTranslation();
   const filters = useSelector((state) => state.services.LandServiceMgmtSlice.filters);
   const defaultForm = {
     selectSubCategory: "tracktor_attachments",
@@ -72,14 +74,14 @@ function LandManagementServicesSubServices() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("landManagement.selectValidLocation");
 
     if (!selectAttachment) {
-      newErrors.selectAttachment = "*Please select an attachment";
+      newErrors.selectAttachment = t("landManagement.selectAttachmentError");
     }
 
     if (selectSubCategory === "tracktor_attachments" && !hpOfTractor) {
-      newErrors.hpOfTractor = "*Please select tractor category";
+      newErrors.hpOfTractor = t("landManagement.selectTractorCategoryError");
     }
 
     let areaError;
@@ -89,7 +91,7 @@ function LandManagementServicesSubServices() {
       areaError = validateArea(farmArea.trim());
     }
     if (areaError) {
-      newErrors.farmArea = areaError;
+      newErrors.farmArea = areaError; // Note: validate validators might need translation too, but passing as is for now
     }
 
     const dateErrors = validateDates(fromDate, toDate);
@@ -122,7 +124,7 @@ function LandManagementServicesSubServices() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("dashboard.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -133,14 +135,14 @@ function LandManagementServicesSubServices() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Land Management Services"
+          title={t("dashboard.landManagement")}
           secImage={landManagementTractorServices}
           navigate="/service-category"
         />
         <div className="dashboard">
           <form>
             <div className="option-wrapper">
-              <h3 className="main-heading">Sub Services</h3>
+              <h3 className="main-heading">{t("landManagement.subServices")}</h3>
               <div className="sub-service-wrapper">
                 <div className="row">
                   <div className="col">
@@ -154,8 +156,8 @@ function LandManagementServicesSubServices() {
                         checked={selectSubCategory === "tracktor_attachments"}
                       />
                       <div className="radio-card">
-                        <img src={TractorandAttachment} alt="Tractor & Attachment" />
-                        <span className="radio-label">Tractor &amp; Attachment</span>
+                        <img src={TractorandAttachment} alt={t("landManagement.tractorAndAttachment")} />
+                        <span className="radio-label">{t("landManagement.tractorAndAttachment")}</span>
                       </div>
                     </label>
                   </div>
@@ -180,7 +182,7 @@ function LandManagementServicesSubServices() {
             </div>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Book your service</h5>
+                <h5 className="book-heading">{t("landManagement.bookYourService")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <LocationInput
@@ -188,7 +190,7 @@ function LandManagementServicesSubServices() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
-                      placeholder="Farm Location*"
+                      placeholder={t("landManagement.farmLocation")}
                     />
                   </div>
                   {selectSubCategory === "tracktor_attachments" && (
@@ -200,11 +202,11 @@ function LandManagementServicesSubServices() {
                         onChange={handleInputChange}
                       >
                         <option value="" disabled>
-                          Select Tractor Category*
+                          {t("landManagement.selectTractorCategory")}
                         </option>
                         {TRACTOR_HP_OPTIONS.map((tractor) => (
                           <option key={tractor.value} value={tractor.value}>
-                            {tractor.label}
+                            {t(`landManagement.${tractor.value}`)}
                           </option>
                         ))}
                       </select>
@@ -221,11 +223,11 @@ function LandManagementServicesSubServices() {
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
-                        Select attachment*
+                        {t("landManagement.selectAttachment")}
                       </option>
                       {TRACTOR_ATTACHMENTS.map((attachment) => (
                         <option key={attachment.value} value={attachment.value}>
-                          {attachment.label}
+                          {t(`landManagement.${attachment.value}`)}
                         </option>
                       ))}
                     </select>
@@ -241,8 +243,8 @@ function LandManagementServicesSubServices() {
                       className="form-control"
                       placeholder={
                         selectAttachment === "Trolly"
-                          ? "Enter Trip Distance(in Km)*"
-                          : "Enter Farm Area(in acre)*"
+                          ? t("landManagement.enterTripDistance")
+                          : t("landManagement.enterFarmArea")
                       }
                       onChange={(val) => setFormState((prev) => ({ ...prev, farmArea: val }))}
                     />
@@ -250,11 +252,11 @@ function LandManagementServicesSubServices() {
                   </div>
                 </div>
 
-                <h5 className="book-heading">Book Services date &amp; time</h5>
+                <h5 className="book-heading">{t("landManagement.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("landManagement.fromDate")}<span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
@@ -275,7 +277,7 @@ function LandManagementServicesSubServices() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">
-                      Till date<span className="required">*</span>
+                      {t("landManagement.tillDate")}<span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={toDate ? new Date(toDate) : null}
@@ -296,7 +298,7 @@ function LandManagementServicesSubServices() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("landManagement.startTime")}<span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={fromTime}
@@ -312,7 +314,7 @@ function LandManagementServicesSubServices() {
             </div>
             <div className="available-service-btn">
               <button type="submit" onClick={handleSubmit} disabled={disable}>
-                See Available Service
+                {t("landManagement.seeAvailableService")}
               </button>
             </div>
           </form>

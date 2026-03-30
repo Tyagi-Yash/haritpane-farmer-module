@@ -1,14 +1,17 @@
+import { useTranslation } from "react-i18next";
 import DecimalInput from "../../common components/DecimalInput";
 
 export default function OtherFields({ otherWeightKg = "", errors = {}, onChange = () => {} }) {
+  const { t } = useTranslation();
+
   return (
     <div className="col-md-6">
       <label className="form-label">
-        Object Weight<span className="required">*</span>
+        {t("transportation.objectWeight")}<span className="required">*</span>
       </label>
       <DecimalInput
         className="form-control"
-        placeholder="Weight of Object(in Kg)"
+        placeholder={t("transportation.objectWeightKg")}
         value={otherWeightKg}
         maxDecimals={2}
         onChange={(val) => onChange("otherWeightKg", val)}

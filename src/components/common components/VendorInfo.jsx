@@ -1,11 +1,13 @@
+import { useTranslation } from "react-i18next";
 import userIcon from "../../assets/images/user-icon.svg";
 import locationIcon from "../../assets/images/location-icon.png";
 import mobileIcon from "../../assets/images/mobile.svg";
 
 const VendorInfo = ({ provider }) => {
+  const { t } = useTranslation();
   return (
     <div className="option-wrapper">
-      <h5 className="normal-heading">Vendor Information</h5>
+      <h5 className="normal-heading">{t("common.vendorInformation")}</h5>
 
       <h6>
         <span>

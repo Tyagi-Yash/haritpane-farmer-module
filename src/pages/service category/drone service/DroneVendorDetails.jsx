@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useDroneBooking } from "../../../hooks/useDroneBooking";
 
@@ -17,6 +18,7 @@ import SuccessModal from "../../../components/common components/SuccessModal";
 import DroneProductInformation from "../../../components/service category/drone service/DroneProductInformation";
 
 function DroneVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -39,16 +41,14 @@ function DroneVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("common.vendorDetails")}
             navigate={`/service-category/drone-service/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
           />
           <div className="dashboard">
             {!vendor ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
-              </p>
+              <p style={{ color: "gray", marginTop: "10px" }}>{t("common.noVendorData")}</p>
             ) : (
               <>
                 <VendorHeader
@@ -64,7 +64,7 @@ function DroneVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Drone Service"}
+                          serviceName={t("drone.droneService")}
                         />
                         <DroneProductInformation vendor={vendor} />
                       </div>

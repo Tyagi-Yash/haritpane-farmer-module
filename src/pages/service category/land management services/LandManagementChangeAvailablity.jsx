@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import landManagementTractorServices from "../../../assets/images/land-management-tractor-services.png";
@@ -17,6 +18,7 @@ import { format } from "date-fns";
 import { formatPrice } from "../../../utils/formatPrice";
 
 function LandManagementChangeAvailablity() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -33,7 +35,7 @@ function LandManagementChangeAvailablity() {
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState(
-    sortByRating === true ? "Top Rated" : "Nearest First",
+    sortByRating === true ? "topRated" : "nearestFirst",
   );
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
@@ -60,12 +62,12 @@ function LandManagementChangeAvailablity() {
     const params = {
       ...filters,
       page: currentPage,
-      sortByRating: selectedSort === "Top Rated" ? true : false,
+      sortByRating: selectedSort === "topRated",
     };
     try {
       await dispatch(getAllServicesOfLandManagement(params)).unwrap();
     } catch {
-      toast("Failed to load services");
+      toast(t("dashboard.somethingWentWrong"));
     }
   };
   useEffect(() => {
@@ -79,17 +81,17 @@ function LandManagementChangeAvailablity() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Land Management Services Listing"
+          title={t("landManagement.landManagementServicesListing")}
           secImage={landManagementTractorServices}
           navigate="/service-category/land-management"
         />
         <div className="dashboard">
           <div className="option-wrapper">
-            <h3 className="main-heading">Change Availability Date</h3>
+            <h3 className="main-heading">{t("common.changeAvailabilityDate")}</h3>
             <div className="filter-area">
               <div className="row align-items-end">
                 <div className="col-md-4 mb-3">
-                  <label className="form-label">Select Start Date</label>
+                  <label className="form-label">{t("common.selectStartDate")}</label>
                   {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   <div className="input-group">
                     <DatePicker
@@ -110,7 +112,7 @@ function LandManagementChangeAvailablity() {
                   </div>
                 </div>
                 <div className="col-md-4 mb-3">
-                  <label className="form-label">Select End Date</label>
+                  <label className="form-label">{t("common.selectEndDate")}</label>
                   {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
                     <DatePicker
@@ -134,20 +136,24 @@ function LandManagementChangeAvailablity() {
                   <div className="sort-box" id="sortBox">
                     <div className="sort-toggle" onClick={toggleSortMenu}>
                       <span>
-                        <span className="sort-label">{selectedSort}</span>
+                        <span className="sort-label">
+                          {selectedSort === "topRated"
+                            ? t("common.topRated")
+                            : t("common.nearestFirst")}
+                        </span>
                         <img src={sortArrowDown} alt="Sort Icon" />
                       </span>
                     </div>
                     {isOpen && (
                       <div className="sort-menu">
-                        <div className="sort-option" onClick={() => selectSortOption("Top Rated")}>
-                          Top Rated
+                        <div className="sort-option" onClick={() => selectSortOption("topRated")}>
+                          {t("common.topRated")}
                         </div>
                         <div
                           className="sort-option"
-                          onClick={() => selectSortOption("Nearest First")}
+                          onClick={() => selectSortOption("nearestFirst")}
                         >
-                          Nearest First
+                          {t("common.nearestFirst")}
                         </div>
                       </div>
                     )}
@@ -161,12 +167,12 @@ function LandManagementChangeAvailablity() {
               <VendorCardSkeleton count={5} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No services found for the selected filters.
+                {t("common.noServicesFound")}
               </p>
             ) : (
               <>
-                <h3 className="main-heading">Available Vendor</h3>
-                <h6 className="form-label-max">Choose from in your radius</h6>
+                <h3 className="main-heading">{t("common.availableVendor")}</h3>
+                <h6 className="form-label-max">{t("common.chooseRadius")}</h6>
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
@@ -181,7 +187,9 @@ function LandManagementChangeAvailablity() {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <div className="title">{service?.businessName || "No description"}</div>
+                          <div className="title">
+                            {service?.businessName || t("common.noDescription")}
+                          </div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
@@ -193,9 +201,11 @@ function LandManagementChangeAvailablity() {
                       <div className="price-info">
                         <h6>
                           ₹ {formatPrice(service?.Info?.price ?? 0)} /
-                          {service?.Info?.equipmentInformation === "Trolly" ? "km" : "acre"}
+                          {service?.Info?.equipmentInformation === "Trolly"
+                            ? t("common.km")
+                            : t("common.acres")}
                         </h6>
-                        <small>Additional charges might apply</small>
+                        <small>{t("common.additionalCharges")}</small>
                       </div>
                     </div>
                   </Link>

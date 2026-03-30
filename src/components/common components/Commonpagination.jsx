@@ -1,4 +1,5 @@
 import ReactPaginate from "react-paginate";
+import { useTranslation } from "react-i18next";
 
 export const Commonpagination = ({
   ActivePage = 1,
@@ -7,6 +8,7 @@ export const Commonpagination = ({
   pageRangeDisplayed = 3,
   Onchange = () => {},
 }) => {
+  const { t } = useTranslation();
   const safeItemsCount = Number(ItemsCountPerPage) || 1;
   const total = Number(TotalItemsCount) || 0;
   const pageCount = Math.max(1, Math.ceil(total / safeItemsCount));
@@ -16,8 +18,8 @@ export const Commonpagination = ({
     <div className="pagination-wrapper">
       <ReactPaginate
         breakLabel="..."
-        nextLabel="Next >"
-        previousLabel="< Prev"
+        nextLabel={t("common.next")}
+        previousLabel={t("common.prev")}
         pageCount={pageCount}
         forcePage={safeActivePage - 1}
         onPageChange={(selected) => Onchange(selected.selected + 1)}

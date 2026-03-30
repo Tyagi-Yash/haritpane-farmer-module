@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 function HarvesterProductInfo({ vendor }) {
+  const { t } = useTranslation();
   const info = vendor?.Info;
   const priceInfo = vendor?.priceInfo || [];
 
@@ -12,10 +15,16 @@ function HarvesterProductInfo({ vendor }) {
 
   return (
     <div className="option-wrapper mb-0">
-      <h5 className="normal-heading">Product Information</h5>
-      <p>Type of Crop: {formatText(cropTypes)}</p>
-      <p>Equipment Type: {formatText(equipmentType)}</p>
-      <p>Equipment Model: {equipmentModel}</p>
+      <h5 className="normal-heading">{t("common.productInformation")}</h5>
+      <p>
+        {t("common.typeOfCrop")}: {formatText(cropTypes)}
+      </p>
+      <p>
+        {t("common.equipmentType")}: {formatText(equipmentType)}
+      </p>
+      <p>
+        {t("common.equipmentModel")}: {equipmentModel}
+      </p>
     </div>
   );
 }

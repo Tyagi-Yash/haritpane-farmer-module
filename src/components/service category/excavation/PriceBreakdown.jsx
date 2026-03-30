@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 
 const PriceBreakdown = ({
@@ -8,6 +9,7 @@ const PriceBreakdown = ({
   payableAmount,
   distanceBeyondRadius,
 }) => {
+  const { t } = useTranslation();
   price = Number(price ?? 0);
   const payable = Number(payableAmount ?? 0);
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
@@ -24,24 +26,23 @@ const PriceBreakdown = ({
   };
   return (
     <div className="option-wrapper bookingPriceTable mb-0">
-      <h5 className="normal-heading">Total Booking Price</h5>
+      <h5 className="normal-heading">{t("common.totalBookingPrice")}</h5>
 
       <table className="table table-borderless">
         <tbody>
           <tr>
             <td>
-              Service Charges
+              {t("common.serviceCharges")}
               {priceType === "Hourly" && (
                 <div className="text-muted small">
-                  {formatPrice(price)} (per Hour) × {formatHoursMinutes(units)}
+                  {formatPrice(price)} ({t("common.perHour")}) × {formatHoursMinutes(units)}
                 </div>
               )}
               {priceType === "Daily" && (
                 <div className="text-muted small">
-                  {formatPrice(price)} (per Day) × {units} day
-                  {units > 1 ? "s" : ""}
+                  {formatPrice(price)} ({t("common.perDay")}) × {units} {units > 1 ? t("common.days") : t("common.day")}
                   <div className="text-muted small">
-                    * Daily charges are calculated by rounding total duration to full days.
+                    {t("common.dailyChargesCalc")}
                   </div>
                 </div>
               )}
@@ -51,10 +52,11 @@ const PriceBreakdown = ({
 
           <tr>
             <td>
-              Transportation Charges
+              {t("common.transportationCharges")}
               {!!transportCharge && (
                 <div className="text-muted small">
-                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                  {formatPrice(transportCharge)} ({t("common.perKm")}) × {distanceBeyondRadius?.toFixed(2)}{" "}
+                  {t("common.km")}
                 </div>
               )}
             </td>
@@ -64,7 +66,7 @@ const PriceBreakdown = ({
 
         <tfoot>
           <tr className="fw-bold border-top">
-            <td>Total Amount to Pay</td>
+            <td>{t("common.totalAmountToPay")}</td>
             <td>{formatPrice(payable)}</td>
           </tr>
         </tfoot>

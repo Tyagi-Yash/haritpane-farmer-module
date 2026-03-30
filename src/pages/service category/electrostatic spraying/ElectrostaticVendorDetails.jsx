@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useElectrostaticBooking } from "../../../hooks/useElectrostaticBooking";
 
@@ -16,7 +17,8 @@ import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
 import ElectrostaticProductInformation from "../../../components/service category/electrostatic spraying/ElectrostaticProductInformation";
 
-function ExcavationVendorDetails() {
+function ElectrostaticVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -40,7 +42,7 @@ function ExcavationVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("progress.vendorDetails")}
             navigate={`/service-category/electrostatic-spraying/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
@@ -48,7 +50,7 @@ function ExcavationVendorDetails() {
           <div className="dashboard">
             {!vendor ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
+                {t("progress.noVendorData")}
               </p>
             ) : (
               <>
@@ -65,7 +67,7 @@ function ExcavationVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Electrostatic Spraying"}
+                          serviceName={t("electrostatic.electrostaticSpraying")}
                         />
                         <ElectrostaticProductInformation vendor={vendor} />
                       </div>
@@ -112,4 +114,4 @@ function ExcavationVendorDetails() {
   );
 }
 
-export default ExcavationVendorDetails;
+export default ElectrostaticVendorDetails;

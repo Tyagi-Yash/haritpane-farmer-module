@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import droneServiceIcon from "../../../assets/images/DroneService-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
@@ -19,6 +20,7 @@ import { add, format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
 
 function DroneBookYourService() {
+  const { t } = useTranslation();
   const filters = useSelector((state) => state.services.DroneServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -54,19 +56,19 @@ function DroneBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("common.selectValidLocation");
 
     const cropError = validateCrop(cropUnderCultivation.trim());
-    if (cropError) newErrors.cropUnderCultivation = cropError;
+    if (cropError) newErrors.cropUnderCultivation = t(cropError);
 
     const areaError = validateArea(areaUnderCultivation.trim());
-    if (areaError) newErrors.areaUnderCultivation = areaError;
+    if (areaError) newErrors.areaUnderCultivation = t(areaError);
 
     const dateErrors = validateFromDate(date);
-    if (dateErrors) newErrors.date = dateErrors;
+    if (dateErrors) newErrors.date = t(dateErrors);
 
     const timeError = validateSelectTime(date, time);
-    if (timeError) newErrors.time = timeError;
+    if (timeError) newErrors.time = t(timeError);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -89,7 +91,7 @@ function DroneBookYourService() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -100,7 +102,7 @@ function DroneBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Drone Service"
+          title={t("drone.droneService")}
           secImage={droneServiceIcon}
           navigate="/service-category"
         />
@@ -108,7 +110,7 @@ function DroneBookYourService() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Book your service</h5>
+                <h5 className="book-heading">{t("common.bookYourService")}</h5>
                 <div className="row g-3">
                   <div className="col-md-12">
                     <LocationInput
@@ -116,13 +118,13 @@ function DroneBookYourService() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
-                      placeholder="Field Location*"
+                      placeholder={t("common.fieldLocation")}
                     />
                   </div>
                   <div className="col-md-6">
                     <DecimalInput
                       className="form-control"
-                      placeholder="Area Under Cultivation(in acre)*"
+                      placeholder={t("drone.areaUnderCultivationAcre")}
                       value={areaUnderCultivation}
                       maxDecimals={2}
                       onChange={(val) =>
@@ -136,7 +138,7 @@ function DroneBookYourService() {
                   <div className="col-md-6">
                     <input
                       type="text"
-                      placeholder="Name of Crop under Cultivation*"
+                      placeholder={t("drone.cropUnderCultivation")}
                       className="form-control"
                       name="cropUnderCultivation"
                       value={cropUnderCultivation}
@@ -147,11 +149,12 @@ function DroneBookYourService() {
                     )}
                   </div>
                 </div>
-                <h5 className="mt-4 book-heading">Book Services date &amp; time</h5>
+                <h5 className="mt-4 book-heading">{t("common.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("common.fromDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={date ? new Date(date) : null}
@@ -172,7 +175,8 @@ function DroneBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("common.startTime")}
+                      <span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={time}
@@ -188,7 +192,7 @@ function DroneBookYourService() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                {disable ? "Loading..." : "See Available Service"}
+                {disable ? t("common.loading") : t("common.seeAvailableService")}
               </button>
             </div>
           </form>

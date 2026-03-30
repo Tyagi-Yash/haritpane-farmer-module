@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 const PriceBreakdown = ({
   price,
   equipment,
@@ -6,6 +8,7 @@ const PriceBreakdown = ({
   payableAmount,
   distanceBeyondRadius,
 }) => {
+  const { t } = useTranslation();
   const formatPrice = (amount) => {
     const num = Number(amount ?? 0);
     return `₹ ${num.toLocaleString("en-IN", {
@@ -25,16 +28,16 @@ const PriceBreakdown = ({
 
   return (
     <div className="option-wrapper bookingPriceTable mb-0">
-      <h5 className="normal-heading">Total Booking Price</h5>
+      <h5 className="normal-heading">{t("common.totalBookingPrice")}</h5>
 
       <table className="table table-borderless">
         <tbody>
           <tr>
             <td>
-              Service Charges
+              {t("common.serviceCharges")}
               <div className="text-muted small">
-                {formatPrice(ratePerAcre)} (Per {equipment === "Trolly" ? "Km" : "Acre"}) ×{" "}
-                {area.toFixed(2)} {equipment === "Trolly" ? "Km" : "Acre"}
+                {formatPrice(ratePerAcre)} ({equipment === "Trolly" ? t("common.perKm") : t("common.perAcre")}) × {area.toFixed(2)}{" "}
+                {equipment === "Trolly" ? t("common.km") : t("common.acres")}
               </div>
             </td>
             <td>{formatPrice(serviceAmount)}</td>
@@ -42,10 +45,11 @@ const PriceBreakdown = ({
 
           <tr>
             <td>
-              Transportation Charges
+              {t("common.transportationCharges")}
               {!!transportCharge && (
                 <div className="text-muted small">
-                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                  {formatPrice(transportCharge)} ({t("common.perKm")}) × {distanceBeyondRadius?.toFixed(2)}{" "}
+                  {t("common.km")}
                 </div>
               )}
             </td>
@@ -55,7 +59,7 @@ const PriceBreakdown = ({
 
         <tfoot>
           <tr>
-            <td>Total Amount to Pay</td>
+            <td>{t("common.totalAmountToPay")}</td>
             <td>{formatPrice(payableAmount)}</td>
           </tr>
         </tfoot>

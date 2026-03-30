@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import AugerServiceIcon from "../../../assets/images/AugerService-icon.png";
@@ -17,6 +18,7 @@ import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 
 function AugerBookYourService() {
+  const { t } = useTranslation();
   const filters = useSelector((state) => state.services.AugerServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -50,16 +52,17 @@ function AugerBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("common.selectValidLocation");
 
     const dateErrors = validateFromDate(date);
-    if (dateErrors) newErrors.date = dateErrors;
+    if (dateErrors) newErrors.date = t(`validation.${dateErrors}`);
 
     const timeError = validateSelectTime(date, time);
-    if (timeError) newErrors.time = timeError;
+    if (timeError) newErrors.time = t(`validation.${timeError}`);
 
     const durationErrors = validateDurationFields(hours, minutes);
-    newErrors = { ...newErrors, ...durationErrors };
+    if (durationErrors.hours) newErrors.hours = t(`validation.${durationErrors.hours}`);
+    if (durationErrors.minutes) newErrors.minutes = t(`validation.${durationErrors.minutes}`);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -84,7 +87,7 @@ function AugerBookYourService() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -95,7 +98,7 @@ function AugerBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Auger Service"
+          title={t("auger.augerService")}
           secImage={AugerServiceIcon}
           navigate="/service-category"
         />
@@ -103,23 +106,23 @@ function AugerBookYourService() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Book your service</h5>
+                <h5 className="book-heading">{t("common.bookYourService")}</h5>
                 <div className="col-md-12 mb-3">
                   <LocationInput
                     value={address}
                     onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                     onSelectLocation={handleSelectLocation}
                     error={errors.address}
-                    placeholder="Job Location*"
+                    placeholder={t("common.jobLocation")}
                   />
                 </div>
-                <h5 className="book-heading">Estimate Job Duration</h5>
+                <h5 className="book-heading">{t("auger.estimateJobDuration")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Hours"
+                      placeholder={t("common.hours")}
                       name="hours"
                       min="0"
                       value={hours}
@@ -131,7 +134,7 @@ function AugerBookYourService() {
                     <input
                       type="number"
                       className="form-control"
-                      placeholder="Minutes (0-59)"
+                      placeholder={`${t("common.minutes")} (0-59)`}
                       name="minutes"
                       min="0"
                       value={minutes}
@@ -140,11 +143,12 @@ function AugerBookYourService() {
                     {errors.minutes && <p className="error-text">{errors.minutes}</p>}
                   </div>
                 </div>
-                <h5 className="book-heading">Book Services date &amp; time</h5>
+                <h5 className="book-heading">{t("common.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("common.fromDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={date ? new Date(date) : null}
@@ -165,7 +169,8 @@ function AugerBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Select time<span className="required">*</span>
+                      {t("common.selectTime")}
+                      <span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={time}
@@ -181,7 +186,7 @@ function AugerBookYourService() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                {disable ? "Loading..." : "See Available Service"}
+                {disable ? t("common.loading") : t("common.seeAvailableService")}
               </button>
             </div>
           </form>

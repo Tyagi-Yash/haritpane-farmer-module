@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import labouricon from "../../../assets/images/labour-icon.png";
@@ -24,6 +25,7 @@ import { format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
 
 function LaborBookYourService() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const filters = useSelector((state) => state.services.LabourServiceMgmtSlice.filters);
   const defaultForm = {
@@ -73,25 +75,25 @@ function LaborBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("common.selectValidLocation");
 
-    const numberOfLabourError = validateNumberOfLabour(numberOfLabour.trim());
+    const numberOfLabourError = validateNumberOfLabour(numberOfLabour.trim(), t);
     if (numberOfLabourError) newErrors.numberOfLabour = numberOfLabourError;
 
-    const labourTypeError = validateLabourType(labourType);
+    const labourTypeError = validateLabourType(labourType, t);
     if (labourTypeError) newErrors.labourType = labourTypeError;
 
     const areaError =
-      cropValueEnable.includes(labourType) && validateArea(areaUnderCultivation.trim());
+      cropValueEnable.includes(labourType) && validateArea(areaUnderCultivation.trim(), t);
     if (areaError) newErrors.areaUnderCultivation = areaError;
 
-    const cropError = cropValueEnable.includes(labourType) && validateCrop(typeOfCrop.trim());
+    const cropError = cropValueEnable.includes(labourType) && validateCrop(typeOfCrop.trim(), t);
     if (cropError) newErrors.typeOfCrop = cropError;
 
-    const dateErrors = validateDates(fromDate, toDate);
+    const dateErrors = validateDates(fromDate, toDate, t);
     newErrors = { ...newErrors, ...dateErrors };
 
-    const timeError = validateFromTimeOnly(fromDate, toDate, fromTime, toTime);
+    const timeError = validateFromTimeOnly(fromDate, toDate, fromTime, toTime, t);
     newErrors = { ...newErrors, ...timeError };
 
     setErrors(newErrors);
@@ -121,7 +123,7 @@ function LaborBookYourService() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -132,7 +134,7 @@ function LaborBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Labour Requirement"
+          title={t("labour.labourRequirement")}
           secImage={labouricon}
           navigate="/service-category"
         />
@@ -140,7 +142,7 @@ function LaborBookYourService() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Book your service</h5>
+                <h5 className="book-heading">{t("common.bookYourService")}</h5>
                 <div className="row g-3">
                   <div className="col-md-4">
                     <LocationInput
@@ -148,7 +150,7 @@ function LaborBookYourService() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
-                      placeholder="Farm Location*"
+                      placeholder={t("common.farmLocation")}
                     />
                   </div>
                   <div className="col-md-4">
@@ -159,11 +161,11 @@ function LaborBookYourService() {
                       onChange={handleInputChange}
                     >
                       <option className="form-control" value="" disabled>
-                        Labour for?
+                        {t("labour.labourFor")}
                       </option>
                       {LabourTypes.map((type) => (
                         <option key={type.value} className="form-control" value={type.value}>
-                          {type.name}
+                          {t(`labour.${type.value}`)}
                         </option>
                       ))}
                     </select>
@@ -173,7 +175,7 @@ function LaborBookYourService() {
                     <input
                       type="number"
                       min={1}
-                      placeholder="Number Of Labour*"
+                      placeholder={t("labour.numberOfLabour")}
                       className="form-control"
                       value={numberOfLabour}
                       name="numberOfLabour"
@@ -187,7 +189,7 @@ function LaborBookYourService() {
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Crop Under Cultivation*"
+                          placeholder={`${t("harvester.typeOfCrop")}*`}
                           value={typeOfCrop}
                           name="typeOfCrop"
                           onChange={handleInputChange}
@@ -200,7 +202,7 @@ function LaborBookYourService() {
                           value={areaUnderCultivation}
                           maxDecimals={2}
                           className="form-control"
-                          placeholder="Area Under Cultivation(in acre)*"
+                          placeholder={`${t("harvester.areaUnderCultivation")}*`}
                           onChange={(val) =>
                             setFormState((prev) => ({ ...prev, areaUnderCultivation: val }))
                           }
@@ -212,11 +214,12 @@ function LaborBookYourService() {
                     </>
                   )}
                 </div>
-                <h5 className="book-heading">Book Services date &amp; time</h5>
+                <h5 className="book-heading">{t("common.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("common.fromDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
@@ -237,7 +240,8 @@ function LaborBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Till date<span className="required">*</span>
+                      {t("common.tillDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={toDate ? new Date(toDate) : null}
@@ -258,7 +262,8 @@ function LaborBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("common.startTime")}
+                      <span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={fromTime}
@@ -270,7 +275,7 @@ function LaborBookYourService() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">End time</label>
+                    <label className="form-label">{t("common.endTime")}</label>
                     <Time12HourPicker
                       value={toTime}
                       onChange={(val) => {
@@ -285,7 +290,7 @@ function LaborBookYourService() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                {disable ? "Loading..." : "See Available Service"}
+                {disable ? t("common.loading") : t("common.seeAvailableService")}
               </button>
             </div>
           </form>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useCattleBooking } from "../../../hooks/useCattleBooking";
 
@@ -17,6 +18,7 @@ import SuccessModal from "../../../components/common components/SuccessModal";
 import CattleInformation from "../../../components/service category/cattle purchase and sale/CattleInformation";
 
 function CattleVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -36,15 +38,13 @@ function CattleVendorDetails() {
     },
   );
 
-  const { cattleInfo = {}, basicInfo = {} } = vendor;
-
   return (
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("common.vendorDetails")}
             navigate={`/service-category/cattle-purchase-sale/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
@@ -52,7 +52,7 @@ function CattleVendorDetails() {
           <div className="dashboard">
             {!vendor ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
+                {t("common.noVendorData")}
               </p>
             ) : (
               <>
@@ -69,7 +69,7 @@ function CattleVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Cattle Purchase & Sale"}
+                          serviceName={t("cattle.cattlePurchaseSale")}
                         />
                         <CattleInformation vendor={vendor} />
                       </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useExcavationBooking } from "../../../hooks/useExcavationBooking";
 
@@ -17,6 +18,7 @@ import SuccessModal from "../../../components/common components/SuccessModal";
 import ExcavationProductInformation from "../../../components/service category/excavation/ExcavationProductInformation";
 
 function ExcavationVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -40,7 +42,7 @@ function ExcavationVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("progress.vendorDetails")}
             navigate={`/service-category/earth-movers/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
@@ -48,7 +50,7 @@ function ExcavationVendorDetails() {
           <div className="dashboard">
             {!vendor ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
+                {t("progress.noVendorData")}
               </p>
             ) : (
               <>
@@ -65,7 +67,7 @@ function ExcavationVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Earth Movers"}
+                          serviceName={t("excavation.earthMovers")}
                         />
                         <ExcavationProductInformation vendor={vendor} />
                       </div>

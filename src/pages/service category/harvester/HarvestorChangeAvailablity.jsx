@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import CropHarvestingService from "../../../assets/images/CropHarvestingService.png";
@@ -17,6 +18,7 @@ import { format } from "date-fns";
 import { formatPrice } from "../../../utils/formatPrice";
 
 function HarvestorChangeAvailablity() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -33,7 +35,7 @@ function HarvestorChangeAvailablity() {
   const [errors, setErrors] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState(
-    sortByRating === true ? "Top Rated" : "Nearest First",
+    sortByRating === true ? "topRated" : "nearestFirst",
   );
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
@@ -60,12 +62,12 @@ function HarvestorChangeAvailablity() {
     const params = {
       ...filters,
       page: currentPage,
-      sortByRating: selectedSort === "Top Rated" ? true : false,
+      sortByRating: selectedSort === "topRated",
     };
     try {
       await dispatch(getAllServicesOfHarvester(params)).unwrap();
     } catch {
-      toast("Failed to load services");
+      toast(t("dashboard.somethingWentWrong"));
     }
   };
   useEffect(() => {
@@ -79,17 +81,17 @@ function HarvestorChangeAvailablity() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Harvester"
+          title={t("dashboard.harvester")}
           secImage={harvestorIcon}
           navigate="/service-category/harvestor"
         />
         <div className="dashboard">
           <div className="option-wrapper">
-            <h3 className="main-heading">Change Availability Date</h3>
+            <h3 className="main-heading">{t("harvester.changeAvailabilityDate")}</h3>
             <div className="filter-area">
               <div className="row align-items-end">
                 <div className="col-md-4 mb-3">
-                  <label className="form-label">Select Start Date</label>
+                  <label className="form-label">{t("harvester.selectStartDate")}</label>
                   {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   <div className="input-group">
                     <DatePicker
@@ -110,7 +112,7 @@ function HarvestorChangeAvailablity() {
                   </div>
                 </div>
                 <div className="col-md-4 mb-3">
-                  <label className="form-label">Select End Date</label>
+                  <label className="form-label">{t("harvester.selectEndDate")}</label>
                   {errors.toDate && <p className="error-text">{errors.toDate}</p>}
                   <div className="input-group">
                     <DatePicker
@@ -134,20 +136,24 @@ function HarvestorChangeAvailablity() {
                   <div className="sort-box" id="sortBox">
                     <div className="sort-toggle" onClick={toggleSortMenu}>
                       <span>
-                        <span className="sort-label">{selectedSort}</span>
+                        <span className="sort-label">
+                          {selectedSort === "topRated"
+                            ? t("common.topRated")
+                            : t("common.nearestFirst")}
+                        </span>
                         <img src={sortArrowDown} alt="Sort Icon" />
                       </span>
                     </div>
                     {isOpen && (
                       <div className="sort-menu">
-                        <div className="sort-option" onClick={() => selectSortOption("Top Rated")}>
-                          Top Rated
+                        <div className="sort-option" onClick={() => selectSortOption("topRated")}>
+                          {t("common.topRated")}
                         </div>
                         <div
                           className="sort-option"
-                          onClick={() => selectSortOption("Nearest First")}
+                          onClick={() => selectSortOption("nearestFirst")}
                         >
-                          Nearest First
+                          {t("common.nearestFirst")}
                         </div>
                       </div>
                     )}
@@ -161,12 +167,12 @@ function HarvestorChangeAvailablity() {
               <VendorCardSkeleton count={5} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No services found for the selected filters.
+                {t("harvester.noServicesFound")}
               </p>
             ) : (
               <>
-                <h3 className="main-heading">Available Vendor</h3>
-                <h6 className="form-label-max">Choose from in your radius</h6>
+                <h3 className="main-heading">{t("harvester.availableVendor")}</h3>
+                <h6 className="form-label-max">{t("harvester.chooseRadius")}</h6>
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
@@ -181,7 +187,9 @@ function HarvestorChangeAvailablity() {
                           className="service-image"
                         />
                         <div className="service-text">
-                          <div className="title">{service?.businessName || "No description"}</div>
+                          <div className="title">
+                            {service?.businessName || t("harvester.noDescription")}
+                          </div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
@@ -200,9 +208,9 @@ function HarvestorChangeAvailablity() {
                                 (filters?.typeOfCrop || "").toLowerCase(),
                             )?.price ?? 0,
                           )}{" "}
-                          {service?.subCategory === "combine_harvester" ? "/acre" : "/quintal"}
+                          {service?.subCategory === "combine_harvester" ? t("common.perAcre") : t("common.perQuintal")}
                         </h6>
-                        <small>Additional charges might apply</small>
+                        <small>{t("common.additionalCharges")}</small>
                       </div>
                     </div>
                   </Link>

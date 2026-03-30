@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 function ExcavationProductInformation({ vendor }) {
+  const { t } = useTranslation();
   const excavationInfo = vendor?.excavationInfo || {};
   const priceInfo = vendor?.priceInfo || {};
 
@@ -13,10 +16,10 @@ function ExcavationProductInformation({ vendor }) {
 
   return (
     <div className="option-wrapper mb-0">
-      <h5 className="normal-heading">Product Information</h5>
-      {renderField("Equipment Type", excavationInfo?.equipmentTypes)}
-      {renderField("Number of Equipment", vendor?.numberOfEquipment)}
-      {renderField("Price Type", priceInfo?.priceType)}
+      <h5 className="normal-heading">{t("excavation.productInformation")}</h5>
+      {renderField(t("excavation.equipmentType"), t(`excavation.${excavationInfo?.equipmentTypes?.toLowerCase().replace(/\s+/g, '')}`) || excavationInfo?.equipmentTypes)}
+      {renderField(t("excavation.numberOfEquipment"), vendor?.numberOfEquipment)}
+      {renderField(t("excavation.priceType"), priceInfo?.priceType)}
     </div>
   );
 }

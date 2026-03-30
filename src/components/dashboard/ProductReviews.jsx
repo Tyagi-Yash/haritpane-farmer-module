@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProductReviews } from "../../reduxtoolkit/slices/dashboard/classifiedSection";
 import profilePic from "../../assets/images/user-icon.svg";
 import StarRating from "./StarRating";
+import { useTranslation } from "react-i18next";
 
 function ProductReviews({ providerId }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const { reviews, reviewStats, reviewsLoading, paginationData } = useSelector(
     (state) => state.services.ClassifiedSectionMgmtSlice,
@@ -29,18 +31,18 @@ function ProductReviews({ providerId }) {
   };
 
   if (!reviewStats && reviewsLoading) {
-    return <p className="grey-para">Loading reviews...</p>;
+    return <p className="grey-para">{t("classified.loadingReviews")}</p>;
   }
 
   if (!reviews?.length) {
-    return <p className="grey-para">No reviews available</p>;
+    return <p className="grey-para">{t("classified.noReviewsAvailable")}</p>;
   }
 
   const { totalReviews, averageRating, ratingBreakdown } = reviewStats;
 
   return (
     <>
-      <h5 className="normal-heading">Reviews</h5>
+      <h5 className="normal-heading">{t("classified.reviews")}</h5>
 
       <div className="row rating-summary mb-4">
         <div className="col-md-10">
@@ -62,7 +64,7 @@ function ProductReviews({ providerId }) {
         <div className="col-md-2 text-center d-flex flex-column justify-content-center align-items-center">
           <h2 className="fw-bold mb-0">{averageRating}</h2>
           <StarRating rating={averageRating} />
-          <div className="review-count mt-1">{totalReviews} Reviews</div>
+          <div className="review-count mt-1">{totalReviews} {t("classified.reviews")}</div>
         </div>
       </div>
 
@@ -77,7 +79,7 @@ function ProductReviews({ providerId }) {
               height={40}
             />
             <div>
-              <strong className="normal-text">{review?.farmerDetails?.name || "Anonymous"}</strong>
+              <strong className="normal-text">{review?.farmerDetails?.name || t("classified.anonymous")}</strong>
               <div>
                 <span className="text-warning">{"★".repeat(review.rating)}</span>
                 <small className="time-text ms-2">
@@ -95,7 +97,7 @@ function ProductReviews({ providerId }) {
       {paginationData?.isNext && (
         <div className="text-center my-3">
           <button className="send-enquiry-btn" onClick={handleLoadMore} disabled={reviewsLoading}>
-            {reviewsLoading ? "Loading..." : "Load More"}
+            {reviewsLoading ? t("common.loading") : t("classified.loadMore")}
           </button>
         </div>
       )}

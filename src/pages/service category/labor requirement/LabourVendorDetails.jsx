@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useLabourBooking } from "../../../hooks/useLabourBooking";
 
@@ -17,6 +18,7 @@ import SuccessModal from "../../../components/common components/SuccessModal";
 import LabourProductInformation from "../../../components/service category/labour requirement/LabourProductInformation";
 
 function LabourVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -42,7 +44,7 @@ function LabourVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("progress.vendorDetails")}
             navigate={`/service-category/labour-requirement/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
@@ -50,7 +52,7 @@ function LabourVendorDetails() {
           <div className="dashboard">
             {!vendor ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
+                {t("progress.noVendorData")}
               </p>
             ) : (
               <>
@@ -67,7 +69,7 @@ function LabourVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Labour Requirement"}
+                          serviceName={t("labour.labourRequirement")}
                         />
                         <LabourProductInformation vendor={vendor} />
                       </div>

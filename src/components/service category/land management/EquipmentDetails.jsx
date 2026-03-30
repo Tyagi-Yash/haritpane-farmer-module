@@ -1,10 +1,11 @@
-
+import { useTranslation } from "react-i18next";
 import {
   TRACTOR_ATTACHMENTS,
   TRACTOR_HP_OPTIONS,
 } from "../../../constants/service category/land management/tractorOptions";
 
 function EquipmentDetails({ vendor }) {
+  const { t } = useTranslation();
   const info = vendor?.Info;
   const getLabel = (options, value) => {
     const match = options.find((item) => item.value === value);
@@ -16,14 +17,14 @@ function EquipmentDetails({ vendor }) {
 
   return (
     <div className="option-wrapper mb-0">
-      <h5 className="normal-heading">Product Information</h5>
+      <h5 className="normal-heading">{t("common.productInformation")}</h5>
 
-      <p>Tractor Brand: {info?.brandOfTractor}</p>
-      <p>Tractor Model: {info?.modelOfTractor}</p>
-      <p>Tractor HP: {hpLabel}</p>
-      <p>Equipment Type: {equipmentLabel}</p>
-      <p>Variant: {info?.equipmentVariant}</p>
-      <p>Description: {info?.equipmentDescription}</p>
+      <p>{t("progress.tractorBrand")}: {info?.brandOfTractor}</p>
+      <p>{t("progress.tractorModel")}: {info?.modelOfTractor}</p>
+      <p>{t("progress.tractorHP")}: {hpLabel}</p>
+      <p>{t("progress.equipmentType")}: {equipmentLabel}</p>
+      <p>{t("progress.variant")}: {info?.equipmentVariant}</p>
+      <p>{t("progress.description")}: {info?.equipmentDescription}</p>
     </div>
   );
 }

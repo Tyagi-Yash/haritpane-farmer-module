@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import CompoundWallBuilderIcon from "../../../assets/images/CompoundWallBuilder-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
@@ -21,6 +22,7 @@ import { format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
 
 function CompoundWallBookYourService() {
+  const { t } = useTranslation();
   const filters = useSelector((state) => state.services.CompoundWallServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -49,10 +51,10 @@ function CompoundWallBookYourService() {
         if (status === 200) {
           setserviceTypesOption(data?.data || []);
         } else {
-          toast(data?.message || "Failed to service type");
+          toast(data?.message || t("compoundWall.failedToGetServiceType"));
         }
       } catch (err) {
-        toast.error("Something went wrong");
+        toast.error(t("common.somethingWentWrong"));
       }
     };
 
@@ -73,21 +75,21 @@ function CompoundWallBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("common.selectValidLocation");
 
     const serviceTypeErrors = validateWallserviceType(serviceType);
-    if (serviceTypeErrors) newErrors.serviceType = serviceTypeErrors;
+    if (serviceTypeErrors) newErrors.serviceType = t(serviceTypeErrors);
 
     const dateErrors = validateFromDate(date);
-    if (dateErrors) newErrors.date = dateErrors;
+    if (dateErrors) newErrors.date = t(dateErrors);
 
     const timeError = validateSelectTime(date, time);
-    if (timeError) newErrors.time = timeError;
+    if (timeError) newErrors.time = t(timeError);
 
     const lengthError = validateLength(length);
-    if (lengthError) newErrors.length = lengthError;
+    if (lengthError) newErrors.length = t(lengthError);
     const hieghtError = validateHeight(height);
-    if (hieghtError) newErrors.height = hieghtError;
+    if (hieghtError) newErrors.height = t(hieghtError);
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -118,7 +120,7 @@ function CompoundWallBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Compound Wall Builder"
+          title={t("compoundWall.compoundWallBuilder")}
           secImage={CompoundWallBuilderIcon}
           navigate="/service-category"
         />
@@ -126,7 +128,7 @@ function CompoundWallBookYourService() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Book your service</h5>
+                <h5 className="book-heading">{t("common.bookYourService")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <LocationInput
@@ -134,7 +136,7 @@ function CompoundWallBookYourService() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
-                      placeholder="Field Location*"
+                      placeholder={t("common.fieldLocation")}
                     />
                   </div>
                   <div className="col-md-6">
@@ -145,7 +147,7 @@ function CompoundWallBookYourService() {
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
-                        Select Specific Service*
+                        {t("compoundWall.selectSpecificService")}
                       </option>
                       {serviceTypesOption.map((option) => (
                         <option key={option} value={option}>
@@ -157,15 +159,16 @@ function CompoundWallBookYourService() {
                     {errors.serviceType && <p className="error-text">{errors.serviceType}</p>}
                   </div>
                 </div>
-                <h5 className="book-heading">Wall Dimension</h5>
+                <h5 className="book-heading">{t("compoundWall.wallDimension")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      Wall Height<span className="required">*</span>
+                      {t("compoundWall.wallHeight")}
+                      <span className="required">*</span>
                     </label>
                     <DecimalInput
                       className="form-control"
-                      placeholder="Enter wall height (in ft)"
+                      placeholder={t("compoundWall.enterWallHeight")}
                       value={height}
                       maxDecimals={2}
                       onChange={(val) => setFormState((prev) => ({ ...prev, height: val }))}
@@ -174,11 +177,12 @@ function CompoundWallBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Wall Length<span className="required">*</span>
+                      {t("compoundWall.wallLength")}
+                      <span className="required">*</span>
                     </label>
                     <DecimalInput
                       className="form-control"
-                      placeholder="Enter wall length (in meter)"
+                      placeholder={t("compoundWall.enterWallLength")}
                       value={length}
                       maxDecimals={2}
                       onChange={(val) => setFormState((prev) => ({ ...prev, length: val }))}
@@ -186,11 +190,12 @@ function CompoundWallBookYourService() {
                     {errors.length && <p className="error-text">{errors.length}</p>}{" "}
                   </div>
                 </div>
-                <h5 className="book-heading">Book Services date &amp; time</h5>
+                <h5 className="book-heading">{t("common.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("common.fromDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={date ? new Date(date) : null}
@@ -211,7 +216,8 @@ function CompoundWallBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("common.startTime")}
+                      <span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={time}
@@ -227,7 +233,7 @@ function CompoundWallBookYourService() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                {disable ? "Loading..." : "See Available Service"}
+                {disable ? t("common.loading") : t("common.seeAvailableService")}
               </button>{" "}
             </div>
           </form>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import BorewellIcon from "../../../assets/images/Borewell-icon.png";
@@ -19,6 +20,7 @@ import { format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
 
 function BorwellBookYourService() {
+  const { t } = useTranslation();
   const filters = useSelector((state) => state.services.BorewellServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -64,7 +66,7 @@ function BorwellBookYourService() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("common.selectValidLocation");
 
     const depthError = validateDepthOfBorewell(depthOfBorewell.trim());
     if (depthError) newErrors.depthOfBorewell = depthError;
@@ -105,7 +107,7 @@ function BorwellBookYourService() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -115,7 +117,7 @@ function BorwellBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Borewell"
+          title={t("borewell.borewell")}
           secImage={BorewellIcon}
           navigate="/service-category"
         />
@@ -123,7 +125,7 @@ function BorwellBookYourService() {
           <form onSubmit={handleSubmit}>
             <div className="option-wrapper">
               <div className="form-section">
-                <h5 className="book-heading">Book your service</h5>
+                <h5 className="book-heading">{t("common.bookYourService")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <LocationInput
@@ -131,13 +133,13 @@ function BorwellBookYourService() {
                       onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                       onSelectLocation={handleSelectLocation}
                       error={errors.address}
-                      placeholder="Farm Location*"
+                      placeholder={t("common.farmLocation")}
                     />
                   </div>
                   <div className="col-md-6">
                     <DecimalInput
                       className="form-control"
-                      placeholder="Approximate depth of borewell(in ft)*"
+                      placeholder={t("borewell.depthOfBorewellFt")}
                       value={depthOfBorewell}
                       maxDecimals={2}
                       onChange={(val) =>
@@ -156,10 +158,10 @@ function BorwellBookYourService() {
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
-                        Casing Pipe*
+                        {t("borewell.casingPipe")}
                       </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option value="yes">{t("common.yes")}</option>
+                      <option value="no">{t("common.no")}</option>
                     </select>
                     {errors.casingPipe && <p className="error-text">{errors.casingPipe}</p>}
                   </div>
@@ -171,19 +173,19 @@ function BorwellBookYourService() {
                       onChange={handleInputChange}
                     >
                       <option value="" disabled>
-                        Submersible water motor*
+                        {t("borewell.waterMotor")}
                       </option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option value="yes">{t("common.yes")}</option>
+                      <option value="no">{t("common.no")}</option>
                     </select>
                     {errors.waterMotor && <p className="error-text">{errors.waterMotor}</p>}
                   </div>
                 </div>
-                <h5 className="book-heading">Book Services date &amp; time</h5>
+                <h5 className="book-heading">{t("common.bookServicesDateTime")}</h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      From date<span className="required">*</span>
+                      {t("common.fromDate")}<span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
@@ -204,7 +206,7 @@ function BorwellBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Till date<span className="required">*</span>
+                      {t("common.tillDate")}<span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={toDate ? new Date(toDate) : null}
@@ -225,7 +227,7 @@ function BorwellBookYourService() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Start time<span className="required">*</span>
+                      {t("common.startTime")}<span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={fromTime}
@@ -237,7 +239,7 @@ function BorwellBookYourService() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label">End time</label>
+                    <label className="form-label">{t("common.endTime")}</label>
                     <Time12HourPicker
                       value={toTime}
                       onChange={(val) => {
@@ -252,7 +254,7 @@ function BorwellBookYourService() {
             </div>
             <div className="available-service-btn">
               <button type="submit" disabled={disable}>
-                {disable ? "Loading..." : "See Available Service"}
+                {disable ? t("common.loading") : t("common.seeAvailableService")}
               </button>
             </div>
           </form>

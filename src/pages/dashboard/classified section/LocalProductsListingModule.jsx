@@ -144,7 +144,7 @@ function LocalProductsListingModule() {
 
               <div className="sort-box">
                 <div className="sort-toggle" onClick={toggleSortMenu}>
-                  <span className="sort-label">{selectedSort}</span>
+                  <span className="sort-label">{selectedSort === "Top Rated" ? t("classified.topRated") : t("classified.location")}</span>
                   <img src={sortArrowDown} alt="Sort" />
                 </div>
 

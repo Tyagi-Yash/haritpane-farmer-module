@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { formatHoursMinutes } from "../../../utils/formatHoursMinutes ";
 
 const PriceBreakdown = ({
@@ -8,6 +9,7 @@ const PriceBreakdown = ({
   distanceBeyondRadius,
   drillInfo = [],
 }) => {
+  const { t } = useTranslation();
   const formatPrice = (amount) => {
     const num = Number(amount ?? 0);
     return `₹ ${num.toLocaleString("en-IN", {
@@ -30,14 +32,15 @@ const PriceBreakdown = ({
           <table className="table table-sm">
             <thead>
               <tr>
-                <th>Drill Information</th>
+                <th>{t("auger.drillInformation")}</th>
               </tr>
             </thead>
             <tbody>
               {drillInfo.map((drill) => (
                 <tr key={drill?._id || drill.drillInfoId}>
                   <td className="no-border">
-                    {drill.drillDiameter}" ₹ {Number(drill.ratePerInch).toFixed(2)}/feet
+                    {drill.drillDiameter}" ₹ {Number(drill.ratePerInch).toFixed(2)}
+                    {t("common.perFeet")}
                   </td>
                 </tr>
               ))}
@@ -45,15 +48,16 @@ const PriceBreakdown = ({
           </table>
         </div>
       )}
-      <h5 className="normal-heading">Tentative cost</h5>
+      <h5 className="normal-heading">{t("common.tentativeCost")}</h5>
 
       <table className="table table-borderless">
         <tbody>
           <tr>
             <td>
-              Service Charges
+              {t("common.serviceCharges")}
               <div className="text-muted small">
-                {formatPrice(ratePerHr)} (Per Hour) × {formatHoursMinutes(billableHours)}
+                {formatPrice(ratePerHr)} {t("common.perHourParentheses")} ×{" "}
+                {formatHoursMinutes(billableHours)}
               </div>
             </td>
             <td>{formatPrice(payable - OveralltransportCharge)}</td>
@@ -61,10 +65,11 @@ const PriceBreakdown = ({
 
           <tr>
             <td>
-              Transportation Charges
+              {t("common.transportationCharges")}
               {!!transportCharge && (
                 <div className="text-muted small">
-                  {formatPrice(transportCharge)} (Per Km) × {distanceBeyondRadius?.toFixed(2)} Km
+                  {formatPrice(transportCharge)} {t("common.perKmParentheses")} ×{" "}
+                  {distanceBeyondRadius?.toFixed(2)} {t("common.km")}
                 </div>
               )}
             </td>
@@ -74,7 +79,7 @@ const PriceBreakdown = ({
 
         <tfoot>
           <tr className="fw-bold border-top">
-            <td>Total Amount to Pay</td>
+            <td>{t("common.totalAmountToPay")}</td>
             <td>{formatPrice(payable)}</td>
           </tr>
         </tfoot>

@@ -1,15 +1,17 @@
+import i18n from "../i18n";
+
 export const validateDates = (fromDate, toDate) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  if (!fromDate) return { fromDate: "*From date is required" };
-  if (new Date(fromDate) < today) return { fromDate: "*From date cannot be in the past" };
+  if (!fromDate) return { fromDate: i18n.t("validation.fromDateRequired") };
+  if (new Date(fromDate) < today) return { fromDate: i18n.t("validation.fromDatePast") };
 
-  if (!toDate) return { toDate: "*To date is required" };
-  if (new Date(toDate) < today) return { toDate: "*To date cannot be in the past" };
+  if (!toDate) return { toDate: i18n.t("validation.toDateRequired") };
+  if (new Date(toDate) < today) return { toDate: i18n.t("validation.toDatePast") };
 
   if (new Date(fromDate) > new Date(toDate)) {
-    return { toDate: "*To date cannot be earlier than from date" };
+    return { toDate: i18n.t("validation.toDateEarlier") };
   }
   return {};
 };
@@ -17,14 +19,14 @@ export const validateFromTillDates = (fromDate, tillDate) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  if (!fromDate) return { fromDate: "*From date is required" };
-  if (new Date(fromDate) < today) return { fromDate: "*From date cannot be in the past" };
+  if (!fromDate) return { fromDate: i18n.t("validation.fromDateRequired") };
+  if (new Date(fromDate) < today) return { fromDate: i18n.t("validation.fromDatePast") };
 
-  if (!tillDate) return { tillDate: "*To date is required" };
-  if (new Date(tillDate) < today) return { tillDate: "*To date cannot be in the past" };
+  if (!tillDate) return { tillDate: i18n.t("validation.toDateRequired") };
+  if (new Date(tillDate) < today) return { tillDate: i18n.t("validation.toDatePast") };
 
   if (new Date(fromDate) > new Date(tillDate)) {
-    return { tillDate: "*To date cannot be earlier than from date" };
+    return { tillDate: i18n.t("validation.toDateEarlier") };
   }
   return {};
 };
@@ -33,53 +35,53 @@ export const validateFromDateRequired = (fromDate, toDate) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  if (!fromDate) return { fromDate: "*From date is required" };
-  if (new Date(fromDate) < today) return { fromDate: "*From date cannot be in the past" };
+  if (!fromDate) return { fromDate: i18n.t("validation.fromDateRequired") };
+  if (new Date(fromDate) < today) return { fromDate: i18n.t("validation.fromDatePast") };
 
   if (toDate) {
-    if (new Date(toDate) < today) return { toDate: "*To date cannot be in the past" };
+    if (new Date(toDate) < today) return { toDate: i18n.t("validation.toDatePast") };
 
     if (new Date(fromDate) > new Date(toDate)) {
-      return { toDate: "*To date cannot be earlier than from date" };
+      return { toDate: i18n.t("validation.toDateEarlier") };
     }
   }
   return {};
 };
 
 export const validateTime = (fromDate, toDate, fromTime, toTime) => {
-  if (!fromTime) return { fromTime: "*Start time is required" };
-  if (!toTime) return { toTime: "*End time is required" };
+  if (!fromTime) return { fromTime: i18n.t("validation.startTimeRequired") };
+  if (!toTime) return { toTime: i18n.t("validation.endTimeRequired") };
 
   const fromDateTime = new Date(`${fromDate}T${fromTime}`);
   const toDateTime = new Date(`${toDate}T${toTime}`);
   const now = new Date();
 
   if (fromDateTime.toDateString() === now.toDateString() && fromDateTime <= now) {
-    return { fromTime: "*Start time must be in the future" };
+    return { fromTime: i18n.t("validation.startTimeFuture") };
   }
 
   if (toDateTime <= fromDateTime) {
-    return { toTime: "*End time must be after start time" };
+    return { toTime: i18n.t("validation.endTimeAfterStart") };
   }
 
   return {};
 };
 
 export const validateFromTimeOnly = (fromDate, toDate, fromTime, toTime) => {
-  if (!fromTime) return { fromTime: "*Start time is required" };
+  if (!fromTime) return { fromTime: i18n.t("validation.startTimeRequired") };
 
   const fromDateTime = new Date(`${fromDate}T${fromTime}`);
   const now = new Date();
 
   if (fromDateTime.toDateString() === now.toDateString() && fromDateTime <= now) {
-    return { fromTime: "*Start time must be in the future" };
+    return { fromTime: i18n.t("validation.startTimeFuture") };
   }
 
   if (toTime) {
     const toDateTime = new Date(`${toDate}T${toTime}`);
 
     if (toDateTime <= fromDateTime) {
-      return { toTime: "*End time must be after start time" };
+      return { toTime: i18n.t("validation.endTimeAfterStart") };
     }
   }
 
@@ -87,7 +89,7 @@ export const validateFromTimeOnly = (fromDate, toDate, fromTime, toTime) => {
 };
 
 export const validateSelectTime = (fromDate, fromTime) => {
-  if (!fromTime) return "*Start time is required";
+  if (!fromTime) return i18n.t("validation.startTimeRequired");
 
   if (fromDate) {
     const selectedDate = new Date(fromDate);
@@ -96,7 +98,7 @@ export const validateSelectTime = (fromDate, fromTime) => {
       const [h, m] = fromTime.split(":");
       const selectedTime = new Date();
       selectedTime.setHours(h, m, 0, 0);
-      if (selectedTime <= now) return "*Time must be in the future";
+      if (selectedTime <= now) return i18n.t("validation.timeFuture");
     }
   }
   return "";
@@ -106,21 +108,21 @@ export const validateFromDate = (fromDate) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  if (!fromDate) return "*From date is required";
-  if (new Date(fromDate) < today) return "*From date cannot be in the past";
+  if (!fromDate) return i18n.t("validation.fromDateRequired");
+  if (new Date(fromDate) < today) return i18n.t("validation.fromDatePast");
   return "";
 };
 export const validateDate = (fromDate) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  if (!fromDate) return "*Date is required";
-  if (new Date(fromDate) < today) return "*Date cannot be in the past";
+  if (!fromDate) return i18n.t("validation.dateRequired");
+  if (new Date(fromDate) < today) return i18n.t("validation.datePast");
   return "";
 };
 
 export const validateEquipmentTypes = (equipmentTypes) => {
-  if (!equipmentTypes) return "*Specific Service is required";
+  if (!equipmentTypes) return i18n.t("validation.specificServiceRequired");
   return "";
 };
 
@@ -132,197 +134,197 @@ export const validateDurationFields = (hours, minutes) => {
   }
 
   if (hours !== "" && (isNaN(hours) || hours < 0)) {
-    errors.hours = "Please enter valid hours";
+    errors.hours = i18n.t("validation.validHours");
   }
 
   if (minutes !== "" && (isNaN(minutes) || minutes < 0 || minutes >= 60)) {
-    errors.minutes = "Please enter valid minutes (0-59)";
+    errors.minutes = i18n.t("validation.validMinutes");
   }
 
   if ((Number(hours) || 0) === 0 && (Number(minutes) || 0) === 0) {
-    errors.hours = "Duration cannot be 0";
+    errors.hours = i18n.t("validation.durationZero");
   }
 
   return errors;
 };
 
 export const validateDepthOfBorewell = (depthOfBorewell) => {
-  if (depthOfBorewell === "") return "Depth of Borewell is required";
+  if (depthOfBorewell === "") return i18n.t("validation.depthOfBorewellRequired");
 
   const num = Number(depthOfBorewell);
-  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZero");
 
   return "";
 };
 
 export const validateCasingPipe = (casingPipe) => {
   if (!casingPipe || casingPipe === "") {
-    return "*Casing Pipe is required";
+    return i18n.t("validation.casingPipeRequired");
   }
   return "";
 };
 
 export const validateWaterMotor = (waterMotor) => {
   if (!waterMotor || waterMotor === "") {
-    return "*Water Motor is required";
+    return i18n.t("validation.waterMotorRequired");
   }
   return "";
 };
 
 export const validateNumberOfLabour = (numberOfLabour) => {
-  if (numberOfLabour === "") return "Number Of Labour is required";
+  if (numberOfLabour === "") return i18n.t("validation.numberOfLabourRequired");
 
   const num = Number(numberOfLabour);
-  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZero");
 
   return "";
 };
 
 export const validateLabourType = (labourType) => {
   if (!labourType || labourType === "") {
-    return "*Labour Type is required";
+    return i18n.t("validation.labourTypeRequired");
   }
   return "";
 };
 
 export const validateArea = (areaUnderCultivation) => {
-  if (areaUnderCultivation === "") return "Area Under Cultivation is required";
+  if (areaUnderCultivation === "") return i18n.t("validation.areaUnderCultivationRequired");
 
   const num = Number(areaUnderCultivation);
-  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZero");
 
   return "";
 };
 export const validateDistance = (distance) => {
-  if (distance === "") return "Distance is required";
+  if (distance === "") return i18n.t("validation.distanceRequired");
 
   const num = Number(distance);
-  if (isNaN(num) || num <= 0) return "Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZero");
 
   return "";
 };
 
 export const validateCrop = (typeOfCrop) => {
-  if (typeOfCrop === "") return "Crop Under Cultivation is required";
+  if (typeOfCrop === "") return i18n.t("validation.cropRequired");
 
   return "";
 };
 
 export const validateWallserviceType = (serviceType) => {
   if (!serviceType || serviceType === "") {
-    return "*Service Type is required";
+    return i18n.t("validation.serviceTypeRequired");
   }
   return "";
 };
 
 export const validateCowDunkType = (typeOfCowDunk) => {
   if (!typeOfCowDunk || typeOfCowDunk === "") {
-    return "*Type is required";
+    return i18n.t("validation.typeRequired");
   }
   return "";
 };
 
 export const validateQuantity = (quantity) => {
   if (!quantity || quantity === "") {
-    return "*Quantity is required";
+    return i18n.t("validation.quantityRequired");
   }
   const num = Number(quantity);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };
 
 export const validateCurrentLocation = (location) => {
-  if (location === "") return "*Current Location is required";
+  if (location === "") return i18n.t("validation.currentLocationRequired");
 
   return "";
 };
 
 export const validateDestinationLocation = (location) => {
-  if (location === "") return "*Travel Location is required";
+  if (location === "") return i18n.t("validation.travelLocationRequired");
 
   return "";
 };
 
 export const validateItemType = (item) => {
   if (!item || item === "") {
-    return "*Transport Item is required";
+    return i18n.t("validation.transportItemRequired");
   }
   return "";
 };
 export const validateVegeType = (item) => {
   if (!item || item === "") {
-    return "*Vegetable Type is required";
+    return i18n.t("validation.vegetableTypeRequired");
   }
   return "";
 };
 export const validateVehicleType = (item) => {
   if (!item || item === "") {
-    return "*Vehicle Type is required";
+    return i18n.t("validation.vehicleTypeRequired");
   }
   return "";
 };
 export const validateLength = (number) => {
   if (!number || number === "") {
-    return "*Length is required";
+    return i18n.t("validation.lengthRequired");
   }
   const num = Number(number);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };
 export const validateWidth = (number) => {
   if (!number || number === "") {
-    return "*Width is required";
+    return i18n.t("validation.widthRequired");
   }
   const num = Number(number);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };
 
 export const validateHeight = (number) => {
   if (!number || number === "") {
-    return "*Height is required";
+    return i18n.t("validation.heightRequired");
   }
   const num = Number(number);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };
 
 export const validateNumberOfCattle = (number) => {
-  if (number === "") return "*Number of cattle is required";
+  if (number === "") return i18n.t("validation.numberOfCattleRequired");
 
   const num = Number(number);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };
 
 export const validateWeightOfCattle = (number) => {
-  if (number === "") return "*Weight of cattle is required";
+  if (number === "") return i18n.t("validation.weightOfCattleRequired");
 
   const num = Number(number);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };
 
 export const validateWeightOfVegetable = (number) => {
-  if (number === "") return "*Weight of Vegetable is required";
+  if (number === "") return i18n.t("validation.weightOfVegetableRequired");
 
   const num = Number(number);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };
 
 export const validateWeight = (number) => {
-  if (number === "") return "*Weight is required";
+  if (number === "") return i18n.t("validation.weightRequired");
 
   const num = Number(number);
-  if (isNaN(num) || num <= 0) return "*Please enter a number greater than 0";
+  if (isNaN(num) || num <= 0) return i18n.t("validation.greaterThanZeroStar");
 
   return "";
 };

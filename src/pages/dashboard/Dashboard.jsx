@@ -20,6 +20,7 @@ import cowImageRecent from "../../assets/images/cow-image-recent.png";
 import DashboardCarousel from "../../components/dashboard/DashboardCarousel";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { useState } from "react";
+import SideAds from "../../components/dashboard/SideAds";
 
 function Dashboard() {
   const { t } = useTranslation();
@@ -212,44 +213,7 @@ function Dashboard() {
                   </section>
                 </div>
 
-                <div className="col-md-3">
-                  <div className="row">
-                    <div className="col-md-12 mb-3">
-                      <div className="recent-activity">
-                        <div className="product-card">
-                          <div className="image-part">
-                            <img src={cowImageRecent} alt="" />
-                          </div>
-                          <div className="card-text-part">
-                            <h6 className="normal-heading mb-1">{t("dashboard.recentActivity.naturalFertilization")}</h6>
-                            <p className="normal-text m-0">{t("dashboard.recentActivity.graminHub")}</p>
-                            <p className="grey-para m-0">{t("dashboard.recentActivity.meerut")}</p>
-                          </div>
-                        </div>
-                        <div className="product-card">
-                          <div className="image-part">
-                            <img src={cowImageRecent} alt="" />
-                          </div>
-                          <div className="card-text-part">
-                            <h6 className="normal-heading mb-1">{t("dashboard.recentActivity.naturalFertilization")}</h6>
-                            <p className="normal-text m-0">{t("dashboard.recentActivity.graminHub")}</p>
-                            <p className="grey-para m-0">{t("dashboard.recentActivity.meerut")}</p>
-                          </div>
-                        </div>
-                        <div className="product-card">
-                          <div className="image-part">
-                            <img src={cowImageRecent} alt="" />
-                          </div>
-                          <div className="card-text-part">
-                            <h6 className="normal-heading mb-1">{t("dashboard.recentActivity.naturalFertilization")}</h6>
-                            <p className="normal-text m-0">{t("dashboard.recentActivity.graminHub")}</p>
-                            <p className="grey-para m-0">{t("dashboard.recentActivity.meerut")}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <SideAds />
               </div>
             </div>
           </div>

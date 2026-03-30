@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 function CattleInformation({ vendor }) {
+  const { t } = useTranslation();
   const cattleInfo = vendor?.cattleInfo || {};
   const basicInfo = vendor?.basicInfo || {};
 
@@ -15,24 +18,24 @@ function CattleInformation({ vendor }) {
 
   return (
     <div className="option-wrapper booking-area mb-0">
-      <h6 className="normal-heading">Cattle Information</h6>
+      <h6 className="normal-heading">{t("cattle.cattleInformation")}</h6>
 
-      {renderField("Cattle Name", cattleInfo?.cattleName)}
-      {renderField("Breed", cattleInfo?.cattleBreed)}
-      {renderField("Gender", cattleInfo?.cattleGender && formatText(cattleInfo.cattleGender))}
+      {renderField(t("cattle.cattleName"), cattleInfo?.cattleName)}
+      {renderField(t("cattle.breed"), cattleInfo?.cattleBreed)}
+      {renderField(t("cattle.gender"), cattleInfo?.cattleGender && formatText(cattleInfo.cattleGender))}
 
-      {renderField("Age", basicInfo?.age)}
-      {renderField("Weight", basicInfo?.weight && `${basicInfo.weight} Kg`)}
+      {renderField(t("cattle.age"), basicInfo?.age)}
+      {renderField(t("cattle.weight"), basicInfo?.weight && `${basicInfo.weight} ${t("cattle.kg")}`)}
 
-      {basicInfo?.calf && renderField("Calf Available", "Yes")}
+      {basicInfo?.calf && renderField(t("cattle.calfAvailable"), t("cattle.yes"))}
 
-      {renderField("Number of Calf", basicInfo?.numberOfCalf)}
+      {renderField(t("cattle.numberOfCalf"), basicInfo?.numberOfCalf)}
 
-      {renderField("Milk Per Day", basicInfo?.milkPerDay && `${basicInfo.milkPerDay} Liters`)}
+      {renderField(t("cattle.milkPerDay"), basicInfo?.milkPerDay && `${basicInfo.milkPerDay} ${t("cattle.liters")}`)}
 
-      {renderField("Lactation", basicInfo?.lactation)}
+      {renderField(t("cattle.lactation"), basicInfo?.lactation)}
 
-      {renderField("Description", basicInfo?.animalDescription)}
+      {renderField(t("common.description"), basicInfo?.animalDescription)}
     </div>
   );
 }

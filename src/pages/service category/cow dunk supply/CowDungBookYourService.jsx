@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import CowDunkSupplyIcon from "../../../assets/images/CowDunkSupply-icon.png";
@@ -19,6 +20,7 @@ import { format } from "date-fns";
 import DecimalInput from "../../../components/common components/DecimalInput";
 
 function CowDungBookYourService() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,7 +66,7 @@ function CowDungBookYourService() {
     let newErrors = {};
 
     if (!currentLocation || !lat || !lng) {
-      newErrors.currentLocation = "Please select a valid location.";
+      newErrors.currentLocation = t("common.selectValidLocation");
     }
 
     const dateErrors = validateDate(fromDate);
@@ -109,10 +111,10 @@ function CowDungBookYourService() {
         const { status, data } = res?.payload || {};
 
         if (status === 200) {
-          toast.success(data?.message || "Booking Request Created successfully");
+          toast.success(data?.message || t("cowDung.bookingSuccess"));
           setShowSuccessModal(true);
         } else {
-          toast.error(data?.message || "Failed to Send Booking Request");
+          toast.error(data?.message || t("cowDung.bookingFailed"));
         }
       } else {
         const formdata = {
@@ -126,7 +128,7 @@ function CowDungBookYourService() {
         navigate(`available-services?${query}`);
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -137,7 +139,7 @@ function CowDungBookYourService() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox
-          title="Cow Dung/Poultry Waste"
+          title={t("cowDung.cowDungPoultryWaste")}
           secImage={CowDunkSupplyIcon}
           navigate="/service-category"
         />
@@ -145,18 +147,18 @@ function CowDungBookYourService() {
         <div className="dashboard">
           <div className="option-wrapper mb-0 py-0">
             <div className="form-section">
-              <h5 className="book-heading">What service would you like to book?</h5>
+              <h5 className="book-heading">{t("cowDung.whatServiceLikeToBook")}</h5>
               <select
                 className="form-control"
                 value={selectedService}
                 onChange={handleServiceChange}
               >
                 <option value="" disabled>
-                  Select a service*
+                  {t("cowDung.selectService")}
                 </option>
-                <option value="cowDungDelivery">Cow dung delivery to my farm</option>
-                <option value="dairy_farmers_cow_dunk">Cow dung pickup from vendor location</option>
-                <option value="poultry">Poultry waste pickup from vendor location</option>
+                <option value="cowDungDelivery">{t("cowDung.cowDungDelivery")}</option>
+                <option value="dairy_farmers_cow_dunk">{t("cowDung.cowDungPickup")}</option>
+                <option value="poultry">{t("cowDung.poultryWastePickup")}</option>
               </select>
             </div>
           </div>
@@ -165,7 +167,7 @@ function CowDungBookYourService() {
             <form onSubmit={handleSubmit}>
               <div className="option-wrapper pt-0">
                 <div className="form-section">
-                  <h5 className="book-heading">Book your service</h5>
+                  <h5 className="book-heading">{t("common.bookYourService")}</h5>
                   <div className="row g-3">
                     <div className="col-md-12">
                       <LocationInput
@@ -175,7 +177,7 @@ function CowDungBookYourService() {
                         }
                         onSelectLocation={handleSelectLocation}
                         error={errors.currentLocation}
-                        placeholder="Farm Location*"
+                        placeholder={t("common.farmLocation")}
                       />
                     </div>
                     <div className="col-md-6">
@@ -186,10 +188,10 @@ function CowDungBookYourService() {
                         onChange={handleInputChange}
                       >
                         <option value="" disabled>
-                          Select type*
+                          {t("cowDung.selectType")}
                         </option>
-                        <option value="Dry">Dry</option>
-                        <option value="Wet">Wet</option>
+                        <option value="Dry">{t("cowDung.dry")}</option>
+                        <option value="Wet">{t("cowDung.wet")}</option>
                       </select>
                       {errors.cowDunkType && <p className="error-text">{errors.cowDunkType}</p>}
                     </div>
@@ -200,7 +202,7 @@ function CowDungBookYourService() {
                         name="cowDunkQuantity"
                         value={cowDunkQuantity}
                         maxDecimals={2}
-                        placeholder="Quantity (in tons)*"
+                        placeholder={t("cowDung.quantityInTons")}
                         onChange={(val) =>
                           setFormState((prev) => ({ ...prev, cowDunkQuantity: val }))
                         }
@@ -210,11 +212,11 @@ function CowDungBookYourService() {
                       )}
                     </div>
                   </div>
-                  <h5 className="book-heading">Book Services date &amp; time</h5>
+                  <h5 className="book-heading">{t("common.bookServicesDateTime")}</h5>
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label">
-                        From date<span className="required">*</span>
+                        {t("common.fromDate")}<span className="required">*</span>
                       </label>
                       <DatePicker
                         selected={fromDate ? new Date(fromDate) : null}
@@ -236,7 +238,7 @@ function CowDungBookYourService() {
 
                     <div className="col-md-6">
                       <label className="form-label">
-                        Start time<span className="required">*</span>
+                        {t("common.startTime")}<span className="required">*</span>
                       </label>
                       <Time12HourPicker
                         value={startTime}
@@ -252,7 +254,7 @@ function CowDungBookYourService() {
               </div>
               <div className="available-service-btn">
                 <button type="submit" disabled={!selectedService || disable}>
-                  {disable ? "Generating..." : "Generate Request"}
+                  {disable ? t("common.generating") : t("common.generateRequest")}
                 </button>
               </div>
             </form>
@@ -262,11 +264,11 @@ function CowDungBookYourService() {
             <form onSubmit={handleSubmit}>
               <div className="option-wrapper pt-0">
                 <div className="form-section">
-                  <h5 className="book-heading">Book your service</h5>
+                  <h5 className="book-heading">{t("common.bookYourService")}</h5>
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label">
-                        Farm location<span className="required">*</span>
+                        {t("common.farmLocation")}<span className="required">*</span>
                       </label>
                       <LocationInput
                         value={currentLocation}
@@ -275,15 +277,15 @@ function CowDungBookYourService() {
                         }
                         onSelectLocation={handleSelectLocation}
                         error={errors.currentLocation}
-                        placeholder="Enter Farm Location*"
+                        placeholder={t("common.enterFarmLocation")}
                       />
                     </div>
                   </div>
-                  <h5 className="book-heading">Book Services date &amp; time</h5>
+                  <h5 className="book-heading">{t("common.bookServicesDateTime")}</h5>
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label">
-                        Pickup date<span className="required">*</span>
+                        {t("common.pickupDate")}<span className="required">*</span>
                       </label>
                       <DatePicker
                         selected={fromDate ? new Date(fromDate) : null}
@@ -307,7 +309,7 @@ function CowDungBookYourService() {
               </div>
               <div className="available-service-btn">
                 <button type="submit" disabled={!selectedService || disable}>
-                  {disable ? "Loading..." : "See Available Service"}
+                  {disable ? t("common.loading") : t("common.seeAvailableService")}
                 </button>
               </div>
             </form>
@@ -317,11 +319,8 @@ function CowDungBookYourService() {
         {showSuccessModal && (
           <div className="custom-modal-backdrop">
             <div className="custom-modal">
-              <h4>Request Created</h4>
-              <p>
-                Your Cow dung requirement order has been generated, we will notify you with the
-                vendor's offer, you can then select the best offer.
-              </p>
+              <h4>{t("cowDung.requestCreated")}</h4>
+              <p>{t("cowDung.successMessage")}</p>
               <button
                 className="btn btn-primary"
                 onClick={() => {
@@ -329,7 +328,7 @@ function CowDungBookYourService() {
                   navigate("/dashboard");
                 }}
               >
-                OK
+                {t("common.ok")}
               </button>
             </div>
           </div>

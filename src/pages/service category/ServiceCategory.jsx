@@ -11,10 +11,11 @@ import compundBuilder from "../../assets/images/compund-builder.png";
 import DroneServices from "../../assets/images/drone-services.png";
 import augerServices from "../../assets/images/auger-services.png";
 import TopbarModal from "../../components/common components/TopbarModal";
-
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 function ServiceCategory() {
+  const { t } = useTranslation();
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -23,11 +24,11 @@ function ServiceCategory() {
           <section>
             <div className="headline-sort">
               <div>
-                <h4 className="heading">Service Category</h4>
+                <h4 className="heading">{t("dashboard.serviceCategory")}</h4>
               </div>
               <div>
                 <a className="hide seemore" href="#">
-                  See More
+                  {t("dashboard.seeMore")}
                 </a>
               </div>
             </div>
@@ -39,25 +40,25 @@ function ServiceCategory() {
                     <div className="service-card">
                       <Link to="land-management">
                         <div className="card-image-part">
-                          <img src={landManagementTractorServices} alt="Tractor" />
+                          <img src={landManagementTractorServices} alt={t("dashboard.landManagement")} />
                         </div>
-                        <div className="label">Land Management / Tractor Services</div>
+                        <div className="label">{t("dashboard.landManagement")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="harvestor">
                         <div className="card-image-part">
-                          <img src={harvester} alt="Harvester" />
+                          <img src={harvester} alt={t("dashboard.harvester")} />
                         </div>
-                        <div className="label">Harvester</div>
+                        <div className="label">{t("dashboard.harvester")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="cattle-purchase-sale">
                         <div className="card-image-part">
-                          <img src={cattlePurchageSale} alt="Cattle" />
+                          <img src={cattlePurchageSale} alt={t("dashboard.cattlePurchaseSale")} />
                         </div>
-                        <div className="label">Cattle Purchase &amp; Sale</div>
+                        <div className="label">{t("dashboard.cattlePurchaseSale")}</div>
                       </Link>
                     </div>
                   </div>
@@ -72,25 +73,25 @@ function ServiceCategory() {
                     <div className="service-card">
                       <Link to="earth-movers">
                         <div className="card-image-part">
-                          <img src={excavation} alt="Earth Movers" />
+                          <img src={excavation} alt={t("dashboard.earthMovers")} />
                         </div>
-                        <div className="label">Earth Movers</div>
+                        <div className="label">{t("dashboard.earthMovers")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="electrostatic-spraying">
                         <div className="card-image-part">
-                          <img src={electrostatic} alt="Electrostatic Spraying" />
+                          <img src={electrostatic} alt={t("dashboard.electrostaticSpraying")} />
                         </div>
-                        <div className="label">Electrostatic Spraying</div>
+                        <div className="label">{t("dashboard.electrostaticSpraying")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="labour-requirement">
                         <div className="card-image-part">
-                          <img src={laborRequirement} alt="labour" />
+                          <img src={laborRequirement} alt={t("dashboard.labourRequirement")} />
                         </div>
-                        <div className="label">Labour Requirement</div>
+                        <div className="label">{t("dashboard.labourRequirement")}</div>
                       </Link>
                     </div>
                   </div>
@@ -105,25 +106,25 @@ function ServiceCategory() {
                     <div className="service-card">
                       <Link to="transportation">
                         <div className="card-image-part">
-                          <img src={transportation} alt="Transportation" />
+                          <img src={transportation} alt={t("dashboard.transportation")} />
                         </div>
-                        <div className="label">Transportation</div>
+                        <div className="label">{t("dashboard.transportation")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="borewell">
                         <div className="card-image-part">
-                          <img src={borewellConstruction} alt="Borewell Construction" />
+                          <img src={borewellConstruction} alt={t("dashboard.borewellConstruction")} />
                         </div>
-                        <div className="label">Borewell Construction</div>
+                        <div className="label">{t("dashboard.borewellConstruction")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="cow-dung-supply">
                         <div className="card-image-part">
-                          <img src={cowDunkSupply} alt="Cow Dung Supply" />
+                          <img src={cowDunkSupply} alt={t("dashboard.cowDungPoultryWaste")} />
                         </div>
-                        <div className="label">Cow Dung/Poultry Waste</div>
+                        <div className="label">{t("dashboard.cowDungPoultryWaste")}</div>
                       </Link>
                     </div>
                   </div>
@@ -138,25 +139,25 @@ function ServiceCategory() {
                     <div className="service-card compound-wall">
                       <Link to="compound-wall-builder">
                         <div className="card-image-part">
-                          <img src={compundBuilder} alt="Compound Wall Builder" />
+                          <img src={compundBuilder} alt={t("dashboard.compoundWallBuilder")} />
                         </div>
-                        <div className="label">Compound Wall Builder</div>
+                        <div className="label">{t("dashboard.compoundWallBuilder")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="drone-service">
                         <div className="card-image-part">
-                          <img src={DroneServices} alt="Drone Services" />
+                          <img src={DroneServices} alt={t("dashboard.droneServices")} />
                         </div>
-                        <div className="label">Drone Services</div>
+                        <div className="label">{t("dashboard.droneServices")}</div>
                       </Link>
                     </div>
                     <div className="service-card">
                       <Link to="auger-service">
                         <div className="card-image-part">
-                          <img src={augerServices} alt="Auger Services" />
+                          <img src={augerServices} alt={t("dashboard.augerServices")} />
                         </div>
-                        <div className="label">Auger Services</div>
+                        <div className="label">{t("dashboard.augerServices")}</div>
                       </Link>
                     </div>
                   </div>

@@ -4,9 +4,11 @@ import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addReview } from "../../reduxtoolkit/slices/dashboard/classifiedSection";
+import { useTranslation } from "react-i18next";
 
 function AddReview({ show, onHide, onSuccess, providerId }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { addLoading } = useSelector((s) => s.services.ClassifiedSectionMgmtSlice);
 
   const [rating, setRating] = useState(0);
@@ -14,23 +16,23 @@ function AddReview({ show, onHide, onSuccess, providerId }) {
 
   const handleSubmit = async () => {
     if (!rating) {
-      toast.error("Please select a rating");
+      toast.error(t("classified.pleaseSelectRating"));
       return;
     }
 
     if (!feedback.trim()) {
-      toast.error("Please write a review");
+      toast.error(t("classified.pleaseWriteReview"));
       return;
     }
     try {
       const payload = { providerId, rating, feedbacks: feedback.trim() };
 
       await dispatch(addReview(payload)).unwrap();
-      toast.success("Review added successfully");
+      toast.success(t("classified.reviewAddedSuccess"));
       onSuccess?.();
       handleClose();
     } catch (err) {
-      toast.error(err?.message || "Failed to submit review");
+      toast.error(err?.message || t("classified.failedToSubmitReview"));
     }
   };
 
@@ -47,7 +49,7 @@ function AddReview({ show, onHide, onSuccess, providerId }) {
       </div>
 
       <div className="modal-body">
-        <h4 className="modal-title text-center main-heading mb-4">How is the Product</h4>
+        <h4 className="modal-title text-center main-heading mb-4">{t("classified.howIsTheProduct")}</h4>
 
         <div className="star-rating">
           {[1, 2, 3, 4, 5].map((star) => (
@@ -70,7 +72,7 @@ function AddReview({ show, onHide, onSuccess, providerId }) {
             maxLength={100}
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Write a Review..."
+            placeholder={t("classified.writeReview")}
           />
           <div className="text-end small mt-1">{feedback.length}/100</div>
         </div>
@@ -78,7 +80,7 @@ function AddReview({ show, onHide, onSuccess, providerId }) {
 
       <div className="modal-footer yellow-btn">
         <button onClick={handleSubmit} disabled={addLoading}>
-          {addLoading ? "Posting..." : "Post Review"}
+          {addLoading ? t("classified.posting") : t("classified.postReview")}
         </button>
       </div>
     </Modal>

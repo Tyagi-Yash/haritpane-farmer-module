@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useBorewellBooking } from "../../../hooks/useBorwellBooking";
 
@@ -16,6 +17,7 @@ import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
 
 function BorwellVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -39,16 +41,14 @@ function BorwellVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("common.vendorDetails")}
             navigate={`/service-category/borewell/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
           />
           <div className="dashboard">
             {!vendor ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
-              </p>
+              <p style={{ color: "gray", marginTop: "10px" }}>{t("common.noVendorData")}</p>
             ) : (
               <>
                 <VendorHeader
@@ -64,7 +64,7 @@ function BorwellVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Borewell"}
+                          serviceName={t("borewell.borewell")}
                         />
                       </div>
                       <div className="col">

@@ -1,15 +1,17 @@
+import { useTranslation } from "react-i18next";
 import Time12HourPicker from "../../common components/Time12HourPicker";
 import DatePicker from "react-datepicker";
 import { format } from "date-fns";
 
 export default function DateTimeSection({ formState = {}, errors = {}, onChange = () => {} }) {
+  const { t } = useTranslation();
   const { fromDate = "", tillDate = "", startTime = "" } = formState || {};
 
   return (
     <>
       <div className="col-md-6">
         <label className="form-label">
-          From date<span className="required">*</span>
+          {t("common.fromDate")}<span className="required">*</span>
         </label>
         <DatePicker
           selected={fromDate ? new Date(fromDate) : null}
@@ -30,7 +32,7 @@ export default function DateTimeSection({ formState = {}, errors = {}, onChange 
 
       <div className="col-md-6">
         <label className="form-label">
-          Till date<span className="required">*</span>
+          {t("common.tillDate")}<span className="required">*</span>
         </label>
         <DatePicker
           selected={tillDate ? new Date(tillDate) : null}
@@ -51,7 +53,7 @@ export default function DateTimeSection({ formState = {}, errors = {}, onChange 
 
       <div className="col-md-6">
         <label className="form-label">
-          Start time<span className="required">*</span>
+          {t("common.startTime")}<span className="required">*</span>
         </label>
         <Time12HourPicker
           value={startTime}

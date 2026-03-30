@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 function DroneProductInformation({ vendor }) {
+  const { t } = useTranslation();
   const basicInfo = vendor?.basicInfo || {};
 
   const renderField = (label, value) => {
@@ -15,11 +18,11 @@ function DroneProductInformation({ vendor }) {
 
   return (
     <div className="option-wrapper mb-0">
-      <h5 className="normal-heading">Product Information</h5>
-      {renderField("Service Address", basicInfo?.adderess)}
-      {renderField("Number of Drones", vendor?.numberOfDrones)}
+      <h5 className="normal-heading">{t("drone.productInformation")}</h5>
+      {renderField(t("drone.serviceAddress"), basicInfo?.adderess)}
+      {renderField(t("drone.numberOfDrones"), vendor?.numberOfDrones)}
       {renderField(
-        "Crop Under Cultivation",
+        t("drone.cropUnderCultivationLabel"),
         vendor?.cropUnderCultivation && formatText(vendor.cropUnderCultivation),
       )}
     </div>

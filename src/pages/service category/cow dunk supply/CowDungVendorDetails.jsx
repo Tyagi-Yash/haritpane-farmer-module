@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useCowDungBooking } from "../../../hooks/useCowDungBooking";
 
@@ -17,6 +18,7 @@ import ReviewTab from "../../../components/common components/ReviewTab";
 import SuccessModal from "../../../components/common components/SuccessModal";
 
 function CowDungVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -41,7 +43,7 @@ function CowDungVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox
-            title="Vendor Details"
+            title={t("common.vendorDetails")}
             navigate={`/service-category/cow-dung-supply/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
@@ -49,9 +51,7 @@ function CowDungVendorDetails() {
 
           <div className="dashboard">
             {!vendor ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
-              </p>
+              <p style={{ color: "gray", marginTop: "10px" }}>{t("common.noVendorData")}</p>
             ) : (
               <>
                 <VendorHeader
@@ -67,7 +67,7 @@ function CowDungVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Cow Dung/Poultry Waste"}
+                          serviceName={t("cowDung.cowDungPoultryWaste")}
                         />
                       </div>
                       <div className="col">

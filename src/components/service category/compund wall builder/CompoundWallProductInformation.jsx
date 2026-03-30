@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 function CompoundWallProductInformation({ vendor }) {
+  const { t } = useTranslation();
   const addressInfo = vendor?.addressInfo || {};
   const materialInfo = vendor?.compoundMaterialsInfo || {};
 
@@ -13,9 +16,9 @@ function CompoundWallProductInformation({ vendor }) {
 
   return (
     <div className="option-wrapper mb-0">
-      <h5 className="normal-heading">Product Information</h5>
-      {renderField("Service Address", addressInfo?.street)}
-      {renderField("Material Type", materialInfo?.materialName)}
+      <h5 className="normal-heading">{t("compoundWall.productInformation")}</h5>
+      {renderField(t("compoundWall.serviceAddress"), addressInfo?.street)}
+      {renderField(t("compoundWall.materialType"), materialInfo?.materialName)}
     </div>
   );
 }

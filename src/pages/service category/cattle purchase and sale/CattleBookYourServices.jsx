@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import cattleIcon from "../../../assets/images/cattle-icon.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
@@ -13,6 +14,7 @@ import {
 } from "../../../constants/service category/cattle purchase and sale/cattleAndBreedData";
 
 function CattleBookYourServices() {
+  const { t } = useTranslation();
   const filters = useSelector((state) => state.services.CattleServiceMgmtSlice.filters);
   const defaultForm = {
     address: "",
@@ -35,13 +37,13 @@ function CattleBookYourServices() {
   const validateForm = () => {
     let newErrors = {};
 
-    if (!address || !lat || !lng) newErrors.address = "Please select a valid location.";
+    if (!address || !lat || !lng) newErrors.address = t("harvester.selectValidLocation");
 
     if (!sectectCattle) {
-      newErrors.sectectCattle = "*Please select a Cattle";
+      newErrors.sectectCattle = t("validation.specificServiceRequired");
     }
     if (sectectCattle && breedOptions[sectectCattle]?.length > 0 && !selectBreed) {
-      newErrors.selectBreed = "*Please select a Breed";
+      newErrors.selectBreed = t("cattle.selectBreedRequired") || "*Please select a Breed";
     }
 
     setErrors(newErrors);
@@ -63,7 +65,7 @@ function CattleBookYourServices() {
       const query = new URLSearchParams(formdata).toString();
       navigate(`available-services?${query}`);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     }
   };
 
@@ -72,7 +74,7 @@ function CattleBookYourServices() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Cattle Purchase & Sale"
+          title={t("cattle.cattlePurchaseSale")}
           secImage={cattleIcon}
           navigate="/service-category"
         />
@@ -81,7 +83,7 @@ function CattleBookYourServices() {
             <form id="bookingForm" onSubmit={handleSubmit}>
               <div className="option-wrapper">
                 <div className="form-section mb-4">
-                  <h4 className="book-heading">Book your service</h4>
+                  <h4 className="book-heading">{t("cattle.bookYourService")}</h4>
                   <div className="row g-3">
                     <div className="col-md-4">
                       <LocationInput
@@ -89,7 +91,7 @@ function CattleBookYourServices() {
                         onChange={(val) => setFormState((prev) => ({ ...prev, address: val }))}
                         onSelectLocation={handleSelectLocation}
                         error={errors.address}
-                        placeholder="Farm Location*"
+                        placeholder={t("cattle.farmLocation")}
                       />
                     </div>
                     <div className="col-md-4">
@@ -104,7 +106,7 @@ function CattleBookYourServices() {
                         }}
                       >
                         <Dropdown.Toggle className="btn w-100 dropdown-toggle">
-                          {sectectCattle || "Select Cattle"}
+                          {sectectCattle ? t(`cattle.${sectectCattle.toLowerCase()}`) : t("cattle.selectCattle")}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
@@ -115,9 +117,9 @@ function CattleBookYourServices() {
                               className="custom-item"
                             >
                               <span className="Icon">
-                                <img src={cattle.image} alt={cattle.name} />
+                                <img src={cattle.image} alt={t(`cattle.${cattle.name.toLowerCase()}`)} />
                               </span>
-                              <span className="DText">{cattle.name}</span>
+                              <span className="DText">{t(`cattle.${cattle.name.toLowerCase()}`)}</span>
                             </Dropdown.Item>
                           ))}
                         </Dropdown.Menu>
@@ -135,7 +137,7 @@ function CattleBookYourServices() {
                           disabled={!sectectCattle || breedOptions[sectectCattle]?.length === 0}
                           className="btn w-100 dropdown-toggle"
                         >
-                          {selectBreed || "Select Breed"}
+                          {selectBreed || t("cattle.selectBreed")}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu as="ul">
@@ -158,7 +160,7 @@ function CattleBookYourServices() {
               </div>
               <div className="text-center">
                 <div className="available-service-btn">
-                  <button type="submit">See Available Service</button>
+                  <button type="submit">{t("cattle.seeAvailableService")}</button>
                 </div>
               </div>
             </form>

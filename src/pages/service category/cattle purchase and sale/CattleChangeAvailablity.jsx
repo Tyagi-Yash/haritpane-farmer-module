@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import sortArrowDown from "../../../assets/images/sort-arrow-down.svg";
 import filter from "../../../assets/images/filter.png";
@@ -14,6 +15,7 @@ import { Commonpagination } from "../../../components/common components/Commonpa
 import { formatPrice } from "../../../utils/formatPrice";
 
 function CattleChangeAvailablity() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -28,7 +30,7 @@ function CattleChangeAvailablity() {
   const [currentPage, setCurrentPage] = useState(paginationData.page || 1);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSort, setSelectedSort] = useState(
-    sortByRating === true ? "Top Rated" : "Nearest First",
+    sortByRating === true ? "topRated" : "nearestFirst",
   );
   const toggleSortMenu = () => {
     setIsOpen((prev) => !prev);
@@ -56,12 +58,12 @@ function CattleChangeAvailablity() {
     const params = {
       ...filters,
       page: currentPage,
-      sortByRating: selectedSort === "Top Rated" ? true : false,
+      sortByRating: selectedSort === "topRated",
     };
     try {
       await dispatch(getAllServicesOfCattle(params)).unwrap();
     } catch {
-      toast("Failed to load services");
+      toast(t("common.somethingWentWrong"));
     }
   };
   useEffect(() => {
@@ -76,7 +78,7 @@ function CattleChangeAvailablity() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="Cattle Purchase & Sale"
+          title={t("cattle.cattlePurchaseSale")}
           secImage={cattleIcon}
           navigate="/service-category/cattle-purchase-sale"
         />
@@ -86,13 +88,13 @@ function CattleChangeAvailablity() {
               <VendorCardSkeleton count={5} />
             ) : services.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No services found for the selected filters.
+                {t("common.noServicesFound")}
               </p>
             ) : (
               <>
                 <div className="row align-items-end ">
                   <div className="col-md-6 mb-4">
-                    <h3 className="main-heading">Available Vendor</h3>
+                    <h3 className="main-heading">{t("common.availableVendor")}</h3>
                   </div>
                   <div className="col-md-6 mb-3">
                     <div className="row align-items-end">
@@ -100,7 +102,11 @@ function CattleChangeAvailablity() {
                         <div className="sort-box" id="sortBox">
                           <div className="sort-toggle" onClick={toggleFilterMenu}>
                             <span>
-                              <span className="sort-label">{selectedFilter}</span>
+                              <span className="sort-label">
+                                {selectedFilter === "Filter"
+                                  ? t("cattle.filter")
+                                  : t(`cattle.${selectedFilter.toLowerCase()}`)}
+                              </span>
                               <img src={filter} alt="Sort Icon" />
                             </span>
                           </div>
@@ -110,31 +116,31 @@ function CattleChangeAvailablity() {
                                 className="sort-option"
                                 onClick={() => selectFilterOption("Breed")}
                               >
-                                Breed
+                                {t("cattle.breed")}
                               </div>
                               <div
                                 className="sort-option"
                                 onClick={() => selectFilterOption("Age")}
                               >
-                                Age
+                                {t("cattle.age")}
                               </div>
                               <div
                                 className="sort-option"
                                 onClick={() => selectFilterOption("Price")}
                               >
-                                Price
+                                {t("cattle.price")}
                               </div>
                               <div
                                 className="sort-option"
                                 onClick={() => selectFilterOption("State")}
                               >
-                                State
+                                {t("cattle.state")}
                               </div>
                               <div
                                 className="sort-option"
                                 onClick={() => selectFilterOption("Lactation")}
                               >
-                                Lactation
+                                {t("cattle.lactation")}
                               </div>
                             </div>
                           )}
@@ -144,7 +150,11 @@ function CattleChangeAvailablity() {
                         <div className="sort-box" id="sortBox">
                           <div className="sort-toggle" onClick={toggleSortMenu}>
                             <span>
-                              <span className="sort-label">{selectedSort}</span>
+                              <span className="sort-label">
+                                {selectedSort === "topRated"
+                                  ? t("common.topRated")
+                                  : t("common.nearestFirst")}
+                              </span>
                               <img src={sortArrowDown} alt="Sort Icon" />
                             </span>
                           </div>
@@ -152,15 +162,15 @@ function CattleChangeAvailablity() {
                             <div className="sort-menu">
                               <div
                                 className="sort-option"
-                                onClick={() => selectSortOption("Top Rated")}
+                                onClick={() => selectSortOption("topRated")}
                               >
-                                Top Rated
+                                {t("common.topRated")}
                               </div>
                               <div
                                 className="sort-option"
-                                onClick={() => selectSortOption("Nearest First")}
+                                onClick={() => selectSortOption("nearestFirst")}
                               >
-                                Nearest First
+                                {t("common.nearestFirst")}
                               </div>
                             </div>
                           )}
@@ -170,7 +180,7 @@ function CattleChangeAvailablity() {
                   </div>
                 </div>
 
-                <h6 className="form-label-max">Choose from in your radius</h6>
+                <h6 className="form-label-max">{t("common.chooseRadius")}</h6>
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
@@ -186,7 +196,9 @@ function CattleChangeAvailablity() {
                         />
 
                         <div className="service-text">
-                          <div className="title">{service?.businessName || "No description"}</div>
+                          <div className="title">
+                            {service?.businessName || t("common.noDescription")}
+                          </div>
                           <div className="rating">
                             <span>
                               <i className="fa-solid fa-star star-icon" />
@@ -197,7 +209,7 @@ function CattleChangeAvailablity() {
                       </div>
                       <div className="price-info">
                         <h6>₹ {formatPrice(service?.payableAmount ?? 0)}</h6>
-                        <small>Additional charges might apply</small>
+                        <small>{t("common.additionalCharges")}</small>
                       </div>
                     </div>
                   </Link>

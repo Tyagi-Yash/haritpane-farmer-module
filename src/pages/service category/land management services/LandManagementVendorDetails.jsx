@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { useLandManagementBooking } from "../../../hooks/useLandManagementBooking";
 
@@ -17,6 +18,7 @@ import SuccessModal from "../../../components/common components/SuccessModal";
 import EquipmentDetails from "../../../components/service category/land management/EquipmentDetails";
 
 function LandManagementVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -41,7 +43,7 @@ function LandManagementVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox
-            title="Vendor Details"
+            title={t("common.vendorDetails")}
             navigate={`/service-category/land-management/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
@@ -50,7 +52,7 @@ function LandManagementVendorDetails() {
           <div className="dashboard">
             {!vendor ? (
               <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
+                {t("common.noVendorData")}
               </p>
             ) : (
               <>
@@ -67,7 +69,7 @@ function LandManagementVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Land Management"}
+                          serviceName={t("dashboard.landManagementStatus")}
                         />
                         <EquipmentDetails vendor={vendor} />
                       </div>

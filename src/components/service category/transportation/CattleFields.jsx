@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import DecimalInput from "../../common components/DecimalInput";
 import IntegerInput from "../../common components/IntegerInput";
 
@@ -7,15 +8,17 @@ export default function CattleFields({
   errors = {},
   onChange = () => {},
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="col-md-6">
         <label className="form-label">
-          Number of cattle<span className="required">*</span>
+          {t("transportation.numberOfCattle")}<span className="required">*</span>
         </label>
         <IntegerInput
           className="form-control"
-          placeholder="Number of cattle"
+          placeholder={t("transportation.numberOfCattle")}
           value={numberOfCattle}
           onChange={(val) => onChange("numberOfCattle", val)}
         />
@@ -24,11 +27,11 @@ export default function CattleFields({
 
       <div className="col-md-6">
         <label className="form-label">
-          Weight of cattle<span className="required">*</span>
+          {t("transportation.weightOfCattle")}<span className="required">*</span>
         </label>
         <DecimalInput
           className="form-control"
-          placeholder="Weight of cattle(in Kg)"
+          placeholder={t("transportation.weightOfCattleKg")}
           value={cattleWeight}
           maxDecimals={2}
           onChange={(val) => onChange("cattleWeight", val)}

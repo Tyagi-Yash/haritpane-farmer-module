@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import locationBlack from "../../assets/images/location-black.svg";
+import { useTranslation } from "react-i18next";
 
 Modal.setAppElement("#root");
 
@@ -12,8 +13,11 @@ export default function LocationInput({
   onChange = () => {},
   onSelectLocation = () => {},
   error = "",
-  placeholder = "location*",
+  placeholder,
 }) {
+  const { t } = useTranslation();
+  const inputPlaceholder = placeholder || `${t("classified.location")}*`;
+  
   const apiKey = "AIzaSyCg61BL0ZrrrlwgGk9F-239jx_xXFsI76Y";
   const { isLoaded, loadError } = useJsApiLoader({ googleMapsApiKey: apiKey, libraries });
 
@@ -306,10 +310,10 @@ export default function LocationInput({
           className="form-control"
           value={internalInput}
           onChange={handleInputChange}
-          placeholder={placeholder}
+          placeholder={inputPlaceholder}
         />
         <img src={locationBlack} alt="" className="location-icon" />
-        <p className="error-text">Error loading map services</p>
+        <p className="error-text">{t("classified.errorLoadingMap")}</p>
       </div>
     );
   }
@@ -323,7 +327,7 @@ export default function LocationInput({
           value={internalInput}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder={placeholder}
+          placeholder={inputPlaceholder}
           style={{ flex: 1 }}
           aria-autocomplete="list"
           aria-expanded={suggestions.length > 0}
@@ -332,7 +336,7 @@ export default function LocationInput({
         <button
           type="button"
           onClick={openMapModal}
-          title="Pick location on map"
+          title={t("classified.selectLocation")}
           style={{
             height: 40,
             width: 40,
@@ -355,7 +359,7 @@ export default function LocationInput({
       >
         {suggestLoading && (
           <div style={{ padding: 8, background: "#fff", border: "1px solid #e5e7eb" }}>
-            Loading...
+            {t("common.loading")}
           </div>
         )}
         {!suggestLoading &&
@@ -416,7 +420,7 @@ export default function LocationInput({
               borderBottom: "1px solid #eee",
             }}
           >
-            <strong>Select location</strong>
+            <strong>{t("classified.selectLocation")}</strong>
             <div>
               <button
                 onClick={() => setOpenMap(false)}
@@ -428,7 +432,7 @@ export default function LocationInput({
                   padding: "5px",
                 }}
               >
-                Cancel
+                {t("common.cancel")}
               </button>
               <button
                 onClick={handleSaveFromMap}
@@ -439,7 +443,7 @@ export default function LocationInput({
                   padding: "5px",
                 }}
               >
-                Save
+                {t("common.save")}
               </button>
             </div>
           </div>
@@ -471,7 +475,7 @@ export default function LocationInput({
                   justifyContent: "center",
                 }}
               >
-                Loading map...
+                {t("classified.loadingMap")}
               </div>
             )}
           </div>

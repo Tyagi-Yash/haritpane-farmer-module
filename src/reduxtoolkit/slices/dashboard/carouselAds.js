@@ -3,28 +3,40 @@ import axios from "../../../config/config";
 
 export const getAllAdsForFarmer = createAsyncThunk(
   "CarouselAds/getAllAdsForFarmer",
-  async (_, { rejectWithValue }) => {
+  async (params = {}, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/getAllAdsForFarmer");
+      const response = await axios.get("/getAllAdsForFarmer", { params });
 
-      if (response.status === 200) {
-        return {
-          status: response.status,
-          data: response.data,
-        };
-      } else {
-        return rejectWithValue({
-          status: response.status,
-          data: response.data,
-        });
-      }
+      return {
+        status: response.status,
+        data: response.data,
+      };
     } catch (err) {
       return rejectWithValue({
         status: err.response?.status || 500,
         data: err.response?.data || { message: "Network or server error" },
       });
     }
-  }
+  },
+);
+
+export const trackAdClick = createAsyncThunk(
+  "CarouselAds/trackAdClick",
+  async (adsId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/getOneAdForFarmer?adsId=${adsId}`);
+
+      return {
+        status: response.status,
+        data: response.data,
+      };
+    } catch (err) {
+      return rejectWithValue({
+        status: err.response?.status || 500,
+        data: err.response?.data || { message: "Tracking failed" },
+      });
+    }
+  },
 );
 
 const initialState = {

@@ -90,7 +90,7 @@ function HarvesterDetails({ data }) {
                 <p>{t("progress.businessName")}: {service?.businessName || "N/A"}</p>
                 <br />
                 <p>{t("progress.farmLocation")}: {data?.addressOfFarm || "N/A"}</p>
-                <p>Crop Type: {data?.typeOfCrop || "N/A"}</p>
+                <p>{t("progress.cropType")}: {data?.typeOfCrop || "N/A"}</p>
                 {/* <p>
                   Farm Area:{" "}
                   {data?.areaUnderCultivation ? `${data.areaUnderCultivation} Acre` : "N/A"}

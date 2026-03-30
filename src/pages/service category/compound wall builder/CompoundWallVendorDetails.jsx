@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { usecompoundWallBooking } from "../../../hooks/useCompoundWallBooking";
 
@@ -17,6 +18,7 @@ import SuccessModal from "../../../components/common components/SuccessModal";
 import CompoundWallProductInformation from "../../../components/service category/compund wall builder/CompoundWallProductInformation";
 
 function CompoundWallVendorDetails() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("service");
@@ -40,16 +42,14 @@ function CompoundWallVendorDetails() {
         <div className="WrapperBox">
           <TopbarModal
             titleBox={true}
-            title="Vendor Details"
+            title={t("common.vendorDetails")}
             navigate={`/service-category/compound-wall-builder/available-services?${new URLSearchParams(
               filters,
             ).toString()}`}
           />
           <div className="dashboard">
             {!vendor ? (
-              <p style={{ color: "gray", marginTop: "10px" }}>
-                No vendor data available. Please go back and select a vendor again.
-              </p>
+              <p style={{ color: "gray", marginTop: "10px" }}>{t("common.noVendorData")}</p>
             ) : (
               <>
                 <VendorHeader
@@ -65,7 +65,7 @@ function CompoundWallVendorDetails() {
                       <div className="col">
                         <BookingSummary
                           businessName={vendor.businessName}
-                          serviceName={"Compound Wall Builder"}
+                          serviceName={t("compoundWall.compoundWallBuilder")}
                         />
                         <CompoundWallProductInformation vendor={vendor} />
                       </div>

@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 const PriceBreakdown = ({
   boreDigging,
   additionalCharges,
@@ -7,6 +9,7 @@ const PriceBreakdown = ({
   motorInfo = [],
   pipeCharges,
 }) => {
+  const { t } = useTranslation();
   const formatPrice = (amount) => {
     const num = Number(amount ?? 0);
     return `₹ ${num.toLocaleString("en-IN", {
@@ -29,21 +32,25 @@ const PriceBreakdown = ({
     <div className="option-wrapper bookingPriceTable mb-0">
       {(motorInfo.length > 0 || pipeCharges) && (
         <>
-          <h5 className="normal-heading">Motor & Pipe Details</h5>
+          <h5 className="normal-heading">{t("borewell.motorPipeDetails")}</h5>
           <table className="table table-sm mb-4">
             <tbody>
               {motorInfo.length > 0 &&
                 motorInfo.map((motor) => (
                   <tr key={motor?._id}>
-                    <td>Motor {motor.motorPower || "-"} HP</td>
+                    <td>
+                      {t("borewell.motor")} {motor.motorPower || "-"} {t("borewell.hp")}
+                    </td>
                     <td>{motor.motorCost ? formatPrice(motor.motorCost) : "-"}</td>
                   </tr>
                 ))}
 
               {pipeCharges && (
                 <tr>
-                  <td>Casing Pipe Charges</td>
-                  <td>{formatPrice(pipeCharges)} /ft</td>
+                  <td>{t("borewell.casingPipeCharges")}</td>
+                  <td>
+                    {formatPrice(pipeCharges)} {t("common.perFeet")}
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -52,15 +59,16 @@ const PriceBreakdown = ({
       )}
       <br />
 
-      <h5 className="normal-heading">Tentative Cost</h5>
+      <h5 className="normal-heading">{t("common.tentativeCost")}</h5>
 
       <table className="table table-borderless">
         <tbody>
           <tr>
             <td>
-              Bore Digging Charges
+              {t("borewell.boreDiggingCharges")}
               <div className="text-muted small">
-                {formatPrice(boreRatePerFt)} (Per Ft) × {depthOfBorewell.toFixed(2)} ft
+                {formatPrice(boreRatePerFt)} ({t("common.perFeet")}) × {depthOfBorewell.toFixed(2)}{" "}
+                {t("common.feet")}
               </div>
             </td>
             <td>{formatPrice(boreAmount)}</td>
@@ -69,10 +77,10 @@ const PriceBreakdown = ({
           {transportCharge > 0 && (
             <tr>
               <td>
-                Transportation Charges
+                {t("common.transportationCharges")}
                 <div className="text-muted small">
-                  {formatPrice(transportCharge)} (Per Km) ×{" "}
-                  {Number(distanceBeyondRadius ?? 0).toFixed(2)} Km
+                  {formatPrice(transportCharge)} ({t("common.perKm")}) × {Number(distanceBeyondRadius ?? 0).toFixed(2)}{" "}
+                  {t("common.km")}
                 </div>
               </td>
               <td>{formatPrice(overallTransportCharge)}</td>
@@ -82,7 +90,7 @@ const PriceBreakdown = ({
 
         <tfoot>
           <tr className="fw-bold border-top">
-            <td>Total Amount to Pay</td>
+            <td>{t("common.totalAmountToPay")}</td>
             <td>{formatPrice(payableAmount)}</td>
           </tr>
         </tfoot>

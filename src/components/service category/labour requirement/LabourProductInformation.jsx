@@ -1,5 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 function LabourProductInformation({ vendor }) {
-  const basicInfo = vendor?.basicInfo || {};
+  const { t } = useTranslation();
   const labourInfo = vendor?.labourInfo || {};
 
   const renderField = (label, value) => {
@@ -12,18 +14,13 @@ function LabourProductInformation({ vendor }) {
     );
   };
 
-  const formatText = (text) => text?.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-
   return (
     <div className="option-wrapper mb-0">
-      <h5 className="normal-heading">Product Information</h5>
-      {renderField("Service Address", basicInfo?.address)}
-      {renderField(
-        "Type of Labour",
-        labourInfo?.typeofLabourProvided && formatText(labourInfo.typeofLabourProvided),
-      )}
-      {renderField("Role Type", vendor?.selectRole && formatText(vendor.selectRole))}
-      {renderField("Number of Labour Supervision", labourInfo?.numberofLabourSupervision)}
+      <h5 className="normal-heading">{t("progress.productInformation")}</h5>
+      {renderField(t("labour.labourFor"), t(`labour.${labourInfo?.typeofLabourProvided}`))}
+      {renderField(t("labour.numberOfLabour"), labourInfo?.numberofLabour)}
+      {renderField(t("harvester.typeOfCrop"), labourInfo?.typeOfCrop)}
+      {renderField(t("harvester.areaUnderCultivation"), labourInfo?.areaUnderCultivation)}
     </div>
   );
 }

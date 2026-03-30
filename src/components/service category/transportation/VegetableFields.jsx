@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import DecimalInput from "../../common components/DecimalInput";
 
 export default function VegetableFields({
@@ -6,11 +7,13 @@ export default function VegetableFields({
   errors = {},
   onChange = () => {},
 }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="col-md-6">
         <label className="form-label">
-          Vegetable Type<span className="required">*</span>
+          {t("transportation.vegetableType")}<span className="required">*</span>
         </label>
         <select
           className="form-control"
@@ -18,22 +21,22 @@ export default function VegetableFields({
           onChange={(e) => onChange("vegetableType", e.target.value)}
         >
           <option value="" disabled>
-            Select type of vegetable
+            {t("transportation.selectVegetableType")}
           </option>
           <option value="leafy_stack" className="form-control">
-            Leafy Vegetable- Stack
+            {t("transportation.leafyStack")}
           </option>
           <option value="tomato_cucumber_crate" className="form-control">
-            Tomato, Cucumber- Crate
+            {t("transportation.tomatoCucumberCrate")}
           </option>
           <option value="onion_potato_stack" className="form-control">
-            Onion, Potato- Stack
+            {t("transportation.onionPotatoStack")}
           </option>
           <option value="cabbage_cauliflower_mesh_sack" className="form-control">
-            Cabbage, Cauliflower- Mesh Sack
+            {t("transportation.cabbageCauliflowerMeshSack")}
           </option>
           <option value="grains_sack" className="form-control">
-            Grains- Sack
+            {t("transportation.grainsSack")}
           </option>
         </select>
         {errors.vegetableType && <p className="error-text">{errors.vegetableType}</p>}
@@ -41,11 +44,11 @@ export default function VegetableFields({
 
       <div className="col-md-6">
         <label className="form-label">
-          Weight of Vegetable<span className="required">*</span>
+          {t("transportation.weightOfVegetable")}<span className="required">*</span>
         </label>
         <DecimalInput
           className="form-control"
-          placeholder="Weight of Vegetable(in Kg)"
+          placeholder={t("transportation.weightOfVegetableKg")}
           value={vegetableWeight}
           maxDecimals={2}
           onChange={(val) => onChange("vegetableWeight", val)}
