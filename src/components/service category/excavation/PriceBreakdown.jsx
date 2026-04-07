@@ -35,7 +35,7 @@ const PriceBreakdown = ({
               {t("common.serviceCharges")}
               {priceType === "Hourly" && (
                 <div className="text-muted small">
-                  {formatPrice(price)} ({t("common.perHour")}) × {formatHoursMinutes(units)}
+                  {formatPrice(price)} ({t("common.perHour")}) × {formatHoursMinutes(units, t)}
                 </div>
               )}
               {priceType === "Daily" && (

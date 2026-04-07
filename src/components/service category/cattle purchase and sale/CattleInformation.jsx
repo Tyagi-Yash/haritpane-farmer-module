@@ -20,9 +20,9 @@ function CattleInformation({ vendor }) {
     <div className="option-wrapper booking-area mb-0">
       <h6 className="normal-heading">{t("cattle.cattleInformation")}</h6>
 
-      {renderField(t("cattle.cattleName"), cattleInfo?.cattleName)}
-      {renderField(t("cattle.breed"), cattleInfo?.cattleBreed)}
-      {renderField(t("cattle.gender"), cattleInfo?.cattleGender && formatText(cattleInfo.cattleGender))}
+      {renderField(t("cattle.cattleName"), cattleInfo?.cattleName && t(`cattle.${cattleInfo.cattleName.toLowerCase()}`))}
+      {renderField(t("cattle.breed"), cattleInfo?.cattleBreed && t(`cattle.breeds.${cattleInfo.cattleBreed.toLowerCase().replace(/ - /g, "_").replace(/ /g, "_").replace(/-/g, "_")}`, { defaultValue: cattleInfo.cattleBreed }))}
+      {renderField(t("cattle.gender"), cattleInfo?.cattleGender && t(`cattle.${cattleInfo.cattleGender.toLowerCase()}`))}
 
       {renderField(t("cattle.age"), basicInfo?.age)}
       {renderField(t("cattle.weight"), basicInfo?.weight && `${basicInfo.weight} ${t("cattle.kg")}`)}
@@ -35,7 +35,7 @@ function CattleInformation({ vendor }) {
 
       {renderField(t("cattle.lactation"), basicInfo?.lactation)}
 
-      {renderField(t("common.description"), basicInfo?.animalDescription)}
+      {renderField(t("progress.description"), basicInfo?.animalDescription)}
     </div>
   );
 }

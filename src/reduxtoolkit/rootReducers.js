@@ -22,6 +22,8 @@ import ClassifiedSectionMgmtSlice from "./slices/dashboard/classifiedSection";
 import StaticContentMgmtSlice from "./slices/static content/staticContent";
 import reviewSlice from "./slices/rate and reviews/rateReview";
 import chatSlice from "./slices/chats/chats";
+import myFarmMgmtSlice from "./slices/account settings/myFarm";
+
 
 const rootReducer = combineReducers({
   authMgmtSlice,
@@ -47,5 +49,7 @@ const rootReducer = combineReducers({
   StaticContentMgmtSlice,
   reviewSlice,
   chatSlice,
+  myFarmMgmtSlice,
 });
+
 export default rootReducer;

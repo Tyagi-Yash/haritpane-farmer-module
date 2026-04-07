@@ -91,7 +91,7 @@ function AugerDetails({ data }) {
                 <p>{t("progress.businessName")}: {service?.businessName || "N/A"}</p>
                 <br />
                 <p>{t("progress.jobLocation")}: {data?.addressOfFarm || "N/A"}</p>
-                {/* <p>Estimated Job Duration: {formatHoursMinutes(data?.estimatedTime) || "N/A"}</p> */}
+                {/* <p>Estimated Job Duration: {formatHoursMinutes(data?.estimatedTime, t) || "N/A"}</p> */}
                 <p>{t("progress.startDate")}: {formatDate(data?.bookingFromDate)}</p>
                 <p>{t("progress.endDate")}: {formatDate(data?.bookingTillDate)}</p>
                 <p>{t("progress.startTime")}: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>

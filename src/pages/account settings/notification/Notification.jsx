@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import {
@@ -9,6 +10,7 @@ import {
 } from "../../../reduxtoolkit/slices/account settings/profile";
 
 function Notification() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState({
@@ -28,10 +30,10 @@ function Notification() {
           chatNotification: data?.data?.chatNotification,
         });
       } else {
-        toast.error(data?.message || "Failed to load notifications. Try again later.");
+        toast.error(data?.message || t("account.failedToLoadNotifications"));
       }
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setLoading(false);
     }
@@ -51,12 +53,12 @@ function Notification() {
       const { message } = res?.payload?.data || {};
       if (status === 200) {
         setNotifications(updatedState);
-        toast.success(message || "Updated successfully");
+        toast.success(message || t("account.updatedSuccessfully"));
       } else {
-        toast.error(message || "Failed to update");
+        toast.error(message || t("account.failedToUpdate"));
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setLoading(false);
     }
@@ -65,15 +67,15 @@ function Notification() {
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal titleBox={true} title="Notification" navigate="/dashboard" />
+        <TopbarModal titleBox={true} title={t("account.notification")} navigate="/dashboard" />
         <div className="dashboard">
           <div className="option-wrapper">
             <div>
               <div className="notification-row d-flex justify-content-between align-items-center">
                 <div>
-                  <p className="main-heading">Push Notifications</p>
+                  <p className="main-heading">{t("account.pushNotifications")}</p>
                   <p className="text-muted notifcation-para-text mb-0">
-                    Get real-time updates about offers, orders, and services directly on your phone.
+                    {t("account.pushNotificationsDesc")}
                   </p>
                 </div>
                 <div className="form-check form-switch">
@@ -89,10 +91,9 @@ function Notification() {
               </div>
               <div className="notification-row d-flex justify-content-between align-items-center mb-4">
                 <div>
-                  <p className="main-heading">Whatsapp Notifications</p>
+                  <p className="main-heading">{t("account.whatsappNotifications")}</p>
                   <p className="text-muted notifcation-para-text mb-0">
-                    Receive alerts and updates on WhatsApp about your orders and new product
-                    launches.
+                    {t("account.whatsappNotificationsDesc")}
                   </p>
                 </div>
                 <div className="form-check form-switch">

@@ -3,10 +3,12 @@ import ChatsNavbar from "../../components/chats/ChatsNavbar";
 import TopbarModal from "../../components/common components/TopbarModal";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { fetchMyReviews } from "../../reduxtoolkit/slices/rate and reviews/rateReview";
 import AddProviderReview from "../../components/chats/reviews/AddProviderReview";
 
 function ChatsReviewSection() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { myReviewList } = useSelector((s) => s.services.reviewSlice);
 
@@ -24,7 +26,7 @@ function ChatsReviewSection() {
           <TopbarModal titleBox={false} profile={profile} />
           <div className="chat dashboard">
             <div className="TitleBox top-bar mb-0 mt-0">
-              <h4 className="main-heading">Chats</h4>
+              <h4 className="main-heading">{t("chats.title")}</h4>
               <div className="d-flex align-items-center">
                 <select
                   className="form-control w-100 me-3"
@@ -32,7 +34,7 @@ function ChatsReviewSection() {
                   onChange={(e) => setSortBy(e.target.value)}
                 >
                   <option value="" disabled>
-                    Sort by
+                    {t("chats.sortBy")}
                   </option>
                   <option value="asc">A–Z</option>
                   <option value="desc">Z–A</option>
@@ -41,7 +43,7 @@ function ChatsReviewSection() {
                 <div className="yellow-btn">
                   <button onClick={() => setShowReviewModal(true)}>
                     <i className="fa-solid fa-plus me-2" />
-                    Share Experience
+                    {t("chats.shareExperience")}
                   </button>
                 </div>
               </div>

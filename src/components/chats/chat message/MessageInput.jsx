@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { getSocket } from "../../../socket/socket";
 import sendIcon from "../../../assets/images/send-icon.svg";
 
 export default function MessageInput() {
+  const { t } = useTranslation();
   const { activeChat } = useSelector((s) => s.services.chatSlice);
 
   const [text, setText] = useState("");
@@ -41,7 +43,7 @@ export default function MessageInput() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
+          placeholder={t("chats.typeMessage")}
         />
         <button className="send" onClick={sendMessage}>
           <img src={sendIcon} alt="send" className="link-icon" />

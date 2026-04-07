@@ -5,13 +5,13 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 import { disconnectSocket } from "../../../socket/socket";
 import { resetReviewList } from "../../../reduxtoolkit/slices/rate and reviews/rateReview";
-import { clearBookingList } from "../../../reduxtoolkit/slices/progress/bookingList";
-import { resetChatState } from "../../../reduxtoolkit/slices/chats/chats";
 import i18n from "../../../i18n";
 
 function DeleteModal({ show, onClose }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
@@ -35,12 +35,12 @@ function DeleteModal({ show, onClose }) {
         
         i18n.changeLanguage("en");
         navigate("/signup");
-        toast.success(message || "Account deleted successfully");
+        toast.success(message || t("account.accountDeletedSuccess"));
       } else {
-        toast.error(message || "Failed to delete account");
+        toast.error(message || t("account.accountDeleteFail"));
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
       onClose();
@@ -60,22 +60,21 @@ function DeleteModal({ show, onClose }) {
           <div className="modal-emoji">
             <img src={deleteEmoji} alt="" />
           </div>
-          <div className="modal-title">Are you sure you want to delete your account?</div>
+          <div className="modal-title">{t("account.confirmDeleteAccount")}</div>
           <p>
-            You’ll permanently lose all saved info, orders, and <br />
-            access to HaritPane services.
+            {t("account.deleteAccountDesc")}
           </p>
           <div className="modal-footer">
             <button
               type="button"
-              className="btn btn-delete-modal"
+               className="btn btn-delete-modal"
               onClick={handleDelete}
               disabled={disable}
             >
-              {disable ? "Deleting..." : "Delete Account"}
+              {disable ? t("account.deleting") : t("account.deleteAccount")}
             </button>
             <button type="button" className="btn btn-cancel" onClick={onClose}>
-              Cancel
+              {t("common.cancel")}
             </button>
           </div>
         </div>

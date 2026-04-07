@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import sortArrowDown from "../../assets/images/sort-arrow-down.svg";
 
 const CancelBookingModal = ({ show, onClose, onCancel, status, reasons = [] }) => {
+  const { t } = useTranslation();
   const [selectedReason, setSelectedReason] = useState("");
   const [customReason, setCustomReason] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -67,13 +69,19 @@ const CancelBookingModal = ({ show, onClose, onCancel, status, reasons = [] }) =
       keyboard={false}
     >
       <Modal.Body>
-        <div className="text-muted modal-title">Cancelling this booking cannot be undone.</div>
+        <div className="text-muted modal-title">{t("progress.cancelBookingUndoWarn")}</div>
         {isStarted && reasons.length > 0 && (
           <div className="mb-3">
             <div className="sort-box" style={{ width: "100%" }}>
               <div className={`sort-toggle ${isOpen ? "open" : ""}`} onClick={toggleDropdown}>
                 <span>
-                  <span className="sort-label">{selectedReason || "Select reason"}</span>
+                  <span className="sort-label">
+                    {selectedReason
+                      ? selectedReason === "Other"
+                        ? t("progress.otherReason")
+                        : t(`progress.reasons.${selectedReason}`)
+                      : t("progress.selectReason")}
+                  </span>
                   <i className={`fa fa-chevron-down dropdown-icon ${isOpen ? "rotate" : ""}`}></i>
                 </span>
               </div>
@@ -87,7 +95,7 @@ const CancelBookingModal = ({ show, onClose, onCancel, status, reasons = [] }) =
                       onClick={() => selectReasonOption(item)}
                       style={{ fontWeight: "400" }}
                     >
-                      {item}
+                      {item === "Other" ? t("progress.otherReason") : t(`progress.reasons.${item}`)}
                     </div>
                   ))}
                 </div>
@@ -99,7 +107,7 @@ const CancelBookingModal = ({ show, onClose, onCancel, status, reasons = [] }) =
           <textarea
             className="cancilation-input"
             rows={3}
-            placeholder="Please tell us why you want to cancel*"
+            placeholder={t("progress.cancelReasonPlaceholder")}
             value={customReason}
             onChange={(e) => setCustomReason(e.target.value)}
           />
@@ -116,11 +124,11 @@ const CancelBookingModal = ({ show, onClose, onCancel, status, reasons = [] }) =
             onClick={handleSubmit}
             style={{ width: "200px" }}
           >
-            {loading ? "Cancelling..." : "Cancel Booking"}
+            {loading ? t("progress.cancelling") : t("progress.cancelBooking")}
           </button>
 
           <button className="btn btn-cancel" onClick={handleClose}>
-            Keep Booking
+            {t("progress.keepBooking")}
           </button>
         </div>
       </Modal.Body>

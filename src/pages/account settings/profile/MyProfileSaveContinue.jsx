@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import profilePic from "../../../assets/images/profile.svg";
 import cameraIcon from "../../../assets/images/camera-icon.svg";
@@ -16,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { profileFields } from "../../../constants/profile/myprofile edit/profileFields";
 
 function MyProfileSaveContinue() {
+  const { t } = useTranslation();
   const [formState, setFormState] = useState({
     farmerName: "",
     phone: "",
@@ -46,10 +48,10 @@ function MyProfileSaveContinue() {
         });
         setLoading(false);
       } else {
-        toast(data?.message || "Failed to load Profile");
+        toast(data?.message || t("account.failedToLoadProfile"));
       }
     } catch (err) {
-      toast("Something went wrong");
+      toast(t("common.somethingWentWrong"));
     }
   };
 
@@ -71,11 +73,11 @@ function MyProfileSaveContinue() {
     const file = e.target.files[0];
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      toast.error("Only image files are allowed");
+      toast.error(t("account.onlyImagesAllowed"));
       return;
     }
     if (file.size > 10 * 1024 * 1024) {
-      toast.error("Image size must be under 10MB");
+      toast.error(t("account.imageSizeLimit"));
       return;
     }
 
@@ -89,12 +91,12 @@ function MyProfileSaveContinue() {
           ...prev,
           profileImage: data?.data[0] || "",
         }));
-        toast.success("Image uploaded successfully");
+        toast.success(t("account.imageUploadSuccess"));
       } else {
-        toast.error(data.message || "Failed to upload Image");
+        toast.error(data.message || t("account.imageUploadFail"));
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     }
   };
 
@@ -103,20 +105,20 @@ function MyProfileSaveContinue() {
     let valid = true;
 
     if (!farmerName.trim()) {
-      newErrors.nameError = "*Name is required";
+      newErrors.nameError = "account.nameRequired";
       valid = false;
     }
 
     if (!phone.trim()) {
-      newErrors.phoneError = "*Phone number is required";
+      newErrors.phoneError = "account.phoneRequired";
       valid = false;
     } else if (!/^[0-9]{10}$/.test(phone.trim())) {
-      newErrors.phoneError = "*Enter a valid 10-digit phone number";
+      newErrors.phoneError = "account.phoneInvalid";
       valid = false;
     }
 
     if (!address.trim()) {
-      newErrors.addressError = "*Address is required";
+      newErrors.addressError = "account.addressRequired";
       valid = false;
     }
 
@@ -151,12 +153,12 @@ function MyProfileSaveContinue() {
       if (status === 200) {
         localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));
         navigate("/profile");
-        toast.success(message || "Profile Updated successfully");
+        toast.success(message || t("account.profileUpdateSuccess"));
       } else {
-        toast.error(message || "Failed to update profile");
+        toast.error(message || t("account.profileUpdateFail"));
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error(t("common.somethingWentWrong"));
     } finally {
       setDisable(false);
     }
@@ -198,18 +200,18 @@ function MyProfileSaveContinue() {
                     )}
                   </label>
                 </div>
-                <h4 className="main-heading mb-3">{farmerName || "Farmer"}</h4>
-                <h6 className="radio-label mb-3">Personal Details</h6>
+                <h4 className="main-heading mb-3">{farmerName || t("account.farmer")}</h4>
+                <h6 className="radio-label mb-3">{t("account.personalDetails")}</h6>
                 <ProfileFieldGroup fields={fields} formState={formState} errors={errors} />
                 <div className="d-flex justify-content-end align-items-center mt-5">
                   <button type="submit" className="btn-edit" disabled={disable}>
                     {disable ? (
                       <div className="d-flex align-items-center gap-2">
-                        <span>Saving</span>
+                        <span>{t("account.saving")}</span>
                         <div className="spinner" role="status" aria-label="Saving..."></div>
                       </div>
                     ) : (
-                      "Save & Continue"
+                      t("account.saveContinue")
                     )}
                   </button>
                 </div>

@@ -21,7 +21,7 @@ export const accountMenu = [
   { to: "/notification", icon: notification, label: "Notification", translateKey: "nav.notification" },
   { to: "/language", icon: language, label: "Language", translateKey: "nav.language" },
   { to: "/profile", icon: profile, label: "Profile", translateKey: "nav.profile" },
-  { to: "/farm-home", icon: myFarm, label: "My Farm", translateKey: "nav.myFarm" },
+  { to: "/my-farms", icon: myFarm, label: "My Farm", translateKey: "nav.myFarm" },
 ];
 
 export const helpMenu = [

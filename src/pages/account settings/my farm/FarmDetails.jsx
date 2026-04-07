@@ -1,19 +1,11 @@
-import React from "react";
-
-import profile from "../../../assets/images/profile.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 
-function MyFarmDetails() {
+function FarmDetails() {
   return (
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal
-            titleBox={true}
-            title="My Farm"
-            navigate="/farm-home"
-            profile={profile}
-          />
+          <TopbarModal titleBox={true} title="My Farm" navigate="/my-farms" />
           <div className="dashboard my-farms-details">
             <div>
               <div className="mb-3">
@@ -52,4 +44,4 @@ function MyFarmDetails() {
   );
 }
 
-export default MyFarmDetails;
+export default FarmDetails;

@@ -5,12 +5,11 @@ import {
   OtpVerify,
   Signup,
   LanguagePage,
-  MyFarmAddLocation,
-  MyFarmDetails,
-  MyFarmHome,
-  MyFarmMapImage,
-  MyFarmAPIPage,
-  MyFarmCardSection,
+  FarmForm,
+  FarmDetails,
+  MyFarmHub,
+  AddFarmMap,
+  FarmGeofencing,
   Notification,
   MyProfile,
   MyProfileSaveContinue,
@@ -220,13 +219,12 @@ function App() {
               <Route path="profile-edit" element={<MyProfileSaveContinue />} />
             </Route>
 
-            <Route path="farm-home">
-              <Route index element={<MyFarmHome />} />
-              <Route path="farm-api-page" element={<MyFarmAPIPage />} />
-              <Route path="farm-add-location" element={<MyFarmAddLocation />} />
-              <Route path="farm-map-image" element={<MyFarmMapImage />} />
-              <Route path="farm-select-map" element={<MyFarmCardSection />} />
-              <Route path="farm-details" element={<MyFarmDetails />} />
+            <Route path="my-farms">
+              <Route index element={<MyFarmHub />} />
+              <Route path="geofencing" element={<FarmGeofencing />} />
+              <Route path="form" element={<FarmForm />} />
+              <Route path="map" element={<AddFarmMap />} />
+              <Route path="details" element={<FarmDetails />} />
             </Route>
           </Route>
         </Route>

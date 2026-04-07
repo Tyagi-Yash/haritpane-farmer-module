@@ -3,12 +3,11 @@ import Signup from "./auth/Signup";
 import PrivacyPolicy from "./static content/PrivacyPolicy";
 import TermsOfService from "./static content/TermsOfService";
 import LanguagePage from "./account settings/language/LanguagePage";
-import MyFarmAddLocation from "./account settings/my farm/MyFarmAddLocation";
-import MyFarmDetails from "./account settings/my farm/MyFarmDetails";
-import MyFarmHome from "./account settings/my farm/MyFarmHome";
-import MyFarmMapImage from "./account settings/my farm/MyFarmMapImage";
-import MyFarmAPIPage from "./account settings/my farm/MyFarmAPIPage";
-import MyFarmCardSection from "./account settings/my farm/MyFarmCardSection";
+import FarmForm from "./account settings/my farm/FarmForm";
+import FarmDetails from "./account settings/my farm/FarmDetails";
+import MyFarmHub from "./account settings/my farm/MyFarmHub";
+import AddFarmMap from "./account settings/my farm/AddFarmMap";
+import FarmGeofencing from "./account settings/my farm/FarmGeofencing";
 import Notification from "./account settings/notification/Notification";
 import MyProfile from "./account settings/profile/MyProfile";
 import MyProfileSaveContinue from "./account settings/profile/MyProfileSaveContinue";
@@ -65,12 +64,11 @@ export {
   PrivacyPolicy,
   TermsOfService,
   LanguagePage,
-  MyFarmAddLocation,
-  MyFarmDetails,
-  MyFarmHome,
-  MyFarmMapImage,
-  MyFarmAPIPage,
-  MyFarmCardSection,
+  FarmForm,
+  FarmDetails,
+  MyFarmHub,
+  AddFarmMap,
+  FarmGeofencing,
   Notification,
   MyProfile,
   MyProfileSaveContinue,

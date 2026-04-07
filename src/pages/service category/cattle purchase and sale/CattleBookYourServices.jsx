@@ -137,7 +137,7 @@ function CattleBookYourServices() {
                           disabled={!sectectCattle || breedOptions[sectectCattle]?.length === 0}
                           className="btn w-100 dropdown-toggle"
                         >
-                          {selectBreed || t("cattle.selectBreed")}
+                          {selectBreed ? t(`cattle.breeds.${selectBreed.toLowerCase().replace(/ - /g, "_").replace(/ /g, "_").replace(/-/g, "_")}`, { defaultValue: selectBreed }) : t("cattle.selectBreed")}
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu as="ul">
@@ -148,7 +148,7 @@ function CattleBookYourServices() {
                               eventKey={breed}
                               className="custom-item"
                             >
-                              {breed}
+                              {t(`cattle.breeds.${breed.toLowerCase().replace(/ - /g, "_").replace(/ /g, "_").replace(/-/g, "_")}`, { defaultValue: breed })}
                             </Dropdown.Item>
                           ))}
                         </Dropdown.Menu>

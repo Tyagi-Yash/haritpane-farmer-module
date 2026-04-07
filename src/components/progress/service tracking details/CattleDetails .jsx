@@ -92,9 +92,9 @@ function CattleDetails({ data }) {
                 <p>{t("progress.businessName")}: {service?.businessName || "N/A"}</p>
                 <br />
                 <p>{t("progress.farmLocation")}: {data?.addressOfFarm || "N/A"}</p>
-                <p>{t("progress.cattleBreed")}: {data?.cattleBreed}</p>
-                <p>{t("progress.cattleName")}: {data?.cattleName}</p>
-                <p>{t("progress.gender")}: {cattleInfo.cattleGender}</p>
+                <p>{t("progress.cattleName")}: {data?.cattleName && t(`cattle.${data.cattleName.toLowerCase()}`)}</p>
+                <p>{t("progress.cattleBreed")}: {data?.cattleBreed && t(`cattle.breeds.${data.cattleBreed.toLowerCase().replace(/ - /g, "_").replace(/ /g, "_").replace(/-/g, "_")}`, { defaultValue: data.cattleBreed })}</p>
+                <p>{t("progress.gender")}: {cattleInfo.cattleGender && t(`cattle.${cattleInfo.cattleGender.toLowerCase()}`)}</p>
                 {basicInfoArray.age && <p>{t("progress.age")}: {basicInfoArray.age} {t("progress.year")}</p>}
                 {basicInfoArray.weight && <p>{t("progress.weight")}: {basicInfoArray.weight} {t("progress.kg")}</p>}
                 {basicInfoArray.calf && <p>{t("progress.calfAvailable")}: {t("progress.yes")}</p>}

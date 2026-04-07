@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { getSocket } from "../../../socket/socket";
 import { addMessage, fetchMessages } from "../../../reduxtoolkit/slices/chats/chats";
 import MessageBubble from "./MessageBubble";
@@ -8,6 +9,7 @@ import profilePic from "../../../assets/images/user-icon.svg";
 import ChatMessageSkeleton from "../../skeletons/ChatMessageSkeleton";
 
 export default function ChatWindow() {
+  const { t } = useTranslation();
   const [chatError, setChatError] = useState("");
 
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ export default function ChatWindow() {
     };
 
     const errorHandler = (errorMessage) => {
-      setChatError("Chat is not available");
+      setChatError(t("chats.chatNotAvailable"));
     };
 
     socket.on("recieveMessage", messageHandler);
@@ -55,7 +57,7 @@ export default function ChatWindow() {
       socket.off("recieveMessage", messageHandler);
       socket.off("statusError", errorHandler);
     };
-  }, [activeChat, socket, dispatch]);
+  }, [activeChat, socket, dispatch, t]);
 
   useEffect(() => {
     if (!chatBodyRef.current) return;
@@ -67,8 +69,8 @@ export default function ChatWindow() {
     return (
       <div className="chat-panel empty-chat">
         <div className="empty-chat-content">
-          <h4>Select a conversation</h4>
-          <p>Choose a chat from the sidebar to start messaging.</p>
+          <h4>{t("chats.selectConversation")}</h4>
+          <p>{t("chats.chooseChatToStart")}</p>
         </div>
       </div>
     );

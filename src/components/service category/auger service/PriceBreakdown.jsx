@@ -57,7 +57,7 @@ const PriceBreakdown = ({
               {t("common.serviceCharges")}
               <div className="text-muted small">
                 {formatPrice(ratePerHr)} {t("common.perHourParentheses")} ×{" "}
-                {formatHoursMinutes(billableHours)}
+                {formatHoursMinutes(billableHours, t)}
               </div>
             </td>
             <td>{formatPrice(payable - OveralltransportCharge)}</td>

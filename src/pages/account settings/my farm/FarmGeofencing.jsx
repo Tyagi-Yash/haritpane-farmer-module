@@ -1,20 +1,12 @@
-import React from "react";
-
-import profile from "../../../assets/images/profile.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { Link } from "react-router-dom";
 
-function MyFarmAPIPage() {
+function FarmGeofencing() {
   return (
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal
-            titleBox={true}
-            title="My Farm"
-            navigate="/farm-home"
-            profile={profile}
-          />
+          <TopbarModal titleBox={true} title="My Farm" navigate="/my-farms" />
           <div className="dashboard my-farm-api">
             <div className="d-flex align-items-center justify-content-center">
               <div className="add-field-card">
@@ -22,7 +14,7 @@ function MyFarmAPIPage() {
               </div>
             </div>
             <div className="available-service-btn">
-              <Link to="/farm-home/farm-add-location">Add Field</Link>
+              <Link to="/my-farms/form">Add Field</Link>
             </div>
           </div>
         </div>
@@ -31,4 +23,4 @@ function MyFarmAPIPage() {
   );
 }
 
-export default MyFarmAPIPage;
+export default FarmGeofencing;

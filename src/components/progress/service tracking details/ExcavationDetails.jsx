@@ -100,7 +100,7 @@ function ExcavationDetails({ data }) {
                 <p>{t("progress.startDate")}: {formatDate(data?.bookingFromDate)}</p>
                 <p>{t("progress.endDate")}: {formatDate(data?.bookingTillDate)}</p>
                 <p>{t("progress.startTime")}: {convertTo12Hour(data?.bookingStartTime) || "N/A"}</p>
-                {/* <p>Tentative Duration: {formatHoursMinutes(data?.durationOfExavation) || "N/A"}</p> */}
+                {/* <p>Tentative Duration: {formatHoursMinutes(data?.durationOfExavation, t) || "N/A"}</p> */}
               </div>
             </div>
             <div className="col">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import profilePic from "../../../assets/images/profile.svg";
 import TopbarModal from "../../../components/common components/TopbarModal";
@@ -12,6 +13,7 @@ import { getFarmerProfile } from "../../../reduxtoolkit/slices/account settings/
 import { profileFields } from "../../../constants/profile/myprofile/profileFields";
 
 function MyProfile() {
+  const { t } = useTranslation();
   const [formState, setFormState] = useState({
     farmerName: "",
     phone: "",
@@ -48,10 +50,10 @@ function MyProfile() {
         });
         setLoading(false);
       } else {
-        toast(data?.message || "Failed to load Profile");
+        toast(data?.message || t("account.failedToLoadProfile"));
       }
     } catch (err) {
-      toast("Something went wrong");
+      toast(t("common.somethingWentWrong"));
     }
   };
 
@@ -65,7 +67,7 @@ function MyProfile() {
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal titleBox={true} title="My Profile" navigate="/dashboard" />
+          <TopbarModal titleBox={true} title={t("account.myProfile")} navigate="/dashboard" />
           <div className="dashboard">
             {loading ? (
               <ProfileSkeleton />
@@ -78,8 +80,8 @@ function MyProfile() {
                     className="profile-img me-3"
                   />
                 </div>
-                <h4 className="main-heading mb-3">{farmerName ? farmerName : "Farmer"}</h4>
-                <h6 className="radio-label mb-3">Personal Details</h6>
+                <h4 className="main-heading mb-3">{farmerName ? farmerName : t("account.farmer")}</h4>
+                <h6 className="radio-label mb-3">{t("account.personalDetails")}</h6>
                 <ProfileFieldGroup fields={profileFields} formState={formState} />
                 <div className="d-flex justify-content-end align-items-center mt-5">
                   <button
@@ -87,10 +89,10 @@ function MyProfile() {
                     onClick={() => setShowDeleteModal(true)}
                     type="button"
                   >
-                    Delete Account?
+                    {t("account.deleteAccountQuestion")}
                   </button>
                   <Link to="profile-edit" className="btn-edit">
-                    Edit
+                    {t("account.edit")}
                   </Link>
                 </div>
               </div>

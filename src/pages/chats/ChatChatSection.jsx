@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import { getSocket } from "../../socket/socket";
 import TopbarModal from "../../components/common components/TopbarModal";
@@ -11,6 +12,7 @@ import profile from "../../assets/images/profile.png";
 import { setActiveChat, fetchChatList, fetchMessages } from "../../reduxtoolkit/slices/chats/chats";
 
 export default function ChatChatSection() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -69,7 +71,7 @@ export default function ChatChatSection() {
           <TopbarModal titleBox={false} profile={profile} />
           <div className="chat dashboard">
             <div className="TitleBox top-bar mb-0 mt-0">
-              <h4 className="main-heading">Chats</h4>
+              <h4 className="main-heading">{t("chats.title")}</h4>
             </div>
             <ChatsNavbar />
             <div className="tab-content">

@@ -2,6 +2,7 @@ import closeIcon from "../../../assets/images/close-icon.svg";
 import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import {
   fetchProviders,
   addProviderReview,
@@ -9,6 +10,7 @@ import {
 import { toast } from "react-toastify";
 
 function AddProviderReview({ show, onHide, onSuccess }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { providers, addLoading } = useSelector((s) => s.services.reviewSlice);
 
@@ -22,25 +24,25 @@ function AddProviderReview({ show, onHide, onSuccess }) {
 
   const handleSubmit = async () => {
     if (!rating) {
-      toast.error("Please select a rating");
+      toast.error(t("chats.selectRatingError"));
       return;
     }
     if (!providerId) {
-      toast.error("Please select a vendor");
+      toast.error(t("chats.selectVendorError"));
       return;
     }
     if (!feedback.trim()) {
-      toast.error("Please write a review");
+      toast.error(t("chats.writeReviewError"));
       return;
     }
     try {
       const payload = { serviceId: providerId, rating, review: feedback.trim() };
       await dispatch(addProviderReview(payload)).unwrap();
-      toast.success("Review added successfully");
+      toast.success(t("chats.reviewAddedSuccess"));
       onSuccess?.();
       handleClose();
     } catch (err) {
-      toast.error(err?.message || "Failed to submit review");
+      toast.error(err?.message || t("chats.failedToSubmitReview"));
     }
   };
 
@@ -58,7 +60,7 @@ function AddProviderReview({ show, onHide, onSuccess }) {
       </div>
 
       <div className="modal-body">
-        <h4 className="modal-title text-center main-heading mb-4">How was the Service</h4>
+        <h4 className="modal-title text-center main-heading mb-4">{t("chats.howWasService")}</h4>
 
         <div className="star-rating">
           {[1, 2, 3, 4, 5].map((star) => (
@@ -78,7 +80,7 @@ function AddProviderReview({ show, onHide, onSuccess }) {
           value={providerId}
           onChange={(e) => setProviderId(e.target.value)}
         >
-          <option value="">Select from Vendors*</option>
+          <option value="">{t("chats.selectFromVendors")}</option>
           {providers.map((p) => (
             <option key={p._id} value={p._id}>
               {p.name}
@@ -94,7 +96,7 @@ function AddProviderReview({ show, onHide, onSuccess }) {
             maxLength={100}
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Write a Review..."
+            placeholder={t("chats.writeReview")}
           />
           <div className="text-end small mt-1">{feedback.length}/100</div>
         </div>
@@ -102,7 +104,7 @@ function AddProviderReview({ show, onHide, onSuccess }) {
 
       <div className="modal-footer yellow-btn">
         <button onClick={handleSubmit} disabled={addLoading}>
-          {addLoading ? "Posting..." : "Post Rating & Review"}
+          {addLoading ? t("chats.posting") : t("chats.postRatingReview")}
         </button>
       </div>
     </Modal>

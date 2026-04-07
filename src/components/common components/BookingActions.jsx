@@ -6,7 +6,7 @@ const BookingActions = ({ isBooking, loading, onBook, onCancelClick }) => {
     <div className="d-flex justify-content-end align-items-center mt-4">
       {/* {!isBooking ? ( */}
       <button onClick={onBook} disabled={loading} className="btn-edit">
-        {loading ? t("common.booking") : t("common.sendBookingRequest")}
+        {loading ? t("progress.booking") : t("common.sendBookingRequest")}
       </button>
       {/* ) : (
         <>

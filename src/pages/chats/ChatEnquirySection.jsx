@@ -5,8 +5,10 @@ import closeIcon from "../../assets/images/close-icon.svg";
 import muthuvelRangan from "../../assets/images/Muthuvel-Rangan.png";
 import ChatsNavbar from "../../components/chats/ChatsNavbar";
 import TopbarModal from "../../components/common components/TopbarModal";
+import { useTranslation } from "react-i18next";
 
 function ChatEnquirySection() {
+  const { t } = useTranslation();
   return (
     <>
       <div className="WrapperArea">
@@ -14,10 +16,10 @@ function ChatEnquirySection() {
           <TopbarModal titleBox={false} profile={profile} />
           <div className="chat dashboard">
             <div className="TitleBox top-bar mb-0 mt-0">
-              <h4 className="main-heading">Chats</h4>
+              <h4 className="main-heading">{t("chats.title")}</h4>
               <div className="d-flex align-items-center">
                 <select className="form-control w-100 me-3">
-                  <option>Sort by</option>
+                  <option>{t("chats.sortBy")}</option>
                   <option>A-Z</option>
                   <option>Z-A</option>
                 </select>
@@ -26,7 +28,7 @@ function ChatEnquirySection() {
                     <span>
                       <i className="fa-solid fa-plus" />
                     </span>{" "}
-                    Add Enquiry
+                    {t("chats.addEnquiry")}
                   </a>
                 </div>
               </div>
@@ -42,7 +44,7 @@ function ChatEnquirySection() {
                           <img src="https://i.pravatar.cc/40?img=1" alt />
                           <div>
                             <h4>George Alan</h4>
-                            <p className="online">Enquiry ID: 434234243</p>
+                            <p className="online">{t("chats.enquiryId")}: 434234243</p>
                           </div>
                           <span className="time">04/04/2025</span>
                         </div>
@@ -50,7 +52,7 @@ function ChatEnquirySection() {
                           <img src="https://i.pravatar.cc/40?img=2" alt />
                           <div>
                             <h4>Uber Cars</h4>
-                            <p className="online">Enquiry ID: 434234243</p>
+                            <p className="online">{t("chats.enquiryId")}: 434234243</p>
                           </div>
                           <span className="time">04/04/2025</span>
                         </div>
@@ -58,7 +60,7 @@ function ChatEnquirySection() {
                           <img src="https://i.pravatar.cc/40?img=3" alt />
                           <div>
                             <h4>Saffya Fareena</h4>
-                            <p className="online">Enquiry ID: 434234243</p>
+                            <p className="online">{t("chats.enquiryId")}: 434234243</p>
                           </div>
                           <span className="time">04/04/2025</span>
                         </div>
@@ -66,7 +68,7 @@ function ChatEnquirySection() {
                           <img src="https://i.pravatar.cc/40?img=2" alt />
                           <div>
                             <h4>Uber Cars</h4>
-                            <p className="online">Enquiry ID: 434234243</p>
+                            <p className="online">{t("chats.enquiryId")}: 434234243</p>
                           </div>
                           <span className="time">04/04/2025</span>
                         </div>
@@ -74,7 +76,7 @@ function ChatEnquirySection() {
                           <img src="https://i.pravatar.cc/40?img=3" alt />
                           <div>
                             <h4>Saffya Fareena</h4>
-                            <p className="online">Enquiry ID: 434234243</p>
+                            <p className="online">{t("chats.enquiryId")}: 434234243</p>
                           </div>
                           <span className="time">04/04/2025</span>
                         </div>
@@ -82,7 +84,7 @@ function ChatEnquirySection() {
                           <img src="https://i.pravatar.cc/40?img=2" alt />
                           <div>
                             <h4>Uber Cars</h4>
-                            <p className="online">Enquiry ID: 434234243</p>
+                            <p className="online">{t("chats.enquiryId")}: 434234243</p>
                           </div>
                           <span className="time">04/04/2025</span>
                         </div>
@@ -90,7 +92,7 @@ function ChatEnquirySection() {
                           <img src="https://i.pravatar.cc/40?img=3" alt />
                           <div>
                             <h4>Saffya Fareena</h4>
-                            <p className="online">Enquiry ID: 434234243</p>
+                            <p className="online">{t("chats.enquiryId")}: 434234243</p>
                           </div>
                           <span className="time">04/04/2025</span>
                         </div>
@@ -116,11 +118,11 @@ function ChatEnquirySection() {
                           <p className="online">Enquiry ID: 434234243</p>
                         </div>
                         <div className="chat-tools">
-                          <button className="close-ticket">Close Ticket</button>
+                          <button className="close-ticket">{t("chats.closeTicket")}</button>
                         </div>
                       </div>
                       <div className="chat-body">
-                        <p className="chat time">Today</p>
+                        <p className="chat time">{t("chats.today")}</p>
                         <div className="msg from">
                           <div>Hi, is the watch still up for sale?</div>
                           <div className="send-info">
@@ -180,7 +182,7 @@ function ChatEnquirySection() {
                       </div>
                       <div className="chat-footer">
                         <div className="input-group">
-                          <input type="text" placeholder="Type your message..." />
+                          <input type="text" placeholder={t("chats.typeMessage")} />
                           <button className="send">
                             <img src={sendIcon} alt="send-icon" className="link-icon" />
                           </button>
@@ -206,14 +208,14 @@ function ChatEnquirySection() {
                 <img src={muthuvelRangan} alt="Profile" />
                 <div className="user-details">
                   <h6 className="normal-heading">Muthuvel Rangan</h6>
-                  <span className="grey-para">Grievance ID: 7566717 &nbsp;•&nbsp; 20/05/2025</span>
+                  <span className="grey-para">{t("chats.grievanceId")}: 7566717 &nbsp;•&nbsp; 20/05/2025</span>
                 </div>
               </div>
               <textarea
                 className="form-control"
                 rows={4}
                 maxLength={100}
-                placeholder="Cause of Concern*"
+                placeholder={t("chats.causeOfConcern")}
                 defaultValue={""}
               />
               <div className="text-end small mt-1">
@@ -225,7 +227,7 @@ function ChatEnquirySection() {
                 className="form-control"
                 rows={4}
                 maxLength={100}
-                placeholder="Detailed Solution*"
+                placeholder={t("chats.detailedSolution")}
                 defaultValue={""}
               />
               <div className="text-end small mt-1">
@@ -235,7 +237,7 @@ function ChatEnquirySection() {
             <div className="modal-footer yellow-btn">
               <a href="#" data-bs-dismiss="modal">
                 {" "}
-                Raise Enquiry{" "}
+                {t("chats.raiseEnquiry")}{" "}
               </a>
             </div>
           </div>
