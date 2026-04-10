@@ -13,14 +13,14 @@ export const addMyFarm = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || { message: "Network error" });
     }
-  }
+  },
 );
 
 export const editMyFarm = createAsyncThunk(
   "myFarm/editMyFarm",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.post("/editMyFarm", payload);
+      const response = await axios.put("/editMyFarm", payload);
       if (response.status === 200) {
         return response.data;
       }
@@ -28,7 +28,7 @@ export const editMyFarm = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || { message: "Network error" });
     }
-  }
+  },
 );
 
 export const getAllMyFarms = createAsyncThunk(
@@ -43,7 +43,7 @@ export const getAllMyFarms = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || { message: "Network error" });
     }
-  }
+  },
 );
 
 const initialState = {

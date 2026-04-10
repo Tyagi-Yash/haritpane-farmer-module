@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
@@ -14,15 +14,37 @@ const libraries = ["places"];
 
 function AddFarmMap() {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyCg61BL0ZrrrlwgGk9F-239jx_xXFsI76Y",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
-  const [markerPosition, setMarkerPosition] = useState(null);
-  const [selectedAddress, setSelectedAddress] = useState("");
-  const [isLoadingAddress, setIsLoadingAddress] = useState(false);
-
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const editData = location.state?.farm;
+  const restoredLocation = location.state?.locationDetails;
+
+  const initialLat = restoredLocation?.lat || editData?.location?.coordinates?.[1] || 20.5937;
+  const initialLng = restoredLocation?.lng || editData?.location?.coordinates?.[0] || 78.9629;
+
+  const [markerPosition, setMarkerPosition] = useState(
+    restoredLocation
+      ? { lat: restoredLocation.lat, lng: restoredLocation.lng }
+      : editData?.location?.coordinates
+        ? { lat: initialLat, lng: initialLng }
+        : null,
+  );
+  const [selectedAddress, setSelectedAddress] = useState(
+    restoredLocation?.address || editData?.postalAddress || "",
+  );
+  const [selectedVillage, setSelectedVillage] = useState(
+    restoredLocation?.village || editData?.village || "",
+  );
+  const [selectedPincode, setSelectedPincode] = useState(
+    restoredLocation?.pincode || editData?.pincode || "",
+  );
+  const [isLoadingAddress, setIsLoadingAddress] = useState(false);
+  const [mapCenter, setMapCenter] = useState({ lat: initialLat, lng: initialLng });
 
   const mapContainerStyle = useMemo(
     () => ({
@@ -40,7 +62,7 @@ function AddFarmMap() {
       rotateControl: false,
       clickableIcons: false,
       zoomControl: true,
-      gestureHandling: "greedy",
+      gestureHandling: "cooperative",
       styles: [
         {
           featureType: "poi",
@@ -61,14 +83,42 @@ function AddFarmMap() {
         setIsLoadingAddress(false);
 
         if (status === "OK" && results?.[0]) {
-          setSelectedAddress(results[0].formatted_address);
+          const result = results[0];
+          setSelectedAddress(result.formatted_address);
+
+          // Extract village and pincode from address_components
+          const components = result.address_components || [];
+          let village = "";
+          let pincode = "";
+
+          for (const comp of components) {
+            const types = comp.types || [];
+            if (
+              !village &&
+              (types.includes("sublocality_level_1") ||
+                types.includes("locality") ||
+                types.includes("administrative_area_level_3"))
+            ) {
+              village = comp.long_name;
+            }
+            if (!pincode && types.includes("postal_code")) {
+              pincode = comp.long_name;
+            }
+          }
+
+          setSelectedVillage(village);
+          setSelectedPincode(pincode);
         } else {
           setSelectedAddress("Address not found");
+          setSelectedVillage("");
+          setSelectedPincode("");
         }
       });
     } catch (error) {
       setIsLoadingAddress(false);
       setSelectedAddress("Unable to fetch address");
+      setSelectedVillage("");
+      setSelectedPincode("");
     }
   }, []);
 
@@ -91,10 +141,13 @@ function AddFarmMap() {
 
     navigate("/my-farms/form", {
       state: {
+        farm: editData,
         locationDetails: {
           lat: markerPosition.lat,
           lng: markerPosition.lng,
           address: selectedAddress,
+          village: selectedVillage,
+          pincode: selectedPincode,
         },
       },
     });
@@ -103,6 +156,8 @@ function AddFarmMap() {
   const handleReset = () => {
     setMarkerPosition(null);
     setSelectedAddress("");
+    setSelectedVillage("");
+    setSelectedPincode("");
   };
 
   return (
@@ -134,8 +189,8 @@ function AddFarmMap() {
                 {isLoaded ? (
                   <GoogleMap
                     mapContainerStyle={mapContainerStyle}
-                    center={center}
-                    zoom={5}
+                    center={mapCenter}
+                    zoom={editData || restoredLocation ? 15 : 5}
                     onClick={onMapClick}
                     options={mapOptions}
                   >

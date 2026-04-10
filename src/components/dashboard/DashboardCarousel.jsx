@@ -12,7 +12,6 @@ const DashboardCarousel = () => {
 
   const loadAds = async () => {
     setLoading(true);
-
     try {
       const res = await dispatch(getAllAdsForFarmer({ deviceOptions: "website" }));
 
@@ -55,7 +54,6 @@ const DashboardCarousel = () => {
         window.open(ad.addsLink, "_blank");
       }
     } catch (err) {
-      console.error("Tracking failed");
       if (ad.addsLink) {
         window.open(ad.addsLink, "_blank");
       }
@@ -63,29 +61,31 @@ const DashboardCarousel = () => {
   };
 
   return (
-    <section>
-      <div>
-        <h3 className="heading text-center mb-5">Feature for you</h3>
-      </div>
+    <section className="dashboard-carousel-section">
+      <h3 className="heading text-center mb-4">Featured for you</h3>
+
       {loading ? (
-        <CarouselAdsSkeleton />
+        <div className="custom-carousel">
+          <CarouselAdsSkeleton />
+        </div>
       ) : ads.length > 0 ? (
-        <Carousel className="mb-4" pause="hover" data-bs-theme="dark">
+        <Carousel
+          className="custom-carousel"
+          indicators={false}
+          controls={false}
+          pause="hover"
+          interval={3000}
+          touch={true}
+        >
           {ads.map((ad) => (
             <Carousel.Item key={ad._id}>
-              <div style={{ cursor: "pointer" }} onClick={() => handleAdClick(ad)}>
-                <img
-                  className="d-block w-100"
-                  src={getValidImage(ad)}
-                  alt={ad.addsTitle || "Advertisement"}
-                />
-              </div>
+              <div className="carousel-card" onClick={() => handleAdClick(ad)}>
+                <div className="carousel-image-wrapper">
+                  <img src={getValidImage(ad)} alt={ad.addsTitle || "Advertisement"} />
+                </div>
 
-              {ad.addsTitle && (
-                <Carousel.Caption>
-                  <h5>{ad.addsTitle}</h5>
-                </Carousel.Caption>
-              )}
+                {ad.addsTitle && <div className="carousel-title">{ad.addsTitle}</div>}
+              </div>
             </Carousel.Item>
           ))}
         </Carousel>

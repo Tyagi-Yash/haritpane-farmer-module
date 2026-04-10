@@ -4,7 +4,7 @@ let socket;
 
 export const connectSocket = () => {
   if (!socket) {
-    socket = io("http://15.206.16.230:8085", {
+    socket = io(import.meta.env.VITE_BACKEND_URL, {
       transports: ["websocket"],
       autoConnect: true,
     });

@@ -3,7 +3,8 @@ import Modal from "react-modal";
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import locationBlack from "../../assets/images/location-black.svg";
 import { useTranslation } from "react-i18next";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMyFarms } from "../../reduxtoolkit/slices/account settings/myFarm";
 Modal.setAppElement("#root");
 
 const libraries = ["places"];
@@ -17,14 +18,31 @@ export default function LocationInput({
 }) {
   const { t } = useTranslation();
   const inputPlaceholder = placeholder || `${t("classified.location")}*`;
-  
-  const apiKey = "AIzaSyCg61BL0ZrrrlwgGk9F-239jx_xXFsI76Y";
-  const { isLoaded, loadError } = useJsApiLoader({ googleMapsApiKey: apiKey, libraries });
+
+  const dispatch = useDispatch();
+  const farms = useSelector((state) => state.services?.myFarmMgmtSlice?.farms || []);
+
+  useEffect(() => {
+    dispatch(getAllMyFarms());
+  }, [dispatch]);
+
+  const predefinedLocations = farms.map((farm) => ({
+    label: farm.farmName,
+    address: farm.postalAddress,
+    lat: String(farm.location?.coordinates?.[1] || ""),
+    lng: String(farm.location?.coordinates?.[0] || ""),
+  }));
+
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries,
+  });
 
   // input + suggestions
   const [internalInput, setInternalInput] = useState(value || "");
   const [suggestions, setSuggestions] = useState([]);
   const [suggestLoading, setSuggestLoading] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   // modal/map state
@@ -140,7 +158,10 @@ export default function LocationInput({
   // close suggestions when clicking outside
   useEffect(() => {
     function onDocClick(e) {
-      if (containerRef.current && !containerRef.current.contains(e.target)) setSuggestions([]);
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setSuggestions([]);
+        setIsFocused(false);
+      }
     }
     document.addEventListener("click", onDocClick);
     return () => document.removeEventListener("click", onDocClick);
@@ -178,6 +199,10 @@ export default function LocationInput({
   }
 
   // input handlers
+  function handleFocus() {
+    setIsFocused(true);
+  }
+
   function handleInputChange(e) {
     const val = e.target.value;
     userTypingRef.current = true;
@@ -326,6 +351,7 @@ export default function LocationInput({
           className="form-control"
           value={internalInput}
           onChange={handleInputChange}
+          onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           placeholder={inputPlaceholder}
           style={{ flex: 1 }}
@@ -384,6 +410,52 @@ export default function LocationInput({
                 }}
               >
                 <span>{s.description}</span>
+              </div>
+            );
+          })}
+
+        {!suggestLoading &&
+          suggestions.length === 0 &&
+          !internalInput &&
+          isFocused &&
+          predefinedLocations.length > 0 &&
+          predefinedLocations.map((loc, idx) => {
+            const isActive = idx === activeIndex;
+            return (
+              <div
+                key={`predefined-${idx}`}
+                onMouseDown={(ev) => {
+                  ev.preventDefault();
+                  // Set programmatic flag
+                  ignorePredictionsRef.current = true;
+                  userTypingRef.current = false;
+                  lastSetBySelectionRef.current = true;
+
+                  setInternalInput(loc.label);
+                  onChange(loc.label);
+                  onSelectLocation({ address: loc.address, lat: loc.lat, lng: loc.lng });
+                  setIsFocused(false);
+
+                  setTimeout(() => {
+                    ignorePredictionsRef.current = false;
+                    lastSetBySelectionRef.current = false;
+                  }, 50);
+                }}
+                onMouseEnter={() => setActiveIndex(idx)}
+                className={isActive ? "suggestion-item--active" : "suggestion-item"}
+                style={{
+                  padding: "8px 10px",
+                  cursor: "pointer",
+                  background: isActive ? "#f3f4f6" : "#fff",
+                  border: "1px solid #e5e7eb",
+                  borderTop: idx === 0 ? "1px solid #e5e7eb" : undefined,
+                  borderRadius: "7px",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <span style={{ fontWeight: "bold" }}>{loc.label}</span>
+                <span style={{ fontSize: "12px", color: "#666" }}>{loc.address}</span>
               </div>
             );
           })}

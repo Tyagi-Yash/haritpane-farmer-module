@@ -23,20 +23,18 @@ function FarmForm() {
     defaultValues: {
       farmName: editData?.farmName || "",
       tehsil: editData?.tehsil || "",
-      postalAddress: editData?.postalAddress || "",
-      village: editData?.village || "",
-      pincode: editData?.pincode || "",
+      postalAddress: initialLocation?.address || editData?.postalAddress || "",
+      village: initialLocation?.village || editData?.village || "",
+      pincode: initialLocation?.pincode || editData?.pincode || "",
     },
   });
 
   const onSubmit = (data) => {
     const payload = {
       ...data,
-      location: editData
-        ? editData.location
-        : initialLocation
-          ? { type: "Point", coordinates: [initialLocation.lng, initialLocation.lat] }
-          : null,
+      location: initialLocation
+        ? { type: "Point", coordinates: [initialLocation.lng, initialLocation.lat] }
+        : editData?.location || null,
     };
 
     if (!payload.location && !editData) {
@@ -64,7 +62,12 @@ function FarmForm() {
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal titleBox={true} title="My Farm" navigate="/my-farms" />
+        <TopbarModal
+          titleBox={true}
+          title="My Farm"
+          navigate="/my-farms/map"
+          navigateState={{ farm: editData, locationDetails: initialLocation }}
+        />
         <div className="dashboard">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="option-wrapper">

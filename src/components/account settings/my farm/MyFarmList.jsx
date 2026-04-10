@@ -1,72 +1,89 @@
-import { Link, useNavigate } from "react-router-dom";
-
-import miniMap from "../../../assets/images/mini-map.png";
+import { useNavigate } from "react-router-dom";
 import editRectangle from "../../../assets/images/edit-rectangle.svg";
 import view from "../../../assets/images/view.svg";
+import farm1 from "../../../assets/images/farm1.jpg";
+import farm2 from "../../../assets/images/farm2.jpg";
+import farm3 from "../../../assets/images/farm3.jpg";
 
 function MyFarmList({ farms = [] }) {
   const navigate = useNavigate();
 
+  const farmImages = [farm1, farm2, farm3];
+
+
   const handleEdit = (farm) => {
-    navigate("/my-farms/form", { state: { farm } });
+    navigate("/my-farms/map", { state: { farm } });
+  };
+
+  const handleView = (farm) => {
+    navigate("/my-farms/details", { state: { farm } });
   };
 
   return (
-    <>
-      <div className="dashboard my-farms-cards my-maps-card-sections">
-        <div className="option-wrapper">
-          <div className="row">
-            <div className="col-md-4 mb-3">
-              <Link
-                to="/my-farms/map"
-                className="add-farm-btn-card card shadow-sm border-0 d-flex align-items-center justify-content-center"
-                style={{
-                  height: "100%",
-                  minHeight: "200px",
-                  background: "#f8f9fa",
-                  border: "2px dashed #dee2e6",
-                  textDecoration:"none"
-                }}
-              >
-                <div className="text-center">
-                  <i className="fa fa-plus-circle fa-2x text-success mb-2"></i>
-                  <h5 className="mb-0">Add Field</h5>
-                </div>
-              </Link>
-            </div>
-            {farms.map((farm) => (
-              <div className="col-md-4 mb-3" key={farm._id}>
-                <div className="farm-card-view">
-                  <figure className="maps-scroll">
-                    <img src={miniMap} alt={farm.farmName} />
-                    <div className="tap-view">
-                      <h4>Tap to view on map</h4>
-                    </div>
-                  </figure>
-                  <div className="name-icon">
-                    <h4 className="normal-text">{farm.farmName}</h4>
-                    <div>
-                      <img src={view} alt="view" style={{ cursor: "pointer" }} />
-                      <img
-                        src={editRectangle}
-                        alt="edit"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleEdit(farm)}
-                      />
-                    </div>
-                  </div>
-                  <div className="available-service-btn">
-                    <Link to="/my-farms/details" className="send-btn">
-                      View detailed forecast
-                    </Link>
+    <div className="dashboard my-farms-cards my-maps-card-sections">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h4 className="mb-0">My Fields</h4>
+
+        <button
+          className="btn btn-success d-flex align-items-center gap-2 px-3"
+          style={{ backgroundColor: "#FAA625", color: "#fff", border: "none" }}
+          onClick={() => navigate("/my-farms/map")}
+        >
+          <i className="fa fa-plus"></i>
+          Add Field
+        </button>
+      </div>
+
+      <div className="row">
+        {farms.map((farm, index) => {
+          const farmImg = farmImages[index % farmImages.length];
+
+          return (
+            <div className="col-md-4 mb-3" key={farm._id || farm.farmName}>
+              <div className="farm-card-view">
+                <figure className="maps-scroll" style={{ position: "relative", height: "150px" }}>
+                  <img
+                    src={farmImg}
+                    alt={farm.farmName}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+
+                  {/* Overlay to disable interaction */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      zIndex: 10,
+                    }}
+                  ></div>
+                </figure>
+
+                <div className="name-icon d-flex justify-content-between align-items-center px-2 py-2">
+                  <h6 className="mb-0">{farm.farmName}</h6>
+
+                  <div className="d-flex gap-2">
+                    <button className="icon-btn" onClick={() => handleView(farm)}>
+                      <img src={view} alt="view" />
+                    </button>
+
+                    <button className="icon-btn" onClick={() => handleEdit(farm)}>
+                      <img src={editRectangle} alt="edit" />
+                    </button>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          );
+        })}
       </div>
-    </>
+    </div>
   );
 }
 

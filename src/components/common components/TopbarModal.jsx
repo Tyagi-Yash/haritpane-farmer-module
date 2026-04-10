@@ -2,7 +2,7 @@ import profile from "../../assets/images/profile.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-function TopbarModal({ titleBox, navigate, secImage, title }) {
+function TopbarModal({ titleBox, navigate, navigateState, secImage, title }) {
   const { t } = useTranslation();
   let profileData = {};
   try {
@@ -17,7 +17,7 @@ function TopbarModal({ titleBox, navigate, secImage, title }) {
         {Boolean(titleBox) && (
           <div className="TitleBox-top-bar">
             <span>
-              <Link className="back-circle-navbar side-space" to={navigate}>
+              <Link className="back-circle-navbar side-space" to={navigate} state={navigateState}>
                 <i className="fa-solid fa-arrow-left" />
               </Link>
             </span>

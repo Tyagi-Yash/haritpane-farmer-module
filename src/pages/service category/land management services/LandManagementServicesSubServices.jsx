@@ -91,7 +91,7 @@ function LandManagementServicesSubServices() {
       areaError = validateArea(farmArea.trim());
     }
     if (areaError) {
-      newErrors.farmArea = areaError; // Note: validate validators might need translation too, but passing as is for now
+      newErrors.farmArea = areaError;
     }
 
     const dateErrors = validateDates(fromDate, toDate);
@@ -156,8 +156,13 @@ function LandManagementServicesSubServices() {
                         checked={selectSubCategory === "tracktor_attachments"}
                       />
                       <div className="radio-card">
-                        <img src={TractorandAttachment} alt={t("landManagement.tractorAndAttachment")} />
-                        <span className="radio-label">{t("landManagement.tractorAndAttachment")}</span>
+                        <img
+                          src={TractorandAttachment}
+                          alt={t("landManagement.tractorAndAttachment")}
+                        />
+                        <span className="radio-label">
+                          {t("landManagement.tractorAndAttachment")}
+                        </span>
                       </div>
                     </label>
                   </div>
@@ -256,7 +261,8 @@ function LandManagementServicesSubServices() {
                 <div className="row g-3">
                   <div className="col-md-4">
                     <label className="form-label">
-                      {t("landManagement.fromDate")}<span className="required">*</span>
+                      {t("landManagement.fromDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={fromDate ? new Date(fromDate) : null}
@@ -277,7 +283,8 @@ function LandManagementServicesSubServices() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">
-                      {t("landManagement.tillDate")}<span className="required">*</span>
+                      {t("landManagement.tillDate")}
+                      <span className="required">*</span>
                     </label>
                     <DatePicker
                       selected={toDate ? new Date(toDate) : null}
@@ -298,7 +305,8 @@ function LandManagementServicesSubServices() {
                   </div>
                   <div className="col-md-4">
                     <label className="form-label">
-                      {t("landManagement.startTime")}<span className="required">*</span>
+                      {t("landManagement.startTime")}
+                      <span className="required">*</span>
                     </label>
                     <Time12HourPicker
                       value={fromTime}

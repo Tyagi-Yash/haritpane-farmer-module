@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://15.206.16.230:8085/api/v1/farmer",
+  baseURL: `${import.meta.env.VITE_BACKEND_URL}/api/v1/farmer`,
 });
 
 axiosInstance.interceptors.request.use(
@@ -12,7 +12,7 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export default axiosInstance;
