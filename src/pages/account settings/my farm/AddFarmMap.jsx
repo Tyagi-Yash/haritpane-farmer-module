@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 
@@ -18,6 +19,7 @@ function AddFarmMap() {
     libraries,
   });
 
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -109,18 +111,18 @@ function AddFarmMap() {
           setSelectedVillage(village);
           setSelectedPincode(pincode);
         } else {
-          setSelectedAddress("Address not found");
+          setSelectedAddress(t("myFarm.addressNotFound"));
           setSelectedVillage("");
           setSelectedPincode("");
         }
       });
     } catch (error) {
       setIsLoadingAddress(false);
-      setSelectedAddress("Unable to fetch address");
+      setSelectedAddress(t("myFarm.unableToFetchAddress"));
       setSelectedVillage("");
       setSelectedPincode("");
     }
-  }, []);
+  }, [t]);
 
   const onMapClick = useCallback(
     (e) => {
@@ -135,7 +137,7 @@ function AddFarmMap() {
 
   const handleNext = () => {
     if (!markerPosition) {
-      toast.error("Please select a location on the map first");
+      toast.error(t("myFarm.selectLocationFirst"));
       return;
     }
 
@@ -163,25 +165,25 @@ function AddFarmMap() {
   return (
     <div className="WrapperArea afm-wrapper">
       <div className="WrapperBox">
-        <TopbarModal titleBox title="My Farm" navigate="/my-farms" />
+        <TopbarModal titleBox title={t("myFarm.title")} navigate="/my-farms" />
 
         <div className="dashboard px-3 pb-3">
           <div className="afm-container">
             <div className="afm-header">
-              <h4>{editData ? "Edit Farm Location" : "Add Farm Location"}</h4>
-              <p>Choose the exact location of your farm on the map</p>
+              <h4>{editData ? t("myFarm.editFarmLocation") : t("myFarm.addFarmLocation")}</h4>
+              <p>{t("myFarm.chooseExactLocation")}</p>
             </div>
 
             <div className="afm-card">
               <div className="afm-card-header">
-                <div className="afm-title">Pick exact farm location</div>
+                <div className="afm-title">{t("myFarm.pickExactLocation")}</div>
 
                 <button
                   onClick={handleReset}
                   disabled={!markerPosition}
                   className={`afm-clear-btn ${!markerPosition ? "disabled" : ""}`}
                 >
-                  Clear
+                  {t("myFarm.clear")}
                 </button>
               </div>
 
@@ -197,12 +199,12 @@ function AddFarmMap() {
                     {markerPosition && <Marker position={markerPosition} />}
                   </GoogleMap>
                 ) : (
-                  <div className="afm-loading">Loading map...</div>
+                  <div className="afm-loading">{t("myFarm.loadingMap")}</div>
                 )}
 
                 {!markerPosition && isLoaded && (
                   <div className="afm-map-overlay">
-                    Tap anywhere on the map to select your farm location
+                    {t("myFarm.tapToSelect")}
                   </div>
                 )}
               </div>
@@ -210,13 +212,13 @@ function AddFarmMap() {
               <div className="afm-bottom">
                 <div className="afm-grid">
                   <div className="afm-location-card">
-                    <div className="afm-label">Selected Location</div>
+                    <div className="afm-label">{t("myFarm.selectedLocation")}</div>
 
                     {markerPosition ? (
                       <>
                         <div className="afm-address">
                           {isLoadingAddress ? (
-                            <span className="afm-loading-text">Fetching address...</span>
+                            <span className="afm-loading-text">{t("myFarm.fetchingAddress")}</span>
                           ) : (
                             selectedAddress
                           )}
@@ -227,7 +229,7 @@ function AddFarmMap() {
                         </div>
                       </>
                     ) : (
-                      <div className="afm-empty">No location selected</div>
+                      <div className="afm-empty">{t("myFarm.noLocationSelected")}</div>
                     )}
                   </div>
 
@@ -236,7 +238,7 @@ function AddFarmMap() {
                     disabled={!markerPosition}
                     className={`afm-continue-btn ${!markerPosition ? "disabled" : ""}`}
                   >
-                    Continue →
+                    {t("myFarm.continue")}
                   </button>
                 </div>
               </div>
@@ -249,3 +251,4 @@ function AddFarmMap() {
 }
 
 export default AddFarmMap;
+

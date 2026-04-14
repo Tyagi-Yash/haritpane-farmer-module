@@ -1,20 +1,23 @@
-import TopbarModal from "../../../components/common components/TopbarModal";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import TopbarModal from "../../../components/common components/TopbarModal";
 
 function FarmGeofencing() {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal titleBox={true} title="My Farm" navigate="/my-farms" />
+          <TopbarModal titleBox={true} title={t("myFarm.title")} navigate="/my-farms" />
           <div className="dashboard my-farm-api">
             <div className="d-flex align-items-center justify-content-center">
               <div className="add-field-card">
-                This screen will be design at time of API implementation(geo fencing API)
+                {t("myFarm.geoFencingPlaceholder")}
               </div>
             </div>
             <div className="available-service-btn">
-              <Link to="/my-farms/form">Add Field</Link>
+              <Link to="/my-farms/form">{t("myFarm.addField")}</Link>
             </div>
           </div>
         </div>
@@ -24,3 +27,4 @@ function FarmGeofencing() {
 }
 
 export default FarmGeofencing;
+

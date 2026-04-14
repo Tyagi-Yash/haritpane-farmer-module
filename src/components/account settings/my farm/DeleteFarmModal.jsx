@@ -1,6 +1,9 @@
 import { Modal } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const DeleteFarmModal = ({ show, onClose, onDelete, farmName }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal
       className="Logout-modal"
@@ -11,16 +14,16 @@ const DeleteFarmModal = ({ show, onClose, onDelete, farmName }) => {
       keyboard={false}
     >
       <Modal.Body>
-        <div className="modal-title">Delete Field?</div>
+        <div className="modal-title">{t("myFarm.deleteFarm")}</div>
         <div className="text-center mb-4 text-muted">
-          Are you sure you want to delete '{farmName}'?
+          {t("myFarm.confirmDeleteFarm", { name: farmName })}
         </div>
         <div className="modal-footer">
           <button className="btn btn-logout-modal" onClick={onClose}>
-            No
+            {t("common.no")}
           </button>
           <button className="btn btn-cancel" onClick={onDelete}>
-            Yes
+            {t("common.yes")}
           </button>
         </div>
       </Modal.Body>
@@ -29,3 +32,4 @@ const DeleteFarmModal = ({ show, onClose, onDelete, farmName }) => {
 };
 
 export default DeleteFarmModal;
+

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import editRectangle from "../../../assets/images/edit-rectangle.svg";
 import view from "../../../assets/images/view.svg";
 import trash from "../../../assets/images/trash.svg";
@@ -12,6 +13,7 @@ import DeleteFarmModal from "./DeleteFarmModal";
 import { Commonpagination } from "../../common components/Commonpagination";
 
 function MyFarmList({ farms = [], pagination = {}, onPageChange = () => {} }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -44,7 +46,7 @@ function MyFarmList({ farms = [], pagination = {}, onPageChange = () => {} }) {
     <>
       <div className="dashboard my-farms-cards my-maps-card-sections">
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h4 className="mb-0">My Fields</h4>
+          <h4 className="mb-0">{t("myFarm.title")}</h4>
 
           <button
             className="btn btn-success d-flex align-items-center gap-2 px-3"
@@ -52,7 +54,7 @@ function MyFarmList({ farms = [], pagination = {}, onPageChange = () => {} }) {
             onClick={() => navigate("/my-farms/map")}
           >
             <i className="fa fa-plus"></i>
-            Add Field
+            {t("myFarm.addField")}
           </button>
         </div>
 
@@ -132,3 +134,4 @@ function MyFarmList({ farms = [], pagination = {}, onPageChange = () => {} }) {
 }
 
 export default MyFarmList;
+

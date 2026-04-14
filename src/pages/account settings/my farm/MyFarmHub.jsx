@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { getAllMyFarms } from "../../../reduxtoolkit/slices/account settings/myFarm";
@@ -8,6 +9,7 @@ import NoFarmList from "../../../components/account settings/my farm/NoFarmList"
 
 function MyFarmHub() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { farms, loader, pagination } = useSelector((state) => state.services.myFarmMgmtSlice);
 
   useEffect(() => {
@@ -21,11 +23,11 @@ function MyFarmHub() {
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
-        <TopbarModal titleBox={true} title="My Farm" navigate="/dashboard" />
+        <TopbarModal titleBox={true} title={t("myFarm.title")} navigate="/dashboard" />
 
         {loader ? (
           <div className="add-field-card">
-            <h4>Loading farms...</h4>
+            <h4>{t("myFarm.loadingFarms")}</h4>
           </div>
         ) : farms.length > 0 ? (
           <MyFarmList farms={farms} pagination={pagination} onPageChange={handlePageChange} />
@@ -38,3 +40,4 @@ function MyFarmHub() {
 }
 
 export default MyFarmHub;
+

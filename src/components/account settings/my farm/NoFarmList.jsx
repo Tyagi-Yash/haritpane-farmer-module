@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Grass from "../../../assets/images/grass.png";
 
 function NoFarmList() {
+  const { t } = useTranslation();
+
   return (
     <div className="dashboard my-farms">
       <div className="d-flex align-items-center justify-content-center">
@@ -9,11 +12,11 @@ function NoFarmList() {
           <figure>
             <img src={Grass} alt="" />
           </figure>
-          <h6 className="normal-heading">Grow Smarter with Your Farm</h6>
-          <p className="grey-para">Personalize your HaritPane experience with your farm info.</p>
+          <h6 className="normal-heading">{t("myFarm.growSmarter")}</h6>
+          <p className="grey-para">{t("myFarm.personalizeExperience")}</p>
           <div className="available-service-btn">
             <Link to="/my-farms/map" className="send-btn">
-              Add Field
+              {t("myFarm.addField")}
             </Link>
           </div>
         </div>
@@ -23,3 +26,4 @@ function NoFarmList() {
 }
 
 export default NoFarmList;
+

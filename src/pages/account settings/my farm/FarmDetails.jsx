@@ -1,12 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 
 const libraries = ["places"];
 
 function FarmDetails() {
+  const { t } = useTranslation();
   const location = useLocation();
   const farm = location.state?.farm;
 
@@ -41,9 +43,9 @@ function FarmDetails() {
     return (
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal titleBox={true} title="My Farm" navigate="/my-farms" />
+          <TopbarModal titleBox={true} title={t("myFarm.title")} navigate="/my-farms" />
           <div className="dashboard p-4 text-center">
-            <h5>No farm data selected.</h5>
+            <h5>{t("myFarm.noFarmDataSelected")}</h5>
           </div>
         </div>
       </div>
@@ -54,7 +56,7 @@ function FarmDetails() {
     <>
       <div className="WrapperArea">
         <div className="WrapperBox">
-          <TopbarModal titleBox={true} title="My Farm" navigate="/my-farms" />
+          <TopbarModal titleBox={true} title={t("myFarm.title")} navigate="/my-farms" />
           <div className="dashboard my-farms-details">
             <div>
               <div className="mb-4">
@@ -85,7 +87,7 @@ function FarmDetails() {
                         </GoogleMap>
                       ) : (
                         <div className="d-flex align-items-center justify-content-center h-100 bg-light">
-                          Loading Map...
+                          {t("myFarm.loadingMap")}
                         </div>
                       )}
                       {/* Transparent overlay to block interaction */}
@@ -110,31 +112,31 @@ function FarmDetails() {
                     style={{ borderRadius: "12px" }}
                   >
                     <h5 className="mb-4" style={{ fontWeight: "600", fontSize: "1.2rem" }}>
-                      Farm Information
+                      {t("myFarm.farmInformation")}
                     </h5>
                     <div className="row g-4">
                       <div className="col-sm-6">
-                        <small className="text-muted d-block mb-1">Tehsil</small>
+                        <small className="text-muted d-block mb-1">{t("myFarm.tehsil")}</small>
                         <span style={{ fontWeight: "500", fontSize: "1.05rem" }}>
-                          {farm.tehsil || "N/A"}
+                          {farm.tehsil || t("myFarm.na")}
                         </span>
                       </div>
                       <div className="col-sm-6">
-                        <small className="text-muted d-block mb-1">Village</small>
+                        <small className="text-muted d-block mb-1">{t("myFarm.village")}</small>
                         <span style={{ fontWeight: "500", fontSize: "1.05rem" }}>
-                          {farm.village || "N/A"}
+                          {farm.village || t("myFarm.na")}
                         </span>
                       </div>
                       <div className="col-sm-6">
-                        <small className="text-muted d-block mb-1">Pincode</small>
+                        <small className="text-muted d-block mb-1">{t("myFarm.pincode")}</small>
                         <span style={{ fontWeight: "500", fontSize: "1.05rem" }}>
-                          {farm.pincode || "N/A"}
+                          {farm.pincode || t("myFarm.na")}
                         </span>
                       </div>
                       <div className="col-12 mt-4">
-                        <small className="text-muted d-block mb-1">Postal Address</small>
+                        <small className="text-muted d-block mb-1">{t("myFarm.postalAddress")}</small>
                         <span style={{ fontWeight: "500", fontSize: "1.05rem" }}>
-                          {farm.postalAddress || "N/A"}
+                          {farm.postalAddress || t("myFarm.na")}
                         </span>
                       </div>
                     </div>

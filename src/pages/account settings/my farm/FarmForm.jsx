@@ -2,11 +2,13 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 import TopbarModal from "../../../components/common components/TopbarModal";
 import { addMyFarm, editMyFarm } from "../../../reduxtoolkit/slices/account settings/myFarm";
 
 function FarmForm() {
+  const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,21 +40,21 @@ function FarmForm() {
     };
 
     if (!payload.location && !editData) {
-      toast.error("Location coordinates are missing. Please select a location on the map.");
+      toast.error(t("myFarm.locationCoordinatesMissing"));
       return;
     }
 
     if (editData) {
       dispatch(editMyFarm({ ...payload, farmId: editData._id })).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
-          toast.success("Farm updated successfully");
+          toast.success(t("myFarm.farmUpdatedSuccess"));
           navigate("/my-farms");
         }
       });
     } else {
       dispatch(addMyFarm(payload)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
-          toast.success("Farm added successfully");
+          toast.success(t("myFarm.farmAddedSuccess"));
           navigate("/my-farms");
         }
       });
@@ -64,7 +66,7 @@ function FarmForm() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox={true}
-          title="My Farm"
+          title={t("myFarm.title")}
           navigate="/my-farms/map"
           navigateState={{ farm: editData, locationDetails: initialLocation }}
         />
@@ -73,18 +75,18 @@ function FarmForm() {
             <div className="option-wrapper">
               <div className="form-section">
                 <h5 className="book-heading">
-                  {editData ? "Edit Farm Details" : "Add Location Details"}
+                  {editData ? t("myFarm.editFarmDetails") : t("myFarm.addLocationDetails")}
                 </h5>
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">
-                      Farm Name <span>*</span>
+                      {t("myFarm.farmName")} <span>*</span>
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter Farm Name"
-                      {...register("farmName", { required: "Farm Name is required" })}
+                      placeholder={t("myFarm.enterFarmName")}
+                      {...register("farmName", { required: t("myFarm.farmNameRequired") })}
                     />
                     {errors.farmName && (
                       <small className="text-danger">{errors.farmName.message}</small>
@@ -92,13 +94,13 @@ function FarmForm() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Tehsil <span>*</span>
+                      {t("myFarm.tehsil")} <span>*</span>
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter Tehsil"
-                      {...register("tehsil", { required: "Tehsil is required" })}
+                      placeholder={t("myFarm.enterTehsil")}
+                      {...register("tehsil", { required: t("myFarm.tehsilRequired") })}
                     />
                     {errors.tehsil && (
                       <small className="text-danger">{errors.tehsil.message}</small>
@@ -106,13 +108,13 @@ function FarmForm() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Postal Address <span>*</span>
+                      {t("myFarm.postalAddress")} <span>*</span>
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter Postal Address"
-                      {...register("postalAddress", { required: "Postal Address is required" })}
+                      placeholder={t("myFarm.enterPostalAddress")}
+                      {...register("postalAddress", { required: t("myFarm.postalAddressRequired") })}
                     />
                     {errors.postalAddress && (
                       <small className="text-danger">{errors.postalAddress.message}</small>
@@ -120,13 +122,13 @@ function FarmForm() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Village <span>*</span>
+                      {t("myFarm.village")} <span>*</span>
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter Village"
-                      {...register("village", { required: "Village is required" })}
+                      placeholder={t("myFarm.enterVillage")}
+                      {...register("village", { required: t("myFarm.villageRequired") })}
                     />
                     {errors.village && (
                       <small className="text-danger">{errors.village.message}</small>
@@ -134,13 +136,13 @@ function FarmForm() {
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">
-                      Pin/postal code <span>*</span>
+                      {t("myFarm.pinPostalCode")} <span>*</span>
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Enter Pincode"
-                      {...register("pincode", { required: "Pincode is required" })}
+                      placeholder={t("myFarm.enterPincode")}
+                      {...register("pincode", { required: t("myFarm.pincodeRequired") })}
                     />
                     {errors.pincode && (
                       <small className="text-danger">{errors.pincode.message}</small>
@@ -151,7 +153,7 @@ function FarmForm() {
             </div>
             <div className="available-service-btn d-flex justify-content-center mt-4">
               <button type="submit" className="send-btn" disabled={loader}>
-                {loader ? "Saving..." : editData ? "Update Farm" : "Save Farm"}
+                {loader ? t("myFarm.saving") : editData ? t("myFarm.updateFarm") : t("myFarm.saveFarm")}
               </button>
             </div>
           </form>
@@ -162,3 +164,4 @@ function FarmForm() {
 }
 
 export default FarmForm;
+
