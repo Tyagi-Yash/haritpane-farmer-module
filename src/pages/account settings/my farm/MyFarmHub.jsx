@@ -8,11 +8,15 @@ import NoFarmList from "../../../components/account settings/my farm/NoFarmList"
 
 function MyFarmHub() {
   const dispatch = useDispatch();
-  const { farms, loader } = useSelector((state) => state.services.myFarmMgmtSlice);
+  const { farms, loader, pagination } = useSelector((state) => state.services.myFarmMgmtSlice);
 
   useEffect(() => {
-    dispatch(getAllMyFarms());
+    dispatch(getAllMyFarms({ page: 1, limit: 10 }));
   }, [dispatch]);
+
+  const handlePageChange = (page) => {
+    dispatch(getAllMyFarms({ page, limit: 10 }));
+  };
 
   return (
     <div className="WrapperArea">
@@ -24,7 +28,7 @@ function MyFarmHub() {
             <h4>Loading farms...</h4>
           </div>
         ) : farms.length > 0 ? (
-          <MyFarmList farms={farms} />
+          <MyFarmList farms={farms} pagination={pagination} onPageChange={handlePageChange} />
         ) : (
           <NoFarmList />
         )}

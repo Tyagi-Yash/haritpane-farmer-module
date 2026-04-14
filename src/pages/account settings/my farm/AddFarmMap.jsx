@@ -168,7 +168,7 @@ function AddFarmMap() {
         <div className="dashboard px-3 pb-3">
           <div className="afm-container">
             <div className="afm-header">
-              <h4>Add Farm Location</h4>
+              <h4>{editData ? "Edit Farm Location" : "Add Farm Location"}</h4>
               <p>Choose the exact location of your farm on the map</p>
             </div>
 

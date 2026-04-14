@@ -4,7 +4,7 @@ import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import locationBlack from "../../assets/images/location-black.svg";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMyFarms } from "../../reduxtoolkit/slices/account settings/myFarm";
+import { getFarmList } from "../../reduxtoolkit/slices/account settings/myFarm";
 Modal.setAppElement("#root");
 
 const libraries = ["places"];
@@ -20,13 +20,13 @@ export default function LocationInput({
   const inputPlaceholder = placeholder || `${t("classified.location")}*`;
 
   const dispatch = useDispatch();
-  const farms = useSelector((state) => state.services?.myFarmMgmtSlice?.farms || []);
+  const allFarms = useSelector((state) => state.services?.myFarmMgmtSlice?.allFarms || []);
 
   useEffect(() => {
-    dispatch(getAllMyFarms());
+    dispatch(getFarmList());
   }, [dispatch]);
 
-  const predefinedLocations = farms.map((farm) => ({
+  const predefinedLocations = allFarms.map((farm) => ({
     label: farm.farmName,
     address: farm.postalAddress,
     lat: String(farm.location?.coordinates?.[1] || ""),
@@ -381,7 +381,7 @@ export default function LocationInput({
 
       <div
         className="autocomplete-dropdown-container"
-        style={{ position: "absolute", zIndex: 60, width: "100%", maxWidth: 600 }}
+        style={{ position: "absolute", zIndex: 60, width: "100%", maxWidth: 600, maxHeight: "250px", overflowY: "auto" }}
       >
         {suggestLoading && (
           <div style={{ padding: 8, background: "#fff", border: "1px solid #e5e7eb" }}>

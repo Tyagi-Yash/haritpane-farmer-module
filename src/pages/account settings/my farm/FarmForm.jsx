@@ -83,7 +83,7 @@ function FarmForm() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="e.g. My Green Farm"
+                      placeholder="Enter Farm Name"
                       {...register("farmName", { required: "Farm Name is required" })}
                     />
                     {errors.farmName && (
@@ -97,7 +97,7 @@ function FarmForm() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="e.g. Rohini"
+                      placeholder="Enter Tehsil"
                       {...register("tehsil", { required: "Tehsil is required" })}
                     />
                     {errors.tehsil && (
@@ -111,7 +111,7 @@ function FarmForm() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="e.g. house no 123, main road, Market"
+                      placeholder="Enter Postal Address"
                       {...register("postalAddress", { required: "Postal Address is required" })}
                     />
                     {errors.postalAddress && (
@@ -125,7 +125,7 @@ function FarmForm() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="e.g. Bhagatpur"
+                      placeholder="Enter Village"
                       {...register("village", { required: "Village is required" })}
                     />
                     {errors.village && (
@@ -139,7 +139,7 @@ function FarmForm() {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="e.g. 110085"
+                      placeholder="Enter Pincode"
                       {...register("pincode", { required: "Pincode is required" })}
                     />
                     {errors.pincode && (
