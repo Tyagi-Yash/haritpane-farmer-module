@@ -3,7 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
 
-import logo from "../../assets/images/Logo.png";
+import logo from "../../assets/images/brand-logo.svg";
+import hindiLogo from "../../assets/images/hindi_logo.svg";
 import profile from "../../assets/images/profile.svg";
 
 import help from "../../assets/images/help.svg";
@@ -33,14 +34,13 @@ function SideNav() {
       const res = await dispatch(logout());
 
       const status = res?.payload?.status;
-      const message = res?.payload?.data?.message;
 
       if (status === 200) {
         localStorage.removeItem("token");
         localStorage.removeItem("farmerProfile");
         localStorage.removeItem("i18nextLng");
         localStorage.removeItem("fcmToken");
-        toast.success(message || t("nav.logoutSuccess"));
+        toast.success( t("nav.logoutSuccess"));
         setShowLogoutModal(false);
         dispatch(resetChatState());
         dispatch(clearBookingList());
@@ -50,7 +50,7 @@ function SideNav() {
         i18n.changeLanguage("en");
         navigate("/signup");
       } else {
-        toast.error(message || t("nav.logoutFail"));
+        toast.error(t("nav.logoutFail"));
       }
     } catch (error) {
       toast.error(t("nav.logoutError"));
@@ -62,7 +62,7 @@ function SideNav() {
       <div className="SidenavArea">
         <div className="SidenavHead">
           <figure>
-            <img src={logo} alt="Logo" />
+            <img src={i18n.language === 'hi' || i18n.language === 'mr' ? hindiLogo : logo} alt="Logo" />
           </figure>
         </div>
 

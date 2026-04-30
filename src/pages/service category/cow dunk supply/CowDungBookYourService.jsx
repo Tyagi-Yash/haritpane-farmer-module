@@ -111,10 +111,10 @@ function CowDungBookYourService() {
         const { status, data } = res?.payload || {};
 
         if (status === 200) {
-          toast.success(data?.message || t("cowDung.bookingSuccess"));
+          // toast.success(data?.message || t("cowDung.bookingSuccess"));
           setShowSuccessModal(true);
         } else {
-          toast.error(data?.message || t("cowDung.bookingFailed"));
+          toast.error(t("cowDung.bookingFailed"));
         }
       } else {
         const formdata = {
@@ -216,7 +216,8 @@ function CowDungBookYourService() {
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label">
-                        {t("common.fromDate")}<span className="required">*</span>
+                        {t("common.fromDate")}
+                        <span className="required">*</span>
                       </label>
                       <DatePicker
                         selected={fromDate ? new Date(fromDate) : null}
@@ -238,7 +239,8 @@ function CowDungBookYourService() {
 
                     <div className="col-md-6">
                       <label className="form-label">
-                        {t("common.startTime")}<span className="required">*</span>
+                        {t("common.startTime")}
+                        <span className="required">*</span>
                       </label>
                       <Time12HourPicker
                         value={startTime}
@@ -268,7 +270,8 @@ function CowDungBookYourService() {
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label">
-                        {t("common.farmLocation")}<span className="required">*</span>
+                        {t("common.farmLocation")}
+                        <span className="required">*</span>
                       </label>
                       <LocationInput
                         value={currentLocation}
@@ -285,7 +288,8 @@ function CowDungBookYourService() {
                   <div className="row g-3">
                     <div className="col-md-6">
                       <label className="form-label">
-                        {t("common.pickupDate")}<span className="required">*</span>
+                        {t("common.pickupDate")}
+                        <span className="required">*</span>
                       </label>
                       <DatePicker
                         selected={fromDate ? new Date(fromDate) : null}

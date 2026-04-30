@@ -61,6 +61,7 @@ import {
   RescheduleCowDung,
   CowDungChangeAvailablity,
   CowDungVendorDetails,
+  Tutorials,
 } from "./pages";
 
 import { ToastContainer } from "react-toastify";
@@ -211,6 +212,7 @@ function App() {
             </Route>
 
             <Route path="notification" element={<Notification />} />
+            <Route path="tutorials" element={<Tutorials />} />
 
             <Route path="language" element={<LanguagePage />} />
 

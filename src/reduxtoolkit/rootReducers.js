@@ -23,6 +23,7 @@ import StaticContentMgmtSlice from "./slices/static content/staticContent";
 import reviewSlice from "./slices/rate and reviews/rateReview";
 import chatSlice from "./slices/chats/chats";
 import myFarmMgmtSlice from "./slices/account settings/myFarm";
+import tutorialSlice from "./slices/tutorials/tutorialSlice";
 
 
 const rootReducer = combineReducers({
@@ -50,6 +51,7 @@ const rootReducer = combineReducers({
   reviewSlice,
   chatSlice,
   myFarmMgmtSlice,
+  tutorialSlice,
 });
 
 export default rootReducer;

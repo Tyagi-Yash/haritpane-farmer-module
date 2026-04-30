@@ -30,7 +30,7 @@ function Notification() {
           chatNotification: data?.data?.chatNotification,
         });
       } else {
-        toast.error(data?.message || t("account.failedToLoadNotifications"));
+        toast.error(t("account.failedToLoadNotifications"));
       }
     } catch (err) {
       toast.error(t("common.somethingWentWrong"));
@@ -50,12 +50,11 @@ function Notification() {
     try {
       const res = await dispatch(editFarmerProfile(updatedState));
       const status = res?.payload?.status;
-      const { message } = res?.payload?.data || {};
       if (status === 200) {
         setNotifications(updatedState);
-        toast.success(message || t("account.updatedSuccessfully"));
+        toast.success(t("account.updatedSuccessfully"));
       } else {
-        toast.error(message || t("account.failedToUpdate"));
+        toast.error(t("account.failedToUpdate"));
       }
     } catch (error) {
       toast.error(t("common.somethingWentWrong"));

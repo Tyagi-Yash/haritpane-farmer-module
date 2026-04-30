@@ -48,7 +48,7 @@ function MyProfileSaveContinue() {
         });
         setLoading(false);
       } else {
-        toast(data?.message || t("account.failedToLoadProfile"));
+        toast(t("account.failedToLoadProfile"));
       }
     } catch (err) {
       toast(t("common.somethingWentWrong"));
@@ -93,7 +93,7 @@ function MyProfileSaveContinue() {
         }));
         toast.success(t("account.imageUploadSuccess"));
       } else {
-        toast.error(data.message || t("account.imageUploadFail"));
+        toast.error(t("account.imageUploadFail"));
       }
     } catch (error) {
       toast.error(t("common.somethingWentWrong"));
@@ -139,7 +139,7 @@ function MyProfileSaveContinue() {
     try {
       const res = await dispatch(editFarmerProfile(data));
       const status = res?.payload?.status;
-      const { message, data: userData } = res?.payload?.data || {};
+      const { data: userData } = res?.payload?.data || {};
       const farmerProfile = {
         name: userData?.name ?? "",
         profileImage: userData?.profileImage ?? "",
@@ -153,9 +153,9 @@ function MyProfileSaveContinue() {
       if (status === 200) {
         localStorage.setItem("farmerProfile", JSON.stringify(farmerProfile));
         navigate("/profile");
-        toast.success(message || t("account.profileUpdateSuccess"));
+        toast.success(t("account.profileUpdateSuccess"));
       } else {
-        toast.error(message || t("account.profileUpdateFail"));
+        toast.error(t("account.profileUpdateFail"));
       }
     } catch (error) {
       toast.error(t("common.somethingWentWrong"));

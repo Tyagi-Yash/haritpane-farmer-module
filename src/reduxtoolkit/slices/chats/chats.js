@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../config/config";
 
-export const fetchChatList = createAsyncThunk("chat/fetchList", async () => {
-  const res = await axios.get("/getAllChatProviders");
+export const fetchChatList = createAsyncThunk("chat/fetchList", async (params) => {
+  const res = await axios.get("/getAllChatProviders", {params});
   return res.data.data[0].data;
 });
 

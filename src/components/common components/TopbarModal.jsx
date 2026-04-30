@@ -40,9 +40,7 @@ function TopbarModal({ titleBox, navigate, navigateState, secImage, title }) {
         <Link to="/notification" style={{ textDecoration: "none" }}>
           <i className="far fa-bell bell-icon" />
         </Link>
-        <div>
-          <i className="fas fa-question question-icon" />
-        </div>
+
         <Link to="/profile" style={{ textDecoration: "none" }}>
           <div className="profile">
             <img src={profileImage ? profileImage : profile} alt="profile" />

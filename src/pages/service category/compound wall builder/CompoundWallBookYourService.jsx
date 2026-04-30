@@ -51,7 +51,7 @@ function CompoundWallBookYourService() {
         if (status === 200) {
           setserviceTypesOption(data?.data || []);
         } else {
-          toast(data?.message || t("compoundWall.failedToGetServiceType"));
+          toast( t("compoundWall.failedToGetServiceType"));
         }
       } catch (err) {
         toast.error(t("common.somethingWentWrong"));

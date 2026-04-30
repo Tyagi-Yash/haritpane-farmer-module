@@ -9,7 +9,7 @@ import ChatsNavbar from "../../components/chats/ChatsNavbar";
 import ChatList from "../../components/chats/chat message/ChatList";
 import ChatWindow from "../../components/chats/chat message/ChatWindow";
 import profile from "../../assets/images/profile.png";
-import { setActiveChat, fetchChatList, fetchMessages } from "../../reduxtoolkit/slices/chats/chats";
+import { setActiveChat, fetchChatList, fetchMessages, resetChatState } from "../../reduxtoolkit/slices/chats/chats";
 
 export default function ChatChatSection() {
   const { t } = useTranslation();
@@ -24,7 +24,8 @@ export default function ChatChatSection() {
   }, [location.state, searchParams]);
 
   useEffect(() => {
-    dispatch(fetchChatList());
+    dispatch(resetChatState());
+    dispatch(fetchChatList({ chatType: "online_Provider" }));
   }, []);
 
   const { chatList } = useSelector((s) => s.services.chatSlice);

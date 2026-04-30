@@ -9,12 +9,14 @@ import myFarm from "../../assets/images/my-farm.svg";
 import complaint from "../../assets/images/complaint.svg";
 import call from "../../assets/images/call.svg";
 import gmail from "../../assets/images/gmail.svg";
+import tutorialIcon from "../../assets/images/tutorial.svg";
 
 export const mainMenu = [
   { to: "/dashboard", icon: dashboard, label: "Dashboard", translateKey: "nav.dashboard" },
   { to: "/service-tracking", icon: notepad, label: "Progress", translateKey: "nav.progress" },
   { to: "/service-category", icon: userRectangle, label: "Service Category", translateKey: "nav.serviceCategory" },
-  { to: "/chats", icon: chat, label: "Chats", translateKey: "nav.chats" },
+  { to: "/chats/message-chat", icon: chat, label: "Chats", translateKey: "nav.chats" },
+  { to: "/tutorials", icon: tutorialIcon, label: "Tutorials", translateKey: "nav.tutorials" },
 ];
 
 export const accountMenu = [

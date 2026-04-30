@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 import { disconnectSocket } from "../../../socket/socket";
 import { resetReviewList } from "../../../reduxtoolkit/slices/rate and reviews/rateReview";
 import i18n from "../../../i18n";
+import { clearBookingList } from "../../../reduxtoolkit/slices/progress/bookingList";
+import { resetChatState } from "../../../reduxtoolkit/slices/chats/chats";
 
 function DeleteModal({ show, onClose }) {
   const { t } = useTranslation();
@@ -21,7 +23,6 @@ function DeleteModal({ show, onClose }) {
     try {
       const res = await dispatch(editFarmerProfile({ status: "deleted" }));
       const status = res?.payload?.status;
-      const message = res?.payload?.data?.message;
 
       if (status === 200) {
         localStorage.removeItem("token");
@@ -32,12 +33,12 @@ function DeleteModal({ show, onClose }) {
         dispatch(clearBookingList());
         dispatch(resetReviewList());
         disconnectSocket();
-        
+
         i18n.changeLanguage("en");
         navigate("/signup");
-        toast.success(message || t("account.accountDeletedSuccess"));
+        toast.success(t("account.accountDeletedSuccess"));
       } else {
-        toast.error(message || t("account.accountDeleteFail"));
+        toast.error(t("account.accountDeleteFail"));
       }
     } catch (error) {
       toast.error(t("common.somethingWentWrong"));
@@ -61,13 +62,11 @@ function DeleteModal({ show, onClose }) {
             <img src={deleteEmoji} alt="" />
           </div>
           <div className="modal-title">{t("account.confirmDeleteAccount")}</div>
-          <p>
-            {t("account.deleteAccountDesc")}
-          </p>
+          <p>{t("account.deleteAccountDesc")}</p>
           <div className="modal-footer">
             <button
               type="button"
-               className="btn btn-delete-modal"
+              className="btn btn-delete-modal"
               onClick={handleDelete}
               disabled={disable}
             >

@@ -42,7 +42,7 @@ function AddProviderReview({ show, onHide, onSuccess }) {
       onSuccess?.();
       handleClose();
     } catch (err) {
-      toast.error(err?.message || t("chats.failedToSubmitReview"));
+      toast.error(t("chats.failedToSubmitReview"));
     }
   };
 

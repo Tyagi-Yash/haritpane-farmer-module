@@ -1,5 +1,5 @@
 import signupLeft from "../../assets/images/signip-left.png";
-import brandLogo from "../../assets/images/brand-logo.png";
+import brandLogo from "../../assets/images/brand-logo.svg";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -107,7 +107,7 @@ function OtpVerify() {
         const userLang = langMap[farmerProfile.languageSelector] || "en";
         i18n.changeLanguage(userLang);
 
-        farmerProfile.languageSelector ? navigate("/dashboard") : navigate("/language");
+        userData.isFirstTime ? navigate("/language") : navigate("/dashboard");
         toast.success(message || "OTP verified sucessfully");
       } else {
         toast.error(message || "Invalid OTP");

@@ -1,5 +1,5 @@
 import signupLeft from "../../assets/images/signip-left.png";
-import brandLogo from "../../assets/images/brand-logo.png";
+import brandLogo from "../../assets/images/brand-logo.svg";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";

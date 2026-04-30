@@ -33,7 +33,6 @@ function LanguagePage() {
     try {
       const res = await dispatch(editFarmerProfile({ languageSelector: language }));
       const status = res?.payload?.status;
-      const message = res?.payload?.data?.message;
 
       if (status === 200) {
         const storedProfile = JSON.parse(localStorage.getItem("farmerProfile")) || {};
@@ -46,9 +45,9 @@ function LanguagePage() {
         }
 
         navigate("/dashboard");
-        toast.success(message || t("languagePage.successToast"));
+        toast.success( t("languagePage.successToast"));
       } else {
-        toast.error(message || t("languagePage.failToast"));
+        toast.error( t("languagePage.failToast"));
       }
     } catch (error) {
       toast.error(t("languagePage.errorToast"));

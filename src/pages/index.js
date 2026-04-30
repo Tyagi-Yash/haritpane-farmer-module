@@ -54,6 +54,7 @@ import LandManagementServicesSubServices from "./service category/land managemen
 import LandManagementVendorDetails from "./service category/land management services/LandManagementVendorDetails";
 import TransportationBookYourService from "./service category/transportation/TransportationBookYourService";
 import ServiceCategory from "./service category/ServiceCategory";
+import Tutorials from "./tutorials/Tutorials";
 import QuotationDetails from "./progress/QuotationDetails";
 import RescheduleTransportation from "./progress/RescheduleTransportation";
 import RescheduleCowDung from "./progress/RescheduleCowDung";
@@ -118,4 +119,5 @@ export {
   LandManagementVendorDetails,
   TransportationBookYourService,
   ServiceCategory,
+  Tutorials,
 };

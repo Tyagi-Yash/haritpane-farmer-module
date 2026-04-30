@@ -38,10 +38,10 @@ function TransportationBookYourService() {
       const { status, data } = res?.payload || {};
 
       if (status === 200) {
-        toast.success(data?.message || t("transportation.bookingSuccess"));
+        // toast.success(data?.message || t("transportation.bookingSuccess"));
         setShowSuccess(true);
       } else {
-        toast.error(data?.message || t("transportation.bookingFailed"));
+        toast.error(t("transportation.bookingFailed"));
       }
     } finally {
       setLoading(false);

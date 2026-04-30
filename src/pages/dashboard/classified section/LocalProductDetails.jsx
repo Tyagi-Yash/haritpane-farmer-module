@@ -36,7 +36,7 @@ function LocalProductDetails() {
       if (status === 200) {
         setProductDetails(data?.data || {});
       } else {
-        toast(data?.message || t("classified.failedToLoad"));
+        toast( t("classified.failedToLoad"));
       }
     } catch (error) {
       toast(t("classified.somethingWentWrong"));
@@ -55,7 +55,7 @@ function LocalProductDetails() {
     const productIdLast12 = productDetails._id.slice(-12);
     const farmerIdLast12 = productDetails.farmerId.slice(-12);
 
-    navigate("/chats", {
+    navigate("/chats/enquiry-chat", {
       state: {
         roomId: productIdLast12 + farmerIdLast12,
         farmerId: productDetails.farmerId,
@@ -120,7 +120,7 @@ function LocalProductDetails() {
           <div className="bottom-buttons d-flex">
             <div className="button-group">
               <button type="button" className="send-enquiry-btn" onClick={handleStartChat}>
-                {t("classified.startChat")}
+                {t("classified.sendEnquiry")}
               </button>
               <button
                 type="button"

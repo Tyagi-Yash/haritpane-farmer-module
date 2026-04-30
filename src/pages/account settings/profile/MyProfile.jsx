@@ -50,7 +50,7 @@ function MyProfile() {
         });
         setLoading(false);
       } else {
-        toast(data?.message || t("account.failedToLoadProfile"));
+        toast(t("account.failedToLoadProfile"));
       }
     } catch (err) {
       toast(t("common.somethingWentWrong"));
@@ -80,7 +80,9 @@ function MyProfile() {
                     className="profile-img me-3"
                   />
                 </div>
-                <h4 className="main-heading mb-3">{farmerName ? farmerName : t("account.farmer")}</h4>
+                <h4 className="main-heading mb-3">
+                  {farmerName ? farmerName : t("account.farmer")}
+                </h4>
                 <h6 className="radio-label mb-3">{t("account.personalDetails")}</h6>
                 <ProfileFieldGroup fields={profileFields} formState={formState} />
                 <div className="d-flex justify-content-end align-items-center mt-5">

@@ -34,7 +34,7 @@
 
 //   self.registration.showNotification(title, {
 //     body,
-//     icon: "/Haritpane_Farmer/vite.svg",
+//     icon: "/Haritpane_Farmer/app_logo.svg",
 //     data: { url },
 //   });
 // });
