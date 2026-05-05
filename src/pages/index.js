@@ -58,6 +58,7 @@ import Tutorials from "./tutorials/Tutorials";
 import QuotationDetails from "./progress/QuotationDetails";
 import RescheduleTransportation from "./progress/RescheduleTransportation";
 import RescheduleCowDung from "./progress/RescheduleCowDung";
+import AllNotifications from "./notifications/AllNotifications";
 
 export {
   OtpVerify,
@@ -71,6 +72,7 @@ export {
   AddFarmMap,
   FarmGeofencing,
   Notification,
+  AllNotifications,
   MyProfile,
   MyProfileSaveContinue,
   ChatChatSection,

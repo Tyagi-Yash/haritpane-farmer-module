@@ -246,6 +246,11 @@ i18n
             searchPlaceholder: "Search Services...",
             defaultUser: "Farmer",
             tutorials: "Tutorials",
+            notifications: "Notifications",
+          },
+          notifications: {
+            noNotifications: "No Notifications Yet",
+            noNotificationsDesc: "When you receive notifications, they will appear here.",
           },
           tutorials: {
             title: "Tutorials",
@@ -499,6 +504,7 @@ i18n
             noReviewsFound: "No reviews found",
             anonymous: "Anonymous",
             noFeedbackProvided: "No feedback provided",
+            jobCancelledStatus:"Job Cancelled",
             noDescription: "No Description",
             labourRequirement: "Labour Requirement",
             electrostaticSpraying: "Electrostatic Spraying",

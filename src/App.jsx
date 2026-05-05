@@ -11,6 +11,7 @@ import {
   AddFarmMap,
   FarmGeofencing,
   Notification,
+  AllNotifications,
   MyProfile,
   MyProfileSaveContinue,
   ChatChatSection,
@@ -212,6 +213,7 @@ function App() {
             </Route>
 
             <Route path="notification" element={<Notification />} />
+            <Route path="all-notifications" element={<AllNotifications />} />
             <Route path="tutorials" element={<Tutorials />} />
 
             <Route path="language" element={<LanguagePage />} />

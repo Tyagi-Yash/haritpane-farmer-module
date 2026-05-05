@@ -24,6 +24,7 @@ import reviewSlice from "./slices/rate and reviews/rateReview";
 import chatSlice from "./slices/chats/chats";
 import myFarmMgmtSlice from "./slices/account settings/myFarm";
 import tutorialSlice from "./slices/tutorials/tutorialSlice";
+import notificationSlice from "./slices/notifications/notificationSlice";
 
 
 const rootReducer = combineReducers({
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
   chatSlice,
   myFarmMgmtSlice,
   tutorialSlice,
+  notificationSlice,
 });
 
 export default rootReducer;
