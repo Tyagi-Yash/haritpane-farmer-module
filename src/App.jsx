@@ -63,6 +63,8 @@ import {
   CowDungChangeAvailablity,
   CowDungVendorDetails,
   Tutorials,
+  ContactUs,
+  RaiseComplaint,
 } from "./pages";
 
 import { ToastContainer } from "react-toastify";
@@ -215,6 +217,8 @@ function App() {
             <Route path="notification" element={<Notification />} />
             <Route path="all-notifications" element={<AllNotifications />} />
             <Route path="tutorials" element={<Tutorials />} />
+            <Route path="contact-us" element={<ContactUs />} />
+            <Route path="raise-a-complaint" element={<RaiseComplaint />} />
 
             <Route path="language" element={<LanguagePage />} />
 

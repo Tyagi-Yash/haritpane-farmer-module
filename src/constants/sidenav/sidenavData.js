@@ -8,7 +8,6 @@ import language from "../../assets/images/language.svg";
 import myFarm from "../../assets/images/my-farm.svg";
 import complaint from "../../assets/images/complaint.svg";
 import call from "../../assets/images/call.svg";
-import gmail from "../../assets/images/gmail.svg";
 import tutorialIcon from "../../assets/images/tutorial.svg";
 
 export const mainMenu = [
@@ -24,11 +23,6 @@ export const accountMenu = [
   { to: "/language", icon: language, label: "Language", translateKey: "nav.language" },
   { to: "/profile", icon: profile, label: "Profile", translateKey: "nav.profile" },
   { to: "/my-farms", icon: myFarm, label: "My Farm", translateKey: "nav.myFarm" },
-];
-
-export const helpMenu = [
-  { icon: complaint, label: "Raise a Complaint", translateKey: "nav.raiseComplaint" },
-  { icon: gmail, label: "Email Us", translateKey: "nav.emailUs" },
-  { icon: call, label: "Call Us", translateKey: "nav.callUs" },
-  { icon: chat, label: "Chat with Us", translateKey: "nav.chatWithUs" },
+  { to: "/contact-us", icon: call, label: "Contact Us", translateKey: "nav.contactUs" },
+  { to: "/raise-a-complaint", icon: complaint, label: "Raise a Complaint", translateKey: "nav.raiseComplaint" },
 ];

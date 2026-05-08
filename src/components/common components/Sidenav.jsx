@@ -7,8 +7,6 @@ import logo from "../../assets/images/brand-logo.svg";
 import hindiLogo from "../../assets/images/hindi_logo.svg";
 import profile from "../../assets/images/profile.svg";
 
-import help from "../../assets/images/help.svg";
-
 import LogoutModal from "./LogoutModal";
 import { toast } from "react-toastify";
 import { logout } from "../../reduxtoolkit/slices/auth/auth";
@@ -18,7 +16,7 @@ import { disconnectSocket } from "../../socket/socket";
 import { clearBookingList } from "../../reduxtoolkit/slices/progress/bookingList";
 import DropdownMenu from "./DropdownMenu";
 import NavItem from "./NavItem";
-import { accountMenu, helpMenu, mainMenu } from "../../constants/sidenav/sidenavData";
+import { accountMenu, mainMenu } from "../../constants/sidenav/sidenavData";
 import { resetReviewList } from "../../reduxtoolkit/slices/rate and reviews/rateReview";
 
 function SideNav() {
@@ -30,7 +28,6 @@ function SideNav() {
 
   const handleLogout = async () => {
     try {
-      
       const res = await dispatch(logout());
 
       const status = res?.payload?.status;
@@ -40,13 +37,13 @@ function SideNav() {
         localStorage.removeItem("farmerProfile");
         localStorage.removeItem("i18nextLng");
         localStorage.removeItem("fcmToken");
-        toast.success( t("nav.logoutSuccess"));
+        toast.success(t("nav.logoutSuccess"));
         setShowLogoutModal(false);
         dispatch(resetChatState());
         dispatch(clearBookingList());
         dispatch(resetReviewList());
         disconnectSocket();
-        
+
         i18n.changeLanguage("en");
         navigate("/signup");
       } else {
@@ -62,7 +59,10 @@ function SideNav() {
       <div className="SidenavArea">
         <div className="SidenavHead">
           <figure>
-            <img src={i18n.language === 'hi' || i18n.language === 'mr' ? hindiLogo : logo} alt="Logo" />
+            <img
+              src={i18n.language === "hi" || i18n.language === "mr" ? hindiLogo : logo}
+              alt="Logo"
+            />
           </figure>
         </div>
 
@@ -72,8 +72,12 @@ function SideNav() {
               <NavItem key={item.to} {...item} />
             ))}
 
-            <DropdownMenu icon={profile} label="Account Settings" translateKey="nav.accountSettings" items={accountMenu} />
-            <DropdownMenu icon={help} label="Help Center" translateKey="nav.helpCenter" items={helpMenu} />
+            <DropdownMenu
+              icon={profile}
+              label="Account Settings"
+              translateKey="nav.accountSettings"
+              items={accountMenu}
+            />
 
             <li className="logout-sidenav">
               <Link className="d-block" onClick={() => setShowLogoutModal(true)}>

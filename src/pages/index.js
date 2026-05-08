@@ -59,6 +59,8 @@ import QuotationDetails from "./progress/QuotationDetails";
 import RescheduleTransportation from "./progress/RescheduleTransportation";
 import RescheduleCowDung from "./progress/RescheduleCowDung";
 import AllNotifications from "./notifications/AllNotifications";
+import ContactUs from "./account settings/contact us/ContactUs";
+import RaiseComplaint from "./account settings/raise complaint/RaiseComplaint";
 
 export {
   OtpVerify,
@@ -73,6 +75,8 @@ export {
   FarmGeofencing,
   Notification,
   AllNotifications,
+  ContactUs,
+  RaiseComplaint,
   MyProfile,
   MyProfileSaveContinue,
   ChatChatSection,
