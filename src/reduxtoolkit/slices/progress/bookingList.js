@@ -21,6 +21,18 @@ export const getMyBookings = createAsyncThunk(
   },
 );
 
+export const getBookingById = createAsyncThunk(
+  "bookingList/getBookingById",
+  async (bookingId, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/getBookingById", { params: { bookingId } });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Failed to fetch booking details" });
+    }
+  },
+);
+
 const bookingListSlice = createSlice({
   name: "bookingList",
   initialState: {
@@ -49,6 +61,7 @@ const bookingListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // getMyBookings
       .addCase(getMyBookings.pending, (state) => {
         state.loading = true;
       })
@@ -73,6 +86,34 @@ const bookingListSlice = createSlice({
         state.loading = false;
       })
       .addCase(getMyBookings.rejected, (state) => {
+        state.loading = false;
+      })
+      
+      // getBookingById
+      .addCase(getBookingById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getBookingById.fulfilled, (state, action) => {
+        state.loading = false;
+        const bookingData = action.payload.data;
+        if (bookingData) {
+          const index = state.services.findIndex((b) => b.id === bookingData._id);
+          if (index !== -1) {
+            state.services[index].raw = {
+              ...state.services[index].raw,
+              startTimeOtp: bookingData.startTimeOtp,
+              endTimeOtp: bookingData.endTimeOtp,
+            };
+          } else {
+            const adapter = bookingAdapters[bookingData.bookingFor];
+            const adaptedBooking = adapter ? adapter(bookingData) : null;
+            if (adaptedBooking) {
+              state.services.push(adaptedBooking);
+            }
+          }
+        }
+      })
+      .addCase(getBookingById.rejected, (state) => {
         state.loading = false;
       });
   },

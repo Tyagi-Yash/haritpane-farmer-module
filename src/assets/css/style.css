@@ -3177,6 +3177,21 @@ input[type="date" i] {
   color: #374151;
 }
 
+.status-all {
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.status-badge-inline {
+  padding: 0px 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
 .sort-option::before {
   content: "";
   border-radius: 6px 0 0 6px;
@@ -5252,5 +5267,72 @@ input[type="date" i] {
 
   .complaint-detail__info-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+.otp-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+
+.otp-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  min-width: 150px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.otp-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.otp-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.otp-value {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.start-otp .otp-value {
+  color: #16a34a;
+}
+
+.end-otp .otp-value {
+  color: #eab308;
+}
+
+.image-otp-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+  .image-otp-container {
+    flex-direction: column;
+  }
+
+  .otp-container {
+    width: 100%;
+    justify-content: flex-start;
   }
 }

@@ -15,7 +15,7 @@ const profileDetector = {
       if (language && langMap[language]) {
         return langMap[language];
       }
-    } catch (e) {}
+    } catch (e) { }
     return undefined;
   },
 };
@@ -153,7 +153,7 @@ i18n
             boleroPickup: "Bolero Pickup (750-1700kg)",
             tractorTrolley: "Tractor-Trolley (1700-3000kg)",
             jobLocation: "Job Location",
-            sendBookingRequest : "Send Booking Request",
+            sendBookingRequest: "Send Booking Request",
           },
           contact: {
             pageTitle: "Contact Us",
@@ -381,6 +381,8 @@ i18n
             postReview: "Post Review",
           },
           progress: {
+            startServiceOtp: "Start Service OTP",
+            endServiceOtp: "End Service OTP",
             serviceTracking: "Service Tracking",
             jobOrder: "Job Order",
             vendorDetails: "Vendor Details",
@@ -430,6 +432,7 @@ i18n
             completed: "Completed",
             ongoing: "On Going",
             onhold: "On Hold",
+            all: "All",
             chat: "Chat",
             call: "Call",
             accept: "Accept",
@@ -551,7 +554,8 @@ i18n
             noReviewsFound: "No reviews found",
             anonymous: "Anonymous",
             noFeedbackProvided: "No feedback provided",
-            jobCancelledStatus:"Job Cancelled",
+            landManagement: "Land Management",
+            jobCancelledStatus: "Job Cancelled",
             noDescription: "No Description",
             labourRequirement: "Labour Requirement",
             electrostaticSpraying: "Electrostatic Spraying",
@@ -1420,6 +1424,8 @@ i18n
             postReview: "समीक्षा पोस्ट करें",
           },
           progress: {
+            startServiceOtp: "सेवा शुरू करें ओटीपी",
+            endServiceOtp: "सेवा समाप्त करें ओटीपी",
             serviceTracking: "सेवा ट्रैकिंग",
             jobOrder: "जॉब ऑर्डर",
             vendorDetails: "विक्रेता विवरण",
@@ -1469,6 +1475,7 @@ i18n
             completed: "पूरा हुआ",
             ongoing: "चल रहा है",
             onhold: "प्रतीक्षेत",
+            all: "सभी",
             chat: "चैट",
             call: "कॉल",
             accept: "स्वीकार करें",
@@ -2462,6 +2469,8 @@ i18n
             postReview: "पुनरावलोकन पोस्ट करा",
           },
           progress: {
+            startServiceOtp: "सेवा सुरू करा ओटीपी",
+            endServiceOtp: "सेवा समाप्त करा ओटीपी",
             serviceTracking: "सेवा ट्रॅकिंग",
             jobOrder: "जॉब ऑर्डर",
             vendorDetails: "विक्रेता तपशील",
@@ -2511,6 +2520,7 @@ i18n
             completed: "पूर्ण झाले",
             ongoing: "चालू आहे",
             onhold: "होल्डवर",
+            all: "सर्व",
             chat: "चॅट",
             call: "कॉल",
             accept: "स्वीकारा",

@@ -1,4 +1,5 @@
 export const statusOptions = [
+  "All",
   "pending",
   "accepted",
   "rejected",

@@ -168,30 +168,47 @@ function LocalProductsListingModule() {
             ) : products.length === 0 ? (
               <p style={{ color: "gray", marginTop: "10px" }}>{t("classified.noProducts")}</p>
             ) : (
-              products.map((product) => (
-                <div
-                  className="product-card"
-                  onClick={() => handleEnquiryClick(product._id)}
-                  key={product._id}
-                >
-                  <div className="image-part">
-                    <img
-                      src={product.productImage?.[0] || productImage}
-                      alt={product.productName || "Product"}
-                    />
+              products.map((product) => {
+                const businessAddress = [
+                  product?.providerDetails?.businInfo?.buildingName,
+                  product?.providerDetails?.businInfo?.street,
+                  product?.providerDetails?.businInfo?.city,
+                  product?.providerDetails?.businInfo?.state,
+                  product?.providerDetails?.businInfo?.pinCode,
+                ]
+                  .filter(Boolean)
+                  .join(", ") ||
+                  product?.providerDetails?.address ||
+                  t("classified.addressNotAvailable");
+
+                return (
+                  <div
+                    className="product-card"
+                    onClick={() => handleEnquiryClick(product._id)}
+                    key={product._id}
+                  >
+                    <div className="image-part">
+                      <img
+                        src={product.productImage?.[0] || productImage}
+                        alt={product.productName || "Product"}
+                      />
+                    </div>
+                    <div className="card-text-part">
+                      <h6 className="normal-heading">{product.productName}</h6>
+                      <p className="normal-para">
+                        {t("common.businessName")}:{" "}
+                        {product?.providerDetails?.businInfo?.businessName ||
+                          product?.providerDetails?.name ||
+                          "N/A"}
+                      </p>
+                      <p className="normal-para">{businessAddress}</p>
+                    </div>
+                    <div className="available-service-btn mt-auto">
+                      <button className="send-btn">{t("classified.viewBusiness")}</button>
+                    </div>
                   </div>
-                  <div className="card-text-part">
-                    <h6 className="normal-heading">{product.productName}</h6>
-                    <p className="normal-para">{t("classified.vendor")}: {product?.providerDetails?.name || "N/A"}</p>
-                    <p className="normal-para">
-                      {product?.providerDetails?.address || t("classified.addressNotAvailable")}
-                    </p>
-                  </div>
-                  <div className="available-service-btn mt-auto">
-                    <button className="send-btn">{t("classified.viewBusiness")}</button>
-                  </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 

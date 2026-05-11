@@ -22,7 +22,7 @@ function ServiceTrackingTab() {
   );
 
   const [page, setPage] = useState(1);
-  const [selectedStatus, setSelectedStatus] = useState(filters?.status || "pending");
+  const [selectedStatus, setSelectedStatus] = useState(filters?.status || "All");
   const [fromDate, setFromDate] = useState(filters?.fromDate || "");
   const [toDate, setToDate] = useState(filters?.toDate || "");
 
@@ -54,7 +54,7 @@ function ServiceTrackingTab() {
   useEffect(() => {
     dispatch(
       getMyBookings({
-        status: selectedStatus,
+        status: selectedStatus === "All" ? "" : selectedStatus,
         fromDate,
         toDate,
         page,
@@ -134,7 +134,9 @@ function ServiceTrackingTab() {
                   onClick={toggleSortMenu}
                 >
                   <span>
-                    <span className="sort-label">{t(`progress.${selectedStatus.toLowerCase()}`)}</span>
+                    <span className="sort-label">
+                      {t(`progress.${selectedStatus.toLowerCase()}`)}
+                    </span>
                     <img src={sortArrowDown} alt="Sort" />
                   </span>
                 </div>
@@ -160,7 +162,14 @@ function ServiceTrackingTab() {
       <div className="option-wrapper mb-0">
         {loading && <ProgressVendorSkeleton count={5} />}
         {!loading && services.length === 0 && (
-          <p className="text-center">{t("progress.noBookingsFound", { status: selectedStatus === "All" ? t("progress.all") : t(`progress.${selectedStatus.toLowerCase()}`) })}</p>
+          <p className="text-center">
+            {t("progress.noBookingsFound", {
+              status:
+                selectedStatus === "All"
+                  ? t("progress.all")
+                  : t(`progress.${selectedStatus.toLowerCase()}`),
+            })}
+          </p>
         )}
         {!loading &&
           services.map((item) => (
@@ -169,14 +178,22 @@ function ServiceTrackingTab() {
               to={`/service-tracking/${item.bookingFor}/${item.id}`}
               className="vendor-card-link"
             >
-              <div className="vendor-card">
+              <div className={`vendor-card status-card-${item.raw.status?.toLowerCase()}`}>
                 <div className="service-info">
                   <img src={item.image || serviceImg} alt="Service" className="service-image" />
+
                   <div className="service-text">
                     <div className="title">{item.businessName || t("progress.noDescription")}</div>
+
                     <div className="rating">
                       <i className="fa-solid fa-star star-icon" />
                       {item.rating ?? "N/A"}
+                      
+                      <div
+                        className={`status-badge-inline status-${item.raw.status?.toLowerCase()}`}
+                      >
+                        {t(`progress.${item.raw.status?.toLowerCase()}`)}
+                      </div>
                     </div>
                   </div>
                 </div>
