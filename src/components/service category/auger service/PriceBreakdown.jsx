@@ -25,6 +25,8 @@ const PriceBreakdown = ({
 
   const billableHours = ratePerHr > 0 ? (payable - OveralltransportCharge) / ratePerHr : 0;
 
+  const isFixedPrice = ratePerHr > 0 && billableHours > 0;
+
   return (
     <div className="option-wrapper bookingPriceTable mb-0">
       {drillInfo.length > 0 && (
@@ -55,12 +57,18 @@ const PriceBreakdown = ({
           <tr>
             <td>
               {t("common.serviceCharges")}
-              <div className="text-muted small">
-                {formatPrice(ratePerHr)} {t("common.perHourParentheses")} ×{" "}
-                {formatHoursMinutes(billableHours, t)}
-              </div>
+              {isFixedPrice && (
+                <div className="text-muted small">
+                  {formatPrice(ratePerHr)} {t("common.perHourParentheses")} ×{" "}
+                  {formatHoursMinutes(billableHours, t)}
+                </div>
+              )}
             </td>
-            <td>{formatPrice(payable - OveralltransportCharge)}</td>
+            <td>
+              {isFixedPrice
+                ? formatPrice(payable - OveralltransportCharge)
+                : "-Price as per vendor rate card"}
+            </td>
           </tr>
 
           <tr>
@@ -77,12 +85,14 @@ const PriceBreakdown = ({
           </tr>
         </tbody>
 
-        <tfoot>
-          <tr className="fw-bold border-top">
-            <td>{t("common.totalAmountToPay")}</td>
-            <td>{formatPrice(payable)}</td>
-          </tr>
-        </tfoot>
+        {isFixedPrice && (
+          <tfoot>
+            <tr className="fw-bold border-top">
+              <td>{t("common.totalAmountToPay")}</td>
+              <td>{formatPrice(payable)}</td>
+            </tr>
+          </tfoot>
+        )}
       </table>
     </div>
   );

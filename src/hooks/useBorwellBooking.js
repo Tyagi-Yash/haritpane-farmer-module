@@ -55,6 +55,9 @@ export const useBorewellBooking = ({ vendor, filters }) => {
       bookingEndTime: filters.toTime,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor?.borewellInfo?.chargesforOutsideRadius ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       motorPower: vendor?.motorInfo?.[0]?.motorPower,
       motorCost: vendor?.motorInfo?.[0]?.motorCost,
       boreDigging: vendor.borewellInfo.boreDigging,

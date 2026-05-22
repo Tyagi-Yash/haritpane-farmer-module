@@ -48,10 +48,15 @@ export const useAugerBooking = ({ vendor, filters }) => {
       amount: vendor.payableAmount?.toString(),
       bookingFromDate: filters.date,
       bookingTillDate: filters.toDate,
-      estimatedTime: filters.estimatedTime,
+      estimatedTime: filters?.estimatedTime || "00:00",
+      totalHours: filters?.totalHours || "0",
+      totalMinutes: filters?.totalMinutes || "0",
       bookingStartTime: filters.time,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor.additionCharges ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       ratePerHr: vendor.ratePerHr,
       drillInfo: Array.isArray(vendor?.drillInfo)
         ? vendor.drillInfo.map(({ drillDiameter, ratePerInch, _id }) => ({

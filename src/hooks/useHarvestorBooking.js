@@ -55,6 +55,9 @@ export const useHarvestorBooking = ({ vendor, filters }) => {
       amount: vendor.payableAmount?.toString(),
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor?.Info?.additionalCharges ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       price: vendor.priceInfo[0].price,
       cropType: vendor.priceInfo[0].cropType,
       priceInfoId: vendor.priceInfo[0]._id,

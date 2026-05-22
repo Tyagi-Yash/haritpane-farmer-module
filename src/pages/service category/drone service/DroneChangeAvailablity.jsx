@@ -23,7 +23,7 @@ function DroneChangeAvailablity() {
   const queryParams = new URLSearchParams(location.search);
   const filterValues = Object.fromEntries(queryParams.entries());
   const [filters, setFilters] = useState(filterValues);
-  const { date, toDate = "" } = filters;
+  const { fromDate, toDate = "" } = filters;
   const {
     services = [],
     loading,
@@ -53,16 +53,16 @@ function DroneChangeAvailablity() {
     let newErrors = {};
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    if (!date) {
-      newErrors.date = t("common.fromDateRequired");
-    } else if (new Date(date) < today) {
-      newErrors.date = t("common.dateNotPast");
+    if (!fromDate) {
+      newErrors.fromDate = t("common.fromDateRequired");
+    } else if (new Date(fromDate) < today) {
+      newErrors.fromDate = t("common.dateNotPast");
     }
     if (toDate) {
       if (new Date(toDate) < today) {
         newErrors.toDate = t("common.toDateNotPast");
       }
-      if (date && toDate && new Date(date) > new Date(toDate)) {
+      if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
         newErrors.toDate = t("common.toDateNotEarlier");
       }
     }
@@ -84,10 +84,10 @@ function DroneChangeAvailablity() {
   };
   useEffect(() => {
     fetchServices();
-  }, [date, toDate, currentPage, selectedSort]);
+  }, [fromDate, toDate, currentPage, selectedSort]);
   useEffect(() => {
     setCurrentPage(1);
-  }, [date, toDate, selectedSort]);
+  }, [fromDate, toDate, selectedSort]);
   return (
     <div className="WrapperArea">
       <div className="WrapperBox">
@@ -104,14 +104,14 @@ function DroneChangeAvailablity() {
               <div className="row align-items-end">
                 <div className="col-md-4 mb-3">
                   <label className="form-label">{t("common.selectStartDate")}</label>
-                  {errors.date && <p className="error-text">{errors.date}</p>}
+                  {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}
                   <div className="input-group">
                     <DatePicker
-                      selected={date ? new Date(date) : null}
+                      selected={fromDate ? new Date(fromDate) : null}
                       onChange={(selectedDate) => {
                         const formatted = format(selectedDate, "yyyy-MM-dd");
-                        setFilters((prev) => ({ ...prev, date: formatted }));
-                        setErrors((prev) => ({ ...prev, date: "" }));
+                        setFilters((prev) => ({ ...prev, fromDate: formatted }));
+                        setErrors((prev) => ({ ...prev, fromDate: "" }));
                       }}
                       dateFormat="dd/MM/yyyy"
                       placeholderText="DD/MM/YYYY"

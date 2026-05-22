@@ -49,10 +49,15 @@ export const useExcavationBooking = ({ vendor, filters }) => {
       bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.fromTime,
-      durationOfExavation: filters.duration,
+      durationOfExavation: filters?.duration || "0",
+      totalHours: filters?.totalHours || "0",
+      totalMinutes: filters?.totalMinutes || "0",
       excavationType: filters.sectectEquipmentType,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor.additionalCharges ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       priceType: vendor.priceInfo.priceType,
       price: vendor.priceInfo.price,
       addressOfFarm: filters?.address,

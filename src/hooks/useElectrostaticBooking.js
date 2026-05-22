@@ -52,6 +52,9 @@ export const useElectrostaticBooking = ({ vendor, filters }) => {
       bookingStartTime: filters.fromTime,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor.basicInfo.additionalCharges ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       chargePerAcre: vendor.basicInfo.chargePerAcre,
       addressOfFarm: filters?.address,
       location: {

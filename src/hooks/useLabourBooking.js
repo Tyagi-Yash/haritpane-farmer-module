@@ -60,6 +60,9 @@ export const useLabourBooking = ({ vendor, filters }) => {
         cropUnderCultivation: filters.typeOfCrop,
       }),
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor?.labourInfo?.additionalCharges ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       dailyWage: vendor.labourInfo.dailyWage,
       additionalCharges: vendor.labourInfo.additionalCharges,
       addressOfFarm: filters?.address,

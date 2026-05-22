@@ -28,7 +28,7 @@ function DroneBookYourService() {
     lng: "",
     cropUnderCultivation: "",
     areaUnderCultivation: "",
-    date: "",
+    fromDate: "",
     time: "",
   };
 
@@ -37,7 +37,7 @@ function DroneBookYourService() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const { address, lat, lng, cropUnderCultivation, areaUnderCultivation, date, time } = formState;
+  const { address, lat, lng, cropUnderCultivation, areaUnderCultivation, fromDate, time } = formState;
 
   const handleSelectLocation = ({ address, lat, lng }) => {
     setFormState((prev) => ({ ...prev, address, lat, lng }));
@@ -64,10 +64,10 @@ function DroneBookYourService() {
     const areaError = validateArea(areaUnderCultivation.trim());
     if (areaError) newErrors.areaUnderCultivation = t(areaError);
 
-    const dateErrors = validateFromDate(date);
-    if (dateErrors) newErrors.date = t(dateErrors);
+    const dateErrors = validateFromDate(fromDate);
+    if (dateErrors) newErrors.fromDate = t(dateErrors);
 
-    const timeError = validateSelectTime(date, time);
+    const timeError = validateSelectTime(fromDate, time);
     if (timeError) newErrors.time = t(timeError);
 
     setErrors(newErrors);
@@ -84,7 +84,7 @@ function DroneBookYourService() {
       lng: lng.trim(),
       cropUnderCultivation: cropUnderCultivation.trim(),
       areaUnderCultivation: areaUnderCultivation.trim(),
-      date,
+      fromDate,
       time,
     };
     try {
@@ -157,11 +157,11 @@ function DroneBookYourService() {
                       <span className="required">*</span>
                     </label>
                     <DatePicker
-                      selected={date ? new Date(date) : null}
+                      selected={fromDate ? new Date(fromDate) : null}
                       onChange={(selectedDate) => {
                         const formatted = format(selectedDate, "yyyy-MM-dd");
-                        setFormState((prev) => ({ ...prev, date: formatted }));
-                        setErrors((prev) => ({ ...prev, date: "" }));
+                        setFormState((prev) => ({ ...prev, fromDate: formatted }));
+                        setErrors((prev) => ({ ...prev, fromDate: "" }));
                       }}
                       dateFormat="dd/MM/yyyy"
                       placeholderText="DD/MM/YYYY"
@@ -171,7 +171,7 @@ function DroneBookYourService() {
                       showOtherMonths
                       fixedHeight
                     />
-                    {errors.date && <p className="error-text">{errors.date}</p>}{" "}
+                    {errors.fromDate && <p className="error-text">{errors.fromDate}</p>}{" "}
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">

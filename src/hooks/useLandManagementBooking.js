@@ -54,6 +54,9 @@ export const useLandManagementBooking = ({ vendor, filters }) => {
       bookingStartTime: filters.fromTime,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor.additionalCharges ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       modelOfTractor: vendor.Info.modelOfTractor,
       attachments:filters.selectAttachment,
       price: vendor.Info.price,

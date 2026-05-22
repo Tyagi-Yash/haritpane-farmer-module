@@ -91,6 +91,8 @@ function ExcavationBookYourService() {
       toDate,
       fromTime,
       duration: Number(totalDuration).toFixed(2),
+      totalHours: hours,
+      totalMinutes: minutes,
     };
     try {
       const query = new URLSearchParams(formdata).toString();

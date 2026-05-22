@@ -48,11 +48,14 @@ export const useDroneBooking = ({ vendor, filters }) => {
       amount: vendor.payableAmount?.toString(),
       areaUnderCultivation: filters.areaUnderCultivation,
       cropUnderCultivation: filters.cropUnderCultivation,
-      bookingFromDate: filters.date,
+      bookingFromDate: filters.fromDate,
       bookingTillDate: filters.toDate,
       bookingStartTime: filters.time,
       extraCharges: vendor.extraCharges,
       distanceBeyondRadius: vendor.distanceBeyondRadius,
+      extraTransportCharges: vendor.extraCharges
+        ? Number(vendor.additionalCharges ?? 0) * vendor.distanceBeyondRadius
+        : 0,
       chargePerAcre: vendor.chargePerAcre,
       numberOfDrones: vendor.numberOfDrones,
       addressOfFarm: filters?.address,

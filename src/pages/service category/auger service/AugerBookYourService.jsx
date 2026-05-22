@@ -79,6 +79,8 @@ function AugerBookYourService() {
       lng: lng.trim(),
       date,
       time,
+      totalHours: hours,
+      totalMinutes: minutes,
       ...((hours || minutes) && {
         estimatedTime: Number(totalDuration).toFixed(2),
       }),
