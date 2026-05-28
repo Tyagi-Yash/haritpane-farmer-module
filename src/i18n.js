@@ -381,8 +381,8 @@ i18n
             postReview: "Post Review",
           },
           progress: {
-            startServiceOtp: "Start Service OTP",
-            endServiceOtp: "End Service OTP",
+            startServiceOtp: "Service Start Otp",
+            endServiceOtp: "Service Completion Otp",
             serviceTracking: "Service Tracking",
             jobOrder: "Job Order",
             vendorDetails: "Vendor Details",
@@ -1424,8 +1424,8 @@ i18n
             postReview: "समीक्षा पोस्ट करें",
           },
           progress: {
-            startServiceOtp: "सेवा शुरू करें ओटीपी",
-            endServiceOtp: "सेवा समाप्त करें ओटीपी",
+            startServiceOtp: "सेवा शुरू करने का ओटीपी",
+            endServiceOtp: "सेवा पूरी करने का ओटीपी",
             serviceTracking: "सेवा ट्रैकिंग",
             jobOrder: "जॉब ऑर्डर",
             vendorDetails: "विक्रेता विवरण",
@@ -2470,7 +2470,7 @@ i18n
           },
           progress: {
             startServiceOtp: "सेवा सुरू करा ओटीपी",
-            endServiceOtp: "सेवा समाप्त करा ओटीपी",
+            endServiceOtp: "सेवा पूर्ण करा ओटीपी",
             serviceTracking: "सेवा ट्रॅकिंग",
             jobOrder: "जॉब ऑर्डर",
             vendorDetails: "विक्रेता तपशील",

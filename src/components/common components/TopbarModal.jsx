@@ -33,10 +33,10 @@ function TopbarModal({ titleBox, navigate, navigateState, secImage, title }) {
         )}
       </div>
       <div className="right-section">
-        <div className="search-box">
+        {/* <div className="search-box">
           <input type="text" placeholder={t("nav.searchPlaceholder")} />
           <i className="fas fa-search search-icon" />
-        </div>
+        </div> */}
         <Link to="/all-notifications" style={{ textDecoration: "none" }}>
           <i className="far fa-bell bell-icon" />
         </Link>

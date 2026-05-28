@@ -13,8 +13,8 @@ const contactOptions = [
     descKey: "contact.callUsDesc",
     desc: "Speak directly with our support team",
     actionKey: "contact.callUsAction",
-    action: "1800-XXX-XXXX",
-    href: "tel:1800XXXXXXX",
+    action: "+911234567890",
+    href: "tel:+911234567890",
     colorClass: "contact-card--call",
   },
   {
@@ -37,8 +37,8 @@ const contactOptions = [
     descKey: "contact.emailUsDesc",
     desc: "Send us an email and we'll get back to you",
     actionKey: "contact.emailUsAction",
-    action: "support@haritpane.com",
-    href: "mailto:support@haritpane.com",
+    action: "sakhha.contact@gmail.com",
+    href: "mailto:sakhha.contact@gmail.com",
     colorClass: "contact-card--email",
   },
 ];
