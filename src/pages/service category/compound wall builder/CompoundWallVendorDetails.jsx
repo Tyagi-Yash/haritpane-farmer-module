@@ -29,7 +29,7 @@ function CompoundWallVendorDetails() {
     (state) => state.services.CompoundWallServiceMgmtSlice,
   );
 
-  const vendor = services.find((v) => v.compoundMaterialsInfo?._id === id);
+  const vendor = services.find((v) => v.compoundMaterialsInfo?.[0]?._id === id);
 
   const { isBooking, loading, bookingStatus, bookService, cancelServiceBooking } =
     usecompoundWallBooking({

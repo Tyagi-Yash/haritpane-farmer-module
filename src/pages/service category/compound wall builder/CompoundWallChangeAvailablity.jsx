@@ -194,8 +194,8 @@ function CompoundWallChangeAvailablity() {
                 {services.map((service) => (
                   <Link
                     className="vendor-card-link"
-                    to={`vendor-details/${service?.compoundMaterialsInfo?._id || ""}`}
-                    key={service?.compoundMaterialsInfo?._id || service?._id}
+                    to={`vendor-details/${service?.compoundMaterialsInfo?.[0]?._id || ""}`}
+                    key={service?.compoundMaterialsInfo?.[0]?._id || service?._id}
                   >
                     <div className="vendor-card">
                       <div className="service-info">
