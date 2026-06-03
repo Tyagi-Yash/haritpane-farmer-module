@@ -118,6 +118,8 @@ function LabourDetails({ data }) {
                   extraCharges={data.extraCharges}
                   payableAmount={data.amount}
                   distanceBeyondRadius={Number(data?.distanceBeyondRadius) || 0}
+                  numberOfDays={data?.numberOfDays || 1}
+                  numberOfLabour={data?.numberOfLabour || 1}
                 />
               </div>
             </div>

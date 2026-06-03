@@ -38,6 +38,18 @@ function LabourVendorDetails() {
     },
   );
 
+  const getNumberOfDays = (fromDate, toDate) => {
+    if (!fromDate || !toDate) return 1;
+    const start = new Date(fromDate);
+    const end = new Date(toDate);
+    const startUTC = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+    const endUTC = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+    const diffDays = Math.round((endUTC - startUTC) / (1000 * 60 * 60 * 24)) + 1;
+    return diffDays > 0 ? diffDays : 1;
+  };
+
+  const numberOfDays = getNumberOfDays(filters?.fromDate, filters?.toDate);
+
   return (
     <>
       <div className="WrapperArea">
@@ -81,6 +93,7 @@ function LabourVendorDetails() {
                           payableAmount={vendor.payableAmount}
                           numberOfLabour={filters.numberOfLabour}
                           distanceBeyondRadius={vendor.distanceBeyondRadius}
+                          numberOfDays={numberOfDays}
                         />
                       </div>
                     </div>

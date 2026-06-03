@@ -42,6 +42,14 @@ export const useLabourBooking = ({ vendor, filters }) => {
     if (!vendor?.providerId || !vendor?._id || !vendor?.categoryId || !filters?.labourType)
       return false;
 
+    const start = new Date(filters.fromDate);
+    const end = new Date(filters.toDate);
+    const startUTC = Date.UTC(start.getFullYear(), start.getMonth(), start.getDate());
+    const endUTC = Date.UTC(end.getFullYear(), end.getMonth(), end.getDate());
+    const numberOfDays = Math.round((endUTC - startUTC) / (1000 * 60 * 60 * 24)) + 1;
+    const days = numberOfDays > 0 ? numberOfDays : 1;
+
+
     const payload = {
       bookingFor: "labour",
       serviceId: vendor._id,
@@ -55,6 +63,7 @@ export const useLabourBooking = ({ vendor, filters }) => {
       bookingEndTime: filters.toTime,
       extraCharges: vendor.extraCharges,
       amount: vendor.payableAmount?.toString(),
+      numberOfDays: days,
       ...(cropValueEnable && {
         areaUnderCultivation: filters.areaUnderCultivation,
         cropUnderCultivation: filters.typeOfCrop,

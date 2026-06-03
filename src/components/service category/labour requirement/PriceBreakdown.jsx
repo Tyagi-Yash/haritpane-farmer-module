@@ -7,6 +7,7 @@ const PriceBreakdown = ({
   payableAmount,
   numberOfLabour,
   distanceBeyondRadius,
+  numberOfDays,
 }) => {
   const { t } = useTranslation();
   const formatPrice = (amount) => {
@@ -21,6 +22,7 @@ const PriceBreakdown = ({
   const transportCharge = extraCharges ? Number(additionalCharges ?? 0) : 0;
   const OveralltransportCharge = transportCharge * distanceBeyondRadius;
 
+  const days = Number(numberOfDays ?? 1);
   const serviceAmount = extraCharges
     ? Number(payableAmount ?? 0) - OveralltransportCharge
     : Number(payableAmount ?? 0);
@@ -35,24 +37,29 @@ const PriceBreakdown = ({
             <td>
               {t("common.serviceCharges")}
               <div className="text-muted small">
-                {formatPrice(wage)} ({t("common.perDay")}) × {numberOfLabour} {t("common.numberOfLabour")}
+                {formatPrice(wage)} ({t("common.perDay")}) × {numberOfLabour}{" "}
+                {t("common.numberOfLabour")} × {days}{" "}
+                {days > 1 ? t("common.days") : t("common.day")}
               </div>
             </td>
             <td>{formatPrice(serviceAmount)}</td>
           </tr>
 
-          <tr>
-            <td>
-              {t("common.transportationCharges")}
-              {!!transportCharge && (
-                <div className="text-muted small">
-                  {formatPrice(transportCharge)} ({t("common.perKm")}) × {distanceBeyondRadius?.toFixed(2)}{" "}
-                  {t("common.km")}
-                </div>
-              )}
-            </td>
-            <td>{formatPrice(OveralltransportCharge)}</td>
-          </tr>
+          {transportCharge > 0 && (
+            <tr>
+              <td>
+                {t("common.transportationCharges")}
+                {!!transportCharge && (
+                  <div className="text-muted small">
+                    {formatPrice(transportCharge)} ({t("common.perKm")}) ×{" "}
+                    {distanceBeyondRadius?.toFixed(2)} {t("common.km")}
+                  </div>
+                )}
+                <div className="text-muted small">*Transportation charges may vary</div>
+              </td>
+              <td>{formatPrice(OveralltransportCharge)}</td>
+            </tr>
+          )}
         </tbody>
 
         <tfoot>
