@@ -14,6 +14,7 @@ import ProductReviews from "../../../components/dashboard/ProductReviews";
 import AddReview from "../../../components/dashboard/AddReview";
 import StarRating from "../../../components/dashboard/StarRating";
 import { isProfileComplete } from "../../../utils/profileValidator";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function LocalProductDetails() {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function LocalProductDetails() {
       if (status === 200) {
         setProductDetails(data?.data || {});
       } else {
-        toast( t("classified.failedToLoad"));
+        toast(t("classified.failedToLoad"));
       }
     } catch (error) {
       toast(t("classified.somethingWentWrong"));
@@ -109,6 +110,32 @@ function LocalProductDetails() {
             </div>
           </div>
           <div className="mb-4">
+            {productDetails?.providerDetails?.selectedCategogyJD?.[0] && (
+              <h6 className="mb-1">
+                {t("classified.category")}:{" "}
+                <span className="fw-normal">
+                  {productDetails?.providerDetails?.selectedCategogyJD?.[0]}
+                </span>
+              </h6>
+            )}
+            {productDetails?.providerDetails?.otherCategoryJD?.[0] && (
+              <h6 className="mb-1">
+                {t("classified.subCategory")}:{" "}
+                <span className="fw-normal">
+                  {productDetails?.providerDetails?.otherCategoryJD?.[0]}
+                </span>
+              </h6>
+            )}
+            {productDetails?.productPrice && (
+              <h6 className="mb-1">
+                {t("classified.price")}:{" "}
+                <span className="fw-normal">
+                  ₹ {formatPrice(productDetails?.productPrice)}/{productDetails?.priceType}
+                </span>
+              </h6>
+            )}
+          </div>
+          <div className="mb-4">
             <h6 className="normal-heading">{t("classified.productDescription")}</h6>
             <p className="grey-para">
               {productDetails?.productDescription || t("classified.descriptionNotAvailable")}
@@ -120,7 +147,7 @@ function LocalProductDetails() {
           <div className="bottom-buttons d-flex">
             <div className="button-group">
               <button type="button" className="send-enquiry-btn" onClick={handleStartChat}>
-                {t("classified.sendEnquiry")}
+                {t("classified.chatWithUs")}
               </button>
               <button
                 type="button"
@@ -137,7 +164,9 @@ function LocalProductDetails() {
                 className="call-us-edit"
                 onClick={() => setShowNumber((prev) => !prev)}
               >
-                {showNumber ? productDetails?.providerDetails?.phone || "N/A" : t("classified.call")}
+                {showNumber
+                  ? productDetails?.providerDetails?.phone || "N/A"
+                  : t("classified.call")}
               </button>
             </div>
           </div>

@@ -10,9 +10,9 @@ import productImage from "../../../assets/images/product-image.png";
 import TopbarModal from "../../../components/common components/TopbarModal";
 import ClassifiedSectionSkeleton from "../../../components/skeletons/ClassifiedSectionSkeleton";
 import { Commonpagination } from "../../../components/common components/Commonpagination";
-import LocationInput from "../../../components/common components/LocationInput";
 
 import { getAllProductsForFarmer } from "../../../reduxtoolkit/slices/dashboard/classifiedSection";
+import { formatPrice } from "../../../utils/formatPrice";
 
 function LocalProductsListingModule() {
   const dispatch = useDispatch();
@@ -26,19 +26,17 @@ function LocalProductsListingModule() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState("Top Rated");
-  const [showLocationFilter, setShowLocationFilter] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const [draftLocation, setDraftLocation] = useState({
-    address: "",
-    lat: null,
-    lng: null,
-  });
-
-  const [appliedLocation, setAppliedLocation] = useState({
-    lat: null,
-    lng: null,
-  });
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchQuery(searchInput);
+      setCurrentPage(1);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [searchInput]);
 
   const loadProducts = useCallback(async () => {
     try {
@@ -51,16 +49,15 @@ function LocalProductsListingModule() {
         params.sortBy = "desc";
       }
 
-      if (selectedSort === "Location" && appliedLocation.lat && appliedLocation.lng) {
-        params.lat = appliedLocation.lat;
-        params.lng = appliedLocation.lng;
+      if (searchQuery.trim()) {
+        params.search = searchQuery.trim();
       }
 
       await dispatch(getAllProductsForFarmer(params)).unwrap();
     } catch {
       toast.error(t("classified.unableToLoad"));
     }
-  }, [dispatch, pathname, currentPage, selectedSort, appliedLocation.lat, appliedLocation.lng]);
+  }, [dispatch, pathname, currentPage, selectedSort, searchQuery]);
 
   useEffect(() => {
     loadProducts();
@@ -70,36 +67,14 @@ function LocalProductsListingModule() {
 
   const selectTopRated = () => {
     setSelectedSort("Top Rated");
-    setShowLocationFilter(false);
-    setDraftLocation({ address: "", lat: null, lng: null });
-    setAppliedLocation({ address: "", lat: null, lng: null });
     setCurrentPage(1);
     setIsSortOpen(false);
   };
 
-  const selectLocation = () => {
-    setSelectedSort("Location");
-    setShowLocationFilter(true);
+  const selectDefault = () => {
+    setSelectedSort("");
     setCurrentPage(1);
     setIsSortOpen(false);
-  };
-
-  const handleSelectLocation = ({ address, lat, lng }) => {
-    setDraftLocation({ address, lat, lng });
-  };
-
-  const handleApplyLocation = () => {
-    if (!draftLocation.lat || !draftLocation.lng) {
-      toast.error(t("classified.selectValidLocation"));
-      return;
-    }
-
-    setAppliedLocation({
-      lat: draftLocation.lat,
-      lng: draftLocation.lng,
-    });
-
-    setCurrentPage(1);
   };
 
   const handlePageChange = (page) => {
@@ -118,7 +93,11 @@ function LocalProductsListingModule() {
       <div className="WrapperBox">
         <TopbarModal
           titleBox
-          title={pathname === "/dashboard/local-shops" ? t("classified.localBusinesses") : t("classified.viewManufacturers")}
+          title={
+            pathname === "/dashboard/local-shops"
+              ? t("classified.localBusinesses")
+              : t("classified.viewManufacturers")
+          }
           navigate="/dashboard"
         />
 
@@ -127,35 +106,46 @@ function LocalProductsListingModule() {
             <h6 className="book-heading">{t("classified.products")}</h6>
 
             <div className="search-sort">
-              {showLocationFilter && (
-                <>
-                  <LocationInput
-                    value={draftLocation.address}
-                    onChange={(val) => setDraftLocation((prev) => ({ ...prev, address: val }))}
-                    onSelectLocation={handleSelectLocation}
-                    placeholder={t("classified.enterLocation")}
-                  />
-
-                  <button className="call-us-edit me-4" onClick={handleApplyLocation}>
-                    {t("classified.applyLocation")}
-                  </button>
-                </>
-              )}
+              <div className="search-bar me-3" style={{ position: "relative", width: "300px" }}>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder={t("classified.searchPlaceholder")}
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  style={{
+                    padding: "10px 15px",
+                    borderRadius: "12px",
+                    width: "100%",
+                  }}
+                />
+              </div>
 
               <div className="sort-box">
                 <div className="sort-toggle" onClick={toggleSortMenu}>
-                  <span className="sort-label">{selectedSort === "Top Rated" ? t("classified.topRated") : t("classified.location")}</span>
+                  <span className="sort-label">
+                    {selectedSort === "Top Rated"
+                      ? t("classified.topRated")
+                      : t("classified.sortBy")}
+                  </span>
                   <img src={sortArrowDown} alt="Sort" />
                 </div>
 
                 {isSortOpen && (
                   <div className="sort-menu">
-                    <div className="sort-option" onClick={selectTopRated}>
-                      {t("classified.topRated")}
-                    </div>
-                    <div className="sort-option" onClick={selectLocation}>
-                      {t("classified.location")}
-                    </div>
+                    {selectedSort === "Top Rated" ? (
+                      <div
+                        className="sort-option"
+                        style={{ fontWeight: "400" }}
+                        onClick={selectDefault}
+                      >
+                        {t("classified.reset")}
+                      </div>
+                    ) : (
+                      <div className="sort-option" onClick={selectTopRated}>
+                        {t("classified.topRated")}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -169,15 +159,16 @@ function LocalProductsListingModule() {
               <p style={{ color: "gray", marginTop: "10px" }}>{t("classified.noProducts")}</p>
             ) : (
               products.map((product) => {
-                const businessAddress = [
-                  product?.providerDetails?.businInfo?.buildingName,
-                  product?.providerDetails?.businInfo?.street,
-                  product?.providerDetails?.businInfo?.city,
-                  product?.providerDetails?.businInfo?.state,
-                  product?.providerDetails?.businInfo?.pinCode,
-                ]
-                  .filter(Boolean)
-                  .join(", ") ||
+                const businessAddress =
+                  [
+                    product?.providerDetails?.businInfo?.buildingName,
+                    product?.providerDetails?.businInfo?.street,
+                    product?.providerDetails?.businInfo?.city,
+                    product?.providerDetails?.businInfo?.state,
+                    product?.providerDetails?.businInfo?.pinCode,
+                  ]
+                    .filter(Boolean)
+                    .join(", ") ||
                   product?.providerDetails?.address ||
                   t("classified.addressNotAvailable");
 
@@ -201,7 +192,21 @@ function LocalProductsListingModule() {
                           product?.providerDetails?.name ||
                           "N/A"}
                       </p>
-                      <p className="normal-para">{businessAddress}</p>
+                      <p className="normal-para">
+                        {t("classified.location")}: {businessAddress}
+                      </p>
+                      {product?.providerDetails?.selectedCategogyJD?.length > 0 && (
+                        <p className="normal-para">
+                          {t("classified.category")}:{" "}
+                          {product?.providerDetails?.selectedCategogyJD?.[0]}
+                        </p>
+                      )}
+                      {product?.providerDetails?.otherCategoryJD?.length > 0 && (
+                        <p className="normal-para">
+                          {t("classified.subCategory")}:{" "}
+                          {product?.providerDetails?.otherCategoryJD?.[0]}
+                        </p>
+                      )}
                     </div>
                     <div className="available-service-btn mt-auto">
                       <button className="send-btn">{t("classified.viewBusiness")}</button>
