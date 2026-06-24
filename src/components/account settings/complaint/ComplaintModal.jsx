@@ -24,16 +24,26 @@ const ComplaintModal = ({ onClose, loading, onSubmit, form, errors, handleChange
         <form className="complaint-modal__body" onSubmit={onSubmit}>
           <div className="complaint-field">
             <label className="complaint-field__label">{t("complaint.complainLabel")}</label>
-            <input
-              type="text"
+            <select
               name="complain"
               value={form.complain}
               onChange={handleChange}
-              placeholder={t("complaint.complainPlaceholder")}
               className={`complaint-field__input ${
                 errors.complain ? "complaint-field__input--error" : ""
               }`}
-            />
+            >
+              <option value="" disabled>
+                {t("complaint.complainPlaceholder")}
+              </option>
+              <option value="Issue with Vendor">{t("complaint.issueVendor")}</option>
+              <option value="Issue in Payment Collection">{t("complaint.issuePayment")}</option>
+              <option value="Issue with Application">{t("complaint.issueApplication")}</option>
+              <option value="Product / Service Listing Issue">{t("complaint.issueListing")}</option>
+              <option value="Service Fulfillment Issue">{t("complaint.issueFulfillment")}</option>
+              <option value="Chat / Communication Issue">{t("complaint.issueCommunication")}</option>
+              <option value="General Query">{t("complaint.generalQuery")}</option>
+              <option value="Other">{t("complaint.other")}</option>
+            </select>
             {errors.complain && <p className="complaint-field__error">{errors.complain}</p>}
           </div>
 
